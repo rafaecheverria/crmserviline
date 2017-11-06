@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Role;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -10,14 +11,12 @@ use App\Http\Controllers\Controller;
 class UserRoleController extends Controller
 {
 
-    public function index(User $user)
+    public function index()
     {
-        $administradores = $user->all()
-                                ->with('role.administrador');
-        //$collection = $personas->Role->administrador;
-        return response()->json(['data' => $administradores], 200);
-        //return view('personas.index', compact('personas'));
-        //var_dump($personas);
+        $role = Role::find(2);
+        $personas = $role->users;
+        return view('personas.index', compact('personas'));
+         //return response()->json(['data' => $users], 200);
     }
 
 }

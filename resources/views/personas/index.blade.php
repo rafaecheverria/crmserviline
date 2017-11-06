@@ -13,18 +13,26 @@
 					<div class="card-content table-responsive table-full-width">
 						<table class="table">
 							<thead class="text-danger">
-								<th>Id</th>
-								<th>Name</th>
+								<th>Rut</th>
+								<th>Nombre</th>
+								<th>Apellidos</th>
+								<th>Dirección</th>
+								<th>Teléfono</th>
 								<th>Email</th>
 								<th colspan="3">Acciones</th>
 							</thead>
 							<tbody>
 								@foreach($personas as $persona)
 								<tr>
-									<td>{{ $persona->id }}</td>
+									<td>{{ $persona->rut }}</td>
 									<td>{{ $persona->name }}</td>
+									<td>{{ $persona->last_name }}</td>
+									<td>{{ $persona->address }}</td>
+									<td>{{ $persona->phone }}</td>
 									<td>{{ $persona->email }}</td>
+									@permission('edit_users')
 									<td>Editar</td>
+									@endpermission
 									<td>Eliminar</td>
 								</tr>
 								@endforeach

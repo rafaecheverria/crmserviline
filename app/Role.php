@@ -3,15 +3,16 @@
 namespace App;
 
 use Zizaco\Entrust\EntrustRole;
-use App\User;
 
 class Role extends EntrustRole
 {
-    //
+     protected $fillable = [
+        'name', 'display_name', 'description',
+    ];
 
-    public function user()
+    public function users()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany('App\User');
     }
 
 }

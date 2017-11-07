@@ -10,6 +10,7 @@
         {!! Html::style('assets/css/bootstrap.min.css') !!}
         {!! Html::style('assets/css/material-dashboard.css') !!}
         {!! Html::style('assets/css/demo.css') !!}
+        {!! Html::style('assets/css/style.css') !!}
         {!! Html::style('http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css') !!}
         {!! Html::style('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons') !!}   
     <title>{{ config('app.name', 'Laravel') }}</title>

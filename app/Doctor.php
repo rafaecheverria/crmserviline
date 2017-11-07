@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Consulta extends Model
+class Doctor extends User()
 {
     protected $fillable = [
-        'fecha', 'hora', 'paciente_id', 'doctor_id',
+        'title', 'specialty', 'complementary_studies', 'position', 
     ];
 }

@@ -16,7 +16,8 @@ Route::get('/', 'HomeController@index');
 
 
 Route::middleware('auth')->prefix('admin')->middleware('role:administrador')->group(function(){
-	Route::resource('personas', 'User\UserRoleController', ['only' => 'index']);
+	Route::resource('doctores', 'Doctor\DoctorController', ['only' => 'index']);
+	Route::resource('recepcionistas', 'Receptionist\ReceptionistController', ['only' => 'index']);
 });
 
 

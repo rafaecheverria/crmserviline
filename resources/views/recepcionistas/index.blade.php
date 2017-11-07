@@ -6,9 +6,9 @@
         <div class="row">
         	<div class="col-md-12">
         		<div class="card">
-					<div class="card-header" data-background-color="purple">
-						<h4 class="card-title">Table Title</h4>
-						<p class="category">Here is a subtitle for this table</p>
+					<div class="card-header" data-background-color="green">
+						<h4 class="card-title">RECEPCIONISTAS</h4>
+						<p class="category text-white">Existen en total 5 Recepcionistas registadros</p>
 					</div>
 					<div class="card-content table-responsive">
 						<table class="table">

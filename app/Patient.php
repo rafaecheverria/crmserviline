@@ -2,14 +2,12 @@
 
 namespace App;
 
-use App\Query;
-
 use Illuminate\Database\Eloquent\Model;
 
 class Patient extends User
 {
 	protected $fillable = [
-        'name', 'email', 'password',
+        'admission_date', 'diagnosis', 'description', 'activity',
     ];
     
     public function Query()

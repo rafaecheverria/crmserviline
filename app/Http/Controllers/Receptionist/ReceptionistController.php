@@ -1,22 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\Receptionist;
 
 use App\User;
+use App\Role;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-
-class UserController extends Controller
+class ReceptionistController extends Controller
 {
-
     public function index()
     {
-    	//$personas = User::all();
-    	//$collection = $personas->Role->administrador;
-    	//return response()->json(['data' => $personas], 200);
-        //return view('personas.index', compact('personas'));
-        //var_dump($personas);
+        $role = Role::find(2);
+        $personas = $role->users;
+        return view('recepcionistas.index', compact('personas'));
     }
 
     public function create()

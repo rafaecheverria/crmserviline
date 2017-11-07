@@ -6,7 +6,6 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
 
-
 class User extends Authenticatable
 {
     use Notifiable;
@@ -14,7 +13,7 @@ class User extends Authenticatable
 
 
     protected $fillable = [
-        'name', 'last_name', 'email', 'password', 'rut', 'phone', 'address', 'age',
+        'name', 'last_name', 'email', 'password', 'rut', 'phone', 'address', 'birth_date', 'city_id',
     ];
 
     protected $hidden = [

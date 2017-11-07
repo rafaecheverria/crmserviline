@@ -52,13 +52,13 @@
                     <ul class="nav">
                         @role('administrador')
                             <li>
-                                <a href="{{ url('admin/personas') }}">Doctores</a>
+                                <a href="{{ url('admin/doctores') }}">Doctores</a>
                             </li>
                         @endrole
                         
                         <li>
-                            <a href="#">Recepcionistas</a>
-                        </li>
+                                <a href="{{ url('admin/recepcionistas') }}">Recepcionistas</a>
+                            </li>
                         <li>
                             <a href="#">Pacientes</a>
                         </li>

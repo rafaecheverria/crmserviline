@@ -9,9 +9,9 @@ use App\Http\Controllers\Controller;
 
 class DoctorController extends Controller
 {
-     public function index()
+    public function index()
     {
-        $role = Role::find(1);
+        $role = Role::find(2);
         $personas = $role->users;
         return view('doctores.index', compact('personas'));
          //return response()->json(['data' => $users], 200);

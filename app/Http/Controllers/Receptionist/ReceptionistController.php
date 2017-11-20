@@ -11,7 +11,7 @@ class ReceptionistController extends Controller
 {
     public function index()
     {
-        $role = Role::find(2);
+        $role = Role::find(3);
         $personas = $role->users;
         return view('recepcionistas.index', compact('personas'));
     }

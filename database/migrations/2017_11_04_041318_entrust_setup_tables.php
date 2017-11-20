@@ -4,11 +4,6 @@ use Illuminate\Database\Schema\Blueprint;
 
 class EntrustSetupTables extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return  void
-     */
     public function up()
     {
         DB::beginTransaction();
@@ -59,12 +54,6 @@ class EntrustSetupTables extends Migration
 
         DB::commit();
     }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return  void
-     */
     public function down()
     {
         Schema::drop('permission_role');

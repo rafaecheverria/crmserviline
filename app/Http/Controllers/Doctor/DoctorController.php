@@ -3,18 +3,22 @@
 namespace App\Http\Controllers\Doctor;
 
 use App\Role;
-use App\User;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 
-class DoctorController extends Controller
+class DoctorController extends ApiController
 {
-    public function index()
+    public function index(Role $role)
     {
+        //$users = $role->users;
+        //return $this->showAll($users);
         $role = Role::find(2);
         $personas = $role->users;
+        //return $this->showAll($personas);
+        //$personas = User::all()->join('posts', 'usuarios.id', '=', 'posts.user_id')->paginate(5);
         return view('doctores.index', compact('personas'));
-         //return response()->json(['data' => $users], 200);
+        //return response()->json(['data' => $users], 200);
+        //dd($personas);
     }
 
     public function create()

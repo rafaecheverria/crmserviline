@@ -21,29 +21,50 @@ class DatabaseSeeder extends Seeder
         $this->call(PermissionsTableSeeder::class);
 
 
-        for($i=1; $i <= 30; $i++) {
-                DB::table('role_user')->insert(
-                    [
-                        'user_id' => User::all()->randomElement('id'),
-                        'role_id' => Role::all()->randomElement('id'),
-                    ]
-                );
-        }
-        //$user_id = User::pluck('id')->all();
-        //$role_id = Role::pluck('id')->all();
-
-        /*for($i=1; $i <= 30; $i++) {
-
-            DB::table('role_user')->insert([
-                'user_id' => $user_id,
-                'role_id' => $role_id
-            ]);
-        //factory(Role::class, $role_user)->create()->each(
-        /* function($roles){ 
-    			$usuarios = User::all()->random(mt_rand(1, 3))->pluck('id'); //se obtiene un conjunto aleatoreo de usuarios
-    			$roles->users()->attach($usuarios); // se le insertan usuarios a las roles
-		    });
-        }*/
+        DB::table('role_user')->insert(array(
+                array('user_id' => 1, 'role_id' => 1),
+                array('user_id' => 2, 'role_id' => 2),
+                array('user_id' => 3, 'role_id' => 2),
+                array('user_id' => 4, 'role_id' => 2),
+                array('user_id' => 5, 'role_id' => 2),
+                array('user_id' => 6, 'role_id' => 2),
+                array('user_id' => 7, 'role_id' => 2),
+                array('user_id' => 8, 'role_id' => 2),
+                array('user_id' => 9, 'role_id' => 2),
+                array('user_id' => 10, 'role_id' => 2),
+                array('user_id' => 11, 'role_id' => 2),
+                array('user_id' => 12, 'role_id' => 2),
+                array('user_id' => 13, 'role_id' => 3),
+                array('user_id' => 14, 'role_id' => 3),
+                array('user_id' => 15, 'role_id' => 3),
+                array('user_id' => 16, 'role_id' => 3),
+                array('user_id' => 17, 'role_id' => 3),
+                array('user_id' => 18, 'role_id' => 3),
+                array('user_id' => 19, 'role_id' => 3),
+                array('user_id' => 20, 'role_id' => 4),
+                array('user_id' => 21, 'role_id' => 4),
+                array('user_id' => 22, 'role_id' => 4),
+                array('user_id' => 23, 'role_id' => 4),
+                array('user_id' => 24, 'role_id' => 4),
+                array('user_id' => 25, 'role_id' => 4),
+                array('user_id' => 26, 'role_id' => 4),
+                array('user_id' => 27, 'role_id' => 4),
+                array('user_id' => 28, 'role_id' => 4),
+                array('user_id' => 29, 'role_id' => 4),
+                array('user_id' => 30, 'role_id' => 4),
+                array('user_id' => 31, 'role_id' => 4),
+                array('user_id' => 32, 'role_id' => 4),
+                array('user_id' => 33, 'role_id' => 4)
+            ));
+        DB::table('permission_role')->insert(array(
+                array('permission_id' => 1, 'role_id' => 1),
+                array('permission_id' => 2, 'role_id' => 1),
+                array('permission_id' => 3, 'role_id' => 1),
+                array('permission_id' => 4, 'role_id' => 1),
+                array('permission_id' => 1, 'role_id' => 2),
+                array('permission_id' => 2, 'role_id' => 2),
+                array('permission_id' => 4, 'role_id' => 2)
+            ));
     }
 }
 

@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Receptionist;
 use App\User;
 use App\Role;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 
-class ReceptionistController extends Controller
+class ReceptionistController extends ApiController
 {
     public function index()
     {

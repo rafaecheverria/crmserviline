@@ -6,7 +6,7 @@ use Zizaco\Entrust\EntrustRole;
 
 class Role extends EntrustRole
 {
-     protected $fillable = [
+    protected $fillable = [
         'name', 'display_name', 'description',
     ];
 
@@ -14,5 +14,4 @@ class Role extends EntrustRole
     {
         return $this->belongsToMany('App\User');
     }
-
 }

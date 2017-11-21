@@ -27,12 +27,12 @@
 	                            <input type="text" class="form-control" placeholder=".col-md-4">
 	                        </div>
 	                    </div>
-	                    <div class="col-md-3 col-sm-12">
+	                    <div class="col-md-2 col-sm-12">
 	                        <div class="label-floating is-empty">
 	                            <button class="btn btn-info"><i class="material-icons">search</i>Buscar</button>
 	                        </div>
 		                </div>
-		                <div class="col-md-3 col-sm-12">
+		                <div class="col-md-4 col-sm-12">
 		                	<button class="btn btn-success"><i class="material-icons">add</i>Agregar</button>
 		                	<span class="dropdown">
 								<button href="#" class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="true" >

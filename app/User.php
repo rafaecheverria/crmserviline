@@ -16,6 +16,19 @@ class User extends Authenticatable
         'name', 'last_name', 'email', 'password', 'rut', 'phone', 'address', 'birth_date',
     ];
 
+    public function setNameAttribute($valor)
+    {
+        $this->attributes['name'] = strtolower($valor);
+    }
+    public function getNameAttribute($valor)
+    {
+        return ucwords($valor);
+    }
+    public function setEmailAttribute($valor)
+    {
+        $this->attributes['email'] = strtolower($valor);
+    }
+
     protected $hidden = [
         'password', 'remember_token',
     ];

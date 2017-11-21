@@ -10,14 +10,14 @@ class DoctorController extends ApiController
 {
     public function index(User $user)
     {
-        $personas = $user->withRole('doctor')->get();
+        $personas = $user->withRole('doctor')->paginate(5);
         //$user = User::hasRole('administrador');
-        //$personas = $role->users;
-        //return $this->showAll($personas);
+        //$personas = $user->roles;
+        //return $this->showAll($personas); // ahora esta operativo ya que habia que importar la collection en el Trait.
         //$personas = User::all()->join('posts', 'usuarios.id', '=', 'posts.user_id')->paginate(5);
-        //return view('doctores.index', compact('personas'));
+        return view('doctores.index', compact('personas'));
         //return response()->json(['data' => $personas], 200);
         //return response()->json($personas);
-        dd($personas);
+        //dd($personas);
     }
 }

@@ -57,66 +57,12 @@
 							<p class="category">Existen en total 5 doctores ingresados</p>
 						</div>
 						<div class="card-content table-responsive">
-							<table class="table">
-								<thead class="text-danger">
-									<th>Rut</th>
-									<th>Nombre</th>
-									<th>Apellidos</th>
-									<th>Dirección</th>
-									<th>Teléfono</th>
-									<th>Email</th>
-									<th colspan="3">Acciones</th>
-								</thead>
-								<tbody>
-									@foreach($personas as $persona)
-									<tr>
-										<td>{{ $persona->rut }}</td>
-										<td>{{ $persona->name }}</td>
-										<td>{{ $persona->last_name }}</td>
-										<td>{{ $persona->address }}</td>
-										<td>{{ $persona->phone }}</td>
-										<td>{{ $persona->email }}</td>
-										@permission('edit_users')
-										<td>Editar</td>
-										@endpermission
-										<td>Eliminar</td>
-									</tr>
-									@endforeach
-								</tbody>
-							</table>
+							
 						</div>
 					</div>
-					<div class="card-content">
-                        <ul class="pagination pagination-primary">
-                            <li>
-                                <a href="javascript:void(0);">1</a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0);">...</a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0);">5</a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0);">6</a>
-                            </li>
-                            <li class="active">
-                                <a href="javascript:void(0);">7</a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0);">8</a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0);">9</a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0);">...</a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0);">12</a>
-                            </li>
-                        </ul>
-                    </div>
+	                    <ul class="pagination pagination-primary">
+	                        {!! $personas->render() !!}
+	                    </ul>
 	       		</div>
 			</div>
 		</div>

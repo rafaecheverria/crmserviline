@@ -4,12 +4,12 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\Role;
-use App\Http\Controllers\ApiController;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 //use Zizaco\Entrust\EntrustRole;
 
-class RegisterController extends ApiController
+class RegisterController extends Controller
 {
     /*
     |--------------------------------------------------------------------------

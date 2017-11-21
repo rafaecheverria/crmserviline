@@ -15,11 +15,12 @@ Route::get('/', 'HomeController@index');
 //Route::get('/home', 'HomeController@index')->name('home');
 
 
-Route::middleware('auth')->prefix('admin')->middleware('role:administrador')->group(function(){
+Route::prefix('admin')->group(function(){
 	Route::resource('doctores', 'Doctor\DoctorController', ['only' => 'index']);
 	Route::resource('recepcionistas', 'Receptionist\ReceptionistController', ['only' => 'index']);
 });
-
+//middleware('auth')
+//middleware('role:administrador')
 
 Route::get('/login', 'Auth\AuthController@getLogin');
 

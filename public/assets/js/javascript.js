@@ -237,45 +237,7 @@ $('#modalContainer').on('show', function () {
 		pagination(1);
 	});
 
-	/*$('#titulo[]').change(function () {
-			 $('#titulo[] option:selected').each(function () {
-				 	elegido=$(this).val();
-
-					alert(elegido);
-					//$('#titulo').val(elegido);
-			 });
-		 });*/
-
-	/*$('#escolaridad').change(function () {
-			 $('#escolaridad option:selected').each(function () {
-				 	elegido=$(this).val();
-					//$('#escolaridad').material_select();
-					alert(elegido);
-			 });
-		 });*/
-
-// ######### SCRIPT NUEVO DEL SISTEMA ###### //
-	/*$('#pais').change(function () {
-			 $('#pais option:selected').each(function () {
-				elegido=$(this).val();
-				$.post("../../vista/php/regiones.php", { elegido: elegido }, function(data){
-				$('#region').html(data);
-				$('#region').material_select();
-			});
-		});
-	});
-	$('#region').change(function () {
-			$('#region option:selected').each(function () {
-				elegido=$(this).val();
-
-				$.post("../../vista/php/ciudades.php", { elegido: elegido }, function(data){
-				$('#ciudad').html(data);
-				$('#ciudad').material_select();
-			});
-		});
-	});*/
-	//document.getElementById("ver_pass").disabled = true;
-
+	
 
 	// ######### SCRIPT ANTIGUO DEL SISTEMA ######## //
 	//######### BUSCAR #########//

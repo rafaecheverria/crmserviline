@@ -11,27 +11,27 @@
 			<div class="row">
 				<div class="col-md-12 col-sm-12">
 					<div class="card-content">
+						{!! Form::open(['id' => 'formbuscar']) !!}
+						 <!-- CAMPO SELECCIONA FILTRO DE BÚSQUEDA -->
 	                    <div class="col-md-3 col-sm-12">
 	                        <div class="form-group label-floating is-empty combo">
-	                            <select class="selectpicker" data-style="select-with-transition" multiple title="Choose City" data-size="7">
-	                                <option disabled> Choose city</option>
-	                                <option value="2">Paris </option>
-	                                <option value="3">Bucharest</option>
-	                                <option value="4">Rome</option>
-	                            </select>
+	                            {!! Form::select('type', ['T' => 'TODOS', 'R' => 'RUT', 'N' => 'NOMBRE', 'A' => 'APELLIDO'], null, ['id' => 'type','class' => 'selectpicker', 'data-style' => 'select-with-transition', 'title' => 'BUSCAR POR:']) !!}
 	                        </div>
 	                    </div>
+	                    <!-- CAMPO BUSCAR -->
 	                    <div class="col-md-3 col-sm-12">
 	                        <div class="form-group label-floating is-empty">
 	                            <label class="control-label"></label>
-	                            <input type="text" class="form-control" placeholder=".col-md-4">
+	                            {!! Form::text('buscar',null, ['id' => 'buscar','class' => 'form-control', 'required' ,'autocomplete' => 'off', 'placeholder' => 'Ingrese Búsqueda']); !!}
 	                        </div>
 	                    </div>
 	                    <div class="col-md-2 col-sm-12">
 	                        <div class="label-floating is-empty">
-	                            <button class="btn btn-info"><i class="material-icons">search</i>Buscar</button>
+	                        	{!! Form::submit('Buscar',['class' => 'btn btn-primary']) !!}
 	                        </div>
 		                </div>
+		                {!! Form::close() !!} 
+
 		                <div class="col-md-4 col-sm-12">
 		                	<button class="btn btn-success"><i class="material-icons">add</i>Agregar</button>
 		                	<span class="dropdown">
@@ -49,22 +49,21 @@
             		</div> 
 				</div>
 			</div>
-	    	<div class="row">
-	    		<div class="col-md-12">
-	        		<div class="card">
+			<div class="card-bootom">
+	    		<div class="row">
+	    			<div class="col-md-12">
 						<div class="card-header" data-background-color="purple">
 							<h4 class="card-title">DOCTORES</h4>
 							<p class="category">Existen en total 5 doctores ingresados</p>
 						</div>
-						<div class="card-content table-responsive">
-							
+						<div class="card-content table-responsive" id="div_lista">
+							@component('doctores.list_doctor')
+								@slot('personas', $personas)
+							@endcomponent
 						</div>
 					</div>
-	                    <ul class="pagination pagination-primary">
-	                        {!! $personas->render() !!}
-	                    </ul>
 	       		</div>
-			</div>
+	       	</div>
 		</div>
 	</div>
 </div>

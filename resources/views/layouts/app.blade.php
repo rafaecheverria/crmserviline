@@ -46,4 +46,5 @@
 {!! Html::script('assets/js/jquery.tagsinput.js') !!}
 {!! Html::script('assets/js/material-dashboard.js') !!}
 {!! Html::script('assets/js/demo.js') !!}
+{!! Html::script('assets/js/ajax.js') !!}
 </html>

@@ -16,8 +16,10 @@ Route::get('/', 'HomeController@index');
 
 
 Route::prefix('admin')->group(function(){
-	Route::resource('doctores', 'Doctor\DoctorController', ['only' => 'index']);
+	Route::resource('doctores', 'Doctor\DoctorController');
 	Route::resource('recepcionistas', 'Receptionist\ReceptionistController', ['only' => 'index']);
+	//Route::get('doctores', 'Doctor\DoctorController@get_doctor_info_by_search');
+	Route::get('getdoctorinfosearch', 'Doctor\DoctorController');
 });
 //middleware('auth')
 //middleware('role:administrador')

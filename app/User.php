@@ -37,4 +37,28 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Role');
     }
+
+    public function scopeBuscar($query, $buscar="")
+    {
+         $resultado = $query->where('name', 'like', '%'.$buscar.'%');
+       /*switch ($parametro) {
+           case 'R':
+                    $resultado = $query->where('rut', 'like', '%'.$buscar.'%');
+               break;
+
+           case 'N':
+                    $resultado = $query->where('name', 'like', '%'.$buscar.'%');
+               break;
+
+            case 'A':
+                    $resultado = $query->where('last_name', 'like', '%'.$buscar.'%');
+               break;
+
+            case 'T':
+                    $resultado = $query->where('last_name', 'like', '%'.$buscar.'%');
+               break;
+       }*/
+
+       return $resultado;
+    }
 }

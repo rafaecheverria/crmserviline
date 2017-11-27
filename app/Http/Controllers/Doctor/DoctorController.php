@@ -8,19 +8,19 @@ use App\Http\Controllers\ApiController;
 
 class DoctorController extends ApiController
 {
-    public function index(User $user, Request $request)// Lista todos los doctores
+    public function index(User $user)// Lista todos los doctores
     {
-        $personas = $user->withRole('doctor')->paginate(5);
-        if ($request->ajax()) {
-        		return response()->json(view('doctores.list_doctor', compact('personas'))->render());
-        }
-        return view('doctores.index', compact('personas'));
+       //$personas = $user->withRole('paciente')->get();
+       //$personas = datatables::eloquent($user->query())->make(true)->withRole('doctor')->get();
+       $personas = datatables()->eloquent($user->withRole('paciente'));
+       //return response()->json(view('doctores.list_doctor', compact('personas'))->render());
+       return view('doctores.index', compact('personas'));
+       //dd($personas);
     }
 
-    public function get_doctor_info_by_search(Request $request) //obtiene la información del docto con el parametro buscar
+    public function get_doctor_info_by_search(Request $request) //obtiene la información del doctor con el parametro buscar
     {
     	//if ($request->ajax()) {
-
     		$personas = $this->data($request->buscar);
     		//return response()->json($personas);
     		dd($personas);
@@ -37,7 +37,6 @@ class DoctorController extends ApiController
     	   
     	if ($request->ajax()) 
     	{
-    		return response()->json('es ajax');
 
     		// $personas = $this->data($request->buscar);
     		 //return response()->json(view('doctores.list_doctor', compact('personas'))->render());

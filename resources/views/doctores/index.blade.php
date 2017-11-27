@@ -14,9 +14,10 @@
 						{!! Form::open(['id' => 'formbuscar']) !!}
 						 <!-- CAMPO SELECCIONA FILTRO DE BÚSQUEDA -->
 	                    <div class="col-md-3 col-sm-12">
-	                        <div class="form-group label-floating is-empty combo">
+	                       <!-- <div class="form-group label-floating is-empty combo">
 	                            {!! Form::select('type', ['T' => 'TODOS', 'R' => 'RUT', 'N' => 'NOMBRE', 'A' => 'APELLIDO'], null, ['id' => 'type','class' => 'selectpicker', 'data-style' => 'select-with-transition', 'title' => 'BUSCAR POR:']) !!}
-	                        </div>
+	                        </div> 
+	                    	-->
 	                    </div>
 	                    <!-- CAMPO BUSCAR -->
 	                    <div class="col-md-3 col-sm-12">
@@ -56,7 +57,7 @@
 							<h4 class="card-title">DOCTORES</h4>
 							<p class="category">Existen en total 5 doctores ingresados</p>
 						</div>
-						<div class="card-content table-responsive" id="div_lista">
+						<div class="card-content" id="div_lista">
 							@component('doctores.list_doctor')
 								@slot('personas', $personas)
 							@endcomponent

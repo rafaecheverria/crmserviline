@@ -19,10 +19,10 @@
 
 });*/
 
-$(document).on('submit','#formbuscar', function(e)
+/*$(document).on('submit','#formbuscar', function(e)
 {
 	e.preventDefault();
-	//alert();
+	alert();
 	var url  = "admin/get_doctor_info_by_search";
 	var data  = $( '#formbuscar' ).serialize();
 
@@ -38,7 +38,7 @@ $(document).on('submit','#formbuscar', function(e)
 		},
 	});
 
-	});
+	});*/
 
 /*$( "#buscar" ).click(function(event){ 
 		event.preventDefault();
@@ -79,7 +79,7 @@ $(document).on('submit','#formbuscar', function(e)
 
 
 
-$(document).on('click','.pagination a', function(e)
+/*$(document).on('click','.pagination a', function(e)
 {
 	var page = $(this).attr('href').split('page=')[1];	
 	getDoctor(page,$('#buscar').val());
@@ -99,7 +99,7 @@ function getDoctor(page,buscar)
 		})	
 	}
 
-
+*/
 /*$( "#buscar-btn" ).click(function(event){ 
 
 	var parametro = $('#type').val();
@@ -125,3 +125,55 @@ function getDoctor(page,buscar)
 	});
 	
 	});*/
+
+	$(document).ready(function() {
+        $('#datatables').DataTable({
+        	"processing": true,
+        	"serverSide": true,
+        	"ajax": "/admin/doctores",
+            "pagingType": "full_numbers",
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            "columns":[
+            	{data: 'id'},
+            	{data: 'rut'},
+            	{data: 'name'},
+            	{data: 'last_name'},
+            	{data: 'address'},
+            	{data: 'phone'},
+            	{data: 'email'},
+            ],
+            responsive: true,
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Buscar Registros",
+            }
+        });
+
+
+        var table = $('#datatables').DataTable();
+
+        // Edit record
+        table.on('click', '.edit', function() {
+            $tr = $(this).closest('tr');
+
+            var data = table.row($tr).data();
+            alert('You press on Row: ' + data[0] + ' ' + data[1] + ' ' + data[2] + '\'s row.');
+        });
+
+        // Delete a record
+        table.on('click', '.remove', function(e) {
+            $tr = $(this).closest('tr');
+            table.row($tr).remove().draw();
+            e.preventDefault();
+        });
+
+        //Like record
+        table.on('click', '.like', function() {
+            alert('You clicked on Like button');
+        });
+
+        $('.card .material-datatables label').addClass('form-group');
+    });

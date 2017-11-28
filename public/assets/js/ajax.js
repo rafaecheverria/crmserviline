@@ -128,28 +128,30 @@ function getDoctor(page,buscar)
 
 	$(document).ready(function() {
         $('#datatables').DataTable({
-        	"processing": true,
-        	"serverSide": true,
-        	"ajax": "/admin/doctores",
-            "pagingType": "full_numbers",
-            "lengthMenu": [
+
+        	//processing: true,
+        	serverSide: true,
+        	//languaje: {"/plugins/datatables/latino.json"},
+        	ajax: "/admin/get_doctor",
+            pagingType: "full_numbers",
+            lengthMenu: [
                 [10, 25, 50, -1],
                 [10, 25, 50, "All"]
             ],
-            "columns":[
-            	{data: 'id'},
-            	{data: 'rut'},
-            	{data: 'name'},
-            	{data: 'last_name'},
-            	{data: 'address'},
-            	{data: 'phone'},
-            	{data: 'email'},
-            ],
+            
             responsive: true,
             language: {
                 search: "_INPUT_",
                 searchPlaceholder: "Buscar Registros",
-            }
+            },
+            columns:[
+
+            	{data: 'rut' , name: 'rut'},
+            	{data: 'name', name: 'name'},
+            	{data: 'last_name', name: 'last_name'},
+            	{data: 'phone', name:'phone'},
+            	{data: 'email', name:'email'}
+            ]
         });
 
 

@@ -20,18 +20,7 @@
 	                    	-->
 	                    </div>
 	                    <!-- CAMPO BUSCAR -->
-	                    <div class="col-md-3 col-sm-12">
-	                        <div class="form-group label-floating is-empty">
-	                            <label class="control-label"></label>
-	                            {!! Form::text('buscar',null, ['id' => 'buscar','class' => 'form-control', 'required' ,'autocomplete' => 'off', 'placeholder' => 'Ingrese Búsqueda']); !!}
-	                        </div>
-	                    </div>
-	                    <div class="col-md-2 col-sm-12">
-	                        <div class="label-floating is-empty">
-	                        	{!! Form::submit('Buscar',['class' => 'btn btn-primary']) !!}
-	                        </div>
-		                </div>
-		                {!! Form::close() !!} 
+
 
 		                <div class="col-md-4 col-sm-12">
 		                	<button class="btn btn-success"><i class="material-icons">add</i>Agregar</button>
@@ -59,7 +48,6 @@
 						</div>
 						<div class="card-content" id="div_lista">
 							@component('doctores.list_doctor')
-								@slot('personas', $personas)
 							@endcomponent
 						</div>
 					</div>

@@ -5,9 +5,7 @@
 <div class="content">
     <div class="container-fluid">
         <div class="card">
-        	<div class="card-header card-header-icon" data-background-color="purple">
-				<i class="material-icons">search</i>
-			</div>
+
 			<div class="row">
 				<div class="col-md-12 col-sm-12">
 					<div class="card-content">
@@ -20,8 +18,6 @@
 	                    	-->
 	                    </div>
 	                    <!-- CAMPO BUSCAR -->
-
-
 		                <div class="col-md-4 col-sm-12">
 		                	<button class="btn btn-success"><i class="material-icons">add</i>Agregar</button>
 		                	<span class="dropdown">
@@ -47,6 +43,7 @@
 							<p class="category">Existen en total 5 doctores ingresados</p>
 						</div>
 						<div class="card-content" id="div_lista">
+
 							@component('doctores.list_doctor')
 							@endcomponent
 						</div>

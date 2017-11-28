@@ -1,4 +1,6 @@
-<table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+<div class="material-datatables">
+    <div class="table-responsive">
+<table id="datatables" class="table dataTable nowrap dataTables_wrapper table-striped table-no-bordered table-hover">
     <thead>
         <tr>
             <th>Rut</th>
@@ -6,6 +8,9 @@
             <th>Apellidos</th>
             <th>Teléfono</th>
             <th>Email</th>
+            <th>Editar</th>
         </tr>
     </thead>
 </table>
+</div>
+</div>

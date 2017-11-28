@@ -19,7 +19,14 @@ class DoctorController extends ApiController
     	//$personas = $user->withRole('paciente')->get();
        //$personas = datatables::eloquent($user->query())->make(true)->withRole('doctor')->get();
       //return datatables()->eloquent($user->withRole('administrador'))->make(true);
-       return datatables()->eloquent($user->query()->withRole('doctor'))->make(true);
+       return datatables()
+              ->eloquent($user
+                ->query()
+                ->withRole('doctor'))
+              ->addColumn('edit', function($user) {
+                    return "<i class='material-icons'>favorite</i>";
+                })
+                ->make(true);
        //return datatables(User::all())->toJson();
        //return response()->json('doctores.index', compact('personas'));
        //return view('doctores.index', compact('personas'));

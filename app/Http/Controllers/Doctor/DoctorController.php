@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Doctor;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
+//use Yajra\Datatables\Facades\Datatables;
 
 
 class DoctorController extends ApiController
@@ -14,22 +15,16 @@ class DoctorController extends ApiController
        return view('doctores.index'); 
     }
 
-    public function get_doctor(User $user) //obtiene la información del doctor con el parametro buscar
+    public function show() //obtiene la información del doctor con el parametro buscar
     {
-    	//$personas = $user->withRole('paciente')->get();
-       //$personas = datatables::eloquent($user->query())->make(true)->withRole('doctor')->get();
-      //return datatables()->eloquent($user->withRole('administrador'))->make(true);
-       return datatables()
-              ->eloquent($user
-                ->query()
-                ->withRole('doctor'))
-              ->addColumn('edit', function($user) {
-                    return "<i class='material-icons'>favorite</i>";
-                })
-                ->make(true);
-       //return datatables(User::all())->toJson();
-       //return response()->json('doctores.index', compact('personas'));
-       //return view('doctores.index', compact('personas'));
-       //return response()->json($personas);
+        $users = User::select(['id', 'rut', 'name', 'last_name', 'phone', 'email']);
+        return datatables()->of($users->withRole('doctor'))
+            ->addColumn('action', function ($user) {
+                return '<a href="doctores/'.$user->id.'/edit" class="btn btn-simple btn-warning btn-icon edit"><i class="material-icons">description</i></a>
+                        <a href="#" onclick="javascript:editar('.$user->id.')" class="btn btn-simple btn-success btn-icon edit"><i class="material-icons">edit</i></a>
+                        <a href="#" class="btn btn-simple btn-danger btn-icon remove"><i class="material-icons">close</i></a>';
+            })
+            ->editColumn('rut', '{{$rut}}')
+            ->make(true);
     }
 }

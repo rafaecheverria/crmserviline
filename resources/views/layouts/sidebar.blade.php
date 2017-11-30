@@ -12,7 +12,7 @@
     <div class="sidebar-wrapper">
         <div class="user">
             <div class="photo">
-                <img src="../assets/img/faces/avatar.jpg" />
+                <img src="{{ asset('assets/img/faces/avatar.jpg') }}" />
             </div>
             <div class="info">
                 <a data-toggle="collapse" href="#collapseExample" class="collapsed">
@@ -77,8 +77,8 @@
                             </li>
                         @endrole
                         <li>
-                                <a href="{{ url('admin/recepcionistas') }}">Recepcionistas</a>
-                            </li>
+                            <a href="{{ url('admin/recepcionistas') }}">Recepcionistas</a>
+                        </li>
                         <li>
                             <a href="#">Pacientes</a>
                         </li>

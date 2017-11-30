@@ -45,6 +45,8 @@
 						<div class="card-content" id="div_lista">
 
 							@component('doctores.list_doctor')
+								@slot('personas')
+								@endslot
 							@endcomponent
 						</div>
 					</div>

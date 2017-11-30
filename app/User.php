@@ -17,7 +17,10 @@ class User extends Authenticatable
     ];
 
     //protected $table = 'Users'
-
+    public function roles()
+    {
+        return $this->belongsToMany('App\Role');
+    }
     public function setNameAttribute($valor)
     {
         $this->attributes['name'] = strtolower($valor);
@@ -35,8 +38,5 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function roles()
-    {
-        return $this->belongsToMany('App\Role');
-    }
+    
 }

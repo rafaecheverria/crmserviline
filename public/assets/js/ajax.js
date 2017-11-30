@@ -1,51 +1,55 @@
 	$(document).ready(function() {
+		$.fn.dataTable.ext.errMode = 'throw';
         $('#datatables').DataTable({
-
         	"processing": true,
         	"serverSide": true,
-        	//languaje: "/plugins/datatables/latino.json",
-        	"ajax": "/admin/get_doctor",
+        	"order": [[ 2, "asc" ]],
+        	"ajax": {"url": "/admin/doctores/show"},
             "pagingType": "full_numbers",
             "lengthMenu": [
                 [10, 25, 50, -1],
-                [10, 25, 50, "All"]
+                [10, 25, 50, "Todos"]
             ],
-           //responsive: true,
             "language": {
-                search: "_INPUT_",
-                searchPlaceholder: "Buscar Registros",
+                url: "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
             },
+            "responsive": true,
             "columns":[
             	{data: 'rut', name: 'rut'},
             	{data: 'name', name: 'name'},
             	{data: 'last_name', name: 'last_name'},
             	{data: 'phone', name: 'phone'},
             	{data: 'email', name: 'email'},
-            	{data: 'edit', name: 'edit'},
+            	{data: 'action', name: 'action', orderable: false, searchable: false}
             ]
-        });
-
-      /*  var table = $('#datatables').DataTable();
-
-        // Edit record
-        table.on('click', '.edit', function() {
-            $tr = $(this).closest('tr');
-
-            var data = table.row($tr).data();
-            alert('You press on Row: ' + data[0] + ' ' + data[1] + ' ' + data[2] + '\'s row.');
-        });
-
-        // Delete a record
-        table.on('click', '.remove', function(e) {
-            $tr = $(this).closest('tr');
-            table.row($tr).remove().draw();
-            e.preventDefault();
-        });
-
-        //Like record
-        table.on('click', '.like', function() {
-            alert('You clicked on Like button');
-        });
-
-        $('.card .material-datatables label').addClass('form-group');*/
     });
+
+		
+
+});
+
+	function editar(id){
+		alert(id);
+	}
+
+/*	$( "#update_profile" ).click(function(event){ 
+		event.preventDefault();
+		var id= $('#id').val();
+		var route = "/usuarios/perfil/"+id+"";
+		var dataString  = $( '#form_profile' ).serializeArray();		
+		$.ajax({
+			url: route,
+			headers: {'X-CSRF-TOKEN':$('input[name=_token]').attr('content')},
+			type: 'PUT',
+			datatype: 'json',
+			data:dataString,
+			success:function(res){
+				if (res.success){ 
+					$('#name_avatar').html(res.name+'<i class="material-icons right">arrow_drop_down</i>');
+					toastr["success"](res.message);
+				}else{
+					toastr["error"](res.message);
+				}
+			},
+		});
+	});*/

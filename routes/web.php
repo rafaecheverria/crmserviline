@@ -16,8 +16,8 @@ Route::get('/', 'HomeController@index');
 
 
 Route::prefix('admin')->group(function(){
-	Route::get('doctores', 'Doctor\DoctorController@index');
-	Route::get('get_doctor', 'Doctor\DoctorController@get_doctor');
+	Route::resource('doctores', 'Doctor\DoctorController');
+	//Route::get('doctores/get_doctor', 'Doctor\DoctorController@get_doctor');
 	Route::resource('recepcionistas', 'Receptionist\ReceptionistController', ['only' => 'index']);
 	//Route::get('get_doctor_info_by_search', 'Doctor\DoctorController@get_doctor_info_by_search');
 	//Route::get('getdoctorinfosearch', 'Doctor\DoctorController@getdoctorinfosearch');

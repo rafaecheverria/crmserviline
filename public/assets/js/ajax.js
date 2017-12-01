@@ -1,6 +1,6 @@
 	$(document).ready(function() {
 		$.fn.dataTable.ext.errMode = 'throw';
-        $('#datatables').DataTable({
+       $('#datatables').DataTable({
         	"processing": true,
         	"serverSide": true,
         	"order": [[ 2, "asc" ]],
@@ -13,7 +13,7 @@
             "language": {
                 url: "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
             },
-            "responsive": true,
+            //"responsive": true,
             "columns":[
             	{data: 'rut', name: 'rut'},
             	{data: 'name', name: 'name'},
@@ -22,20 +22,18 @@
             	{data: 'email', name: 'email'},
             	{data: 'action', name: 'action', orderable: false, searchable: false}
             ]
-    });
 
-		
+
+    });
 
 });
 
-	function editar(id){
-		alert(id);
-	}
 
-/*	$( "#update_profile" ).click(function(event){ 
+	$( "#update_profile" ).click(function(event){ 
 		event.preventDefault();
 		var id= $('#id').val();
-		var route = "/usuarios/perfil/"+id+"";
+		alert(id);
+		/*var route = "/usuarios/perfil/"+id+"";
 		var dataString  = $( '#form_profile' ).serializeArray();		
 		$.ajax({
 			url: route,
@@ -51,5 +49,5 @@
 					toastr["error"](res.message);
 				}
 			},
-		});
-	});*/
+		});*/
+	});

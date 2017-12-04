@@ -19,7 +19,7 @@ class DoctorController extends ApiController
     {
 
         $users = User::select(['id', 'rut', 'name', 'last_name', 'phone', 'email'])->withRole('doctor');
-        return datatables()->eloquent($users) //->withRole('doctor')
+        return datatables()->eloquent($users)
             ->addColumn('action', function ($user) {
                 return '<a href="doctores/'.$user->id.'/edit" class="btn btn-simple btn-warning btn-icon edit"><i class="material-icons">description</i></a>
                         <a href="doctores/'.$user->id.'/edit" id="update"  class="btn btn-simple btn-success btn-icon edit"><i class="material-icons">edit</i></a>
@@ -32,16 +32,11 @@ class DoctorController extends ApiController
     public function edit($id)
     {
         $doctor = User::findOrFail($id);
-        //$speciality = Speciality::all()->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)->pluck('name', 'id');
-       // $speciality = $doctor->speciality_id->name;
         $specialities = Speciality::all();
 			$select = [];
 			foreach($specialities as $specility){
 			    $select[$specility->id] = $specility->name;
 		}
-
-        //dd($speciality);
-       // echo $speciality;
         return view('doctores.edit', compact('doctor', 'select'));
     }
 

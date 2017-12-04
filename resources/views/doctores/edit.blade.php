@@ -13,24 +13,25 @@
                         <h4 class="card-title">Edit Profile -
                             <small class="category">Complete your profile</small>
                         </h4>
-                        <form>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="form-group label-floating">
-                                          {!! Form::label('rut', 'Rut'); !!}
-                                          {!! Form::text('rut', $doctor->rut, ['readonly', 'class' => 'form-control']); !!}
+                        {!! Form::model($doctor, ['id' => 'update_doctor']); !!}
+                            {!! Form::hidden('id', null, ['id' => 'id']); !!} 
+                                <div class="row">
+                                    <div class="col-md-4"> 
+                                        <div class="form-group label-floating">
+                                              {!! Form::label('rut', 'Rut'); !!}
+                                              {!! Form::text('rut', null, ['readonly', 'class' => 'form-control']); !!}
+                                        </div>
                                     </div>
-                                </div>
                                 <div class="col-md-4">
                                     <div class="form-group label-floating">
                                         {!! Form::label('nombres', 'Nombres'); !!}
-                                        {!! Form::text('name', $doctor->name, ['class' => 'form-control']); !!}
+                                        {!! Form::text('name',null, ['class' => 'form-control']); !!}
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group label-floating">
                                         {!! Form::label('apellidos', 'Apellidos'); !!}
-                                        {!! Form::text('last_name', $doctor->last_name, ['class' => 'form-control']); !!}
+                                        {!! Form::text('last_name', null, ['class' => 'form-control']); !!}
                                     </div>
                                 </div>
                             </div>
@@ -38,19 +39,19 @@
                                 <div class="col-md-4">
                                     <div class="form-group label-floating">
                                         {!! Form::label('email', 'Email'); !!}
-                                        {!! Form::text('email', $doctor->email, ['class' => 'form-control']); !!}
+                                        {!! Form::text('email', null, ['class' => 'form-control']); !!}
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group label-floating">
                                         {!! Form::label('phone', 'Teléfono'); !!}
-                                        {!! Form::text('phone', $doctor->phone, ['class' => 'form-control']); !!}
+                                        {!! Form::text('phone', null, ['class' => 'form-control']); !!}
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group label-floating">
                                         {!! Form::label('birth_date', 'Fecha de Nacimiento'); !!}
-                                        {!! Form::date('birth_date', $doctor->birth_date, ['class' => 'form-control']); !!}
+                                        {!! Form::date('birth_date', null, ['class' => 'form-control']); !!}
                                     </div>
                                 </div>
                             </div>
@@ -58,7 +59,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group label-floating">
                                         {!! Form::label('address', 'Dirección'); !!}
-                                        {!! Form::text('address', $doctor->address, ['class' => 'form-control']); !!}
+                                        {!! Form::text('address', null, ['class' => 'form-control']); !!}
                                     </div>
                                 </div>
                             </div>
@@ -66,7 +67,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group label-floating">
                                         {!! Form::label('title', 'Título'); !!}
-                                        {!! Form::text('title', $doctor->title, ['class' => 'form-control']); !!}
+                                        {!! Form::text('title', null, ['class' => 'form-control']); !!}
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -87,9 +88,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-rose pull-right">Actualizar</button>
                             <div class="clearfix"></div>
-                        </form>
+                       {!! Form::close() !!}
+                       {!! link_to('#','Actualizar',['id' => 'btn_update_doc' , 'class' => 'btn btn-rose pull-right']); !!}
                     </div>
                 </div>
             </div>

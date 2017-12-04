@@ -1,10 +1,13 @@
 	$(document).ready(function() {
-		$.fn.dataTable.ext.errMode = 'throw';
-       $('#datatables').DataTable({
+		//$.fn.dataTable.ext.errMode = 'throw';  //Esto permite que no aparezca el alert() cuando el servidor responde con un error.
+      	$('#datatables').DataTable({
+      		"headers": {'X-CSRF-TOKEN':$('input[name=_token]').attr('content')},
         	"processing": true,
         	"serverSide": true,
         	"order": [[ 2, "asc" ]],
-        	"ajax": {"url": "/admin/doctores/show"},
+        	"ajax": {
+        		 "url": "doctores/show",
+        		},
             "pagingType": "full_numbers",
             "lengthMenu": [
                 [10, 25, 50, -1],
@@ -15,6 +18,7 @@
             },
             //"responsive": true,
             "columns":[
+            	{data: 'id', name: 'id'},
             	{data: 'rut', name: 'rut'},
             	{data: 'name', name: 'name'},
             	{data: 'last_name', name: 'last_name'},
@@ -22,9 +26,7 @@
             	{data: 'email', name: 'email'},
             	{data: 'action', name: 'action', orderable: false, searchable: false}
             ]
-
-
-    });
+	    });
 
 });
 

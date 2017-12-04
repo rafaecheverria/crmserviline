@@ -21,6 +21,10 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Role');
     }
+    public function specialities()
+    {
+        return $this->hasMany('App\Speciality');
+    }
     public function setNameAttribute($valor)
     {
         $this->attributes['name'] = strtolower($valor);

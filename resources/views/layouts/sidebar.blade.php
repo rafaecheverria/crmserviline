@@ -57,7 +57,7 @@
                 <div class="collapse" id="especialidades">
                     <ul class="nav">
                         <li>
-                            <a href="{{ url('admin/doctores') }}">Sub-Epecialidades</a>
+                            <a href="{{ url('doctores') }}">Sub-Epecialidades</a>
                         </li>
                     </ul>
                 </div>

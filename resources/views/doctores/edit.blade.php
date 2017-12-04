@@ -30,59 +30,59 @@
                                 <div class="col-md-4">
                                     <div class="form-group label-floating">
                                         {!! Form::label('apellidos', 'Apellidos'); !!}
-                                        {!! Form::text('name', $doctor->last_name, ['class' => 'form-control']); !!}
+                                        {!! Form::text('last_name', $doctor->last_name, ['class' => 'form-control']); !!}
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group label-floating">
-                                        {!! Form::label('apellidos', 'Apellidos'); !!}
-                                        {!! Form::text('name', $doctor->last_name, ['class' => 'form-control']); !!}
+                                        {!! Form::label('email', 'Email'); !!}
+                                        {!! Form::text('email', $doctor->email, ['class' => 'form-control']); !!}
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group label-floating">
-                                        {!! Form::label('apellidos', 'Apellidos'); !!}
-                                        {!! Form::text('name', $doctor->last_name, ['class' => 'form-control']); !!}
+                                        {!! Form::label('phone', 'Teléfono'); !!}
+                                        {!! Form::text('phone', $doctor->phone, ['class' => 'form-control']); !!}
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group label-floating">
+                                        {!! Form::label('birth_date', 'Fecha de Nacimiento'); !!}
+                                        {!! Form::date('birth_date', $doctor->birth_date, ['class' => 'form-control']); !!}
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group label-floating">
-                                        <label class="control-label">Adress</label>
-                                        <input type="text" class="form-control">
+                                        {!! Form::label('address', 'Dirección'); !!}
+                                        {!! Form::text('address', $doctor->address, ['class' => 'form-control']); !!}
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group label-floating">
-                                        <label class="control-label">City</label>
-                                        <input type="text" class="form-control">
+                                        {!! Form::label('title', 'Título'); !!}
+                                        {!! Form::text('title', $doctor->title, ['class' => 'form-control']); !!}
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group label-floating">
-                                        <label class="control-label">Country</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group label-floating">
-                                        <label class="control-label">Postal Code</label>
-                                        <input type="text" class="form-control">
+                                        {!! Form::label('speciality_id', 'Especialidad'); !!}
+                                         {!! Form::select('speciality_id', $select, null, ['class'=>'form-control']) !!}
+                   
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label>About Me</label>
+                                        {!! Form::label('complementary_studies', 'Estudios Complementarios'); !!}
                                         <div class="form-group label-floating">
-                                            <label class="control-label"> Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.</label>
-                                            <textarea class="form-control" rows="5"></textarea>
+                                            {!! Form::textarea('complementary_studies',$doctor->complementary_studies,['class'=>'form-control', 'rows' => 4, 'cols' => 40]) !!}
                                         </div>
                                     </div>
                                 </div>

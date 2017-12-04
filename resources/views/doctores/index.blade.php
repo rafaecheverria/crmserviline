@@ -6,11 +6,11 @@
     <div class="container-fluid">
         <div class="card">
 			<div class="row">
-				<div class="col-md-3 col-md-offset-9 col-sm-12">
+				<div class="col-md-4 col-md-offset-8 col-sm-12">
 	                <div class="col-md-12 col-sm-12">
 	                	<button class="btn btn-success" id="agregar_doctor"><i class="material-icons">add</i>Agregar</button>
 	                	<span class="dropdown">
-							<button href="#" class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="true" >
+						<button href="#" class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="true" >
 							<i class="material-icons">save</i>
 					    	Exportar
 					    	<b class="caret"></b>
@@ -31,7 +31,6 @@
 							<p class="category">Existen en total 5 doctores ingresados</p>
 						</div>
 						<div class="card-content" id="div_lista">
-
 							@component('doctores.list_doctor')
 								@slot('personas')
 								@endslot

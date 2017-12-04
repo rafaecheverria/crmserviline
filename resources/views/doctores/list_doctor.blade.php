@@ -3,6 +3,7 @@
 <table id="datatables" class="table dataTable table-responsive nowrap dataTables_wrapper table-striped table-no-bordered table-hover">
     <thead>
         <tr>
+            <th></th>
             <th>Rut</th>
             <th>Nombre</th>
             <th>Apellidos</th>

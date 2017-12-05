@@ -83,7 +83,7 @@
                                     <div class="form-group">
                                         {!! Form::label('complementary_studies', 'Estudios Complementarios'); !!}
                                         <div class="form-group label-floating">
-                                            {!! Form::textarea('complementary_studies',$doctor->complementary_studies,['class'=>'form-control', 'rows' => 4, 'cols' => 40]) !!}
+                                            {!! Form::textarea('complementary_studies',null,['class'=>'form-control', 'rows' => 4, 'cols' => 40]) !!}
                                         </div>
                                     </div>
                                 </div>

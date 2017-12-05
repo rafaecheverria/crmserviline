@@ -32,24 +32,23 @@ $(document).ready(function() {
 
 	$( "#btn_update_doc" ).click(function(event){ 
 		event.preventDefault();
-		var id= $('#id').val();
+		var id= $( '#id' ).val();
 		var route = "/admin/doctores/"+id+"";
-        alert(route);
-		var dataString  = $( '#update_doctor' ).serialize();		
-		/*$.ajax({
+		var dataString  = $( '#update_doctor' ).serializeArray();		
+		$.ajax({
 			url: route,
 			headers: {'X-CSRF-TOKEN':$('input[name=_token]').attr('content')},
 			type: 'PUT',
 			datatype: 'json',
 			data:dataString,
 			success:function(res){
-                alert(res);
-				if (res.success){ 
-					$('#name_avatar').html(res.name+'<i class="material-icons right">arrow_drop_down</i>');
-					toastr["success"](res.message);
+                console.log(res);
+				/*if (res.success){ 
+					//$('#name_avatar').html(res.name+'<i class="material-icons right">arrow_drop_down</i>');
+					 $.notify({icon: "add_alert",message: res.message});
 				}else{
-					toastr["error"](res.message);
-				}
+					 $.notify({icon: "add_alert",message: res.message});
+				}*/
 			},
-		});*/
+		});
 	});

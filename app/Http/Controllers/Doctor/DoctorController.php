@@ -43,8 +43,10 @@ class DoctorController extends ApiController
     public function update(Request $request, $id){ 
 
         if($request->ajax()){
-            $user = User::findOrFail($id)->specialities;
+            $user = User::findOrFail($id);
             $user->fill($request->all());
+
+          //  return response()->json($request->complementa);
 
         if ($user->isClean()){ //verifica si el usuario realizó alguna modificación en el formulario antes de enviar
             return response()->json([

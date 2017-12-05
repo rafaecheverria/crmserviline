@@ -5,8 +5,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
         <meta name="viewport" content="width=device-width" />
-        {!! Html::style('assets/img/apple-icon.png') !!}
-        {!! Html::style('assets/img/favicon.png') !!}
+        <!--{!! Html::style('assets/img/apple-icon.png') !!}
+        {!! Html::style('assets/img/favicon.png') !!}-->
         {!! Html::style('assets/css/bootstrap.min.css') !!}
         {!! Html::style('assets/css/demo.css') !!}
         {!! Html::style('assets/css/style.css') !!}
@@ -38,7 +38,7 @@
 {!! Html::script('assets/js/bootstrap-datetimepicker.js') !!}
 {!! Html::script('assets/js/jquery-jvectormap.js') !!}
 {!! Html::script('assets/js/nouislider.min.js') !!}
-{!! Html::script('ttps://maps.googleapis.com/maps/api/js') !!}
+<!--{!! Html::script('https://maps.googleapis.com/maps/api/js') !!}-->
 {!! Html::script('assets/js/jquery.select-bootstrap.js') !!}
 {!! Html::script('assets/js/jquery.datatables.js') !!}
 {!! Html::script('assets/js/sweetalert2.js') !!}

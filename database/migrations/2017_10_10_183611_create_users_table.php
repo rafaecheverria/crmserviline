@@ -36,3 +36,5 @@ class CreateUsersTable extends Migration
         Schema::dropIfExists('users');
     }
 }
+
+//nullable() -> hace que el campo no sea obligatorio en la base de datos.

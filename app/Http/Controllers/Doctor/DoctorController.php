@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Doctor;
 use App\User;
 use App\Speciality;
 use App\Doctor;
+use App\Http\Requests\UserRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
 
@@ -40,25 +41,23 @@ class DoctorController extends ApiController
         return view('doctores.edit', compact('doctor', 'select'));
     }
 
-    public function update(Request $request, $id){ 
+    public function update(UserRequest $request, $id)
+    { 
 
         if($request->ajax()){
-            $user = User::findOrFail($id);
+            $user = Doctor::findOrFail($id);
             $user->fill($request->all());
-
-          //  return response()->json($request->complementa);
 
         if ($user->isClean()){ //verifica si el usuario realizó alguna modificación en el formulario antes de enviar
             return response()->json([
                 "error" => true,
-                "message" => "No ha realizado ninguna modificación !"
+                "message" => "Usted no ha realizado actualizaciones en los datos del doctor ".$user->last_name.""
             ]);
         }
             $user->save();
             return response()->json([
                 "success" => true,
-                "name" => $user->name,
-                "message" => "Actualización satisfactoria !"
+                "message" => "los registros del doctor ".$user->last_name." se han actualizado correctamente !"
             ]);
         }
     }

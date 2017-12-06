@@ -41,14 +41,20 @@ $(document).ready(function() {
 			type: 'PUT',
 			datatype: 'json',
 			data:dataString,
-			success:function(res){
-                console.log(res);
-				/*if (res.success){ 
+			success:function(data){
+				if (data.success){ 
 					//$('#name_avatar').html(res.name+'<i class="material-icons right">arrow_drop_down</i>');
-					 $.notify({icon: "add_alert",message: res.message});
+					 $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000});
 				}else{
-					 $.notify({icon: "add_alert",message: res.message});
-				}*/
+					 $.notify({icon: "add_alert", message: data.message},{type: 'warning', timer: 1000});
+				}           
 			},
+            error:function(data){
+                var error = data.responseJSON;
+                for(var i in error){
+                    var message = error[i];
+                    $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000});
+                }
+            }
 		});
 	});

@@ -11,9 +11,10 @@ class User extends Authenticatable
     use Notifiable;
     use EntrustUserTrait;
 
+    protected $table = "users";
 
     protected $fillable = [
-        'name', 'last_name', 'email', 'password', 'rut', 'phone', 'address', 'birth_date',
+        'name', 'last_name', 'email', 'password', 'rut', 'phone', 'address', 'birth_date','title', 'complementary_studies', 'position', 'speciality_id', 'admission_date', 'description', 'activity'
     ];
 
     //protected $table = 'Users'

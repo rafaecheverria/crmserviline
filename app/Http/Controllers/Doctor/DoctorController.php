@@ -43,7 +43,6 @@ class DoctorController extends ApiController
 
     public function update(UserRequest $request, $id)
     { 
-
         if($request->ajax()){
             $user = Doctor::findOrFail($id);
             $user->fill($request->all());

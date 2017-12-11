@@ -50,7 +50,9 @@ $(document).ready(function() {
 				}           
 			},
             error:function(data){
-                var error = data.responseJSON;
+                console.log(data);
+                var error = data.responseJSON.errors;
+                console.log(error);
                 for(var i in error){
                     var message = error[i];
                     $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000});

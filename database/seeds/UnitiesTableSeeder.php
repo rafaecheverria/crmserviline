@@ -7,10 +7,10 @@ class UnitiesTableSeeder extends Seeder
     public function run()
     {
         factory(App\Unity::class)->create([
-	        'name' => 'Medilab',
+	        'nombre' => 'Medilab',
         ]);
         factory(App\Unity::class)->create([
-	        'name' => 'Clínica Chillán',
+	        'nombre' => 'Clínica Chillán',
         ]);
         //factory(App\Role::class, 4)->create();
     }

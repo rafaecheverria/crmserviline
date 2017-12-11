@@ -1,4 +1,17 @@
 $(document).ready(function() {
+    $('.datepicker').datetimepicker({
+    icons: {
+        time: false,
+        date: "fa fa-calendar",
+        up: "fa fa-chevron-up",
+        down: "fa fa-chevron-down",
+        previous: 'fa fa-chevron-left',
+        next: 'fa fa-chevron-right',
+        today: 'fa fa-screenshot',
+        clear: 'fa fa-trash',
+        close: 'fa fa-remove'
+    }
+});
 	//$.fn.dataTable.ext.errMode = 'throw';  //Esto permite que no aparezca el alert() cuando el servidor responde con un error.
   	$('#datatables').DataTable({
   		"headers": {'X-CSRF-TOKEN':$('input[name=_token]').attr('content')},
@@ -20,9 +33,9 @@ $(document).ready(function() {
         "columns":[
         	{data: 'id', name: 'id'},
         	{data: 'rut', name: 'rut'},
-        	{data: 'name', name: 'name'},
-        	{data: 'last_name', name: 'last_name'},
-        	{data: 'phone', name: 'phone'},
+        	{data: 'nombres', name: 'nombres'},
+        	{data: 'apellidos', name: 'apellidos'},
+        	{data: 'telefono', name: 'telefono'},
         	{data: 'email', name: 'email'},
         	{data: 'action', name: 'action', orderable: false, searchable: false}
         ]

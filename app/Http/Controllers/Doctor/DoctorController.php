@@ -19,7 +19,7 @@ class DoctorController extends ApiController
     public function show() //obtiene la información del doctor con el parametro buscar
     {
 
-        $users = User::select(['id', 'rut', 'name', 'last_name', 'phone', 'email'])->withRole('doctor');
+        $users = User::select(['id', 'rut', 'nombres', 'apellidos', 'telefono', 'email'])->withRole('doctor');
         return datatables()->eloquent($users)
             ->addColumn('action', function ($user) {
                 return '<a href="doctores/'.$user->id.'/edit" class="btn btn-simple btn-warning btn-icon edit"><i class="material-icons">description</i></a>
@@ -36,7 +36,7 @@ class DoctorController extends ApiController
         $specialities = Speciality::all();
 			$select = [];
 			foreach($specialities as $specility){
-			    $select[$specility->id] = $specility->name;
+			    $select[$specility->id] = $specility->nombre;
 		}
         return view('doctores.edit', compact('doctor', 'select'));
     }
@@ -50,13 +50,13 @@ class DoctorController extends ApiController
         if ($user->isClean()){ //verifica si el usuario realizó alguna modificación en el formulario antes de enviar
             return response()->json([
                 "error" => true,
-                "message" => "Usted no ha realizado actualizaciones en los datos del doctor ".$user->last_name.""
+                "message" => "Usted no ha realizado actualizaciones en los datos del doctor ".$user->apellidos.""
             ]);
         }
             $user->save();
             return response()->json([
                 "success" => true,
-                "message" => "los registros del doctor ".$user->last_name." se han actualizado correctamente !"
+                "message" => "los registros del doctor ".$user->apellidos." se han actualizado correctamente !"
             ]);
         }
     }

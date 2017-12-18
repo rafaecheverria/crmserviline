@@ -19,7 +19,7 @@ class DoctorController extends ApiController
     public function show() //obtiene la información del doctor con el parametro buscar
     {
 
-        $users = User::select(['id', 'rut', 'nombres', 'apellidos', 'telefono', 'email'])->withRole('doctor');
+        $users = User::select(['id', 'rut', 'nombres', 'apellidos', 'email'])->withRole('doctor');
         return datatables()->eloquent($users)
             ->addColumn('action', function ($user) {
                 return '<a href="doctores/'.$user->id.'/edit" class="btn btn-simple btn-warning btn-icon edit"><i class="material-icons">description</i></a>

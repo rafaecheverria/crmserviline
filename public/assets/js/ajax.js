@@ -1,7 +1,7 @@
 $(document).ready(function() {
-    $('.datepicker').datetimepicker({
+    $('#nacimiento').datetimepicker({
+        
     icons: {
-        time: false,
         date: "fa fa-calendar",
         up: "fa fa-chevron-up",
         down: "fa fa-chevron-down",
@@ -10,7 +10,8 @@ $(document).ready(function() {
         today: 'fa fa-screenshot',
         clear: 'fa fa-trash',
         close: 'fa fa-remove'
-    }
+    },
+    format: 'DD-MM-YYYY',
 });
 	//$.fn.dataTable.ext.errMode = 'throw';  //Esto permite que no aparezca el alert() cuando el servidor responde con un error.
   	$('#datatables').DataTable({
@@ -31,11 +32,9 @@ $(document).ready(function() {
         },
         //"responsive": true,
         "columns":[
-        	{data: 'id', name: 'id'},
         	{data: 'rut', name: 'rut'},
         	{data: 'nombres', name: 'nombres'},
         	{data: 'apellidos', name: 'apellidos'},
-        	{data: 'telefono', name: 'telefono'},
         	{data: 'email', name: 'email'},
         	{data: 'action', name: 'action', orderable: false, searchable: false}
         ]

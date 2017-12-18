@@ -18,7 +18,7 @@ class UsersTableSeeder extends Seeder
 	        'titulo' => 'Ingeniero en informatica',
 	        'estudios_complementarios' => 'no tiene',
 	        'posicion' => 'adiministrativo',
-	        'nacimiento' => '16-05-1987',
+	        'nacimiento' => '1987-05-16',
 	        'fecha_admision' => '2014',
 	        'email' => 'rafaecheverria@live.cl',
 	        'speciality_id' => '1',

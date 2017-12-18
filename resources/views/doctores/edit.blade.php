@@ -58,7 +58,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group label-floating">
                                         {!! Form::label('nacimiento', 'Fecha de Nacimiento'); !!}
-                                        {!! Form::date('nacimiento', null, ['class' => 'form-control']); !!}
+                                        {!! Form::text('nacimiento', null, ['class' => 'form-control']); !!}
                                     </div>
                                 </div>
                             </div>

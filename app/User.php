@@ -15,10 +15,10 @@ class User extends Authenticatable
     protected $table = "users";
 
     protected $fillable = [
-        'nombres', 'apellidos', 'email', 'password', 'rut', 'telefono', 'direccion', 'nacimiento', 'titulo', 'estudios_complementarios', 'posicion', 'speciality_id', 'fecha_admision', 'descripcion', 'actividad'
+        'nombres', 'apellidos', 'email', 'password', 'rut', 'telefono', 'direccion', 'nacimiento', 'titulo', 'estudios_complementarios', 'posicion', 'speciality_id', 'fecha_admision', 'descripcion', 'actividad', 'avatar'
     ];
 
-    protected $dates = [
+   /* protected $dates = [
         'nacimiento'
     ];
 
@@ -30,7 +30,7 @@ class User extends Authenticatable
     public function setNacimientoAttribute($value)
     {
         $this->attributes['nacimiento'] = Carbon::createFromFormat('d-m-Y', $value)->toDateString();
-    }
+    }*/
     public function roles()
     {
         return $this->belongsToMany('App\Role');

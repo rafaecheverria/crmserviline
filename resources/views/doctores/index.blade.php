@@ -8,7 +8,12 @@
 			<div class="row">
 				<div class="col-md-4 col-md-offset-8 col-sm-12">
 	                <div class="col-md-12 col-sm-12">
-	                	<button class="btn btn-success" id="agregar_doctor"><i class="material-icons">add</i>Agregar</button>
+
+	                	<a href="{{url('admin/doctores/create')}}" class="btn btn-success">
+                    <i class="material-icons">assignment</i>
+                    <p>Consultas</p>
+                </a>
+	                	<button class="btn btn-success"><i class="material-icons">add</i>Agregar</button>
 	                	<span class="dropdown">
 						<button href="#" class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="true" >
 							<i class="material-icons">save</i>

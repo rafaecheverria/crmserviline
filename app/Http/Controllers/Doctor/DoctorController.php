@@ -30,6 +30,19 @@ class DoctorController extends ApiController
             ->make(true);
     }
 
+    public function create()
+    {
+        $especialidades = Speciality::get()->pluck('nombre', 'id');
+        return view('doctores.create', compact('especialidades'));
+    }
+
+    public function store(Request $request)
+    {
+        if($request->ajax()){
+            User::create($request->all());
+        }
+    }
+
     public function edit($id)
     {
         $doctor = User::findOrFail($id);
@@ -56,6 +69,7 @@ class DoctorController extends ApiController
             $user->save();
             return response()->json([
                 "success" => true,
+                "apellidos" => $user->apellidos,
                 "message" => "los registros del doctor ".$user->apellidos." se han actualizado correctamente !"
             ]);
         }

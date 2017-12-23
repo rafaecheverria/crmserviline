@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->string('titulo');  
             $table->string('estudios_complementarios')->nullable(); 
             $table->string('posicion');
+            $table->string('avatar')->default('default.jpg');
             $table->rememberToken();
             $table->timestamps();
 

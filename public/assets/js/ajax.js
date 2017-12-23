@@ -41,6 +41,41 @@ $(document).ready(function() {
     });
 });
 
+$( "#guardar_doc" ).click(function(event){ 
+        event.preventDefault();
+        var dataString  = $( '#form_doc' ).serializeArray();
+        var route = "/admin/doctores/create";
+        $.ajax({
+            url: route,
+            headers: {'X-CSRF-TOKEN':$('input[name=_token]').attr('content')},
+            type: 'post',
+            datatype: 'json',
+            data:dataString,
+
+            beforeSend: function(){
+                $("#guardar").text("Enviando...");
+                $("#guardar").attr("disabled", true);
+            },
+            complete: function(data){
+                $("#guardar").text("Enviar");
+                $("#guardar").attr("disabled", false);
+            },
+            success:function(){
+                toastr["success"]("Responderemos a su solicitud a la brevedad, gracias por escribirnos!","Mensaje Enviado:");
+                $('#form_doc')[0].reset();
+            },
+            error:function(data){
+                var error = data.responseJSON;
+                for(var i in error){
+                    for(var j in error[i]){
+                        var message = error[i][j];
+                        toastr.error(message);
+                    }
+                }
+            }
+        });
+    });
+
 
 	$( "#btn_update_doc" ).click(function(event){ 
 		event.preventDefault();
@@ -55,16 +90,15 @@ $(document).ready(function() {
 			data:dataString,
 			success:function(data){
 				if (data.success){ 
-					//$('#name_avatar').html(res.name+'<i class="material-icons right">arrow_drop_down</i>');
+					$('.apellidos_up').html(data.apellidos);
 					 $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000});
+
 				}else{
 					 $.notify({icon: "add_alert", message: data.message},{type: 'warning', timer: 1000});
 				}           
 			},
             error:function(data){
-                console.log(data);
                 var error = data.responseJSON.errors;
-                console.log(error);
                 for(var i in error){
                     var message = error[i];
                     $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000});
@@ -72,3 +106,53 @@ $(document).ready(function() {
             }
 		});
 	});
+
+// Subir Imagen de Perfil
+    var $avatarInput, $avatarImage, $avatarForm;
+    var avatarUrl;
+
+    $(function(){
+    
+        $avatarInput = $('#avatarInput');
+        $avatarImage = $('.avatarImage');
+        $avatarForm = $('#avatarForm');
+        avatarUrl = "/admin/users/avatar";
+        $id = $('#id').val();
+
+        $avatarImage.on('click', function(){    
+            $avatarInput.click();
+        });
+        
+        $avatarInput.on('change', function(){
+
+        var formData = new FormData();
+        formData.append('avatar', $avatarInput[0].files[0]);
+
+            $.ajax({
+                url: avatarUrl+'?'+$avatarForm.serialize(),
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+
+            beforeSend: function(){
+                    $avatarImage.attr('src', '/assets/img/touchloader.gif');
+            },
+            success: function(data){
+                if (data.success)
+                    $avatarImage.attr('src', '/assets/img/perfiles/'+data.file_name+'?'+ new Date().getTime());
+                    $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000});
+            },
+            error: function(data){
+                var error = data.responseJSON.errors;
+                for(var i in error){
+                    var message = error[i];
+                      $avatarImage.attr('src');
+                      $avatarImage.attr('src', '/assets/img/perfiles/'+data.file_name+'?'+ new Date().getTime());
+                     $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000});
+                }
+            }
+        });
+
+    });
+});

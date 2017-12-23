@@ -12,11 +12,11 @@
     <div class="sidebar-wrapper">
         <div class="user">
             <div class="photo">
-                <img src="{{ asset('assets/img/faces/avatar.jpg') }}" />
+                <img src="/assets/img/perfiles/{{ Auth::User()->avatar }}" />
             </div>
             <div class="info">
                 <a data-toggle="collapse" href="#collapseExample" class="collapsed">
-                    Tania Andrew
+                    {{Auth::User()->nombres}} {{Auth::User()->apellidos}}
                     <b class="caret"></b>
                 </a>
                 <div class="collapse" id="collapseExample">

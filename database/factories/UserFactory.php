@@ -15,7 +15,6 @@ $factory->define(App\User::class, function (Faker $faker) {
         'diagnostico' => $faker->jobTitle,
         'descripcion' => $faker->jobTitle,
         'titulo' => $faker->jobTitle,
-        'speciality_id' => rand(1,7),
         'estudios_complementarios' => $faker->jobTitle,
         'posicion' => $faker->jobTitle,
         'nacimiento' => $faker->date,

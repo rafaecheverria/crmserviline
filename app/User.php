@@ -15,7 +15,7 @@ class User extends Authenticatable
     protected $table = "users";
 
     protected $fillable = [
-        'nombres', 'apellidos', 'email', 'password', 'rut', 'telefono', 'direccion', 'nacimiento', 'titulo', 'estudios_complementarios', 'posicion', 'speciality_id', 'fecha_admision', 'descripcion', 'actividad', 'avatar'
+        'id', 'nombres', 'apellidos', 'email', 'password', 'rut', 'telefono', 'direccion', 'nacimiento', 'titulo', 'estudios_complementarios', 'posicion', 'fecha_admision', 'descripcion', 'actividad', 'avatar'
     ];
 
    /* protected $dates = [
@@ -37,13 +37,21 @@ class User extends Authenticatable
     }
     public function specialities()
     {
-        return $this->hasMany('App\Speciality');
+        return $this->belongsToMany('App\Speciality');
     }
-    public function setNameAttribute($valor)
+    public function setNombresAttribute($valor)
     {
-        $this->attributes['name'] = strtolower($valor);
+        $this->attributes['nombres'] = strtolower($valor);
     }
-    public function getNameAttribute($valor)
+    public function getNombresAttribute($valor)
+    {
+        return ucwords($valor);
+    }
+    public function setApellidosAttribute($valor)
+    {
+        $this->attributes['apellidos'] = strtolower($valor);
+    }
+    public function getApellidosAttribute($valor)
     {
         return ucwords($valor);
     }
@@ -55,6 +63,5 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-
     
 }

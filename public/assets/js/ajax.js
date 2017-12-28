@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    listar();
     $('#nacimiento').datetimepicker({
         
     icons: {
@@ -13,92 +14,52 @@ $(document).ready(function() {
     },
     format: 'DD-MM-YYYY',
 });
-	//$.fn.dataTable.ext.errMode = 'throw';  //Esto permite que no aparezca el alert() cuando el servidor responde con un error.
-  	$('#datatables').DataTable({
-  		"headers": {'X-CSRF-TOKEN':$('input[name=_token]').attr('content')},
-    	"processing": true,
-    	"serverSide": true,
-    	"order": [[ 2, "asc" ]],
-    	"ajax": {
-    		 "url": "doctores/show",
-    		},
-        "pagingType": "full_numbers",
-        "lengthMenu": [
-            [10, 25, 50, -1],
-            [10, 25, 50, "Todos"]
-        ],
-        "language": {
-            url: "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
-        },
-        //"responsive": true,
-        "columns":[
-        	{data: 'rut', name: 'rut'},
-        	{data: 'nombres', name: 'nombres'},
-        	{data: 'apellidos', name: 'apellidos'},
-        	{data: 'email', name: 'email'},
-        	{data: 'action', name: 'action', orderable: false, searchable: false}
-        ]
-    });
-});
 
-$( "#guardar_doc" ).click(function(event){ 
+$( "#btn_guardar_doc" ).click(function(event){ 
         event.preventDefault();
         var dataString  = $( '#form_doc' ).serializeArray();
-        var route = "/admin/doctores/create";
+        var route = "/admin/doctores";
+
         $.ajax({
             url: route,
-            headers: {'X-CSRF-TOKEN':$('input[name=_token]').attr('content')},
             type: 'post',
             datatype: 'json',
             data:dataString,
 
-            beforeSend: function(){
-                $("#guardar").text("Enviando...");
-                $("#guardar").attr("disabled", true);
-            },
-            complete: function(data){
-                $("#guardar").text("Enviar");
-                $("#guardar").attr("disabled", false);
-            },
-            success:function(){
-                toastr["success"]("Responderemos a su solicitud a la brevedad, gracias por escribirnos!","Mensaje Enviado:");
+            success:function(data){
+                console.log(data.message);
+                $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000});
                 $('#form_doc')[0].reset();
             },
             error:function(data){
-                var error = data.responseJSON;
+                var error = data.responseJSON.errors;
                 for(var i in error){
                     for(var j in error[i]){
                         var message = error[i][j];
-                        toastr.error(message);
+                        console.log(message);
+                       $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000});
                     }
                 }
             }
         });
     });
 
-
 	$( "#btn_update_doc" ).click(function(event){ 
 		event.preventDefault();
 		var id= $( '#id' ).val();
 		var route = "/admin/doctores/"+id+"";
-		var dataString  = $( '#update_doctor' ).serializeArray();		
+		var dataString  = $( '#update_doctor' ).serializeArray();
 		$.ajax({
 			url: route,
-			headers: {'X-CSRF-TOKEN':$('input[name=_token]').attr('content')},
 			type: 'PUT',
 			datatype: 'json',
 			data:dataString,
 			success:function(data){
-				if (data.success){ 
-					$('.apellidos_up').html(data.apellidos);
-					 $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000});
-
-				}else{
-					 $.notify({icon: "add_alert", message: data.message},{type: 'warning', timer: 1000});
-				}           
+				 $('.apellidos_up').html(data.apellidos);
+				 $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000});
 			},
-            error:function(data){
-                var error = data.responseJSON.errors;
+             error:function(data){
+              var error = data.responseJSON.errors;
                 for(var i in error){
                     var message = error[i];
                     $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000});
@@ -106,6 +67,8 @@ $( "#guardar_doc" ).click(function(event){
             }
 		});
 	});
+    });
+
 
 // Subir Imagen de Perfil
     var $avatarInput, $avatarImage, $avatarForm;
@@ -156,3 +119,56 @@ $( "#guardar_doc" ).click(function(event){
 
     });
 });
+
+//$.fn.dataTable.ext.errMode = 'throw';  //Esto permite que no aparezca el alert() cuando el servidor responde con un error.
+   var listar = function()
+   {
+        var table = $('#datatables').DataTable({
+        "headers": {'X-CSRF-TOKEN':$('input[name=_token]').attr('content')},
+        "processing": true,
+        "serverSide": true,
+        "order": [[ 2, "asc" ]],
+        "ajax": {
+             "url": "doctores/show",
+            },
+        "pagingType": "full_numbers",
+        "lengthMenu": [
+            [10, 25, 50, -1],
+            [10, 25, 50, "Todos"]
+        ],
+        "language": {
+            url: "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+        },
+        //"responsive": true,
+        "columns":[
+            {data: 'rut', name: 'rut'},
+            {data: 'nombres', name: 'nombres'},
+            {data: 'apellidos', name: 'apellidos'},
+            {data: 'email', name: 'email'},
+            {data: 'action', name: 'action', orderable: false, searchable: false}
+        ]
+    });
+}
+
+function eliminar_doc(id)
+{
+    event.preventDefault();
+    var popup = confirm("¿ Esta seguro de eliminar este registro ?")
+    var route = "/admin/doctores/"+id+"";
+    var csrf_token = $('meta[name="csrf-token"]').attr('content');
+    if(popup ==true){
+     $.ajax({
+            url: route,
+            type: 'POST',
+            data: {'_method' : 'DELETE', '_token' : csrf_token},
+            success:function(data){
+                console.log(data);
+                $('#datatables').DataTable().ajax.reload();
+                $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000});
+            }, 
+            error:function(){
+                alert('la operación falló');
+            }
+       });
+ }
+}

@@ -15,7 +15,7 @@
             </div>
             {!! Form::close() !!} 
           </div>
-            <div class="col-md-8">
+            <div class="col-md-126">
                 <div class="card">
                     <div class="card-header card-header-icon" data-background-color="rose">
                         <i class="material-icons">perm_identity</i>
@@ -24,17 +24,28 @@
                         <h4 class="card-title">Doctor/a - <span class="apellidos_up">{{$doctor->apellidos}}</span></h4>
                         {!! Form::model($doctor, ['id' => 'update_doctor']); !!}
                             {!! Form::text('id', $doctor->id,['id' => 'id', 'hidden' => true]); !!} 
-                                <div class="row">
-                                    <div class="col-md-6"> 
-                                        <div class="form-group label-floating">
-                                              {!! Form::label('rut', 'Rut'); !!}
-                                              {!! Form::text('rut', null, ['readonly', 'class' => 'form-control']); !!}
-                                        </div>
+                            <div class="row">
+                                <div class="col-md-4"> 
+                                    <div class="form-group label-floating">
+                                        {!! Form::label('rut', 'Rut'); !!}
+                                        {!! Form::text('rut', null, ['readonly', 'class' => 'form-control']); !!}
                                     </div>
-                                <div class="col-md-6">
+                                </div>
+                                <div class="col-md-4">
                                     <div class="form-group label-floating">
                                         {!! Form::label('nombres', 'Nombres'); !!}
                                         {!! Form::text('nombres',null, ['class' => 'form-control']); !!}
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card-profile">
+                                        <div class="card-avatar">
+                                           <div id="cargando">
+                                                <a href="#">
+                                                    <img class="img avatarImage" src="/assets/img/perfiles/{{ $doctor->avatar }}" />
+                                                </a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -83,8 +94,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group label-floating">
-                                        {!! Form::label('speciality_id', 'Especialidad'); !!}
-                                         {!! Form::select('speciality_id', $select, null,['class'=>'form-control']) !!}
+                                        {!! Form::label('speciality', 'Especialidad'); !!}
+    {!! Form::select('especialidad[]', $specialities,$my_speciality,['class'=>'selectpicker', 'multiple', 'data-style' => 'select-with-transition']) !!}
                                     </div>
                                 </div>
                             </div>
@@ -104,7 +115,7 @@
                     </div>
                 </div>
             </div>
-            
+            <!--
             <div class="col-md-4">
                 <div class="card card-profile">
                     <div class="card-avatar">
@@ -122,8 +133,10 @@
                         </p>
                         <a href="#pablo" class="btn btn-rose btn-round">Follow</a>
                     </div>
+
                 </div>
             </div>
+            -->
         </div>
     </div>
 </div>

@@ -10,10 +10,9 @@
 	                <div class="col-md-12 col-sm-12">
 
 	                	<a href="{{url('admin/doctores/create')}}" class="btn btn-success">
-                    <i class="material-icons">assignment</i>
-                    <p>Consultas</p>
-                </a>
-	                	<button class="btn btn-success"><i class="material-icons">add</i>Agregar</button>
+	                		<i class="material-icons">add</i>
+		                    <span>Agragar</span>
+		                </a>
 	                	<span class="dropdown">
 						<button href="#" class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="true" >
 							<i class="material-icons">save</i>

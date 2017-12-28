@@ -9,7 +9,7 @@ class Speciality extends Model
 	protected $table = "specialities";
 
      protected $fillable = [
-        'id', 'name',
+        'id', 'nombre',
     ];
 
     public function getFullNameAttribute()
@@ -19,6 +19,6 @@ class Speciality extends Model
 
     public function users()
     {
-        return $this->hasOne('App\User');
+        return $this->belongsToMany('App\User');
     }
 }

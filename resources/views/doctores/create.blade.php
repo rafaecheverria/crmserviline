@@ -15,19 +15,19 @@
                                 <div class="row">
                                     <div class="col-md-4"> 
                                         <div class="form-group label-floating">
-                                              {!! Form::label('rut', 'Rut'); !!}
+                                              {!! Form::label('rut', 'Rut', ['class' => 'control-label']); !!}
                                               {!! Form::text('rut', null, ['class' => 'form-control']); !!}
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group label-floating">
-                                            {!! Form::label('nombres', 'Nombres'); !!}
+                                            {!! Form::label('nombres', 'Nombres', ['class' => 'control-label']); !!}
                                             {!! Form::text('nombres',null, ['class' => 'form-control']); !!}
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group label-floating">
-                                            {!! Form::label('apellidos', 'Apellidos'); !!}
+                                            {!! Form::label('apellidos', 'Apellidos', ['class' => 'control-label']); !!}
                                             {!! Form::text('apellidos', null, ['class' => 'form-control']); !!}
                                         </div>
                                     </div>
@@ -35,19 +35,19 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group label-floating">
-                                            {!! Form::label('email', 'Email'); !!}
+                                            {!! Form::label('email', 'Email', ['class' => 'control-label']); !!}
                                             {!! Form::text('email', null, ['class' => 'form-control']); !!}
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group label-floating">
-                                            {!! Form::label('direccion', 'Dirección'); !!}
+                                            {!! Form::label('direccion', 'Dirección', ['class' => 'control-label']); !!}
                                             {!! Form::text('direccion', null, ['class' => 'form-control']); !!}
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group label-floating">
-                                            {!! Form::label('telefono', 'Teléfono'); !!}
+                                            {!! Form::label('telefono', 'Teléfono', ['class' => 'control-label']); !!}
                                             {!! Form::text('telefono', null, ['class' => 'form-control']); !!}
                                         </div>
                                     </div>
@@ -55,20 +55,20 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group label-floating">
-                                            {!! Form::label('nacimiento', 'Fecha de Nacimiento'); !!}
-                                            {!! Form::text('nacimiento', null, ['class' => 'form-control']); !!}
+                                            {!! Form::label('nacimiento', 'Fecha de Nacimiento', ['class' => 'control-label']); !!}
+                                            {!! Form::text('nacimiento', 'dd-mm-aaaa', ['class' => 'form-control']); !!}
                                         </div>
                                     </div>
                                      <div class="col-md-4">
                                         <div class="form-group label-floating">
-                                            {!! Form::label('titulo', 'Título'); !!}
+                                            {!! Form::label('titulo', 'Título', ['class' => 'control-label']); !!}
                                             {!! Form::text('titulo', null, ['class' => 'form-control']); !!}
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group label-floating">
-                                            {!! Form::label('speciality_id', 'Especialidad'); !!}
-                                        {!! Form::select('speciality_id', $especialidades, null,['class'=>'form-control']) !!}
+                                            {!! Form::label('speciality_id', 'Especialidad', ['class' => 'control-label']); !!}
+                        {!! Form::select('especialidad[]', $especialidades, null,['class'=>'selectpicker', 'multiple', 'data-style' => 'select-with-transition']) !!}
                                         </div>
                                     </div>
                                 </div>
@@ -84,7 +84,7 @@
                                 </div>
                             <div class="clearfix"></div>
                        {!! Form::close() !!}
-                       {!! link_to('#','Actualizar',['id' => 'btn_update_doc' , 'class' => 'btn btn-rose pull-right']); !!}
+                       {!! link_to('#','Guardar',['id' => 'btn_guardar_doc' , 'class' => 'btn btn-rose pull-right']); !!}
                     </div>
                 </div>
             </div>

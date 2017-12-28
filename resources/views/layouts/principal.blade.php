@@ -1,4 +1,4 @@
-<nav class="navbar navbar-transparent navbar-absolute">
+<nav class="navbar navbar-default navbar-absolute">
     <div class="container-fluid">
         <div class="navbar-minimize">
             <button id="minimizeSidebar" class="btn btn-round btn-white btn-fill btn-just-icon">
@@ -64,16 +64,6 @@
                 </li>
                 <li class="separator hidden-lg hidden-md"></li>
             </ul>
-            <form class="navbar-form navbar-right" role="search">
-                <div class="form-group form-search is-empty">
-                    <input type="text" class="form-control" placeholder="Search">
-                    <span class="material-input"></span>
-                </div>
-                <button type="submit" class="btn btn-white btn-round btn-just-icon">
-                    <i class="material-icons">search</i>
-                    <div class="ripple-container"></div>
-                </button>
-            </form>
         </div>
     </div>
 </nav>

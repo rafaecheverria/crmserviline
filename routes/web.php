@@ -17,7 +17,7 @@ Route::get('/', 'HomeController@index');
 
 Route::prefix('admin')->group(function(){
 	Route::resource('doctores', 'Doctor\DoctorController');
-	Route::resource('recepcionistas', 'Receptionist\ReceptionistController', ['only' => 'index']);
+	Route::resource('recepcionistas', 'Receptionist\ReceptionistController');
 	Route::resource('users/avatar', 'User\AvatarController', ['only' => 'store']);
 
 });

@@ -75,7 +75,6 @@ class DoctorController extends ApiController
 
     public function destroy($id)
     {
-
         $user = User::findOrFail($id);
         User::destroy($id);
         return response()->json([

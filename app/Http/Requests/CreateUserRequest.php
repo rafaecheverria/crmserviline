@@ -32,7 +32,6 @@ class CreateUserRequest extends FormRequest
             'titulo'        => 'required|max:255',
             'nacimiento'    => 'required',
             'direccion'     => 'required|max:50',
-            'titulo'        => 'required|max:50',
             'especialidad'  => 'required'
         ];
     }

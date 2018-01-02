@@ -35,10 +35,18 @@ class ReceptionistController extends ApiController
 
     public function show($id)
     {
-         $users = User::select(['id', 'rut', 'nombres', 'apellidos', 'email'])->withRole('recepcionista');
-        return datatables()->eloquent($users)
-            ->addColumn('action', function ($user) {
-                return '<a href="recepcionistas/'.$user->id.'/edit" class="btn btn-simple btn-warning btn-icon edit"><i class="material-icons">description</i></a>
+            
+         $users = User::with('roles')->selectRaw('distinct users.*');
+        return  datatables()
+                ->eloquent($users)
+                ->addColumn('roles', function (User $user) {
+                    return $user->roles->map(function($roles) {
+                        return str_limit($roles->display_name);
+                        })
+                ->implode('-');
+                    })
+                           ->addColumn('action', function ($user) {
+                return '<a href="#" onclick="roles_user('.$user->id.')" class="btn btn-simple btn-warning btn-icon edit"><i class="material-icons">description</i></a>
                         <a href="recepcionistas/'.$user->id.'/edit" id="update"  class="btn btn-simple btn-success btn-icon edit"><i class="material-icons">edit</i></a>
                         <a href="#" onclick="eliminar_recep('.$user->id.')" class="btn btn-simple btn-danger btn-icon remove-item"><i class="material-icons">close</i></a>';
             })

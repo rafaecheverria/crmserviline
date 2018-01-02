@@ -43,26 +43,23 @@
             </li>
             <li>
                 <a href="{{url('/')}}">
-                    <i class="material-icons">assignment</i>
-                    <p>Consultas</p>
+                    <i class="material-icons">account_box</i>
+                    <p>Pacientes</p>
                 </a>
             </li>
             <li>
-                <a data-toggle="collapse" href="#especialidades">
-                    <i class="material-icons">person</i>
-                    <p>Especialidades
-                        <b class="caret"></b>
-                    </p>
+                <a href="{{url('/')}}">
+                    <i class="material-icons">date_range</i>
+                    <p>Citas Médicas</p>
                 </a>
-                <div class="collapse" id="especialidades">
-                    <ul class="nav">
-                        <li>
-                            <a href="{{ url('doctores') }}">Sub-Epecialidades</a>
-                        </li>
-                    </ul>
-                </div>
             </li>
             <li>
+                <a href="{{url('/')}}">
+                    <i class="material-icons">chrome_reader_mode</i>
+                    <p>Consultas Médicas</p>
+                </a>
+            </li>
+           <!-- <li>
                 <a data-toggle="collapse" href="#personas">
                     <i class="material-icons">person</i>
                     <p>Personas
@@ -85,6 +82,7 @@
                     </ul>
                 </div>
             </li>
+        -->
             <li>
                 <a data-toggle="collapse" href="#settings">
                     <i class="material-icons">settings</i>
@@ -95,10 +93,16 @@
                 <div class="collapse" id="settings">
                     <ul class="nav">
                         <li>
+                            <a href="{{ url('admin/personas') }}">Personas</a>
+                        </li>
+                        <li>
                             <a href="#">Roles</a>
                         </li>
                         <li>
                             <a href="#">Permisos</a>
+                        </li>
+                        <li>
+                            <a href="#">Especialidades</a>
                         </li>
                     </ul>
                 </div>

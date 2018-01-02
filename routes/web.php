@@ -19,7 +19,7 @@ Route::prefix('admin')->group(function(){
 	Route::resource('doctores', 'Doctor\DoctorController');
 	Route::resource('recepcionistas', 'Receptionist\ReceptionistController');
 	Route::resource('users/avatar', 'User\AvatarController', ['only' => 'store']);
-
+	Route::resource('personas', 'User\UserController');
 });
 //middleware('auth')
 //middleware('role:administrador')

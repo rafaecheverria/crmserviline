@@ -1,7 +1,11 @@
 $(document).ready(function() {
+
     listar();
     listar_recepcionista();
     listar_personas();
+
+
+
     $('.card .material-datatables label').addClass('form-group');
     $('#nacimiento').datetimepicker({
         
@@ -244,7 +248,6 @@ $( "#btn_update_rec" ).click(function(event){
         "headers": {'X-CSRF-TOKEN':$('input[name=_token]').attr('content')},
         "processing": true,
         "serverSide": true,
-        'dom': 'Bfrtip',
         "order": [[ 2, "asc" ]],
         "ajax": {
              "url": "personas/show",
@@ -253,11 +256,6 @@ $( "#btn_update_rec" ).click(function(event){
         "lengthMenu": [
             [10, 25, 50, -1],
             [10, 25, 50, "Todos"]
-        ],
-        buttons: [
-            'colvis',
-            'excel',
-            'print'
         ],
         "language": {
             url: "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
@@ -268,10 +266,9 @@ $( "#btn_update_rec" ).click(function(event){
             {data: 'nombres', name: 'nombres'},
             {data: 'apellidos', name: 'apellidos'},
             {data: 'email', name: 'email'},
-            {data: 'action', name: 'action', orderable: false, searchable: false}
-        ]
+            {data: 'action', name: 'action', orderable: false, searchable: false, class:"text-right"}
+        ],
     });
-        //$('.card .material-datatables label').addClass('form-group');
 }
 
 function eliminar_doc(id)

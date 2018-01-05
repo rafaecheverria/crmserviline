@@ -30,4 +30,6 @@
   background:black url('/assets/img/animation3.gif') no-repeat 10px 50%;
     border:1px solid #8ed9f6;
 }
-
+.avatarImage{
+  margin-top:  27px;
+}

@@ -15,7 +15,13 @@
             </div>
             {!! Form::close() !!} 
           </div>
-            <div class="col-md-126">
+
+            <div class="col-md-3">
+                <a href="#">
+                    <img src="/assets/img/perfiles/{{ $recepcionista->avatar }}" alt="Thumbnail Image" class="img-rounded img-responsive avatarImage">
+                </a>
+            </div>
+            <div class="col-md-9">
                 <div class="card">
                     <div class="card-header card-header-icon" data-background-color="rose">
                         <i class="material-icons">perm_identity</i>
@@ -24,19 +30,6 @@
                         <h4 class="card-title">Recepcionista - <span class="apellidos_up">{{$recepcionista->apellidos}}</span></h4>
                         {!! Form::model($recepcionista, ['id' => 'update_recepcionista']); !!}
                             {!! Form::text('id', $recepcionista->id,['id' => 'id', 'hidden' => true]); !!} 
-                            <div class="row">
-                                <div class="col-md-2 col-md-offset-10">
-                                    <div class="card-profile">
-                                        <div class="card-avatar">
-                                           <div id="cargando">
-                                                <a href="#">
-                                                    <img class="img avatarImage" src="/assets/img/perfiles/{{ $recepcionista->avatar }}" />
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="row">
                                 <div class="col-md-6"> 
                                     <div class="form-group label-floating">

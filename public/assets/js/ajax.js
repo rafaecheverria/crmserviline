@@ -297,41 +297,37 @@ function eliminar_doc(id)
     }
 }
 
-
 function roles_user(id)
 {
-    event.preventDefault();
-    var route = "/admin/personas/"+id+"/edit";
-    var csrf_token = $('meta[name="csrf-token"]').attr('content');
-     $.ajax({
-            url: route,
-            type: 'GET',
-            success:function(data){
-                //console.log(JSON.stringify(data.roles));
-                 //$('#roles').val(data.rut);
-                //var roles = [data.roles];
-                //var idregions = ["es", "pt", "fr"];
-                //var select = document.getElementById("combo");
-               //for(var i=0;i<data.roles.length;i++){
-
-                   // select.options[i] = new Option(regions[i], idregions[i]);
-               // }
-
-               console.log(data.roles);
-               console.log(data.my_roles);
-                //data me trae todos los datos del usuario seleccionado en la tabla
-                //$('#rut').val(data.rut);
-                //$('#nombres').val(data.nombres);
-                //$('#roles').val(data.roles[0]); //me trae todos los roles existente es la tabla roles de la base de datos
-                //$('#roles').val(data.my_roles); //me trae los roles que tiene asignados el usuario seleccionado en la tabla
-                //$('#datatables').DataTable().ajax.reload();
-                //$.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000});
-                //alert(data.roles[0]);
-            }, 
-            error:function(){
-                alert('la operación falló');
-            }
-       });
+   event.preventDefault();
+   var route = "/admin/personas/"+id+"/edit";
+   var csrf_token = $('meta[name="csrf-token"]').attr('content');
+    $.ajax({
+           url: route,
+           type: 'GET',
+        success:function(data){
+            const crearOption = (value, name, selected) => `<option value="${value}"${selected.includes(value) ? ' selected' : ''}>${name}</option>`
+            const obj = data.roles
+            const values = Object.keys(obj)
+            const opciones = values.map(x => crearOption(x, obj[x], data.my_roles))
+            const select = document.getElementById('roles')
+                 select.innerHTML = ''
+                 opciones.forEach(x => { select.insertAdjacentHTML('beforeend', x) })
+            const valor = data.my_roles
+                 i = 0, size = valor.length
+                      for(i; i < size; i++){
+                    $('select option[value='+valor[i]+']').attr('selected', 'selected')
+                }
+            $('#rut').val(data.rut)
+            $('#nombres').val(data.nombres)
+            $('#title-name').html(data.nombres +' '+ data.apellidos)
+            $('#image-modal').html('<img src="/assets/img/perfiles/'+data.avatar+'" alt="Thumbnail Image" class="img-rounded img-responsive">')
+            $('.selectpicker2').selectpicker('refresh')
+          },
+       error:function(){
+           alert('la operación falló');
+          }
+    });
 }
 
 function eliminar_recep(id)

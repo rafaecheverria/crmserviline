@@ -29,6 +29,7 @@
 {!! Html::script('assets/js/jquery-3.1.1.min.js') !!}
 {!! Html::script('assets/js/jquery-ui.min.js') !!}
 {!! Html::script('assets/js/bootstrap.min.js') !!}
+
 {!! Html::script('assets/js/material.min.js') !!}
 {!! Html::script('assets/js/perfect-scrollbar.jquery.min.js') !!}
 {!! Html::script('assets/js/jquery.validate.min.js') !!}

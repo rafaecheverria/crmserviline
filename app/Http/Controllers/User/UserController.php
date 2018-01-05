@@ -46,7 +46,7 @@ class UserController extends ApiController
                 ->implode('-');
                     })
                            ->addColumn('action', function ($user) {
-                return '<a href="#" onclick="roles_user('.$user->id.')" class="btn btn-simple btn-warning btn-icon edit" data-toggle="modal" data-target="#noticeModal"><i class="material-icons">description</i></a>
+                return '<a href="#" onclick="roles_user('.$user->id.')" class="btn btn-simple btn-warning btn-icon edit" data-toggle="modal" data-target="#noticeModal"><i class="material-icons">settings_brightness</i></a>
                         <a href="recepcionistas/'.$user->id.'/edit" id="update"  class="btn btn-simple btn-success btn-icon edit"><i class="material-icons">edit</i></a>
                         <a href="#" onclick="eliminar_recep('.$user->id.')" class="btn btn-simple btn-danger btn-icon remove-item"><i class="material-icons">close</i></a>';
             })
@@ -68,6 +68,7 @@ class UserController extends ApiController
             'id'         => $persona->id,
             'nombres'    => $persona->nombres,
             'apellidos'  => $persona->apellidos,
+            'avatar'     => $persona->avatar,
             'roles'      => $roles,
             'my_roles'   => $my_roles
         ]);

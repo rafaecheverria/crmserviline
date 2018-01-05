@@ -4,7 +4,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="material-icons">clear</i></button>
-                <h5 class="modal-title" id="myModalLabel">How Do You Become an Affiliate?</h5>
+                <h5 class="modal-title" id="myModalLabel"><span id="title-name"></span></s></h5>
             </div>
             <div class="modal-body">
                 @include('personas.form_roles')

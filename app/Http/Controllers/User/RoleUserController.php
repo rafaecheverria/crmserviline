@@ -37,7 +37,15 @@ class RoleUserController extends Controller
 
     public function update(Request $request, $id)
     {
-        //
+        if($request->ajax()){
+            $user = User::findOrFail($id);
+            $user->roles()->sync($request->role);   
+            return response()->json([
+                "apellidos" => $user->apellidos,
+                "message" => "los roles del usuario ".$user->apellidos." se han actualizado correctamente !"
+                ]);
+           
+        }
     }
 
     public function destroy($id)

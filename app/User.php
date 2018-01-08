@@ -18,10 +18,11 @@ class User extends Authenticatable
         'id', 'nombres', 'apellidos', 'email', 'password', 'rut', 'telefono', 'direccion', 'nacimiento', 'titulo', 'estudios_complementarios', 'posicion', 'fecha_admision', 'descripcion', 'actividad', 'avatar'
     ];
 
-   /* protected $dates = [
+   
+    protected $dates = [
         'nacimiento'
     ];
-
+/*
     public function getNacimientoAttribute($value)
     {
         return Carbon::parse($value)->format('d-m-Y');
@@ -58,6 +59,10 @@ class User extends Authenticatable
     public function setEmailAttribute($valor)
     {
         $this->attributes['email'] = strtolower($valor);
+    }
+
+    public function getEdad(){
+        return $this->nacimiento->diffInYears(now());
     }
 
     protected $hidden = [

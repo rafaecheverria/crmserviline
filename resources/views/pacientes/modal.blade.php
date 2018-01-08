@@ -7,7 +7,7 @@
                 <h5 class="modal-title" id="myModalLabel"><span class="title-name"></span></s></h5>
             </div>
             <div class="modal-body">
-                @include('personas.form_roles')
+                @include('pacientes.form_roles')
             </div>
             <div class="modal-footer text-center">
                 <a href="#" class="btn btn-danger pull-right" data-dismiss="modal">Cancelar</a>

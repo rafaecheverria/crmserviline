@@ -34,19 +34,18 @@ class UserController extends ApiController
         }
     }
 
-    public function show($id)
+    public function show()
     {
          $users = User::with('roles')->selectRaw('distinct users.*');
         return  datatables()
-                ->eloquent($users)
+                ->of($users)
                 ->addColumn('roles', function (User $user) {
                     return $user->roles->map(function($roles) {
                         return str_limit($roles->display_name);
                         })
                 ->implode('-');
-                    })
-                           ->addColumn('action', function ($user) {
-                return '<a href="#" onclick="roles_user('.$user->id.')" class="btn btn-simple btn-warning btn-icon edit" data-toggle="modal" data-target="#noticeModal"><i class="material-icons">settings_brightness</i></a>
+                })->addColumn('action', function ($user) {
+                return '<a href="#" onclick="roles_user('.$user->id.')" class="btn btn-simple btn-warning btn-icon edit" data-toggle="modal" data-target="#roleModal"><i class="material-icons">settings_brightness</i></a>
                         <a href="recepcionistas/'.$user->id.'/edit" id="update"  class="btn btn-simple btn-success btn-icon edit"><i class="material-icons">edit</i></a>
                         <a href="#" onclick="eliminar_recep('.$user->id.')" class="btn btn-simple btn-danger btn-icon remove-item"><i class="material-icons">close</i></a>';
             })->make(true);
@@ -57,10 +56,7 @@ class UserController extends ApiController
         $persona = User::findOrFail($id);
         $roles = Role::orderBy('display_name', 'DESC')->pluck('display_name', 'id');
         $my_roles = $persona->roles->pluck('id')->ToArray();
-        //return view('personas.modal', compact('persona', 'roles', 'my_roles'));
-
-        //return view('personas.index', compact('persona', 'roles', 'my_roles'));
-
+        
         return response()->json([
             'success'    => true,
             'rut'        => $persona->rut,

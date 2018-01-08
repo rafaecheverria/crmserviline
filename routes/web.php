@@ -20,6 +20,8 @@ Route::prefix('admin')->group(function(){
 	Route::resource('recepcionistas', 'Receptionist\ReceptionistController');
 	Route::resource('users/avatar', 'User\AvatarController', ['only' => 'store']);
 	Route::resource('personas', 'User\UserController');
+	Route::resource('roles', 'User\RoleUserController', ['only' => 'update']);
+	Route::resource('pacientes', 'Paciente\PacienteController');
 });
 //middleware('auth')
 //middleware('role:administrador')

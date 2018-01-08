@@ -3,6 +3,7 @@ $(document).ready(function() {
     listar();
     listar_recepcionista();
     listar_personas();
+    listar_pacientes();
 
 
 
@@ -50,7 +51,6 @@ $( "#btn_guardar_doc" ).click(function(event){
             }
         });
     });
-
 $( "#btn_guardar_rec" ).click(function(event){ 
         event.preventDefault();
         var dataString  = $( '#form_rec' ).serializeArray();
@@ -79,6 +79,35 @@ $( "#btn_guardar_rec" ).click(function(event){
             }
         });
     });
+$( "#update_role_user" ).click(function(event){ 
+        event.preventDefault()
+        var id= $( '#id' ).val()
+        var route = "/admin/roles/"+id+""
+        var dataString  = $( '#form_update_roles_user' ).serializeArray()
+       // alert(dataString)
+        $.ajax({
+            url: route,
+            type: 'PUT',
+            datatype: 'json',
+            data:dataString,
+
+            success:function(data){
+                console.log(data.message)
+                $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
+                $('#roleModal').modal('toggle');
+            },
+            error:function(data){
+                var error = data.responseJSON.errors;
+                for(var i in error){
+                    for(var j in error[i]){
+                        var message = error[i][j];
+                        console.log(message)
+                       $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000})
+                    }
+                }
+            }
+        })  
+    })
 
 	$( "#btn_update_doc" ).click(function(event){ 
 		event.preventDefault();
@@ -242,6 +271,40 @@ $( "#btn_update_rec" ).click(function(event){
 }
 
 //$.fn.dataTable.ext.errMode = 'throw';  //Esto permite que no aparezca el alert() cuando el servidor responde con un error.
+   var listar_pacientes = function()
+   {
+        var table = $('#pacientes').DataTable({
+        "headers": {'X-CSRF-TOKEN':$('input[name=_token]').attr('content')},
+        "processing": true,
+        "serverSide": true,
+        "order": [[ 2, "asc" ]],
+        "ajax": {
+             "url": "pacientes/show",
+            },
+
+        "pagingType": "simple_numbers",
+        "lengthMenu": [
+            [10, 25, 50, -1],
+            [10, 25, 50, "Todos"]
+        ],
+        "language": {
+            url: "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+        },
+        //"responsive": true,
+        "columns":[
+            {data: 'rut', name: 'rut'},
+            {data: 'nombres', name: 'nombres'},
+            {data: 'apellidos', name: 'apellidos'},
+            {data: 'telefono', name: 'telefono'},
+            {data: 'nacimiento', name: 'nacimiento'},
+            {data: 'action', name: 'action', orderable: false, searchable: false, class:"text-right"}
+        ],
+        'columnDefs': [{ }]
+    });
+        //$('.card .material-datatables label').addClass('form-group');
+}
+
+//$.fn.dataTable.ext.errMode = 'throw';  //Esto permite que no aparezca el alert() cuando el servidor responde con un error.
    var listar_personas = function()
    {
         var table = $('#personas').DataTable({
@@ -303,11 +366,16 @@ function roles_user(id)
            url: route,
            type: 'GET',
         success:function(data){
+            $('#id').val(data.id)
+            $('#rut').val(data.rut)
+            $('#nombres').val(data.nombres)
+            $('.title-name').html(data.nombres +' '+ data.apellidos)
+            $('#image-modal').html('<img src="/assets/img/perfiles/'+data.avatar+'" alt="Thumbnail Image" class="img-rounded img-responsive">')
             const crearOption = (value, name, selected) => `<option value="${value}"${selected.includes(value) ? ' selected' : ''}>${name}</option>`
             const obj = data.roles
             const values = Object.keys(obj)
             const opciones = values.map(x => crearOption(x, obj[x], data.my_roles))
-            const select = document.getElementById('roles')
+            const select = document.getElementById('role')
                  select.innerHTML = ''
                  opciones.forEach(x => { select.insertAdjacentHTML('beforeend', x) })
             const valor = data.my_roles
@@ -315,11 +383,7 @@ function roles_user(id)
                       for(i; i < size; i++){
                     $('select option[value='+valor[i]+']').attr('selected', 'selected')
                 }
-            $('#rut').val(data.rut)
-            $('#nombres').val(data.nombres)
-            $('#title-name').html(data.nombres +' '+ data.apellidos)
-            $('#image-modal').html('<img src="/assets/img/perfiles/'+data.avatar+'" alt="Thumbnail Image" class="img-rounded img-responsive">')
-            $('.selectpicker2').selectpicker('refresh')
+           $('.selectpicker2').selectpicker('refresh')
           },
        error:function(){
            alert('la operación falló');

@@ -42,7 +42,7 @@
                 </a>
             </li>
             <li>
-                <a href="{{url('/')}}">
+                <a href="{{ url('admin/pacientes') }}">
                     <i class="material-icons">account_box</i>
                     <p>Pacientes</p>
                 </a>

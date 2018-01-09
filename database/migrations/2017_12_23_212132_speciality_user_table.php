@@ -14,8 +14,6 @@ class SpecialityUserTable extends Migration
                         
             $table->foreign('speciality_id')->references('id')->on('specialities')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
-
-            //$table->primary(['specility_id', 'user_id']);
         });
     }
 

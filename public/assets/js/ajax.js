@@ -292,7 +292,6 @@ $( "#btn_update_rec" ).click(function(event){
         },
         //"responsive": true,
         "columns":[
-            {data: 'rut', name: 'rut'},
             {data: 'nombres', name: 'nombres'},
             {data: 'apellidos', name: 'apellidos'},
             {data: 'telefono', name: 'telefono'},

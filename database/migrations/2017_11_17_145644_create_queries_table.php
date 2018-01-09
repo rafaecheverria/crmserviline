@@ -14,7 +14,7 @@ class CreateQueriesTable extends Migration
             $table->string('fecha');
             $table->string('hora');
             $table->integer('doctor_id')->unsigned();
-            $table->integer('patient_id')->unsigned();
+            $table->integer('paciente_id')->unsigned();
             $table->integer('unity_id')->unsigned();
             $table->string('estado');
             $table->string('diagnostico');
@@ -22,7 +22,7 @@ class CreateQueriesTable extends Migration
             $table->timestamps();
             
             $table->foreign('doctor_id')->references('id')->on('users');
-            $table->foreign('patient_id')->references('id')->on('users');
+            $table->foreign('paciente_id')->references('id')->on('users');
             $table->foreign('unity_id')->references('id')->on('users');
         });
     }

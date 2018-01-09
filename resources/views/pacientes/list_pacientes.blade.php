@@ -1,8 +1,8 @@
+
 <div class="material-datatables">
-<table id="pacientes" class="table dataTable table-responsive nowrap dataTables_wrapper table-striped table-no-bordered table-hover">
+<table id="pacientes" class="table dataTable nowrap dataTables_wrapper table-striped table-no-bordered table-hover">
     <thead>
         <tr>
-            <th>Rut</th>
             <th>Nombres</th>
             <th>Apellidos</th>
             <th>Teléfono</th>

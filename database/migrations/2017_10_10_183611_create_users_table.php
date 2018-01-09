@@ -25,10 +25,12 @@ class CreateUsersTable extends Migration
             $table->string('titulo')->nullable();  
             $table->string('estudios_complementarios')->nullable(); 
             $table->string('posicion')->nullable();
+            $table->string('genero')->nullable();
+            $table->string('estado')->nullable();
             $table->string('avatar')->default('default.jpg');
+
             $table->rememberToken();
             $table->timestamps();
-
         });
     }
 

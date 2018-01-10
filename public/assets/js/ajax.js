@@ -292,11 +292,11 @@ $( "#btn_update_rec" ).click(function(event){
         },
         //"responsive": true,
         "columns":[
+            {data: 'action', name: 'action', orderable: false, searchable: false, class:"text-left"},
             {data: 'nombres', name: 'nombres'},
             {data: 'apellidos', name: 'apellidos'},
             {data: 'telefono', name: 'telefono'},
-            {data: 'nacimiento', name: 'nacimiento'},
-            {data: 'action', name: 'action', orderable: false, searchable: false, class:"text-right"}
+            {data: 'nacimiento', name: 'nacimiento'}
         ],
         'columnDefs': [{ }]
     });
@@ -388,6 +388,42 @@ function roles_user(id)
            alert('la operación falló');
           }
     });
+}
+
+function antecedentes_personales(id)
+{
+
+    //alert(id)
+   /*event.preventDefault();
+   var route = "/admin/personas/"+id+"/edit";
+   var csrf_token = $('meta[name="csrf-token"]').attr('content');
+    $.ajax({
+           url: route,
+           type: 'GET',
+        success:function(data){
+            $('#id').val(data.id)
+            $('#rut').val(data.rut)
+            $('#nombres').val(data.nombres)
+            $('.title-name').html(data.nombres +' '+ data.apellidos)
+            $('#image-modal').html('<img src="/assets/img/perfiles/'+data.avatar+'" alt="Thumbnail Image" class="img-rounded img-responsive">')
+            const crearOption = (value, name, selected) => `<option value="${value}"${selected.includes(value) ? ' selected' : ''}>${name}</option>`
+            const obj = data.roles
+            const values = Object.keys(obj)
+            const opciones = values.map(x => crearOption(x, obj[x], data.my_roles))
+            const select = document.getElementById('role')
+                 select.innerHTML = ''
+                 opciones.forEach(x => { select.insertAdjacentHTML('beforeend', x) })
+            const valor = data.my_roles
+                 i = 0, size = valor.length
+                      for(i; i < size; i++){
+                    $('select option[value='+valor[i]+']').attr('selected', 'selected')
+                }
+           $('.selectpicker2').selectpicker('refresh')
+          },
+       error:function(){
+           alert('la operación falló');
+          }
+    });*/
 }
 
 function eliminar_recep(id)

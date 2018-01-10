@@ -29,8 +29,8 @@ class PacienteController extends Controller
                 return $user->getEdad();
                     })
                     ->addColumn('action', function ($user) {
-                        return '<a href="#" rel="tooltip" title="Perfil" class="btn btn-simple btn-primary btn-icon"><i class="material-icons">person</i></a>
-                        <a href="#" rel="tooltip" title="Antecedentes Personales" class="btn btn-simple btn-warning btn-icon"><i class="material-icons">assignment_ind</i></a>
+                        return '<a href="#" class="btn btn-simple btn-primary btn-icon"><i class="material-icons">person</i></a>
+                        <a href="#" onclick="antecedentes_personales('.$user->id.')"  data-toggle="modal" data-target="#antecedentePersonalModal" rel="tooltip" title="Antecedentes Personales" class="btn btn-simple btn-warning btn-icon"><i class="material-icons">assignment_ind</i></a>
                         <a href="#" rel="tooltip" title="Expediente" class="btn btn-simple btn-info btn-icon"><i class="material-icons">content_paste</i></a>
                         <a href="#" rel="tooltip" title="Editar" class="btn btn-simple btn-success btn-icon edit"><i class="material-icons">edit</i></a>';
                     })->make(true);

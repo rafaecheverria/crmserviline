@@ -2,10 +2,11 @@
 
 @section('content')
 @include('pacientes.modal')
+@include('pacientes.modal_personal')
 <div class="content">
     <div class="container-fluid">
     	<div class="row">
-    		<div class="col-md-9">
+    		<div class="col-md-12">
         		<div class="card">
 					<div class="card-header card-header-icon" data-background-color="blue">
 						 <i class="material-icons">assignment</i>

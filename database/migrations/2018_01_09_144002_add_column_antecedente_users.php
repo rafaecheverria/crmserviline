@@ -6,28 +6,21 @@ use Illuminate\Database\Migrations\Migration;
 
 class AddColumnAntecedenteUsers extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('antecedente_id')->unsigned()->nullable();
-            $table->foreign('antecedente_id')->references('id')->on('antecedentes');
+            $table->string('sangre')->nullable();
+            $table->string('vih')->nullable();
+            $table->integer('peso')->nullable();
+            $table->string('altura')->nullable();
+            $table->string('alergia')->nullable();
+            $table->string('medicamento_actual')->nullable();
+            $table->string('enfermedad')->nullable();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('antecedente_id');
-        });
+
     }
 }

@@ -5,8 +5,6 @@ $(document).ready(function() {
     listar_personas();
     listar_pacientes();
 
-
-
     $('.card .material-datatables label').addClass('form-group');
     $('#nacimiento').datetimepicker({
         
@@ -107,6 +105,38 @@ $( "#update_role_user" ).click(function(event){
                 }
             }
         })  
+    })
+$( "#update_antecedentes_paciente" ).click(function(event){ 
+        event.preventDefault()
+        var id= $( '#id_paciente' ).val()
+        var route = "/admin/antecedentes/"+id+""
+        var dataString  = $( '#form_antecedente_paciente' ).serializeArray()
+
+        console.log(dataString)
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            url: route,
+            type: 'PUT',
+            datatype: 'json',
+            data:dataString,
+
+            success:function(data){
+                console.log(data)
+                $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
+                $('#antecedentePersonalModal').modal('toggle');
+            },
+            error:function(data){
+                console.log(data)
+                var error = data.responseJSON.errors;
+                for(var i in error){
+                    for(var j in error[i]){
+                        var message = error[i][j];
+                        console.log(message)
+                       $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000})
+                    }
+                }
+            }
+        })
     })
 
 	$( "#btn_update_doc" ).click(function(event){ 
@@ -297,8 +327,7 @@ $( "#btn_update_rec" ).click(function(event){
             {data: 'apellidos', name: 'apellidos'},
             {data: 'telefono', name: 'telefono'},
             {data: 'nacimiento', name: 'nacimiento'}
-        ],
-        'columnDefs': [{ }]
+        ]
     });
         //$('.card .material-datatables label').addClass('form-group');
 }
@@ -392,38 +421,29 @@ function roles_user(id)
 
 function antecedentes_personales(id)
 {
-
-    //alert(id)
-   /*event.preventDefault();
-   var route = "/admin/personas/"+id+"/edit";
+   event.preventDefault();
+   var route = "/admin/antecedentes/"+id+"/edit";
    var csrf_token = $('meta[name="csrf-token"]').attr('content');
     $.ajax({
            url: route,
            type: 'GET',
         success:function(data){
-            $('#id').val(data.id)
-            $('#rut').val(data.rut)
-            $('#nombres').val(data.nombres)
+            $('#id_paciente').val(data.id)
+            $('#sangre').val(data.sangre)
+            $('#sangre').selectpicker('refresh') //actualiza la vista del usuario "selectpicker"
+            $('#vih').val(data.vih)
+            $('#vih').selectpicker('refresh') //Actualiza la vista del usuario "selectpicker"
+            $('#peso').val(data.peso)
+            $('#altura').val(data.altura)
+            $('#alergia').val(data.alergia)
+            $('#medicamento').val(data.medicamento)
+            $('#enfermedad').val(data.enfermedad)
             $('.title-name').html(data.nombres +' '+ data.apellidos)
-            $('#image-modal').html('<img src="/assets/img/perfiles/'+data.avatar+'" alt="Thumbnail Image" class="img-rounded img-responsive">')
-            const crearOption = (value, name, selected) => `<option value="${value}"${selected.includes(value) ? ' selected' : ''}>${name}</option>`
-            const obj = data.roles
-            const values = Object.keys(obj)
-            const opciones = values.map(x => crearOption(x, obj[x], data.my_roles))
-            const select = document.getElementById('role')
-                 select.innerHTML = ''
-                 opciones.forEach(x => { select.insertAdjacentHTML('beforeend', x) })
-            const valor = data.my_roles
-                 i = 0, size = valor.length
-                      for(i; i < size; i++){
-                    $('select option[value='+valor[i]+']').attr('selected', 'selected')
-                }
-           $('.selectpicker2').selectpicker('refresh')
           },
        error:function(){
            alert('la operación falló');
           }
-    });*/
+    });
 }
 
 function eliminar_recep(id)

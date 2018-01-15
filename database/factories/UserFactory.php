@@ -21,6 +21,13 @@ $factory->define(App\User::class, function (Faker $faker) {
         'fecha_admision' => $faker->date,
         'email' => $faker->unique()->safeEmail,
         'password' => $password ?: $password = bcrypt('secret'),
+        'sangre' => '0',
+        'vih' => '0',
+        'peso' => 0,
+        'altura' => 'sin registros',
+        'alergia' => 'sin registros',
+        'medicamento_actual' => 'sin registros',
+        'enfermedad' => 'sin registros',
         'remember_token' => str_random(10),
     ];
 });

@@ -8,6 +8,7 @@ Route::prefix('admin')->group(function(){
 	Route::resource('roles', 'User\RoleUserController', ['only' => 'update']);
 	Route::resource('pacientes', 'Paciente\PacienteController');
 	Route::resource('antecedentes', 'Paciente\AntecedenteController', ['only' => ['update', 'edit']]);
+	Route::resource('pacientes/perfil', 'Paciente\PerfilController', ['only' => 'show']);
 });
 //middleware('auth')
 //middleware('role:administrador')

@@ -21,16 +21,15 @@ class PacienteController extends Controller
                 return $user->getEdad();
                     })
                     ->addColumn('action', function ($user) {
-                        return '<a href="#" class="btn btn-simple btn-primary btn-icon"><i class="material-icons">person</i></a>
+                        return '<a href="pacientes/perfil/'.$user->id.'" class="btn btn-simple btn-primary btn-icon"><i class="material-icons">person</i></a>
                         <a href="#" onclick="antecedentes_personales('.$user->id.')"  data-toggle="modal" data-target="#antecedentePersonalModal" rel="tooltip" title="Antecedentes Personales" class="btn btn-simple btn-warning btn-icon"><i class="material-icons">assignment_ind</i></a>
                         <a href="#" rel="tooltip" title="Expediente" class="btn btn-simple btn-info btn-icon"><i class="material-icons">content_paste</i></a>
-                        <a href="pacientes/'.$user->id.'/edit" rel="tooltip" title="Editar" class="btn btn-simple btn-success btn-icon edit"><i class="material-icons">edit</i></a>';
+                        <a href="#" rel="tooltip" title="Editar" class="btn btn-simple btn-success btn-icon edit"><i class="material-icons">edit</i></a>';
                     })->make(true);
     }
 
     public function edit($id)
     {
-        $paciente = User::findOrFail($id);
-        return view('pacientes.edit', compact('paciente'));
+        //
     }
 }

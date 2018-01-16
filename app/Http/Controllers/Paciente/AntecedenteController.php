@@ -23,7 +23,7 @@ class AntecedenteController extends Controller
             'medicamento'        => $paciente->medicamento_actual,
             'enfermedad'         => $paciente->enfermedad,
             'nombres'            => $paciente->nombres,
-            'apellidos'          => $paciente->apellidos
+            'apellidos'          => $paciente->apellidos,
         ]);
     }
     public function update(Request $request, $id)

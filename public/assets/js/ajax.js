@@ -1,9 +1,26 @@
 $(document).ready(function() {
 
+    $('#citas_medicas').fullCalendar({
+        header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'month,basicWeek,basicDay',
+        },
+        defaultDate: new Date(),
+        height: 700,
+        navLinks: true,
+        editable: true,
+        events: [
+        
+        ]
+    });
+
     listar();
     listar_recepcionista();
     listar_personas();
     listar_pacientes();
+    
+
 
     $('.card .material-datatables label').addClass('form-group');
     $('#nacimiento').datetimepicker({

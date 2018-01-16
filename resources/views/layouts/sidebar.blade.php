@@ -48,7 +48,7 @@
                 </a>
             </li>
             <li>
-                <a href="{{url('/')}}">
+                <a href="{{ url('admin/citas') }}">
                     <i class="material-icons">date_range</i>
                     <p>Citas Médicas</p>
                 </a>

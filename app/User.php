@@ -36,10 +36,6 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Role');
     }
-    public function antecedentes()
-    {
-        return $this->hasMany('App\Antecedente');
-    }
     public function specialities()
     {
         return $this->belongsToMany('App\Speciality');

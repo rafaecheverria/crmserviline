@@ -9,6 +9,7 @@ Route::prefix('admin')->group(function(){
 	Route::resource('pacientes', 'Paciente\PacienteController');
 	Route::resource('antecedentes', 'Paciente\AntecedenteController', ['only' => ['update', 'edit']]);
 	Route::resource('pacientes/perfil', 'Paciente\PerfilController', ['only' => 'show']);
+	Route::resource('citas', 'Citas\CitasMedicasController');
 });
 //middleware('auth')
 //middleware('role:administrador')

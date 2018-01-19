@@ -31,7 +31,7 @@ class AvatarController extends Controller
                 "path" => $path,
                 "file_name" => $file_name,
                 "avatar" => $avatar,
-                "message" => "La imagen fue subida con Exito!"
+                "message" => "La imagen fue subida con exito!"
             ]);
         }
     }

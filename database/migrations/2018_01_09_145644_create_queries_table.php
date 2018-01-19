@@ -11,17 +11,18 @@ class CreateQueriesTable extends Migration
     {
         Schema::create('queries', function (Blueprint $table) {
             $table->increments('id');
-            $table->date('fecha_inicio');
-            $table->date('fecha_fin');
-            $table->time('hora');
+            $table->dateTime('fecha_inicio');
+            $table->dateTime('fecha_fin');
+            $table->string('estado');
+            $table->string('title');
+            $table->string('descripcion');
             $table->integer('doctor_id')->unsigned();
             $table->integer('paciente_id')->unsigned();
-            $table->string('estado');
-            $table->string('diagnostico');
-            $table->string('descripcion');
-            $table->timestamps();
+            $table->integer('unity_id')->unsigned();
             $table->foreign('doctor_id')->references('id')->on('users');
             $table->foreign('paciente_id')->references('id')->on('users');
+            $table->foreign('unity_id')->references('id')->on('unities');
+            $table->timestamps();
         });
     }
 

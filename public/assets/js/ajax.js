@@ -4,22 +4,19 @@ $(document).ready(function() {
         header: {
             left: 'prev,next today',
             center: 'title',
-            right: 'month,basicWeek,basicDay',
+            right: 'month,basicWeek,basicDay,listDay',
         },
         defaultDate: new Date(),
-        height: 700,
+        height: 650,
         navLinks: true,
         editable: true,
-        events: [
-        
-        ]
-    });
+        events: "/admin/api"
+    })
 
     listar();
     listar_recepcionista();
     listar_personas();
     listar_pacientes();
-    
 
 
     $('.card .material-datatables label').addClass('form-group');

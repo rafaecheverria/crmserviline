@@ -9,9 +9,23 @@ use App\Http\Controllers\Controller;
 
 class CitasMedicasController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
-        return view('citas_medicas.index'); 
+        return view('citas_medicas.index');
+    }
+
+    public function api()
+    {
+        
+        $data = Query::join('users', 'queries.paciente_id', '=', 'users.id')
+            ->select('users.nombres as title', 'queries.fecha_inicio as start')
+            ->get();
+        return Response()->json($data);
     }
 
     public function create()

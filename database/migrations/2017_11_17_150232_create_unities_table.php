@@ -11,6 +11,12 @@ class CreateUnitiesTable extends Migration
         Schema::create('unities', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre');
+            $table->string('telefono');
+            $table->string('email');
+            $table->string('direccion');
+            $table->string('avatar')->nullable();
+            $table->string('region');
+            $table->string('ciudad');
             $table->timestamps();
         });
     }

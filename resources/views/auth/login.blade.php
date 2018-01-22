@@ -94,6 +94,20 @@
                                                 <input type="password" name="password" class="form-control">
                                             </div>
                                         </div>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">business</i>
+                                            </span>
+                                            <div class="form-group label-floating">
+                                                <label class="control-label">Unidad</label>
+                                                <select id="unidad" class="selectpicker" data-style="select-with-transition">
+                                                    <option>Medilab</option>
+                                                    <option>Clinica Chillán</option>
+                                                    <option>Clínica las Amapaloas</option>
+                                                    <option>Inmunomédica</option>
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="footer text-center">
                                         <button type="submit" class="btn btn-rose btn-simple btn-wd btn-lg">Entrar</button>

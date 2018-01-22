@@ -1,6 +1,7 @@
 <?php
 Route::get('/', 'HomeController@index');
 Route::prefix('admin')->group(function(){
+	Route::resource('clinica','Clinica\ClinicaController');
 	Route::resource('doctores', 'Doctor\DoctorController');
 	Route::resource('recepcionistas', 'Receptionist\ReceptionistController');
 	Route::resource('users/avatar', 'User\AvatarController', ['only' => 'store']);

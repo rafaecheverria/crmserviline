@@ -40,6 +40,10 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Speciality');
     }
+    public function unities()
+    {
+        return $this->belongsToMany('App\Unity');
+    }
     public function setNombresAttribute($valor)
     {
         $this->attributes['nombres'] = strtolower($valor);

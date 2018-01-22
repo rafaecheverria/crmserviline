@@ -59,30 +59,6 @@
                     <p>Consultas Médicas</p>
                 </a>
             </li>
-           <!-- <li>
-                <a data-toggle="collapse" href="#personas">
-                    <i class="material-icons">person</i>
-                    <p>Personas
-                        <b class="caret"></b>
-                    </p>
-                </a>
-                <div class="collapse" id="personas">
-                    <ul class="nav">
-                        @role('administrador')
-                            <li>
-                                <a href="{{ url('admin/doctores') }}">Doctores</a>
-                            </li>
-                        @endrole
-                        <li>
-                            <a href="{{ url('admin/recepcionistas') }}">Recepcionistas</a>
-                        </li>
-                        <li>
-                            <a href="#">Pacientes</a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-        -->
             <li>
                 <a data-toggle="collapse" href="#settings">
                     <i class="material-icons">settings</i>
@@ -92,6 +68,9 @@
                 </a>
                 <div class="collapse" id="settings">
                     <ul class="nav">
+                        <li>
+                            <a href="{{ url('admin/clinica') }}">Clinica</a>
+                        </li>
                         <li>
                             <a href="{{ url('admin/personas') }}">Personas</a>
                         </li>

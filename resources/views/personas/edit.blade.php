@@ -94,28 +94,6 @@
                     </div>
                 </div>
             </div>
-            <!--
-            <div class="col-md-4">
-                <div class="card card-profile">
-                    <div class="card-avatar">
-                        <div id="cargando">
-                            <a href="#">
-                                <img class="img avatarImage" src="/assets/img/perfiles/{{ $recepcionista->avatar }}" />
-                            </a>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <h6 class="category text-gray">DOCTOR/A</h6>
-                        <h4 class="card-title"><div class="apellidos_up">{{$recepcionista->apellidos}}</div></h4>
-                        <p class="description">
-                            Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...
-                        </p>
-                        <a href="#pablo" class="btn btn-rose btn-round">Follow</a>
-                    </div>
-
-                </div>
-            </div>
-            -->
         </div>
     </div>
 </div>

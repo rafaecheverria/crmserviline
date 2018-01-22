@@ -1,24 +1,72 @@
 $(document).ready(function() {
 
-    $('#citas_medicas').fullCalendar({
-        header: {
-            left: 'prev,next today',
-            center: 'title',
-            right: 'month,basicWeek,basicDay,listDay',
-        },
-        defaultDate: new Date(),
-        height: 650,
-        navLinks: true,
-        editable: true,
-        events: "/admin/api"
-    })
-
     listar();
     listar_recepcionista();
     listar_personas();
     listar_pacientes();
 
+    $calendar = $('#citas_medicas');
 
+        today = new Date();
+        y = today.getFullYear();
+        m = today.getMonth();
+        d = today.getDate();
+
+        $calendar.fullCalendar({
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay,listYear',
+            },
+            defaultDate: today,
+            selectable: true,
+            selectHelper: true,
+            navLinks: true,
+            views: {
+                month: { // name of view
+                    titleFormat: 'MMMM YYYY'
+                    // other view-specific options here
+                },
+                week: {
+                    titleFormat: " MMMM D YYYY"
+                },
+                day: {
+                    titleFormat: 'D MMM, YYYY'
+                }
+            },
+
+            select: function(start, end) {
+
+
+                start = moment(start.format());
+                $("#fecha_inicio").val(start.format("DD-MM-YYYY"));
+                $('#fecha_inicio').datetimepicker({format: 'DD-MM-YYYY'});
+                $('#hora_inicio').datetimepicker({
+                    format: 'HH:mm:ss',
+                    icons : {
+                        up: "fa fa-chevron-up",
+                        down: "fa fa-chevron-down",
+                        previous: 'fa fa-chevron-left',
+                        next: 'fa fa-chevron-right',
+                        today: 'fa fa-screenshot',
+                        clear: 'fa fa-trash',
+                        close: 'fa fa-remove',
+                    }
+                });
+
+              $("#add_evento").modal("show");
+
+                // on select we show the Sweet Alert modal with an input
+            },
+            editable: true,
+            eventLimit: true, // allow "more" link when too many events
+
+
+            // color classes: [ event-blue | event-azure | event-green | event-orange | event-red ]
+            events: "/admin/api"
+        });
+
+    $("#btn_refresh").fullCalendar ('refresh');
     $('.card .material-datatables label').addClass('form-group');
     $('#nacimiento').datetimepicker({
         

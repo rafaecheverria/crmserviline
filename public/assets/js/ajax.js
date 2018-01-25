@@ -1,87 +1,64 @@
+function redirect(ruta)
+{
+    window.location = ruta;
+    //setTimeout("location."+ruta, 5000);
+}
 $(document).ready(function() {
+$( "#delete_cita" ).click(function(event){ 
+    event.preventDefault();
+    var id= $( '#id' ).val()
+    var popup = confirm("¿ Esta seguro de eliminar esta cita ?")
+    var route = "/admin/citas/"+id+"";
+    var csrf_token = $('meta[name="csrf-token"]').attr('content');
+    if(popup ==true){
+     $.ajax({
+            url: route,
+            type: 'POST',
+            data: {'_method' : 'DELETE', '_token' : csrf_token},
+            success:function(data){
+                $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
+                $("#citas_medicas").fullCalendar('refetchEvents')
+                $("#up_evento").modal("hide")
+            }, 
+            error:function(){
+                alert('la operación falló');
+            }
+       })
+    }
+})
 
-    listar();
-    listar_recepcionista();
-    listar_personas();
-    listar_pacientes();
+$( "#guardar_cita" ).click(function(event){ 
+        event.preventDefault();
+        var dataString  = $( '#form_cita' ).serializeArray();
+        var route = "/admin/citas";
 
-    $calendar = $('#citas_medicas');
+        //console.log(route)
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            url: route,
+            type: 'post',
+            datatype: 'json',
+            data:dataString,
+            success:function(data){
+                console.log(data);
+                $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000});
+                $('#form_cita')[0].reset();
+                $("#citas_medicas").fullCalendar('refetchEvents');
+                $("#add_evento").modal("hide");
 
-        today = new Date();
-        y = today.getFullYear();
-        m = today.getMonth();
-        d = today.getDate();
-
-        $calendar.fullCalendar({
-            header: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'month,agendaWeek,agendaDay,listYear',
             },
-            defaultDate: today,
-            selectable: true,
-            selectHelper: true,
-            navLinks: true,
-            views: {
-                month: { // name of view
-                    titleFormat: 'MMMM YYYY'
-                    // other view-specific options here
-                },
-                week: {
-                    titleFormat: " MMMM D YYYY"
-                },
-                day: {
-                    titleFormat: 'D MMM, YYYY'
-                }
-            },
-
-            select: function(start, end) {
-
-
-                start = moment(start.format());
-                $("#fecha_inicio").val(start.format("DD-MM-YYYY"));
-                $('#fecha_inicio').datetimepicker({format: 'DD-MM-YYYY'});
-                $('#hora_inicio').datetimepicker({
-                    format: 'HH:mm:ss',
-                    icons : {
-                        up: "fa fa-chevron-up",
-                        down: "fa fa-chevron-down",
-                        previous: 'fa fa-chevron-left',
-                        next: 'fa fa-chevron-right',
-                        today: 'fa fa-screenshot',
-                        clear: 'fa fa-trash',
-                        close: 'fa fa-remove',
+            error:function(data){
+                var error = data.responseJSON.errors;
+                for(var i in error){
+                    for(var j in error[i]){
+                        var message = error[i][j];
+                        console.log(message);
+                       $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000});
                     }
-                });
-
-              $("#add_evento").modal("show");
-
-                // on select we show the Sweet Alert modal with an input
-            },
-            editable: true,
-            eventLimit: true, // allow "more" link when too many events
-
-
-            // color classes: [ event-blue | event-azure | event-green | event-orange | event-red ]
-            events: "/admin/api"
-        });
-
-    $("#btn_refresh").fullCalendar ('refresh');
-    $('.card .material-datatables label').addClass('form-group');
-    $('#nacimiento').datetimepicker({
-        
-    icons: {
-        date: "fa fa-calendar",
-        up: "fa fa-chevron-up",
-        down: "fa fa-chevron-down",
-        previous: 'fa fa-chevron-left',
-        next: 'fa fa-chevron-right',
-        today: 'fa fa-screenshot',
-        clear: 'fa fa-trash',
-        close: 'fa fa-remove'
-    },
-    format: 'DD-MM-YYYY',
-});
+                }
+            }
+        })
+    })
 
 $( "#btn_guardar_doc" ).click(function(event){ 
         event.preventDefault();
@@ -109,8 +86,8 @@ $( "#btn_guardar_doc" ).click(function(event){
                     }
                 }
             }
-        });
-    });
+        })
+    })
 $( "#btn_guardar_rec" ).click(function(event){ 
         event.preventDefault();
         var dataString  = $( '#form_rec' ).serializeArray();
@@ -123,7 +100,6 @@ $( "#btn_guardar_rec" ).click(function(event){
             data:dataString,
 
             success:function(data){
-                console.log(data.message);
                 $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000});
                 $('#form_doc')[0].reset();
             },
@@ -132,13 +108,42 @@ $( "#btn_guardar_rec" ).click(function(event){
                 for(var i in error){
                     for(var j in error[i]){
                         var message = error[i][j];
-                        console.log(message);
                        $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000});
                     }
                 }
             }
-        });
-    });
+        })
+    })
+
+$( "#update_cita" ).click(function(event){ 
+        event.preventDefault()
+        var id= $( '#id' ).val()
+        var route = "/admin/citas/"+id+""
+        var dataString  = $( '#form_update_cita' ).serializeArray()
+        console.log(dataString)
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            url: route,
+            type: 'PUT',
+            datatype: 'json',
+            data:dataString,
+
+            success:function(data){
+                $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
+                $("#citas_medicas").fullCalendar('refetchEvents')
+                $("#up_evento").modal("hide");
+            },
+            error:function(data){
+                var error = data.responseJSON.errors;
+                for(var i in error){
+                    for(var j in error[i]){
+                        var message = error[i][j];
+                       $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000})
+                    }
+                }
+            }
+        }) 
+    })
 $( "#update_role_user" ).click(function(event){ 
         event.preventDefault()
         var id= $( '#id' ).val()
@@ -152,7 +157,6 @@ $( "#update_role_user" ).click(function(event){
             data:dataString,
 
             success:function(data){
-                console.log(data.message)
                 $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
                 $('#roleModal').modal('toggle');
             },
@@ -161,7 +165,6 @@ $( "#update_role_user" ).click(function(event){
                 for(var i in error){
                     for(var j in error[i]){
                         var message = error[i][j];
-                        console.log(message)
                        $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000})
                     }
                 }
@@ -222,8 +225,8 @@ $( "#update_antecedentes_paciente" ).click(function(event){
                     $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000});
                 }
             }
-		});
-	});
+		})
+	})
     
 $( "#btn_update_rec" ).click(function(event){ 
         event.preventDefault();
@@ -246,9 +249,37 @@ $( "#btn_update_rec" ).click(function(event){
                     $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000});
                 }
             }
-        });
-    });
-});
+        })
+    })
+
+$( "#ingresar" ).click(function(event){ 
+        event.preventDefault();
+        var dataString  = $( '#form_login' ).serializeArray();
+        var route = "login";
+
+        //console.log(dataString)
+        $.ajax({
+            url: route,
+            headers: {'X-CSRF-TOKEN':$('input[name=_token]').attr('content')},
+            type: 'post',
+            datatype: 'json',
+            data:dataString,
+            success:function(){
+                //toastr["success"]("Se ha autenticado correctamente!");
+                //$('#modal1').modal('close');
+                //setTimeout("redirect('/')", 700);
+                redirect('/');
+            },
+            error:function(data){
+              var error = data.responseJSON.errors;
+                for(var i in error){
+                    var message = error[i];
+                    $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000});
+                }
+            }
+        })
+    })
+})
 
 // Subir Imagen de Perfil
     var $avatarInput, $avatarImage, $avatarForm;
@@ -302,128 +333,7 @@ $( "#btn_update_rec" ).click(function(event){
 
 //$.fn.dataTable.ext.errMode = 'throw';  //Esto permite que no aparezca el alert() cuando el servidor responde con un error.
 
-   var listar = function()
-   {
-        var table = $('#datatables').DataTable({
-        "headers": {'X-CSRF-TOKEN':$('input[name=_token]').attr('content')},
-        "processing": true,
-        "serverSide": true,
-        "order": [[ 2, "asc" ]],
-        "ajax": {
-             "url": "doctores/show",
-            },
-        "pagingType": "full_numbers",
-        "lengthMenu": [
-            [10, 25, 50, -1],
-            [10, 25, 50, "Todos"]
-        ],
-        "language": {
-            url: "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
-        },
-        //"responsive": true,
-        "columns":[
-            {data: 'rut', name: 'rut'},
-            {data: 'nombres', name: 'nombres'},
-            {data: 'apellidos', name: 'apellidos'},
-            {data: 'email', name: 'email'},
-            {data: 'action', name: 'action', orderable: false, searchable: false}
-        ]
-    });
-}
-
-//$.fn.dataTable.ext.errMode = 'throw';  //Esto permite que no aparezca el alert() cuando el servidor responde con un error.
-   var listar_recepcionista = function()
-   {
-        var table = $('#recepcionistas').DataTable({
-        "headers": {'X-CSRF-TOKEN':$('input[name=_token]').attr('content')},
-        "processing": true,
-        "serverSide": true,
-        "order": [[ 2, "asc" ]],
-        "ajax": {
-             "url": "recepcionistas/show",
-            },
-        "pagingType": "simple_numbers",
-        "lengthMenu": [
-            [10, 25, 50, -1],
-            [10, 25, 50, "Todos"]
-        ],
-        "language": {
-            url: "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
-        },
-        //"responsive": true,
-        "columns":[
-            {data: 'rut', name: 'rut'},
-            {data: 'nombres', name: 'nombres'},
-            {data: 'apellidos', name: 'apellidos'},
-            {data: 'roles', name: 'roles.name'},
-            {data: 'action', name: 'action', orderable: false, searchable: false}
-        ]
-    });
-        //$('.card .material-datatables label').addClass('form-group');
-}
-
-//$.fn.dataTable.ext.errMode = 'throw';  //Esto permite que no aparezca el alert() cuando el servidor responde con un error.
-   var listar_pacientes = function()
-   {
-        var table = $('#pacientes').DataTable({
-        "headers": {'X-CSRF-TOKEN':$('input[name=_token]').attr('content')},
-        "processing": true,
-        "serverSide": true,
-        "order": [[ 2, "asc" ]],
-        "ajax": {
-             "url": "pacientes/show",
-            },
-
-        "pagingType": "simple_numbers",
-        "lengthMenu": [
-            [10, 25, 50, -1],
-            [10, 25, 50, "Todos"]
-        ],
-        "language": {
-            url: "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
-        },
-        //"responsive": true,
-        "columns":[
-            {data: 'action', name: 'action', orderable: false, searchable: false, class:"text-left"},
-            {data: 'nombres', name: 'nombres'},
-            {data: 'apellidos', name: 'apellidos'},
-            {data: 'telefono', name: 'telefono'},
-            {data: 'nacimiento', name: 'nacimiento'}
-        ]
-    });
-        //$('.card .material-datatables label').addClass('form-group');
-}
-
-//$.fn.dataTable.ext.errMode = 'throw';  //Esto permite que no aparezca el alert() cuando el servidor responde con un error.
-   var listar_personas = function()
-   {
-        var table = $('#personas').DataTable({
-        "headers": {'X-CSRF-TOKEN':$('input[name=_token]').attr('content')},
-        "processing": true,
-        "serverSide": true,
-        "order": [[ 2, "asc" ]],
-        "ajax": {
-             "url": "personas/show",
-            },
-        "pagingType": "simple_numbers",
-        "lengthMenu": [
-            [10, 25, 50, -1],
-            [10, 25, 50, "Todos"]
-        ],
-        "language": {
-            url: "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
-        },
-        //"responsive": true,
-        "columns":[
-            {data: 'rut', name: 'rut'},
-            {data: 'nombres', name: 'nombres'},
-            {data: 'apellidos', name: 'apellidos'},
-            {data: 'email', name: 'email'},
-            {data: 'action', name: 'action', orderable: false, searchable: false, class:"text-right"}
-        ],
-    });
-}
-
+   
 function eliminar_doc(id)
 {
     event.preventDefault();

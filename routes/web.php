@@ -1,6 +1,6 @@
 <?php
 Route::get('/', 'HomeController@index');
-Route::prefix('admin')->group(function(){
+Route::middleware(['auth', 'role:administrador'])->prefix('admin')->group(function(){
 	Route::resource('clinica','Clinica\ClinicaController');
 	Route::resource('doctores', 'Doctor\DoctorController');
 	Route::resource('recepcionistas', 'Receptionist\ReceptionistController');
@@ -10,8 +10,10 @@ Route::prefix('admin')->group(function(){
 	Route::resource('pacientes', 'Paciente\PacienteController');
 	Route::resource('antecedentes', 'Paciente\AntecedenteController', ['only' => ['update', 'edit']]);
 	Route::resource('pacientes/perfil', 'Paciente\PerfilController', ['only' => 'show']);
-	Route::resource('citas', 'Citas\CitasMedicasController');
+	Route::resource('citas', 'Citas\CitasMedicasController', ['only' => ['index', 'store', 'update', 'destroy']]);
+	Route::resource('consultas', 'Citas\ConsultasMedicasController');
 	Route::get('api','Citas\CitasMedicasController@api');
+
 });
 //middleware('auth')
 //middleware('role:administrador')

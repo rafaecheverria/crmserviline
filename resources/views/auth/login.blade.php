@@ -34,31 +34,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href=" ../dashboard.html ">Material Dashboard Pro</a>
-            </div>
-            <div class="collapse navbar-collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="../dashboard.html">
-                            <i class="material-icons">dashboard</i> Dashboard
-                        </a>
-                    </li>
-                    <li class="">
-                        <a href="register.html">
-                            <i class="material-icons">person_add</i> Register
-                        </a>
-                    </li>
-                    <li class=" active ">
-                        <a href="login.html">
-                            <i class="material-icons">fingerprint</i> Login
-                        </a>
-                    </li>
-                    <li class="">
-                        <a href="lock.html">
-                            <i class="material-icons">lock_open</i> Lock
-                        </a>
-                    </li>
-                </ul>
+                <a class="navbar-brand" href=" ../dashboard.html ">Bienvenidos a DoClick</a>
             </div>
         </div>
     </nav>
@@ -69,7 +45,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-4 col-sm-6 col-md-offset-4 col-sm-offset-3">
-                            <form method="post" role="form" action="{{ route('login') }}">
+                            <form id="form_login" role="form">
                             {{ csrf_field() }}
                                 <div class="card card-login card-hidden">
                                     <div class="card-header text-center" data-background-color="rose">
@@ -94,23 +70,9 @@
                                                 <input type="password" name="password" class="form-control">
                                             </div>
                                         </div>
-                                        <div class="input-group">
-                                            <span class="input-group-addon">
-                                                <i class="material-icons">business</i>
-                                            </span>
-                                            <div class="form-group label-floating">
-                                                <label class="control-label">Unidad</label>
-                                                <select id="unidad" class="selectpicker" data-style="select-with-transition">
-                                                    <option>Medilab</option>
-                                                    <option>Clinica Chillán</option>
-                                                    <option>Clínica las Amapaloas</option>
-                                                    <option>Inmunomédica</option>
-                                                </select>
-                                            </div>
-                                        </div>
                                     </div>
                                     <div class="footer text-center">
-                                        <button type="submit" class="btn btn-rose btn-simple btn-wd btn-lg">Entrar</button>
+                                        <button id="ingresar" class="btn btn-rose btn-simple btn-wd btn-lg">Entrar</button>
                                     </div>
                                 </div>
                             </form>
@@ -120,36 +82,12 @@
             </div>
             <footer class="footer">
                 <div class="container">
-                    <nav class="pull-left">
-                        <ul>
-                            <li>
-                                <a href="#">
-                                    Home
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Company
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Portfolio
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Blog
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
                     <p class="copyright pull-right">
                         &copy;
                         <script>
                             document.write(new Date().getFullYear())
                         </script>
-                        <a href="http://www.creative-tim.com">Creative Tim</a>, made with love for a better web
+                        <a href="http://www.serviline.cl">Serviline</a>, Hecho para mejorar las gestiones administrativas.
                     </p>
                 </div>
             </footer>
@@ -194,6 +132,7 @@
 <script src="assets/js/material-dashboard.js"></script>
 <!-- Material Dashboard DEMO methods, don't include it in your project! -->
 <script src="assets/js/demo.js"></script>
+<script src="assets/js/ajax.js"></script>
 <script type="text/javascript">
     $().ready(function() {
         demo.checkFullPageBackgroundImage();

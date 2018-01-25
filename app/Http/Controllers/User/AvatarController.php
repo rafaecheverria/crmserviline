@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\User;
 
-use Illuminate\Http\Request;
-use App\Http\Requests\AvatarRequest;
-use App\Http\Controllers\Controller;
 use App\User;
 use Auth;
 use Image;
+use Illuminate\Http\Request;
+use App\Http\Requests\AvatarRequest;
+use App\Http\Controllers\Controller;
 
 class AvatarController extends Controller
 {

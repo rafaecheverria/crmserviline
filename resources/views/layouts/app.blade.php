@@ -29,7 +29,6 @@
 {!! Html::script('assets/js/jquery-3.1.1.min.js') !!}
 {!! Html::script('assets/js/jquery-ui.min.js') !!}
 {!! Html::script('assets/js/bootstrap.min.js') !!}
-
 {!! Html::script('assets/js/material.min.js') !!}
 {!! Html::script('assets/js/perfect-scrollbar.jquery.min.js') !!}
 {!! Html::script('assets/js/jquery.validate.min.js') !!}
@@ -38,7 +37,7 @@
 {!! Html::script('assets/js/jquery.bootstrap-wizard.js') !!}
 {!! Html::script('assets/js/bootstrap-notify.js') !!}
 {!! Html::script('assets/js/bootstrap-datetimepicker.js') !!}
-{!! Html::script('assets/js/jquery-jvectormap.js') !!}
+<!--{!! Html::script('assets/js/jquery-jvectormap.js') !!}-->
 {!! Html::script('assets/js/nouislider.min.js') !!}
 <!--{!! Html::script('https://maps.googleapis.com/maps/api/js') !!}-->
 {!! Html::script('assets/js/jquery.select-bootstrap.js') !!}
@@ -51,4 +50,6 @@
 {!! Html::script('assets/js/material-dashboard.js') !!}
 {!! Html::script('assets/js/demo.js') !!}
 {!! Html::script('assets/js/ajax.js') !!}
+{!! Html::script('assets/js/calendarios.js') !!}
+{!! Html::script('assets/js/listas.js') !!}
 </html>

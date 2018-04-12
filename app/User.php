@@ -15,14 +15,11 @@ class User extends Authenticatable
     protected $table = "users";
 
     protected $fillable = [
-        'id', 'nombres', 'apellidos', 'email', 'password', 'rut', 'telefono', 'direccion', 'nacimiento', 'titulo', 'estudios_complementarios', 'posicion', 'fecha_admision', 'descripcion', 'actividad', 'avatar'
+        'id', 'nombres', 'apellidos', 'email', 'password', 'rut', 'telefono', 'direccion', 'nacimiento', 'titulo', 'estudios_complementarios', 'posicion', 'fecha_admision', 'descripcion', 'actividad', 'avatar', 'sangre', 'vih', 'peso', 'altura', 'alergia', 'medicamento_actual', 'enfermedad', 'speciality_id'
     ];
 
-   
-    protected $dates = [
-        'nacimiento'
-    ];
-/*
+     protected $appends = ['years'];
+     /*
     public function getNacimientoAttribute($value)
     {
         return Carbon::parse($value)->format('d-m-Y');
@@ -32,13 +29,23 @@ class User extends Authenticatable
     {
         $this->attributes['nacimiento'] = Carbon::createFromFormat('d-m-Y', $value)->toDateString();
     }*/
+    public static function doctores($id) //obtiene los doctores en los select de agregar y editar cita que estan ligados a una especialidad
+    {
+        return User::where('speciality_id', '=', $id)->get();
+    }
+
+    public function queries()
+    {
+        return $this->belongsToMany('App\Query');
+    }
+
     public function roles()
     {
         return $this->belongsToMany('App\Role');
     }
     public function specialities()
     {
-        return $this->belongsToMany('App\Speciality');
+        return $this->hasMany('App\Speciality');
     }
     public function unities()
     {
@@ -60,6 +67,7 @@ class User extends Authenticatable
     {
         return ucwords($valor);
     }
+
     public function setEmailAttribute($valor)
     {
         $this->attributes['email'] = strtolower($valor);
@@ -67,6 +75,16 @@ class User extends Authenticatable
 
     public function getEdad(){
         return $this->nacimiento->diffInYears(now());
+    }
+
+    public function getYearsAttribute()
+    {
+        return Carbon::parse($this->nacimiento)->age;
+    }
+
+    public function getFullNameAttribute()
+    {
+        return $this->attributes['nombres'] .' '. $this->attributes['apellidos'];
     }
 
     protected $hidden = [

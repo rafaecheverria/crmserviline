@@ -26,49 +26,59 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label class="control-label">HORA FIN</label>
-                        <input id="hora_fin" name="hora_fin" type="text" class="form-control" />                    
+                        <input id="hora_fin" name="hora_fin" type="text" class="form-control" />       
                     </div>
                 </div>
             </div>
             @role('doctor')
             <div class="row">
-            <div class="col-md-12"> 
+                <div class="col-md-12"> 
                     <div class="form-group">
                       <label class="control-label">PACIENTE</label>
-                      <select id="paciente_id" name="paciente_id" class="selectpicker" data-style="select-with-transition">
-                            <option value="">-- SELECCIONE UN PACIENTE --</option>
+                      <select id="paciente_id" name="paciente_id" class="form-control" data-style="select-with-transition">
+                            <option value="0">-- SELECCIONE --</option>
                              @foreach($pacientes as $paciente)
                                 <option value="{{ $paciente->id }}">{{ $paciente->apellidos }} {{ $paciente->nombres }}</option>
                             @endforeach
-
                       </select>
                     </div>
                 </div>
-                </div>
+            </div>
             @endrole
             @role('administrador')
             <div class="row">
                 <div class="col-md-6"> 
                     <div class="form-group">
-                      <label class="control-label">DOCTOR</label>
-                      <select id="doctor_id" name="doctor_id" class="selectpicker" data-style="select-with-transition">
-                            <option value="">-- SELECCIONE UN DOCTOR --</option>
-                             @foreach($doctores as $doctor)
-                                <option value="{{ $doctor->id }}">{{ $doctor->nombres }} {{ $doctor->apellidos }}</option>
+                      <label class="control-label">ESPECIALIDAD</label>
+                      <select id="speciality_id" name="speciality_id" class="form-control" data-style="select-with-transition">
+                            <option value="0">-- Seleccione --</option>
+                             @foreach($especialidades as $especialidad)
+                                <option value="{{ $especialidad->id }}">{{ $especialidad->nombre }}</option>
                             @endforeach
-
                       </select>
                     </div>
                 </div>
                 <div class="col-md-6"> 
                     <div class="form-group">
+                      <label class="control-label">DOCTOR</label>
+                      <select id="doctor_id" name="doctor_id" class="form-control" data-style="select-with-transition">
+                            <option value="0">-- Seleccione --</option>
+                             @foreach($doctores as $doctor)
+                                <option value="{{ $doctor->id }}">{{ $doctor->nombres }} {{ $doctor->apellidos }}</option>
+                            @endforeach
+                      </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12"> 
+                    <div class="form-group">
                       <label class="control-label">PACIENTE</label>
-                      <select id="paciente_id" name="paciente_id" class="selectpicker" data-style="select-with-transition">
-                            <option value="">-- SELECCIONE UN PACIENTE --</option>
+                      <select id="paciente_id" name="paciente_id" class="form-control" data-style="select-with-transition">
+                            <option value="">-- Seleccione --</option>
                              @foreach($pacientes as $paciente)
                                 <option value="{{ $paciente->id }}">{{ $paciente->apellidos }} {{ $paciente->nombres }}</option>
                             @endforeach
-
                       </select>
                     </div>
                 </div>

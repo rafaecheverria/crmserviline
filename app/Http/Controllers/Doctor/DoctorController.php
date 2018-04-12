@@ -35,6 +35,11 @@ class DoctorController extends ApiController
         return view('doctores.create', compact('especialidades'));
     }
 
+    public function getDoctor($id)
+    {
+        
+    }
+
     public function store(CreateUserRequest $request)
     {
         

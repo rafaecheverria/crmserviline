@@ -15,7 +15,7 @@ class CreateQueriesTable extends Migration
             $table->dateTime('fecha_fin');
             $table->string('estado');
             $table->string('color', 7);
-            $table->string('descripcion');
+            $table->string('descripcion')->nullable();
             $table->integer('doctor_id')->unsigned();
             $table->integer('paciente_id')->unsigned();
             $table->integer('unity_id')->unsigned();

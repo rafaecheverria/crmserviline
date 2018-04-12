@@ -106,15 +106,7 @@ class DatabaseSeeder extends Seeder
                 array('permission_id' => 4, 'role_id' => 2)
             ));
 
-        DB::table('speciality_user')->insert(array(
-                array('speciality_id' => 1, 'user_id' => 2),
-                array('speciality_id' => 2, 'user_id' => 2),
-                array('speciality_id' => 3, 'user_id' => 2),
-                array('speciality_id' => 4, 'user_id' => 3),
-                array('speciality_id' => 5, 'user_id' => 3),
-                array('speciality_id' => 3, 'user_id' => 4),
-                array('speciality_id' => 1, 'user_id' => 5)
-            ));
+
     }
 }
 

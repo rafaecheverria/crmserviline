@@ -42,21 +42,16 @@
                 </a>
             </li>
             <li>
-                <a href="{{ url('admin/pacientes') }}">
+                <a href="{{ url('pacientes') }}">
                     <i class="material-icons">account_box</i>
                     <p>Pacientes</p>
                 </a>
             </li>
             <li>
-                <a href="{{ url('admin/citas') }}">
-                    <i class="material-icons">date_range</i>
-                    <p>Citas Médicas</p>
-                </a>
-            </li>
-            <li>
-                <a href="{{url('admin/consultas')}}">
+                <a href="{{url('consultas')}}">
                     <i class="material-icons">chrome_reader_mode</i>
-                    <p>Consultas Médicas</p>
+                    <p>Consultas Médicas
+                    </p>
                 </a>
             </li>
             <li>
@@ -69,10 +64,10 @@
                 <div class="collapse" id="settings">
                     <ul class="nav">
                         <li>
-                            <a href="{{ url('admin/clinica') }}">Clinica</a>
+                            <a href="{{ url('clinica') }}">Clinica</a>
                         </li>
                         <li>
-                            <a href="{{ url('admin/personas') }}">Personas</a>
+                            <a href="{{ url('personas') }}">Personas</a>
                         </li>
                         <li>
                             <a href="#">Roles</a>

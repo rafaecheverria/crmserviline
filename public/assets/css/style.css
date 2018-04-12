@@ -60,8 +60,32 @@
 }
 
 
-table, th, td {
+table, th, td{
     text-align: left;
 }
 
+.modal-content .modal-body-edit {
+  padding-top: 15px;
+  padding-right: 15px;
+  padding-bottom: 16px;
+  padding-left: 5px;
+}
 
+.modal-content .modal-body-add {
+  padding-top: 23px;
+  padding-right: 15px;
+  padding-bottom: 24px;
+  padding-left: 5px;
+}
+
+.sinpadding [class*="col-"] {
+    margin-top: -25px;
+}
+
+#table_pacientes{
+  width: 92%;
+  border-radius:1px;
+  border-spacing: 0;
+  border-collapse: collapse;
+  margin: 0px;
+}

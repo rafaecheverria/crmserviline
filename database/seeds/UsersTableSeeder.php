@@ -22,13 +22,14 @@ class UsersTableSeeder extends Seeder
 	        'fecha_admision' => '2014',
 	        'email' => 'rafaecheverria@live.cl',
 	        'password' => bcrypt('26082008'),
-		     'sangre' => 'sin registros',
+		    'sangre' => 'sin registros',
 	        'vih' => 'sin registros',
 	        'peso' => 0,
 	        'altura' => 'sin registros',
 	        'alergia' => 'sin registros',
 	        'medicamento_actual' => 'sin registros',
 	        'enfermedad' => 'sin registros',
+	        'speciality_id' => 1,
 	        'remember_token' => str_random(10),
         ]);
 

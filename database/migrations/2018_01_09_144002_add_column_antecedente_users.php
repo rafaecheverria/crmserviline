@@ -21,6 +21,14 @@ class AddColumnAntecedenteUsers extends Migration
 
     public function down()
     {
-
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('sangre');
+            $table->dropColumn('vih');
+            $table->dropColumn('peso');
+            $table->dropColumn('altura');
+            $table->dropColumn('alergia');
+            $table->dropColumn('medicamento_actual');
+            $table->dropColumn('enfermedad');
+        });
     }
 }

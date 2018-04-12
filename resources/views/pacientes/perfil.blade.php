@@ -7,6 +7,7 @@
             <div class="col s12 m4">
             {!! Form::open(['method' => 'POST', 'files' => true,'id' => 'avatarForm']); !!}
             <div class="file-field input-field">
+                <div id="id_paciente"></div>
                 {!! Form::text('id', $paciente->id,['id' => 'id', 'hidden' => true]); !!} 
                 {!! Form::file('avatar', ['id' => 'avatarInput', 'class' => 'hidden']); !!}         
               <div class="file-path-wrapper">

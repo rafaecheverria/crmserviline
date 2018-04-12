@@ -23,10 +23,8 @@ class PerfilController extends Controller
     }
     public function show($id)
     {
-        {
         $paciente = User::findOrFail($id);
         return view('pacientes.perfil', compact('paciente'));
-    }
     }
     public function edit($id)
     {

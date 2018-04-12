@@ -33,6 +33,8 @@
 {!! Html::script('assets/js/perfect-scrollbar.jquery.min.js') !!}
 {!! Html::script('assets/js/jquery.validate.min.js') !!}
 {!! Html::script('assets/js/moment.min.js') !!}
+{!! Html::script('assets/js/locale.js') !!}
+
 {!! Html::script('assets/js/chartist.min.js') !!}
 {!! Html::script('assets/js/jquery.bootstrap-wizard.js') !!}
 {!! Html::script('assets/js/bootstrap-notify.js') !!}
@@ -49,7 +51,8 @@
 {!! Html::script('assets/js/jquery.tagsinput.js') !!}
 {!! Html::script('assets/js/material-dashboard.js') !!}
 {!! Html::script('assets/js/demo.js') !!}
-{!! Html::script('assets/js/ajax.js') !!}
+{!! Html::script('assets/js/jquery.Rut.js') !!}
 {!! Html::script('assets/js/calendarios.js') !!}
+{!! Html::script('assets/js/ajax.js') !!}
 {!! Html::script('assets/js/listas.js') !!}
 </html>

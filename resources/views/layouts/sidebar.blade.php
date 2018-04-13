@@ -57,6 +57,23 @@
             <li>
                 <a data-toggle="collapse" href="#settings">
                     <i class="material-icons">settings</i>
+                    <p>Mantenimiento
+                        <b class="caret"></b>
+                    </p>
+                </a>
+                <div class="collapse" id="settings">
+                    <ul class="nav">
+                        <li>
+                            <a href="{{ url('clinica') }}">Doctores</a>
+                        </li>
+                        <li>
+                            <a href="{{ url('personas') }}">Especialidades</a>
+                        </li>
+                </div>
+            </li>
+            <li>
+                <a data-toggle="collapse" href="#settings">
+                    <i class="material-icons">settings</i>
                     <p>Configuración
                         <b class="caret"></b>
                     </p>
@@ -74,9 +91,6 @@
                         </li>
                         <li>
                             <a href="#">Permisos</a>
-                        </li>
-                        <li>
-                            <a href="#">Especialidades</a>
                         </li>
                     </ul>
                 </div>

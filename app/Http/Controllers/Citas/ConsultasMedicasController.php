@@ -13,7 +13,7 @@ class ConsultasMedicasController extends Controller
 {
     public function index()
     {
-         $doctores = User::select(['id', 'nombres', 'apellidos'])->withRole('doctor')->orderBy('apellidos', 'asc')->get();
+        $doctores = User::select(['id', 'nombres', 'apellidos'])->withRole('doctor')->orderBy('apellidos', 'asc')->get();
         $pacientes = User::select(['id', 'nombres', 'apellidos'])->withRole('paciente')->orderBy('apellidos', 'asc')->get();
         $especialidades = Speciality::select(['id', 'nombre'])->orderBy('nombre', 'asc')->get();
         $cantidad_pacientes = User::withRole('paciente')->count();

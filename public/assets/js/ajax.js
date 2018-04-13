@@ -5,14 +5,23 @@ function redirect(ruta)
 }
 $(document).ready(function() {
 
-    $("#speciality_id").change(event =>{
-        $.get(`towns/${event.target.value}`, function(res, sta){
-            $("town").empty();
-            res.forEach(element => {
-                $("#town").append(`<option value=${element.id}> ${element.name}<option>`)
-            })
+$("#speciality_id").change(function(event){ //carga los doctores en el select #doctor_id según la especialidad elegida.
+    var id = event.target.value;
+    if (!id) 
+         $("#doctor_id").html("<option>--Seleccione--</option>")
+ 
+        $.get("get-doctor/"+id+"",function(response,speciality){
+        $("#doctor_id").empty();
+        if (response == "") {
+             $("#doctor_id").html("<option>--Seleccione--</option>")
+        }else{
+            for(i = 0; i <response.length; i++) {
+                $("#doctor_id").append("<option value='"+response[i].id+"'>"+response[i].nombres+"</option>")
+            }
+        }
         })
-    })
+})
+
 
 $('.datepicker').datetimepicker({
             format: 'DD-MM-YYYY',
@@ -484,6 +493,7 @@ $( "#ingresar" ).click(function(event){
 
 function roles_user(id)
 {
+    alert(id)
    event.preventDefault();
    var route = "/personas/"+id+"/edit";
    var csrf_token = $('meta[name="csrf-token"]').attr('content');
@@ -701,15 +711,30 @@ function cargar_consulta_atendida(id)// Carga los datos en el modal para editar,
                url: route,
                type: 'GET',
             success:function(data){
+                //console.log(data.especialidad)
                 $("#id_consulta_pendiente").val(data.id)
                 $("#fecha_inicio").val(data.fecha_inicio)
                 $("#hora_inicio").val(data.hora_inicio)
                 $('#hora_fin').val(data.hora_fin)
                 $('#paciente_id').val(data.paciente)
                 $('#speciality_id').val(data.especialidad)
-                $('#doctor_id').val(data.doctor)
+                //$('#doctor_id').val(data.doctor)
                 $('#descripcion').val(data.descripcion)
+                $('#doctor_id option[value='+data.doctor+']').attr('selected','selected');
 
+                $.get("get-doctor/"+data.especialidad+"",function(response,speciality){
+                    $("#doctor_id").empty();
+                    if (response == "") {
+                         $("#doctor_id").html("<option>--Seleccione--</option>")
+                    }else{
+                        for(i = 0; i <response.length; i++) {
+                            $("#doctor_id").append("<option value='"+response[i].id+"'>"+response[i].nombres+"</option>")
+                        }
+                        $('#doctor_id').val(data.doctor)
+                    }
+                })
+                
+                //$('#doctor_id').val(data.doctor)
               },
            error:function(){
                alert('la operación falló');

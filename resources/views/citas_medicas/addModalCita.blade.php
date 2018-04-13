@@ -51,7 +51,7 @@
                     <div class="form-group">
                       <label class="control-label">ESPECIALIDAD</label>
                       <select id="speciality_id" name="speciality_id" class="form-control" data-style="select-with-transition">
-                            <option value="0">-- Seleccione --</option>
+                            <option value="">-- Seleccione --</option>
                              @foreach($especialidades as $especialidad)
                                 <option value="{{ $especialidad->id }}">{{ $especialidad->nombre }}</option>
                             @endforeach
@@ -63,9 +63,6 @@
                       <label class="control-label">DOCTOR</label>
                       <select id="doctor_id" name="doctor_id" class="form-control" data-style="select-with-transition">
                             <option value="0">-- Seleccione --</option>
-                             @foreach($doctores as $doctor)
-                                <option value="{{ $doctor->id }}">{{ $doctor->nombres }} {{ $doctor->apellidos }}</option>
-                            @endforeach
                       </select>
                     </div>
                 </div>

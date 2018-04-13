@@ -122,54 +122,65 @@ $(document).ready(function() {
                         $.notify({icon: "add_alert", message: 'Esta consulta no se puede modificar porque ya fue atendida.'},{type: 'warning', timer: 1000})
                     }else{
                         var date_start = $.fullCalendar.moment(event.start).format('DD-MM-YYYY');
-                    var time_start = $.fullCalendar.moment(event.start).format('HH:mm:ss');
-                    var time_end = $.fullCalendar.moment(event.end).format('HH:mm:ss');
-                    $("#up_evento #id").val(event.id);
-                    $("#up_evento #fecha_inicio").datetimepicker({
-                        format: 'DD-MM-YYYY',
-                        icons : {
-                            up: "fa fa-chevron-up",
-                            down: "fa fa-chevron-down",
-                            previous: 'fa fa-chevron-left',
-                            next: 'fa fa-chevron-right',
-                            today: 'fa fa-screenshot',
-                            clear: 'fa fa-trash',
-                            close: 'fa fa-remove',
+                        var time_start = $.fullCalendar.moment(event.start).format('HH:mm:ss');
+                        var time_end = $.fullCalendar.moment(event.end).format('HH:mm:ss');
+                        $("#up_evento #id").val(event.id);
+                        $("#up_evento #fecha_inicio").datetimepicker({
+                            format: 'DD-MM-YYYY',
+                            icons : {
+                                up: "fa fa-chevron-up",
+                                down: "fa fa-chevron-down",
+                                previous: 'fa fa-chevron-left',
+                                next: 'fa fa-chevron-right',
+                                today: 'fa fa-screenshot',
+                                clear: 'fa fa-trash',
+                                close: 'fa fa-remove',
+                            }
+                        }).val(date_start);
+                        $("#up_evento #hora_inicio").datetimepicker({
+                            format: 'HH:mm:ss',
+                            icons : {
+                                up: "fa fa-chevron-up",
+                                down: "fa fa-chevron-down",
+                                previous: 'fa fa-chevron-left',
+                                next: 'fa fa-chevron-right',
+                                today: 'fa fa-screenshot',
+                                clear: 'fa fa-trash',
+                                close: 'fa fa-remove',
+                            }
+                        }).val(time_start);
+                        $("#up_evento #hora_fin").datetimepicker({
+                            format: 'HH:mm:ss',
+                            icons : {
+                                up: "fa fa-chevron-up",
+                                down: "fa fa-chevron-down",
+                                previous: 'fa fa-chevron-left',
+                                next: 'fa fa-chevron-right',
+                                today: 'fa fa-screenshot',
+                                clear: 'fa fa-trash',
+                                close: 'fa fa-remove',
+                            }
+                        }).val(time_end);
+                        $("#up_evento #paciente_id").val(event.paciente_id);
+                        $("#up_evento #descripcion").val(event.descripcion);
+                        $("#up_evento #speciality_id").val(event.speciality_id);
+                        //$("#up_evento #doctor_id_").val(event.doctor_id);
+                           // $('.selectpicker').selectpicker('refresh')
+                           $.get("get-doctor/"+event.speciality_id+"",function(response,speciality){
+                                $("#up_evento #doctor_id").empty();
+                                if (response == "") {
+                                     $("#up_evento #doctor_id").html("<option>--Seleccione--</option>")
+                                }else{
+                                    for(i = 0; i <response.length; i++) {
+                                        $("#up_evento #doctor_id").append("<option value='"+response[i].id+"'>"+response[i].nombres+"</option>")
+                                    }
+                                    $('#up_evento #doctor_id').val(event.doctor_id)
+                                }
+                            })
+                        $("#up_evento").modal("show");
                         }
-                    }).val(date_start);
-                    $("#up_evento #hora_inicio").datetimepicker({
-                        format: 'HH:mm:ss',
-                        icons : {
-                            up: "fa fa-chevron-up",
-                            down: "fa fa-chevron-down",
-                            previous: 'fa fa-chevron-left',
-                            next: 'fa fa-chevron-right',
-                            today: 'fa fa-screenshot',
-                            clear: 'fa fa-trash',
-                            close: 'fa fa-remove',
-                        }
-                    }).val(time_start);
-                    $("#up_evento #hora_fin").datetimepicker({
-                        format: 'HH:mm:ss',
-                        icons : {
-                            up: "fa fa-chevron-up",
-                            down: "fa fa-chevron-down",
-                            previous: 'fa fa-chevron-left',
-                            next: 'fa fa-chevron-right',
-                            today: 'fa fa-screenshot',
-                            clear: 'fa fa-trash',
-                            close: 'fa fa-remove',
-                        }
-                    }).val(time_end);
-                    $("#up_evento #doctor_id").val(event.doctor_id);
-                    $("#up_evento #paciente_id").val(event.paciente_id);
-                    $("#up_evento #speciality_id").val(event.speciality_id);
-                    $("#up_evento #descripcion").val(event.descripcion);
-                    $('.selectpicker2').selectpicker('refresh')
-                    $("#up_evento").modal("show");
-                    }
-                },
-            })
+                    },
+                })
 
         $('#nacimiento').datetimepicker({
         icons: {

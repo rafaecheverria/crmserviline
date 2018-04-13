@@ -74,6 +74,7 @@ class CitasMedicasController extends Controller
     public function edit(Query $queries, $id) //carga los datos al formulario modal de citas pendientes en el modulo "consultas medicas"
     {
         $cita_pendiente = $queries->findOrFail($id);
+        //$especialidad = $cita_pendiente->speciality_id;
            return response()->json([
             'success'      => true,
             'id'           => $cita_pendiente->id,

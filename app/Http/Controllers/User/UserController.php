@@ -30,7 +30,7 @@ class UserController extends ApiController
             $user->attachRole(3);
             return response()->json([
                 "message" => "los registros del recepcionista ".$user->apellidos." se han registrado correctamente !"
-                ]);
+            ]);
         }
     }
 

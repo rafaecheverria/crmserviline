@@ -35,9 +35,12 @@ class DoctorController extends ApiController
         return view('doctores.create', compact('especialidades'));
     }
 
-    public function getDoctor($id)
+    public function getDoctor(Request $request, $id)
     {
-        
+        if ($request->ajax()) {
+            $doctores = User::doctores($id);
+            return response()->json($doctores);
+        }
     }
 
     public function store(CreateUserRequest $request)

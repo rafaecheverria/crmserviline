@@ -28,7 +28,7 @@ $factory->define(App\User::class, function (Faker $faker) {
         'alergia' => 'sin registros',
         'medicamento_actual' => 'sin registros',
         'enfermedad' => 'sin registros',
-        'speciality_id' => $faker->randomNumber(2),
+        //'speciality_id' => $faker->randomNumber(2),
         'remember_token' => str_random(10),
     ];
 });

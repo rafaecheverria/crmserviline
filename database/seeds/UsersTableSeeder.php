@@ -29,7 +29,7 @@ class UsersTableSeeder extends Seeder
 	        'alergia' => 'sin registros',
 	        'medicamento_actual' => 'sin registros',
 	        'enfermedad' => 'sin registros',
-	        'speciality_id' => 1,
+	        //'speciality_id' => 1,
 	        'remember_token' => str_random(10),
         ]);
 

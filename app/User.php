@@ -15,7 +15,7 @@ class User extends Authenticatable
     protected $table = "users";
 
     protected $fillable = [
-        'id', 'nombres', 'apellidos', 'email', 'password', 'rut', 'telefono', 'direccion', 'nacimiento', 'titulo', 'estudios_complementarios', 'posicion', 'fecha_admision', 'descripcion', 'actividad', 'avatar', 'sangre', 'vih', 'peso', 'altura', 'alergia', 'medicamento_actual', 'enfermedad', 'speciality_id'
+        'id', 'nombres', 'apellidos', 'email', 'password', 'rut', 'telefono', 'direccion', 'nacimiento', 'titulo', 'estudios_complementarios', 'posicion', 'fecha_admision', 'descripcion', 'actividad', 'avatar', 'sangre', 'vih', 'peso', 'altura', 'alergia', 'medicamento_actual', 'enfermedad'
     ];
 
      protected $appends = ['years'];
@@ -29,9 +29,11 @@ class User extends Authenticatable
     {
         $this->attributes['nacimiento'] = Carbon::createFromFormat('d-m-Y', $value)->toDateString();
     }*/
-    public static function doctores($id) //obtiene los doctores en los select de agregar y editar cita que estan ligados a una especialidad
+   public static function doctores($id) //obtiene los doctores en los select de agregar y editar cita que estan ligados a una especialidad
     {
-        return User::where('speciality_id', '=', $id)->get();
+        $users = Speciality::findOrFail($id)->users; //lista los usuarios que tinen el id de la especialidad que recibe como parametro
+        return $users;
+        //return $doctores;
     }
 
     public function queries()
@@ -45,7 +47,7 @@ class User extends Authenticatable
     }
     public function specialities()
     {
-        return $this->hasMany('App\Speciality');
+        return $this->belongsToMany('App\Speciality');
     }
     public function unities()
     {

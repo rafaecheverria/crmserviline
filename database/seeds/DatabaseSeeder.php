@@ -20,6 +20,15 @@ class DatabaseSeeder extends Seeder
         $this->call(UnitiesTableSeeder::class);
         $this->call(PermissionsTableSeeder::class);
 
+        DB::table('speciality_user')->insert(array(
+
+                 array('user_id' => 852, 'speciality_id' => 1),
+                 array('user_id' => 853, 'speciality_id' => 1),
+                 array('user_id' => 4,   'speciality_id' => 1),
+                 array('user_id' => 852, 'speciality_id' => 2),
+
+            ));
+
 
         DB::table('role_user')->insert(array(
                 array('user_id' => 1, 'role_id' => 1),

@@ -14,8 +14,9 @@ Route::middleware(['auth', 'role:administrador|doctor|recepcionista'])->group(fu
 	Route::resource('citas', 'Citas\CitasMedicasController', ['only' => ['index', 'store', 'update', 'destroy', 'edit']]);
 	Route::resource('consultas', 'Citas\ConsultasMedicasController');
 
-	Route::get('atender/{id}','Citas\ConsultasMedicasController@atender');
+	Route::get('get-doctor/{id}','Doctor\DoctorController@getDoctor');
 	Route::get('doctor/{id}','Citas\ConsultasMedicasController@atender');
+	Route::get('atender/{id}','Citas\ConsultasMedicasController@atender');
 	//Route::get('consultas-atendidas','Citas\ConsultasMedicasController@index_atendidos');
 	Route::get('consultas-carga','Citas\ConsultasMedicasController@carga_atendidos');
 	Route::get('api','Citas\CitasMedicasController@api');

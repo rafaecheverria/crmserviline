@@ -64,11 +64,6 @@
                             <div class="form-group">
                               <label class="control-label">DOCTOR</label>
                               <select id="doctor_id" name="doctor_id" class="form-control" data-style="select-with-transition">
-                                    <option value="">-- Seleccione --</option>
-                                     @foreach($doctores as $doctor)
-                                        <option value="{{ $doctor->id }}">{{ $doctor->nombres }} {{ $doctor->apellidos }}</option>
-                                    @endforeach
-
                               </select>
                             </div>
                         </div>

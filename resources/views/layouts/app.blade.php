@@ -11,7 +11,7 @@
     {!! Html::style('assets/css/bootstrap.min.css') !!}
     {!! Html::style('assets/css/demo.css') !!}
     {!! Html::style('assets/css/style.css') !!}
-    {!! Html::style('http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css') !!}
+    {!! Html::style('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css') !!}
     {!! Html::style('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons') !!}   
     {!! Html::style('assets/css/material-dashboard.css') !!}
       
@@ -24,7 +24,7 @@
            @include('layouts.principal')
            @yield('content')
         </div>
-    </div>   
+    </div>  
 </body>
 {!! Html::script('assets/js/jquery-3.1.1.min.js') !!}
 {!! Html::script('assets/js/jquery-ui.min.js') !!}
@@ -34,7 +34,6 @@
 {!! Html::script('assets/js/jquery.validate.min.js') !!}
 {!! Html::script('assets/js/moment.min.js') !!}
 {!! Html::script('assets/js/locale.js') !!}
-
 {!! Html::script('assets/js/chartist.min.js') !!}
 {!! Html::script('assets/js/jquery.bootstrap-wizard.js') !!}
 {!! Html::script('assets/js/bootstrap-notify.js') !!}

@@ -28,7 +28,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row sinpadding">
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="control-label">Nacimiento:</label>

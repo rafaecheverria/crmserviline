@@ -4,7 +4,26 @@ function redirect(ruta)
     //setTimeout("location."+ruta, 5000);
 }
 $(document).ready(function() {
-
+    $("#limpiar").click(function(){
+        $("#nombre").val("")
+        $("#btn-guardar").html('<a href="#" onclick="guardar_especialidad();" class="btn btn-fill btn-success">Guardar</a>')
+    })
+$("#up_evento #speciality_id").change(function(event){ //carga los doctores en el select #doctor_id según la especialidad elegida.
+    var id = event.target.value;
+    if (!id) 
+         $("#doctor_id").html("<option>--Seleccione--</option>")
+ 
+        $.get("get-doctor/"+id+"",function(response,speciality){
+        $("#up_evento #doctor_id").empty();
+        if (response == "") {
+             $("#up_evento #doctor_id").html("<option>--Seleccione--</option>")
+        }else{
+            for(i = 0; i <response.length; i++) {
+                $("#up_evento #doctor_id").append("<option value='"+response[i].id+"'>"+response[i].apellidos+" "+response[i].nombres+"</option>")
+            }
+        }
+    })
+})
 $("#speciality_id").change(function(event){ //carga los doctores en el select #doctor_id según la especialidad elegida.
     var id = event.target.value;
     if (!id) 
@@ -13,16 +32,14 @@ $("#speciality_id").change(function(event){ //carga los doctores en el select #d
         $.get("get-doctor/"+id+"",function(response,speciality){
         $("#doctor_id").empty();
         if (response == "") {
-             $("#doctor_id").html("<option>--Seleccione--</option>")
+             $("#up_evento #doctor_id").html("<option>--Seleccione--</option>")
         }else{
             for(i = 0; i <response.length; i++) {
-                $("#doctor_id").append("<option value='"+response[i].id+"'>"+response[i].nombres+"</option>")
+                $("#doctor_id").append("<option value='"+response[i].id+"'>"+response[i].apellidos+" "+response[i].nombres+"</option>")
             }
         }
         })
 })
-
-
 $('.datepicker').datetimepicker({
             format: 'DD-MM-YYYY',
             locale:'es',
@@ -56,9 +73,7 @@ $('.timepicker').datetimepicker({
 
             }
          });
-
 $( "#delete_cita" ).click(function(event){ //esta funcion elimina una cita oendiente desde el cale ndario.
-    event.preventDefault();
     var id= $( '#id' ).val()
     var popup = confirm("¿ Esta seguro de eliminar esta cita ?")
     var route = "/citas/"+id+"";
@@ -87,6 +102,7 @@ $( "#guardar_cita" ).click(function(event){
         event.preventDefault();
         var dataString  = $( '#form_cita' ).serializeArray();
         var route = "/citas";
+        console.log(dataString)
         $.ajax({
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             url: route,
@@ -168,7 +184,7 @@ $( "#btn_guardar_rec" ).click(function(event){
         })
     })
 
-$( "#update_cita" ).click(function(event){ //esta funcion elimina una cita oendiente desde el Calendario.
+$( "#update_cita" ).click(function(event){ 
         event.preventDefault()
         var id= $( '#id' ).val()
         var route = "/citas/"+id+""
@@ -225,7 +241,8 @@ $( "#update_consulta_pendiente" ).click(function(event){ //esta funcion actualiz
         }) 
     })
 $( "#update_consulta" ).click(function(event){ 
-        var id= $( '#id' ).val()
+    
+       var id= $( '#id' ).val()
         var route = "/consultas/"+id+""
         var dataString  = $( '#form_consulta' ).serializeArray()
         $.ajax({
@@ -254,9 +271,8 @@ $( "#update_consulta" ).click(function(event){
         }) 
     })
 $( "#update_role_user" ).click(function(event){ 
-        event.preventDefault()
         var id= $( '#id' ).val()
-        var route = "/roles/"+id+""
+        var route = "/update-roles/"+id+""
         var dataString  = $( '#form_update_roles_user' ).serializeArray()
         $.ajax({
             url: route,
@@ -279,36 +295,111 @@ $( "#update_role_user" ).click(function(event){
             }
         })  
     })
-/*$( "#update_antecedentes_paciente" ).click(function(event){ 
-        event.preventDefault()
-        var id= $( '#id_paciente' ).val()
-        var route = "/antecedentes/"+id+""
-        var dataString  = $( '#form_antecedente_paciente' ).serializeArray()
+$( "#update_especialidades" ).click(function(event){ 
+        var id= $( '#id' ).val()
+        var route = "/especialidad-doctor/"+id+""
+        var dataString  = $( '#form_especielidades_doctor' ).serializeArray()
         $.ajax({
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             url: route,
             type: 'PUT',
             datatype: 'json',
             data:dataString,
-
             success:function(data){
-                console.log(data)
                 $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
-                $('#antecedentePersonalModal').modal('toggle');
+                $('#modal_especialidades').modal('toggle');
+                 $('#table_doctores').DataTable().ajax.reload();
             },
             error:function(data){
-                console.log(data)
                 var error = data.responseJSON.errors;
                 for(var i in error){
                     for(var j in error[i]){
                         var message = error[i][j];
-                        console.log(message)
+                       $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000})
+                    }
+                }
+            }
+        })  
+    })
+$( "#update_permisos_roles" ).click(function(event){ 
+        var id= $( '#id' ).val()
+        var route = "/permisos-roles/"+id+""
+        var dataString  = $( '#form_permisos_rol' ).serializeArray()
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            url: route,
+            type: 'PUT',
+            datatype: 'json',
+            data:dataString,
+            success:function(data){
+                $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
+                $('#modal_permisos').modal('toggle');
+                 $('#table_roles').DataTable().ajax.reload();
+            },
+            error:function(data){
+                var error = data.responseJSON.errors;
+                for(var i in error){
+                    for(var j in error[i]){
+                        var message = error[i][j];
+                       $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000})
+                    }
+                }
+            }
+        })  
+    })
+
+$( "#update_editar_rol" ).click(function(event){ //actualiza los datos del modal rol.
+        var id = $("#id_e").val();
+        var route = "/roles/"+id+""
+        var dataString  = $( '#form_editar_rol' ).serializeArray()
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            url: route,
+            type: 'PUT',
+            datatype: 'json',
+            data:dataString,
+            success:function(data){
+                $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
+                $('#modal_editar_rol').modal('toggle');
+                $('#table_roles').DataTable().ajax.reload();
+            },
+            error:function(data){
+                var error = data.responseJSON.errors;
+                for(var i in error){
+                    for(var j in error[i]){
+                        var message = error[i][j];
                        $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000})
                     }
                 }
             }
         })
-    })*/
+    })
+$( "#update_editar_permiso" ).click(function(event){ //actualiza los datos del modal rol.
+        var id = $("#id_e").val();
+        var route = "/permisos/"+id+""
+        var dataString  = $( '#form_editar_permiso' ).serializeArray()
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            url: route,
+            type: 'PUT',
+            datatype: 'json',
+            data:dataString,
+            success:function(data){
+                $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
+                $('#modal_editar_permiso').modal('toggle');
+                $('#table_permisos').DataTable().ajax.reload();
+            },
+            error:function(data){
+                var error = data.responseJSON.errors;
+                for(var i in error){
+                    for(var j in error[i]){
+                        var message = error[i][j];
+                       $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000})
+                    }
+                }
+            }
+        })
+    })
 $( "#update_editar_paciente" ).click(function(event){ 
         event.preventDefault()
         var id= $( '#id' ).val()
@@ -337,8 +428,44 @@ $( "#update_editar_paciente" ).click(function(event){
             }
         })
     })
+$( "#update_editar_usuario" ).click(function(event){  //actualiza los datos del doctor.
 
-	$( "#btn_update_doc" ).click(function(event){ 
+        var id= $( '#id' ).val()
+        var tipo = $("#tipo").val()
+        var route = ""
+        if (tipo === "doctor") {route = "/doctores/"+id+""}else{route = "/recepcionistas/"+id+""}
+        var dataString  = $( '#form_editar_usuario' ).serializeArray()
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            url: route,
+            type: 'PUT',
+            datatype: 'json',
+            data:dataString,
+            success:function(data){
+                if (data.tipo === "doctor") {
+                    $('#table_doctores').DataTable().ajax.reload()
+                    $('#modal_editar_doctor').modal('toggle')
+                    $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
+                }else{
+                    $('#table_recepcionistas').DataTable().ajax.reload()
+                    $('#modal_editar_recepcionista').modal('toggle')
+                    $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
+                }         
+            },
+            error:function(data){
+                var error = data.responseJSON.errors;
+                for(var i in error){
+                    for(var j in error[i]){
+                        var message = error[i][j];
+                        console.log(message)
+                       $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000})
+                    }
+                }
+            }
+        })
+    })
+
+	/*$( "#btn_update_doc" ).click(function(event){ 
 		event.preventDefault();
 		var id= $( '#id' ).val();
 		var route = "/doctores/"+id+"";
@@ -360,9 +487,9 @@ $( "#update_editar_paciente" ).click(function(event){
                 }
             }
 		})
-	})
+	})*/
     
-$( "#btn_update_rec" ).click(function(event){ 
+/*$( "#btn_update_rec" ).click(function(event){ 
         event.preventDefault();
         var id= $( '#id' ).val();
         var route = "/recepcionistas/"+id+"";
@@ -384,10 +511,60 @@ $( "#btn_update_rec" ).click(function(event){
                 }
             }
         })
+    })*/
+$( "#add_rol" ).click(function(event){
+        var route = "/roles/"
+        var dataString  = $( '#form_add_rol' ).serializeArray()
+        console.log(dataString)
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            url: route,
+            type: 'POST',
+            datatype: 'json',
+            data:dataString,
+            success:function(data){
+                $('#table_roles').DataTable().ajax.reload();
+                $('#modal_agregar_rol').modal('toggle');
+                $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
+            },
+            error:function(data){
+                var error = data.responseJSON.errors;
+                for(var i in error){
+                    for(var j in error[i]){
+                        var message = error[i][j];
+                       $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000})
+                    }
+                }
+            }
+        })
+    })
+$( "#add_permiso" ).click(function(event){
+        var route = "/permisos/"
+        var dataString  = $( '#form_add_permisos' ).serializeArray()
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            url: route,
+            type: 'POST',
+            datatype: 'json',
+            data:dataString,
+            success:function(data){
+                $('#table_permisos').DataTable().ajax.reload();
+                $('#modal_agregar_permiso').modal('toggle');
+                $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
+            },
+            error:function(data){
+                var error = data.responseJSON.errors;
+                for(var i in error){
+                    for(var j in error[i]){
+                        var message = error[i][j];
+                       $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000})
+                    }
+                }
+            }
+        })
     })
 
-$( "#add_paciente" ).click(function(event){ 
-        event.preventDefault()
+$( "#add_paciente" ).click(function(event){
         var route = "/pacientes/"
         var dataString  = $( '#form_add_paciente' ).serializeArray()
         console.log(dataString)
@@ -413,6 +590,41 @@ $( "#add_paciente" ).click(function(event){
             }
         })
     })
+$( "#add_usuario" ).click(function(event){  //esta funcion agrega nuevos doctores y recepcionistas.
+        var route = ""
+        var dataString  = $( '#form_add_usuario' ).serializeArray()
+        var tipo = $("#tipo").val()
+        if (tipo === "doctor"){route = "/doctores/"}else{route = "/recepcionistas/"}
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            url: route,
+            type: 'POST',
+            datatype: 'json',
+            data:dataString,
+            success:function(data){
+                if (data.tipo === "doctor") {
+                     $('#table_doctores').DataTable().ajax.reload();
+                     $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
+                     $('#form_add_usuario')[0].reset()
+                     $('#modal_agregar_doctor').modal('toggle')
+                }else{
+                     $('#table_recepcionistas').DataTable().ajax.reload();
+                     $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
+                     $('#form_add_usuario')[0].reset()
+                     $('#modal_agregar_recepcionista').modal('toggle')
+                }
+            },
+            error:function(data){
+                var error = data.responseJSON.errors;
+                for(var i in error){
+                    for(var j in error[i]){
+                        var message = error[i][j];
+                       $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000})
+                    }
+                }
+            }
+        })
+    })
 
 $( "#ingresar" ).click(function(event){ 
         event.preventDefault();
@@ -420,7 +632,7 @@ $( "#ingresar" ).click(function(event){
         var route = "login";
         $.ajax({
             url: route,
-            headers: {'X-CSRF-TOKEN':$('input[name=_token]').attr('content')},
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             type: 'post',
             datatype: 'json',
             data:dataString,
@@ -460,7 +672,7 @@ $( "#ingresar" ).click(function(event){
         formData.append('avatar', $avatarInput[0].files[0]);
 
             $.ajax({
-                headers: {'X-CSRF-TOKEN':$('input[name=_token]').attr('content')},
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 url: avatarUrl+'?'+$avatarForm.serialize(),
                 method: 'POST',
                 data: formData,
@@ -490,10 +702,69 @@ $( "#ingresar" ).click(function(event){
     });
 });
 
+    String.prototype.ucwords = function() {
+    str = this.toLowerCase();
+    return str.replace(/(^([a-zA-Z\p{M}]))|([ -][a-zA-Z\p{M}])/g,
+        function($1){
+            return $1.toUpperCase();
+        });
+}
 
-function roles_user(id)
+function guardar_especialidad()
 {
-    alert(id)
+    var route = "/especialidades/"
+        var dataString  = $( '#form_especialidades' ).serializeArray()
+        console.log(dataString)
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            url: route,
+            type: 'POST',
+            datatype: 'json',
+            data:dataString,
+            success:function(data){
+                $('#table_especialidades').DataTable().ajax.reload();
+                $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
+            },
+            error:function(data){
+                var error = data.responseJSON.errors;
+                for(var i in error){
+                    for(var j in error[i]){
+                        var message = error[i][j];
+                       $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000})
+                    }
+                }
+            }
+        })
+}
+function actualizar_especialidad($id)
+{
+    var id= $( '#id' ).val()
+    var route = "/especialidades/"+id+"";
+    var dataString  = $( '#form_especialidades' ).serializeArray()
+    $.ajax({
+           headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+           url: route,
+           type: 'PUT',
+           data: dataString,
+        success:function(data){
+            $('#table_especialidades').DataTable().ajax.reload()
+            $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
+          },
+       error:function(data){
+            var error = data.responseJSON.errors;
+                for(var i in error){
+                    for(var j in error[i]){
+                        var message = error[i][j];
+                       $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000})
+                    }
+                }
+          }
+    });
+}
+
+
+function roles_user(id)// carga datos en el modal roles_user del módulo de personas.
+{
    event.preventDefault();
    var route = "/personas/"+id+"/edit";
    var csrf_token = $('meta[name="csrf-token"]').attr('content');
@@ -525,8 +796,97 @@ function roles_user(id)
           }
     });
 }
+/*function carga_doctor(id)//carga datos del doctor en el modal editar.
+{
+   //event.preventDefault(); este evento no funciona con firefox y envia error, no cargan los datos en el modal.
+   var route = "/doctores/"+id+"/edit";
+   var csrf_token = $('meta[name="csrf-token"]').attr('content');
+    $.ajax({
+           url: route,
+           type: 'GET',
+        success:function(data){
+            console.log(data.nombres)
+            $('#nombres_doc').val(data.nombres)
+            $('#id').val(data.id)
+            $(".avatarImage").attr('src', 'assets/img/perfiles/'+data.avatar+'?'+ new Date().getTime());
+            $('#apellidos').val(data.apellidos)
+            $('#email').val(data.email)
+            $('#telefono').val(data.telefono)
+            $('#direccion').val(data.direccion)
+            $('#nacimiento').val(data.nacimiento)
+            $("INPUT[name=genero]").val([data.genero]) //carga valor de radiobutton desde mysql
+            $('.title-name').html(data.nombres)
+          },
+       error:function(){
+           alert('la operación falló');
+          }
+    })
+}*/
+function carga_usuario(id)//carga datos del doctor y recepcionista en el modal editar.
+{
+   //event.preventDefault(); este evento no funciona con firefox y envia error, no cargan los datos en el modal.
+   var route = "/recepcionistas/"+id+"/edit";
+   var csrf_token = $('meta[name="csrf-token"]').attr('content');
+    $.ajax({
+           url: route,
+           type: 'GET',
+        success:function(data){
+            console.log(data.nombres)
+            $("INPUT[name=nombres]").val([data.nombres])
+            $("INPUT[name=apellidos]").val([data.apellidos])
+            $("INPUT[name=email]").val([data.email])
+            $("INPUT[name=telefono]").val([data.telefono])
+            $("INPUT[name=direccion]").val([data.direccion])
+            $("INPUT[name=nacimiento]").val([data.nacimiento])
+            $("INPUT[name=id]").val(data.id)
+            $(".avatarImage").attr('src', 'assets/img/perfiles/'+data.avatar+'?'+ new Date().getTime());
+            $("INPUT[name=genero]").val([data.genero]) //carga valor de radiobutton desde mysql
+           $('.title-name').html(data.nombres+" "+ data.apellidos)
+          },
+       error:function(){
+           alert('la operación falló');
+          }
+    })
+}
 
-function carga_paciente(id)
+function carga_rol(id)//carga datos del doctor en el modal editar.
+{
+   var route = "/roles/"+id+"/edit";
+   var csrf_token = $('meta[name="csrf-token"]').attr('content');
+    $.ajax({
+           url: route,
+           type: 'GET',
+        success:function(data){
+            console.log(data.nombre)
+            $('#name_e').val(data.nombre)
+            $('#id_e').val(data.id)
+            $('.title-name').html(data.nombre)
+          },
+       error:function(){
+           alert('la operación falló');
+          }
+    });
+}
+function carga_permiso(id)//carga datos de los permisos en el modal editar.
+{
+   var route = "/permisos/"+id+"/edit";
+   var csrf_token = $('meta[name="csrf-token"]').attr('content');
+    $.ajax({
+           url: route,
+           type: 'GET',
+        success:function(data){
+            console.log(data.nombre)
+            $('#name_e').val(data.nombre)
+            $('#id_e').val(data.id)
+            $('.title-name').html(data.nombre)
+          },
+       error:function(){
+           alert('la operación falló');
+          }
+    });
+}
+
+function carga_paciente(id)//carga datos del paciente en el modal editar.
 {
    //event.preventDefault(); este evento no funciona con firefox y envia error, no cargan los datos en el modal.
    var route = "/pacientes/"+id+"/edit";
@@ -559,8 +919,74 @@ function carga_paciente(id)
           }
     });
 }
+function permisos_roles(id) //carga modal que contiene el select multiple de permisos del rol.
+{
+   var route = "/permisos-roles/"+id+"/edit";
+   var csrf_token = $('meta[name="csrf-token"]').attr('content');
+   var image = new Image();
+    $.ajax({
+           url: route,
+           type: 'GET',
+        success:function(data){
+            $('#id').val(data.id)
+            $('#rol').html(data.nombre)
+            $('.title-name').html(data.nombre)
+            const crearOption = (value, name, selected) => `<option value="${value}"${selected.includes(value) ? ' selected' : ''}>${name}</option>`
+            const obj = data.permisos
+            const values = Object.keys(obj)
+            const opciones = values.map(x => crearOption(x, obj[x], data.my_permisos))
+            const select = document.getElementById('permisos_roles')
+                 select.innerHTML = ''
+                 opciones.forEach(x => { select.insertAdjacentHTML('beforeend', x) })
+            const valor = data.my_permisos
+                 i = 0, size = valor.length
+                      for(i; i < size; i++){
+                    $('select option[value='+valor[i]+']').attr('selected', 'selected')
+                }
+           $('.selectpicker').selectpicker('refresh')
+          },
+       error:function(){
+           alert('la operación falló');
+          }
+    });
+}
+function especialidad_doctor(id) //carga modal que contiene el select multiple de las especialidades del doctor.
+{
+   var route = "/especialidad-doctor/"+id+"/edit";
+   var csrf_token = $('meta[name="csrf-token"]').attr('content');
+   var image = new Image();
+    $.ajax({
+           url: route,
+           type: 'GET',
+        success:function(data){
+            $('#id').val(data.id)
+            $(".avatarImage").attr('src', 'assets/img/perfiles/'+data.avatar+'?'+ new Date().getTime());
+            $('#rut').html(data.rut)
+            $('#nombres').html(data.nombres)
+            $('#estudios_complementarios').val(data.estudios_complementarios)
+            $('.title-name').html(data.nombres)
+            //$('.selectpicker3').selectpicker()
+            const crearOption = (value, name, selected) => `<option value="${value}"${selected.includes(value) ? ' selected' : ''}>${name}</option>`
+            const obj = data.especialidades
+            const values = Object.keys(obj)
+            const opciones = values.map(x => crearOption(x, obj[x], data.my_especialidades))
+            const select = document.getElementById('especialidades_doctor')
+                 select.innerHTML = ''
+                 opciones.forEach(x => { select.insertAdjacentHTML('beforeend', x) })
+            const valor = data.my_especialidades
+                 i = 0, size = valor.length
+                      for(i; i < size; i++){
+                    $('select option[value='+valor[i]+']').attr('selected', 'selected')
+                }
+           $('.selectpicker').selectpicker('refresh')
+          },
+       error:function(){
+           alert('la operación falló');
+          }
+    });
+}
 
-function ficha_paciente(id)
+function ficha_paciente(id) //carga datos en la ficha del paciente.
 {
    var route = "/ficha/"+id+"";
    var csrf_token = $('meta[name="csrf-token"]').attr('content');
@@ -594,9 +1020,51 @@ function ficha_paciente(id)
     });
 }
 
+function expediente_paciente(id) //carga datos en el expediente del paciente.
+{
+   
+   var route = "/expediente/"+id+"";
+   var csrf_token = $('meta[name="csrf-token"]').attr('content');
+   var html = "";
+    $.ajax({
+        url: route,
+        type: 'GET',
+        success:function(data){
+            console.log(data)
+           if (data.array.length > 0) {
+                for(i=0;i<data.array.length;i++){
+                    for(i=0;i<data.fecha.length;i++){
+                        html+="<div class='panel-group' id='accordion' role='tablist' aria-multiselectable='true'>";
+                        html+="<div class='panel panel-default'>";
+                        html+="<div class='panel-heading' role='tab' id='"+data.array[i].id+"'>";
+                        html+="<a class='collapsed' role='button' data-toggle='collapse' data-parent='#accordion' href='#"+data.array[i].id+"1' aria-expanded='false' aria-controls='"+data.array[i].id+"1'>";
+                        html+="<h4 class='panel-title'>"+data.fecha[i]+"<i class='material-icons'>keyboard_arrow_down</i></h4></a></div>";
+                        html+="<div id='"+data.array[i].id+"1' class='panel-collapse collapse' role='tabpanel' aria-labelledby='"+data.array[i].id+"'>";
+                        html+="<div class='panel-body'><table><tbody><tr><th>Atendido por: </th><td>&nbsp;</td><td> Dr/a. "+data.array[i].nombres_doctor.ucwords()+" "+data.array[i].apellidos_doctor.ucwords()+"</td><td>&nbsp;</td><td>&nbsp;</td><th>Especialidad:</th><td>&nbsp;</td><td>"+data.array[i].especialidad.ucwords()+"</td></tr></tbody></table><div id='divider'></div><ol><li><h6><strong>Síntomas</strong></h5><p align='justify'><small>"+data.array[i].sintomas+"</small></p></li>"
+                        html+="<li><h6><strong>Exámenes</strong></h6><p align='justify'><small>"+data.array[i].examenes+"</small></p></li>";
+                        html+="<li><h6><strong>Tratamiento</strong></h6><p align='justify'><small>"+data.array[i].tratamiento+"</small></p></li>";
+                        html+="<li><h6><strong>Observaciones</strong></h6><p align='justify'><small>"+data.array[i].observaciones+"</small></p></li>";
+                        html+="</ol></div></div></div></div>";
+                }
+            }
+             $('#boton').html('<a href="pdf/'+data.id_paciente+'" id="download_ficha" class="btn btn-info pull-right"><span class="btn-label"><i class="material-icons">file_download</i></span>Descargar</a>')
+            }else{
+
+                html+="<p>Este paciente no tiene historial clínico</p>";
+                $('#boton').html('<a href="#" data-dismiss="modal" class="btn btn-danger pull-right"><span class="btn-label"><i class="material-icons">close</i></span>Cerrar</a>')
+            }
+            $("#colapse").html(html)
+            $(".title-name").html(data.paciente)
+            
+        },
+        error:function(){
+           alert('la operación falló');
+        }
+    });
+}
+
 function eliminar_recep(id)
 {
-    event.preventDefault();
     var popup = confirm("¿ Esta seguro de eliminar este registro ?")
     var route = "/recepcionistas/"+id+"";
     var csrf_token = $('meta[name="csrf-token"]').attr('content');
@@ -617,7 +1085,6 @@ function eliminar_recep(id)
 }
 function eliminar_doc(id)
 {
-    event.preventDefault();
     var popup = confirm("¿ Esta seguro de eliminar este registro ?")
     var route = "/doctores/"+id+"";
     var csrf_token = $('meta[name="csrf-token"]').attr('content');
@@ -638,12 +1105,10 @@ function eliminar_doc(id)
 }
 function delete_paciente(id)
 {
-    event.preventDefault();
     $('#eliminar').html('<button type="button" class="btn btn-simple" data-dismiss="modal">Cancelar</button><a href="#" onclick="del_paciente('+id+')"; type="button" class="btn btn-success btn-simple">Sí, Borrar</a>')
 }
 function del_paciente(id)
 {// elimina un paciente
-    event.preventDefault();
     var route = "/pacientes/"+id+"";
     var csrf_token = $('meta[name="csrf-token"]').attr('content');
      $.ajax({
@@ -661,10 +1126,123 @@ function del_paciente(id)
             }
        });
 }
-
+function delete_especialidad(id)
+{
+    $('#eliminar').html('<button type="button" class="btn btn-simple" data-dismiss="modal">Cancelar</button><a href="#" onclick="del_especialidad('+id+')"; type="button" class="btn btn-success btn-simple">Sí, Borrar</a>')
+}
+function del_especialidad(id)
+{// elimina un paciente
+    var route = "/especialidades/"+id+"";
+    var csrf_token = $('meta[name="csrf-token"]').attr('content');
+     $.ajax({
+            url: route,
+            type: 'POST',
+            data: {'_method' : 'DELETE', '_token' : csrf_token},
+            success:function(data){
+                $("#eliminar_especialidad").modal("hide");
+                $('#table_especialidades').DataTable().ajax.reload();
+                $.notify({icon: "add_alert", message: data.message},{type: data.type, timer: 1000});
+            }, 
+            error:function(data){
+                console.log(data)
+                //alert('la operación falló');
+            }
+       });
+}
+function delete_rol(id)
+{
+    $('#eliminar').html('<button type="button" class="btn btn-simple" data-dismiss="modal">Cancelar</button><a href="#" onclick="del_rol('+id+')"; type="button" class="btn btn-success btn-simple">Sí, Borrar</a>')
+}
+function del_rol(id)
+{// elimina un paciente
+    var route = "/roles/"+id+"";
+    var csrf_token = $('meta[name="csrf-token"]').attr('content');
+     $.ajax({
+            url: route,
+            type: 'POST',
+            data: {'_method' : 'DELETE', '_token' : csrf_token},
+            success:function(data){
+                $("#eliminar_rol").modal("hide");
+                $('#table_roles').DataTable().ajax.reload();
+                $.notify({icon: "add_alert", message: data.message},{type: data.type, timer: 1000});
+            }, 
+            error:function(data){
+                console.log(data)
+                //alert('la operación falló');
+            }
+       });
+}
+function delete_permiso(id)
+{
+    $('#eliminar').html('<button type="button" class="btn btn-simple" data-dismiss="modal">Cancelar</button><a href="#" onclick="del_permiso('+id+')"; type="button" class="btn btn-success btn-simple">Sí, Borrar</a>')
+}
+function del_permiso(id)
+{// elimina un paciente
+    var route = "/permisos/"+id+"";
+    var csrf_token = $('meta[name="csrf-token"]').attr('content');
+     $.ajax({
+            url: route,
+            type: 'POST',
+            data: {'_method' : 'DELETE', '_token' : csrf_token},
+            success:function(data){
+                $("#eliminar_permiso").modal("hide");
+                $('#table_permisos').DataTable().ajax.reload();
+                $.notify({icon: "add_alert", message: data.message},{type: data.type, timer: 1000});
+            }, 
+            error:function(data){
+                console.log(data)
+                //alert('la operación falló');
+            }
+       });
+}
+function delete_doctor(id)
+{
+    $('#eliminar').html('<button type="button" class="btn btn-simple" data-dismiss="modal">Cancelar</button><a href="#" onclick="del_doctor('+id+')"; type="button" class="btn btn-success btn-simple">Sí, Borrar</a>')
+}
+function del_doctor(id)
+{// elimina un paciente
+    var route = "/doctores/"+id+"";
+    var csrf_token = $('meta[name="csrf-token"]').attr('content');
+     $.ajax({
+            url: route,
+            type: 'POST',
+            data: {'_method' : 'DELETE', '_token' : csrf_token},
+            success:function(data){
+                $("#eliminar_doctor").modal("hide");
+                $('#table_doctores').DataTable().ajax.reload();
+                $.notify({icon: "add_alert", message: data.message},{type: data.type, timer: 1000});
+            }, 
+            error:function(data){
+                console.log(data)
+                //alert('la operación falló');
+            }
+       })
+}
+function delete_recepcionista(id)
+{
+    $('#eliminar').html('<button type="button" class="btn btn-simple" data-dismiss="modal">Cancelar</button><a href="#" onclick="del_recepcionista('+id+')"; type="button" class="btn btn-success btn-simple">Sí, Borrar</a>')
+}
+function del_recepcionista(id)
+{// elimina un paciente
+    var route = "/recepcionistas/"+id+"";
+    var csrf_token = $('meta[name="csrf-token"]').attr('content');
+     $.ajax({
+            url: route,
+            type: 'POST',
+            data: {'_method' : 'DELETE', '_token' : csrf_token},
+            success:function(data){
+                $("#eliminar_recepcionista").modal("hide");
+                $('#table_recepcionistas').DataTable().ajax.reload();
+                $.notify({icon: "add_alert", message: data.message},{type: "success", timer: 1000});
+            }, 
+            error:function(data){
+                alert('la operación falló');
+            }
+       })
+}
 function atender(id)
 { //Carga mestra el modal para realizar una atención.
-    var route = "/atender/"+id+"";
+    var route = "/consultas/"+id+"/edit";
     var csrf_token = $('meta[name="csrf-token"]').attr('content');
     $.ajax({
            url: route,
@@ -673,7 +1251,29 @@ function atender(id)
             $('#edad').html(data.edad)
             $('#visitas').html(data.visitas)
             $('#paciente').html(data.paciente)
+            $('#sintomas').val(data.sintomas)
+            $('#examenes').val(data.examenes)
+            $('#tratamiento').val(data.tratamiento)
+            $('#observacion').val(data.observacion)
             $('#id').val(data.id)
+          },
+       error:function(){
+           alert('la operación falló');
+          }
+    });
+}
+function cargar_datos_especialidad(id)// Carga los datos en el formulario que esta al lado de la lista de especialidades.
+{
+    var route = "/especialidades/"+id+"/edit";
+    var csrf_token = $('meta[name="csrf-token"]').attr('content');
+    $.ajax({
+           url: route,
+           type: 'GET',
+        success:function(data){
+            console.log(data)
+            $('#id').val(data.id)
+            $('#nombre').val(data.nombre)
+            $('#btn-guardar').html('<a href="#" onclick="actualizar_especialidad();" class="btn btn-fill btn-success">Actualizar</a>')
           },
        error:function(){
            alert('la operación falló');
@@ -688,24 +1288,23 @@ function cargar_consulta_atendida(id)// Carga los datos en el modal para editar,
            url: route,
            type: 'GET',
         success:function(data){
-            console.log(data)
-            $('#edad_').html(data.edad)
-            $('#visitas_').html(data.visitas)
-            $('#paciente_').html(data.paciente)
-            $('#sintomas_').val(data.sintomas)
-            $('#examenes_').val(data.examenes)
-            $('#tratamiento_').val(data.tratamiento)
-            $('#observacion_').val(data.observacion)
+            $('#edad_atendida').html(data.edad)
+            $('#visitas_atendida').html(data.visitas)
+            $('#paciente_atendida').html(data.paciente)
+            $('#sintomas_atendida').val(data.sintomas)
+            $('#examenes_atendida').val(data.examenes)
+            $('#tratamiento_atendida').val(data.tratamiento)
+            $('#observacion_atendida').val(data.observacion)
             $('#id').val(data.id)
           },
        error:function(){
            alert('la operación falló');
           }
-    });
+    })
 }
     function update_cita_pendiente(id)
     {
-       var route = "/citas/"+id+"/edit";
+        var route = "/citas/"+id+"/edit";
         var csrf_token = $('meta[name="csrf-token"]').attr('content');
         $.ajax({
                url: route,
@@ -720,15 +1319,13 @@ function cargar_consulta_atendida(id)// Carga los datos en el modal para editar,
                 $('#speciality_id').val(data.especialidad)
                 //$('#doctor_id').val(data.doctor)
                 $('#descripcion').val(data.descripcion)
-                $('#doctor_id option[value='+data.doctor+']').attr('selected','selected');
-
                 $.get("get-doctor/"+data.especialidad+"",function(response,speciality){
                     $("#doctor_id").empty();
                     if (response == "") {
                          $("#doctor_id").html("<option>--Seleccione--</option>")
                     }else{
                         for(i = 0; i <response.length; i++) {
-                            $("#doctor_id").append("<option value='"+response[i].id+"'>"+response[i].nombres+"</option>")
+                            $("#doctor_id").append("<option value='"+response[i].id+"'>"+response[i].apellidos+" "+response[i].nombres+"</option>")
                         }
                         $('#doctor_id').val(data.doctor)
                     }
@@ -763,4 +1360,41 @@ function cargar_consulta_atendida(id)// Carga los datos en el modal para editar,
        })
     }
 }
+
+ function get_clave(id)
+{  
+    var route = "/getClave/"+id+"";
+    var csrf_token = $('meta[name="csrf-token"]').attr('content');
+     $.ajax({
+            url: route,
+            type: 'POST',
+            data: {'_method' : 'DELETE', '_token' : csrf_token},
+            success:function(data){
+                    $("#id").val(data.id)
+            }, 
+            error:function(){
+                alert('la operación falló');
+            }
+       })
+    
+}
+
+ function add_clave(id)
+{  
+    var route = "/getClave/"+id+"";
+    var csrf_token = $('meta[name="csrf-token"]').attr('content');
+     $.ajax({
+            url: route,
+            type: 'POST',
+            data: {'_method' : 'DELETE', '_token' : csrf_token},
+            success:function(data){
+                    $("#id").val(data.id)
+            }, 
+            error:function(){
+                alert('la operación falló');
+            }
+       })
+    
+}
+
 

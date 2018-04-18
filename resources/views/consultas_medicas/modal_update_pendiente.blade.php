@@ -7,7 +7,7 @@
                 <h6>FORMULARIO DE ATENCIÓN MÉDICA </h6>
             </div>
             <div class="modal-body">
-                @include('consultas_medicas.updateCitaPendiente')
+              
             </div>
             <div class="modal-footer text-center">
                 <a href="#" id="update_consulta" class="btn btn-info pull-right">Guardar</a>

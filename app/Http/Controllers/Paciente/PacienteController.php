@@ -40,7 +40,7 @@ class PacienteController extends Controller
             $paciente->enfermedad         = $request->enfermedad_add;
             $paciente->avatar             = "default.jpg";
             $paciente->save();
-            $paciente->attachRole(4);
+            $paciente->attachRole(4); //4 es el numero id del rol paciente
             return response()->json([
                 "message" => "El paciente ".$paciente->nombres." ".$paciente->apellidos." ha sido guardado exitosamente !"
                 ]);
@@ -56,7 +56,7 @@ class PacienteController extends Controller
                     })
                     ->addColumn('action', function ($user) {
                         $ficha = '<a href="#" onclick="ficha_paciente('.$user->id.')" data-toggle="modal" data-target="#modal_ficha" rel="tooltip" title="Ficha del paciente" class="btn btn-simple btn-primary btn-icon"><i class="material-icons">folder_shared</i></a>';
-                        $expediente = '<a href="#" rel="tooltip" data-placement="bottom" title="Expediente" class="btn btn-simple btn-info btn-icon"><i class="material-icons">content_paste</i></a>';
+                        $expediente = '<a href="#" onclick="expediente_paciente('.$user->id.')" data-toggle="modal" data-target="#modal_expediente" rel="tooltip" title="Expediente" class="btn btn-simple btn-info btn-icon"><i class="material-icons">content_paste</i></a>';
                         $editar = '<a href="#" onclick="carga_paciente('.$user->id.')" data-toggle="modal" data-target="#modal_editar_paciente" rel="tooltip" title="Editar" class="btn btn-simple btn-success btn-icon edit"><i class="material-icons">edit</i></a>';
                         $eliminar = '<a href="#" onclick="delete_paciente('.$user->id.')" data-toggle="modal" data-target="#eliminar_paciente" rel="tooltip" title="Editar" class="btn btn-simple btn-danger btn-icon"><i class="material-icons">close</i></a>';
 

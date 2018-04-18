@@ -58,6 +58,31 @@
      border-top-left-radius: 5px;
      border-top-right-radius: 5px;
 }
+.modal-header-red {
+    color:#fff;
+    padding:9px 15px;
+    border-bottom:1px solid #eee;
+    background-color:#f44336;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+     border-top-left-radius: 5px;
+     border-top-right-radius: 5px;
+}
+
+.modal-header-success {
+    color:#fff;
+    padding:9px 15px;
+    border-bottom:1px solid #eee;
+    background-color:#4caf50;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+     border-top-left-radius: 5px;
+     border-top-right-radius: 5px;
+}
 
 
 table, th, td{
@@ -82,7 +107,7 @@ table, th, td{
     margin-top: -25px;
 }
 
-#table_pacientes{
+#top-button-add{
   width: 92%;
   border-radius:1px;
   border-spacing: 0;

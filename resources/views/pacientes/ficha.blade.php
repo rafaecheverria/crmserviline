@@ -2,22 +2,7 @@
     <div class="row">
         <div class="col-md-4">
             <div class="row">
-                 {!! Form::open(['method' => 'POST', 'files' => true,'id' => 'avatarForm']); !!}
-            <div class="file-field input-field">
-                <input type="text" name="id" id="id" hidden="true">
-                {!! Form::file('avatar', ['id' => 'avatarInput', 'class' => 'hidden']); !!}         
-              <div class="file-path-wrapper">
-                <input class="file-path validate" name="avatar" hidden="true" placeholder="Selecciona una imagen">     
-              </div>
-            </div>
-            {!! Form::close() !!} 
-
-                 <div class="col-md-12" align="center">
-                    <a href="#">
-                        <img alt="Thumbnail Image" class="img-rounded img-responsive avatarImage">
-                    </a>
-                    Cambiar imagen
-                </div>
+                @include('..personas/avatar')
             </div>
             <br>
             <div class="row">
@@ -30,7 +15,6 @@
                     </li>
                 </ul>
             </div>
-
         </div>
         <div class="col-md-8">
             <div class="tab-content">
@@ -101,11 +85,6 @@
                                 </tr>
                             </tbody>
                         </table>
-                </div>
-                <div class="tab-pane" id="tab3">
-                    Completely synergize resource taxing relationships via premier niche markets. Professionally cultivate one-to-one customer service with robust ideas.
-                    <br />
-                    <br />Dynamically innovate resource-leveling customer service for state of the art customer service.
                 </div>
             </div>
         </div>

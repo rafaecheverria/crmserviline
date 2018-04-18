@@ -54,7 +54,7 @@ class UserController extends ApiController
     public function edit($id)
     {
         $persona = User::findOrFail($id);
-        $roles = Role::orderBy('display_name', 'DESC')->pluck('display_name', 'id');
+        $roles = Role::orderBy('name', 'DESC')->pluck('name', 'id');
         $my_roles = $persona->roles->pluck('id')->ToArray();
         
         return response()->json([
@@ -69,6 +69,29 @@ class UserController extends ApiController
         ]);
     }
 
+    public function getClave($id) 
+    {
+        $user = User::findOrFail($id);
+            return response()->json([
+                "id" => $user->id,
+            ]);
+    }
+
+      public function putClave(ValidaPasswordRequest $request, $id) 
+    {
+       if($request->ajax()){
+            $user = User::findOrFail($id);
+            $user->password = Hash::make($request->password);
+            $user->save();
+            return response()->json([
+             "tipo" => "recepcionista",
+             "nombres" => $user->nombres,
+             "apellidos" => $user->apellidos,
+             "message" => "La contraseña del usuario ".$user->nombres." ".$user->apellidos." fue actualizada correctamente!"
+            ]);
+        }
+    }
+
     public function update(UpdateRecepcionistaRequest $request, $id)
     {
         if($request->ajax()){
@@ -77,7 +100,7 @@ class UserController extends ApiController
             $user->save();
             return response()->json([
                 "apellidos" => $user->apellidos,
-                "message" => "los registros del recepcionista ".$user->apellidos." se han actualizado correctamente !"
+                "message" => "los registros del usuario ".$user->apellidos." se han actualizado correctamente !"
                 ]);
         }
     }

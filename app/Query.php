@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Jenssegers\Date\Date;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
@@ -21,7 +22,9 @@ class Query extends Model
 
     public function getYearsAttribute()
     {
-		return Carbon::parse($this->fecha_inicio)->format('d-m-Y');    
+		//return Carbon::parse($this->fecha_inicio)->format('d-m-Y'); 
+        return Date::parse($this->fecha_inicio)->toFormattedDateString();
+       
 	}
 
 	public function setPacienteIdAttribute($valor)

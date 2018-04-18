@@ -67,7 +67,7 @@ class ConsultasMedicasController extends Controller
                 return $consulta->getYearsAttribute();
             })
             ->addColumn('action', function ($consulta) {
-                $editar = '<a href="#" onclick="cargar_consulta_atendida('.$consulta->id.')" data-toggle="modal" data-target="#modal_carga_atendida" rel="tooltip" title="Editar" class="btn btn-simple btn-success btn-icon edit"><i class="material-icons">edit</i></a>';
+                $editar = '<a href="#" onclick="atender('.$consulta->id.')" data-toggle="modal" data-target="#modal_atender" rel="tooltip" title="Editar" class="btn btn-simple btn-success btn-icon edit"><i class="material-icons">edit</i></a>';
                 $eliminar = '<a href="#" onclick="delete_cita_pendiente('.$consulta->id.')" data-toggle="modal" data-target="#eliminar_paciente" rel="tooltip" title="Eliminar" class="btn btn-simple btn-danger btn-icon"><i class="material-icons">close</i></a>';
                 return $editar.$eliminar;
             })->make(true);
@@ -92,7 +92,7 @@ class ConsultasMedicasController extends Controller
 
         $cita_atendida = $queries->findOrFail($id);
         $paciente =  $users->findOrFail($cita_atendida->paciente_id);
-         $visitas =   $queries->all()->where('paciente_id', '=', $cita_atendida->paciente_id)->where('estado', '=', 'atendido')->count();
+        $visitas =   $queries->all()->where('paciente_id', '=', $cita_atendida->paciente_id)->where('estado', '=', 'atendido')->count();
            return response()->json([
             'success'      => true,
             'id'           => $cita_atendida->id,

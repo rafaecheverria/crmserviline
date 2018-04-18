@@ -1,19 +1,97 @@
 $(document).ready(function() {
-	listar()
-    listar_recepcionista()
+	listar_doctores()
+    listar_recepcionistas()
     listar_personas()
     listar_pacientes()
-    citas_pendientes()
-    citas_atendidas()
+    listar_especialidades()
+    listar_permisos()
+    listar_roles()
+    listar_citas_pendientes()
+    listar_citas_atendidas()
 })
 
-var listar = function()
+var listar_permisos = function()
 {
-    var table = $('#datatables').DataTable({
+    var table = $('#table_permisos').DataTable({
         "headers": {'X-CSRF-TOKEN':$('input[name=_token]').attr('content')},
         "processing": true,
         "serverSide": true,
-        "order": [[ 2, "asc" ]],
+        "order": [[ 1, "asc" ]],
+        "ajax": {
+             "url": "permisos/show",
+            },
+        "pagingType": "simple_numbers",
+        "lengthMenu": [
+            [10, 25, 50, -1],
+            [10, 25, 50, "Todos"]
+        ],
+        "language": {
+            url: "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+        },
+        "responsive": true,
+        "columns":[
+            {data: 'action', name: 'action', orderable: false, searchable: false},
+            {data: 'name', name: 'name'}
+        ]
+    })
+}
+var listar_roles = function()
+{
+    var table = $('#table_roles').DataTable({
+        "headers": {'X-CSRF-TOKEN':$('input[name=_token]').attr('content')},
+        "processing": true,
+        "serverSide": true,
+        "order": [[ 1, "asc" ]],
+        "ajax": {
+             "url": "roles/show",
+            },
+        "pagingType": "simple_numbers",
+        "lengthMenu": [
+            [10, 25, 50, -1],
+            [10, 25, 50, "Todos"]
+        ],
+        "language": {
+            url: "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+        },
+        "responsive": true,
+        "columns":[
+            {data: 'action', name: 'action', orderable: false, searchable: false},
+            {data: 'name', name: 'name'}
+        ]
+    })
+}
+var listar_especialidades = function()
+{
+    var table = $('#table_especialidades').DataTable({
+        "headers": {'X-CSRF-TOKEN':$('input[name=_token]').attr('content')},
+        "processing": true,
+        "serverSide": true,
+        "order": [[ 1, "asc" ]],
+        "ajax": {
+             "url": "especialidades/show",
+            },
+        "pagingType": "simple_numbers",
+        "lengthMenu": [
+            [10, 25, 50, -1],
+            [10, 25, 50, "Todos"]
+        ],
+        "language": {
+            url: "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+        },
+        "responsive": true,
+        "columns":[
+            {data: 'action', name: 'action', orderable: false, searchable: false},
+            {data: 'nombre', name: 'nombre'}
+        ]
+    })
+}
+var listar_doctores = function()
+{
+    var table = $('#table_doctores').DataTable({
+        "headers": {'X-CSRF-TOKEN':$('input[name=_token]').attr('content')},
+        "processing": true,
+        "serverSide": true,
+        "order": [[ 3, "asc" ]],
         "ajax": {
              "url": "doctores/show",
             },
@@ -25,23 +103,23 @@ var listar = function()
         "language": {
             url: "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
         },
-        //"responsive": true,
+        "responsive": true,
         "columns":[
+            {data: 'action', name: 'action', orderable: false, searchable: false},
             {data: 'rut', name: 'rut'},
             {data: 'nombres', name: 'nombres'},
             {data: 'apellidos', name: 'apellidos'},
-            {data: 'email', name: 'email'},
-            {data: 'action', name: 'action', orderable: false, searchable: false}
+            {data: 'email', name: 'email'}
         ]
 	})
 }
-var listar_recepcionista = function()
+var listar_recepcionistas = function()
 {
-    var table = $('#recepcionistas').DataTable({
+    var table = $('#table_recepcionistas').DataTable({
         "headers": {'X-CSRF-TOKEN':$('input[name=_token]').attr('content')},
         "processing": true,
         "serverSide": true,
-        "order": [[ 2, "asc" ]],
+        "order": [[ 3, "asc" ]],
         "ajax": {
              "url": "recepcionistas/show",
             },
@@ -55,15 +133,15 @@ var listar_recepcionista = function()
         },
         //"responsive": true,
         "columns":[
+            {data: 'action', name: 'action', orderable: false, searchable: false},
             {data: 'rut', name: 'rut'},
             {data: 'nombres', name: 'nombres'},
             {data: 'apellidos', name: 'apellidos'},
-            {data: 'roles', name: 'roles.name'},
-            {data: 'action', name: 'action', orderable: false, searchable: false}
+            {data: 'email', name: 'email'}
         ]
 	})
 }
-var citas_pendientes = function()
+var listar_citas_pendientes = function()
 {
     var table = $('#pendientes').DataTable({
         "headers": {'X-CSRF-TOKEN':$('input[name=_token]').attr('content')},
@@ -92,7 +170,7 @@ var citas_pendientes = function()
         ],
 	})
 }
-var citas_atendidas = function()
+var listar_citas_atendidas = function()
 {
     var table = $('#table_atendidos').DataTable({
         "headers": {'X-CSRF-TOKEN':$('input[name=_token]').attr('content')},

@@ -10,35 +10,10 @@ use App\Http\Controllers\ApiController;
 
 class RoleUserController extends Controller
 {
-    public function index()
-    {
-        //
-    }
-
-    public function create()
-    {
-        //
-    }
-
-    public function store(Request $request)
-    {
-        //
-    }
-
-    public function show($id)
-    {
-        //
-    }
-
-    public function edit($id)
-    {
-        //
-    }
-
     public function update(Request $request, $id)
     {
         if($request->ajax()){
-            $user = User::findOrFail($id);
+            $user = User::find($id);
             $user->roles()->sync($request->role);   
             return response()->json([
                 "apellidos" => $user->apellidos,
@@ -46,10 +21,5 @@ class RoleUserController extends Controller
                 ]);
            
         }
-    }
-
-    public function destroy($id)
-    {
-        //
     }
 }

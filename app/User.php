@@ -33,12 +33,11 @@ class User extends Authenticatable
     {
         $users = Speciality::findOrFail($id)->users; //lista los usuarios que tinen el id de la especialidad que recibe como parametro
         return $users;
-        //return $doctores;
     }
 
     public function queries()
     {
-        return $this->belongsToMany('App\Query');
+        return $this->hasMany('App\Query');
     }
 
     public function roles()

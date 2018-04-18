@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Receptionist;
 
 use App\User;
 use App\Role;
-use App\Http\Requests\CreateRecepcionistaRequest;
-use App\Http\Requests\UpdateRecepcionistaRequest;
+use Illuminate\Support\Carbon;
+use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
 
@@ -21,14 +22,24 @@ class ReceptionistController extends ApiController
         return view('recepcionistas.create');
     }
 
-    public function store(CreateRecepcionistaRequest $request)
+     public function store(CreateUserRequest $request)
     {
         if($request->ajax()){
-            $user = new User($request->all());
-            $user->save();
-            $user->attachRole(3);
+            $recepcionista = new User();
+            $recepcionista->rut                = $request->rut_add;
+            $recepcionista->nombres            = $request->nombres_add;
+            $recepcionista->apellidos          = $request->apellidos_add;
+            $recepcionista->nacimiento         = Carbon::parse($request->nacimiento_add)->format('Y-m-d');
+            $recepcionista->email              = $request->email_add;
+            $recepcionista->telefono           = $request->telefono_add;
+            $recepcionista->direccion          = $request->direccion_add;
+            $recepcionista->genero             = $request->genero_add;
+            $recepcionista->avatar             = "default.jpg";
+            $recepcionista->save();
+            $recepcionista->attachRole(3); //3 es el numero id del rol recepcionista
             return response()->json([
-                "message" => "los registros del recepcionista ".$user->apellidos." se han registrado correctamente !"
+                "tipo" => "recepcionista",
+                "message" => "El recepcionista ".$recepcionista->nombres." ".$recepcionista->apellidos." ha sido guardado exitosamente !"
                 ]);
         }
     }
@@ -36,18 +47,14 @@ class ReceptionistController extends ApiController
     public function show()
     {
             
-         $users = User::with('roles')->selectRaw('distinct users.*')->withRole('recepcionista');
-        return  datatables()->eloquent($users)
-                ->addColumn('roles', function (User $user) {
-                    return $user->roles->map(function($roles) {
-                        return str_limit($roles->display_name);
-                        })
-                ->implode('-');
-                    })
-                    ->addColumn('action', function ($user) {
-                return '<a href="#" onclick="roles_user('.$user->id.')" class="btn btn-simple btn-warning btn-icon edit"><i class="material-icons">description</i></a>
-                        <a href="recepcionistas/'.$user->id.'/edit" id="update"  class="btn btn-simple btn-success btn-icon edit"><i class="material-icons">edit</i></a>
-                        <a href="#" onclick="eliminar_recep('.$user->id.')" class="btn btn-simple btn-danger btn-icon remove-item"><i class="material-icons">close</i></a>';
+         $recepcionistas = User::with('roles')->selectRaw('distinct users.*')->withRole('recepcionista');
+        return  datatables()->eloquent($recepcionistas)
+                    ->addColumn('action', function ($recepcionista) {
+                    $clave = '<a href="#" onclick="get_clave('.$recepcionista->id.')" data-toggle="modal" data-target="#modal_especialidades" rel="tooltip" title="Resetear contraseña" class="btn btn-simple btn-primary btn-icon edit"><i class="material-icons">vpn_key</i></a>';
+                    $editar ='<a href="#" onclick="carga_usuario('.$recepcionista->id.')" data-toggle="modal" data-target="#modal_editar_recepcionista" rel="tooltip" title="Editar" class="btn btn-simple btn-success btn-icon edit"><i class="material-icons">edit</i></a>';
+                    $eliminar ='<a href="#" onclick="delete_recepcionista('.$recepcionista->id.')"  data-toggle="modal" data-target="#eliminar_recepcionista" rel="tooltip" title="Eliminar" class="btn btn-simple btn-danger btn-icon remove-item"><i class="material-icons">close</i></a>';
+
+                     return $clave.$editar.$eliminar;
             })
             ->make(true);
     }
@@ -55,20 +62,37 @@ class ReceptionistController extends ApiController
     public function edit($id)
     {
         $recepcionista = User::findOrFail($id);
-        return view('recepcionistas.edit', compact('recepcionista'));
+        return response()->json([
+            'success'     => true,
+            'id'          => $recepcionista->id,
+            'avatar'      => $recepcionista->avatar,
+            'nombres'     => $recepcionista->nombres,
+            'apellidos'   => $recepcionista->apellidos,
+            'nacimiento'  => Carbon::parse($recepcionista->nacimiento)->format('d-m-Y'),
+            'genero'      => $recepcionista->genero,
+            'email'       => $recepcionista->email,
+            'telefono'    => $recepcionista->telefono,
+            'direccion'   => $recepcionista->direccion,
+        ]);
     }
 
-    public function update(UpdateRecepcionistaRequest $request, $id)
+    public function update(UpdateUserRequest $request, $id)
     {
         if($request->ajax()){
-            $user = User::findOrFail($id);
-            $user->fill($request->all());
-            $user->save();
+            $recepcionista = User::findOrFail($id);
+            $recepcionista->nombres            = $request->nombres;
+            $recepcionista->apellidos          = $request->apellidos;
+            $recepcionista->nacimiento         = Carbon::parse($request->nacimiento_e)->format('Y-m-d');
+            $recepcionista->email              = $request->email;
+            $recepcionista->telefono           = $request->telefono;
+            $recepcionista->direccion          = $request->direccion;
+            $recepcionista->genero             = $request->genero;
+            $recepcionista->save();
             return response()->json([
-                "apellidos" => $user->apellidos,
-                "message" => "los registros del recepcionista ".$user->apellidos." se han actualizado correctamente !"
-                ]);
-           
+             "tipo" => "recepcionista",
+             "apellidos" => $recepcionista->apellidos,
+             "message" => "El recepcionista ".$recepcionista->nombres." ".$recepcionista->apellidos." ha sido actualizado correctamente !"
+            ]);
         }
     }
 
@@ -78,7 +102,7 @@ class ReceptionistController extends ApiController
         User::destroy($id);
         return response()->json([
             'success' => true,
-            "message" => "los registros del doctor ".$user->apellidos." han sido eliminados correctamente !"
+            "message" => "los registros del recepcionista ".$user->nombres." ".$user->apellidos." han sido eliminados correctamente !"
         ]);
     }
 }

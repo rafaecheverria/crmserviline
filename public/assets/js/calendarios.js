@@ -39,8 +39,9 @@ $(document).ready(function() {
                 },
 
                 select: function(start, end) { //evento que abre el modal agregar.
+
                     start = moment(start.format());
-                    $("#fecha_inicio").val(start.format("DD-MM-YYYY"));
+                   $("#fecha_inicio").val(start.format("DD-MM-YYYY"));
                     $('#hora_inicio').datetimepicker({
                         format: 'HH:mm:ss',
                         icons : {
@@ -121,6 +122,7 @@ $(document).ready(function() {
                     if (estado == "atendido") {
                         $.notify({icon: "add_alert", message: 'Esta consulta no se puede modificar porque ya fue atendida.'},{type: 'warning', timer: 1000})
                     }else{
+                        var especialidad = event.speciality_id;
                         var date_start = $.fullCalendar.moment(event.start).format('DD-MM-YYYY');
                         var time_start = $.fullCalendar.moment(event.start).format('HH:mm:ss');
                         var time_end = $.fullCalendar.moment(event.end).format('HH:mm:ss');
@@ -163,20 +165,18 @@ $(document).ready(function() {
                         }).val(time_end);
                         $("#up_evento #paciente_id").val(event.paciente_id);
                         $("#up_evento #descripcion").val(event.descripcion);
-                        $("#up_evento #speciality_id").val(event.speciality_id);
-                        //$("#up_evento #doctor_id_").val(event.doctor_id);
-                           // $('.selectpicker').selectpicker('refresh')
-                           $.get("get-doctor/"+event.speciality_id+"",function(response,speciality){
-                                $("#up_evento #doctor_id").empty();
-                                if (response == "") {
-                                     $("#up_evento #doctor_id").html("<option>--Seleccione--</option>")
-                                }else{
-                                    for(i = 0; i <response.length; i++) {
-                                        $("#up_evento #doctor_id").append("<option value='"+response[i].id+"'>"+response[i].nombres+"</option>")
-                                    }
-                                    $('#up_evento #doctor_id').val(event.doctor_id)
+                        $("#up_evento #speciality_id").val(especialidad);
+                            $.get("get-doctor/"+especialidad+"",function(response,speciality){
+                            $("#up_evento #doctor_id").empty();
+                            if (response == "") {
+                                 $("#up_evento #doctor_id").html("<option>--Seleccione--</option>")
+                            }else{
+                                for(i = 0; i <response.length; i++) {
+                                    $("#up_evento #doctor_id").append("<option value='"+response[i].id+"'>"+response[i].apellidos+" "+response[i].nombres+"</option>")
                                 }
-                            })
+                                $('#up_evento #doctor_id').val(event.doctor_id)
+                            }
+                        })
                         $("#up_evento").modal("show");
                         }
                     },
@@ -195,4 +195,5 @@ $(document).ready(function() {
         },
         format: 'DD-MM-YYYY',
     })
+        
 })

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Citas;
 use App\User;
 use App\Query;
 use App\Speciality;
+use Jenssegers\Date\Date;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -54,7 +55,7 @@ class CitasMedicasController extends Controller
                 $cita->doctor_id = $request->doctor_id; //inserta el doctor del formulario.
                 $cita->speciality_id = $request->speciality_id;
             }
-            $Finicio = Carbon::parse($request->fecha_inicio)->format('Y-m-d');
+            $Finicio = Date::parse($request->fecha_inicio)->format('Y-m-d');
             $cita->fecha_inicio = $Finicio . " " . $request->hora_inicio;
             $cita->fecha_fin    = $Finicio . " " . $request->hora_fin;
             $cita->estado       = 'pendiente';

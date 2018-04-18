@@ -17,4 +17,12 @@ class Speciality extends Model
     {
         return $this->belongsToMany('App\User');
     }
+     public function setNombreAttribute($valor)
+    {
+        $this->attributes['nombre'] = strtolower($valor);
+    }
+    public function getNombreAttribute($valor)
+    {
+        return ucwords($valor);
+    }
 }

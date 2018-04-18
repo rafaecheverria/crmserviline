@@ -28,10 +28,15 @@ class UpdateUserRequest extends FormRequest
             'apellidos'     => 'required|max:255',
             'telefono'      => 'required|min:6|numeric',
             'email'         => 'required|email|max:255',
-            'titulo'        => 'required|max:255',
             'nacimiento'    => 'required',
             'direccion'     => 'required|max:50',
-            'especialidad'  => 'required'
+            'genero'        => 'required',
+        ];
+    }
+     public function messages()
+    {
+        return [
+            'nombres.required' => 'El campo nombres es obligatorio.',
         ];
     }
 }

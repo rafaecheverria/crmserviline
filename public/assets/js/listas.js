@@ -205,7 +205,7 @@ var listar_pacientes = function()
         "headers": {'X-CSRF-TOKEN':$('input[name=_token]').attr('content')},
         "processing": true,
         "serverSide": true,
-        "order": [[ 2, "asc" ]],
+        "order": [[ 3, "asc" ]],
         "ajax": {
              "url": "pacientes/show",
             },
@@ -221,6 +221,7 @@ var listar_pacientes = function()
         "responsive": true,
         "columns":[
             {data: 'action', name: 'action', orderable: false, searchable: false, class:"text-left"},
+            {data: 'rut', name: 'rut'},
             {data: 'nombres', name: 'nombres'},
             {data: 'apellidos', name: 'apellidos'},
             {data: 'telefono', name: 'telefono'},

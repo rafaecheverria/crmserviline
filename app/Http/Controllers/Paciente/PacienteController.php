@@ -49,7 +49,7 @@ class PacienteController extends Controller
 
     public function show()
     {
-         $users = User::select(['id', 'nombres', 'apellidos', 'telefono', 'nacimiento'])->withRole('paciente');
+         $users = User::select(['id', 'rut', 'nombres', 'apellidos', 'telefono', 'nacimiento'])->withRole('paciente');
         return  datatables()->of($users)
                 ->editColumn('nacimiento', function ($user) {
                  return $user->getYearsAttribute();
@@ -60,9 +60,6 @@ class PacienteController extends Controller
                         $editar = '<a href="#" onclick="carga_paciente('.$user->id.')" data-toggle="modal" data-target="#modal_editar_paciente" rel="tooltip" title="Editar" class="btn btn-simple btn-success btn-icon edit"><i class="material-icons">edit</i></a>';
                         $eliminar = '<a href="#" onclick="delete_paciente('.$user->id.')" data-toggle="modal" data-target="#eliminar_paciente" rel="tooltip" title="Editar" class="btn btn-simple btn-danger btn-icon"><i class="material-icons">close</i></a>';
 
-                             /* if(Auth::user()->hasRole("recepcionista")){
-                                return $buttons;
-                            }*/
                         return $ficha.$expediente.$editar.$eliminar;
                        
                     })->make(true);

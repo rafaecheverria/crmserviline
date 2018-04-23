@@ -2,7 +2,8 @@
     <div class="row">
         <div class="col-md-8">
             <form class="form" id="form_editar_usuario">
-                <input type="text" name="tipo" id="tipo" value="recepcionista" hidden="true">
+                <input type="text" name="id" id="id" hidden="true"> 
+                <input type="text" name="tipo" class="tipo" value="recepcionista" hidden="true">
                 <div class="row sinpadding">
                     <div class="col-md-12">
                         <div class="form-group">
@@ -71,7 +72,7 @@
         </div>
         <div class="col-md-4">
             <div class="row">
-                @include('..personas/avatar')
+                @include('../personas/avatar')
             </div>
         </div>
     </div>

@@ -2365,7 +2365,7 @@ NOTE: use percentage font sizes or else old IE chokes
 --------------------------------------------------------------------------------------------------*/
 .fc button {
   border: none;
-  border-radius: 30px;
+  border-radius: 3px;
   position: relative;
   padding: 6px 12px;
   font-weight: 400;

@@ -32,6 +32,6 @@
 @include('doctores.modal_especialidades')
 @include('doctores.modal_editar')
 @include('doctores.modal_agregar')
-
+@include('../clave.usuarios')
 @endsection
 

@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-4">
             <div class="row">
-                @include('..personas/avatar')
+                <img alt="Thumbnail Image" class="img-rounded img-responsive img_doc">
             </div>
         </div>
         <div class="col-md-8">
@@ -23,7 +23,7 @@
                 </tbody>
             </table>
             <form id="form_especielidades_doctor" class="sinpadding">
-                <input id="id" name="id" hidden="true" />
+                <input id="id_especialidad" name="id_especialidad" hidden="true" />
                 <div class="col-md-12">
                     <div class="form-group label-floating">
                         <label>Especialidades</label>

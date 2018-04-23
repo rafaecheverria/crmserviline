@@ -4,6 +4,7 @@
             <div class="tab-content">
                 <div class="tab-pane active" id="1">
                     <form class="form" id="form_editar_paciente">
+                        <input type="text" id="id_paciente" hidden="true">
                         <div class="row sinpadding">
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -69,8 +70,6 @@
                                 </div>
                             </div>
                     </div>
-                    @role('administrador') <!-- al terminar esta sección debemos manejar estos datos con abilidades y persmisos a cada perfil "administrador", "doctor", 
-                    "recepcionista", "paciente"-->
                 <div class="tab-pane" id="2">
                         <div class="row sinpadding">
                             <div class="col-sm-12">
@@ -136,7 +135,6 @@
                                 </div>
                             </div>
                         </div>
-                        @endrole
                     </form>
                 </div>
             </div>
@@ -153,11 +151,14 @@
                             <i class="material-icons">info</i>Básica
                         </a>
                     </li>
+                     @role(['administrador', 'doctor']) <!-- al terminar esta sección debemos manejar estos datos con abilidades y persmisos a cada perfil "administrador", "doctor", 
+                    "recepcionista", "paciente"-->
                     <li>
                         <a href="#2" role="tab" data-toggle="tab">
                             <i class="material-icons">fingerprint</i>Personal
                         </a>
                     </li>
+                    @endrole
                 </ul>
             </div>
         </div>

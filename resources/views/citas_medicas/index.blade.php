@@ -81,7 +81,9 @@
         </div>
     </div>
 </div>
-@endsection
-
 @include('citas_medicas.addModalCita')
 @include('citas_medicas.upModalCita')
+
+@endsection
+
+

@@ -11,9 +11,18 @@
     </div>
     <div class="sidebar-wrapper">
         <div class="user">
+
+            <form id="formAvatar" method="post">
+                {{ csrf_field() }}
+                <input type="text" name="id" id="id_img" value="{{Auth::User()->id}}" class="hidden">
+                <input type="file" id="txt_input" class="hidden">
+            </form>
+             <a href="#">
             <div class="photo">
-                <img src="/assets/img/perfiles/{{ Auth::User()->avatar }}" />
+                <img src="/assets/img/perfiles/{{ Auth::User()->avatar }}" class="img-responsive avatar_img" />
             </div>
+        </a>
+
             <div class="info">
                 <a data-toggle="collapse" href="#collapseExample" class="collapsed">
                     {{Auth::User()->nombres}} {{Auth::User()->apellidos}}
@@ -22,13 +31,10 @@
                 <div class="collapse" id="collapseExample">
                     <ul class="nav">
                         <li>
-                            <a href="#">Mi Cuenta</a>
+                            <a href="#" data-toggle="modal" data-target="#modal_micuenta">Mis Datos</a>
                         </li>
                         <li>
-                            <a href="#">Edit Profile</a>
-                        </li>
-                        <li>
-                            <a href="#">Settings</a>
+                            <a href="#" data-toggle="modal" data-target="#modal_miclave">Cambiar Clave</a>
                         </li>
                     </ul>
                 </div>
@@ -49,7 +55,7 @@
                 </a>
             </li>
             @endpermission
-           @permission('leer-consultas')
+           @permission('leer-citas')
             <li>
                 <a href="{{url('consultas')}}">
                     <i class="material-icons">chrome_reader_mode</i>
@@ -124,3 +130,5 @@
         </ul>
     </div>
 </div>
+@include('../personas/modal_cuenta')
+@include('../clave/perfil')

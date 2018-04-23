@@ -16,7 +16,6 @@
 							@slot('personas')
 							@endslot
 						@endcomponent
-					
 					</div>
 				</div>
        		</div>

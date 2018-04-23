@@ -12,6 +12,11 @@ class Speciality extends Model
         'id', 'nombre',
     ];
 
+    public static function especialidades($id) //obtiene las especialidades del doctor en session.
+    {
+        $especialidades = User::findOrFail($id)->specialities; //lista las especialidades del doctor en sesión.
+        return $especialidades;
+    }
 
     public function users()
     {

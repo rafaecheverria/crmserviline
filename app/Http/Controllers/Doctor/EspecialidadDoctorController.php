@@ -29,6 +29,14 @@ class EspecialidadDoctorController extends Controller
         } 
     }
 
+     public function getEspecialidad(Request $request, $id)
+    {
+        if ($request->ajax()) {
+            $especialidades = Speciality::especialidades($id);
+            return response()->json($especialidades);
+        }
+    }
+
     public function update(Request $request, $id)
     {
         if($request->ajax()){

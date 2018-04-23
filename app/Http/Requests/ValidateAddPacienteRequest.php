@@ -31,8 +31,8 @@ class ValidateAddPacienteRequest extends FormRequest
             'telefono_add'  => 'required',
             'direccion_add' => 'required|min:5',
             'genero_add'    => 'required',
-            'peso_add'      => 'numeric', 
-            'altura_add'    => 'numeric'  
+            'peso_add'      => 'min:0|max:3', 
+            'altura_add'    => 'min:0|max:3'  
         ];
     }
     public function messages()

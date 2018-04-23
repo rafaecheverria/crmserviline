@@ -10,7 +10,7 @@
                 @include('doctores.form_editar')
             </div>
             <div class="modal-footer text-center">
-                <a href="#" id="update_editar_usuario" class="btn btn-danger pull-right">Actualizar</a>
+                <a href="#" id="actualizar_usuario" class="btn btn-danger pull-right">Actualizar</a>
             </div>
         </div>
     </div>

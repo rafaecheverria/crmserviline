@@ -50,7 +50,7 @@ class ReceptionistController extends ApiController
          $recepcionistas = User::with('roles')->selectRaw('distinct users.*')->withRole('recepcionista');
         return  datatables()->eloquent($recepcionistas)
                     ->addColumn('action', function ($recepcionista) {
-                    $clave = '<a href="#" onclick="get_clave('.$recepcionista->id.')" data-toggle="modal" data-target="#modal_especialidades" rel="tooltip" title="Resetear contraseña" class="btn btn-simple btn-primary btn-icon edit"><i class="material-icons">vpn_key</i></a>';
+                    $clave = '<a href="#" onclick="getClave('.$recepcionista->id.')" data-toggle="modal" data-target="#modal_clave" rel="tooltip" title="Resetear contraseña" class="btn btn-simple btn-primary btn-icon edit"><i class="material-icons">vpn_key</i></a>';
                     $editar ='<a href="#" onclick="carga_usuario('.$recepcionista->id.')" data-toggle="modal" data-target="#modal_editar_recepcionista" rel="tooltip" title="Editar" class="btn btn-simple btn-success btn-icon edit"><i class="material-icons">edit</i></a>';
                     $eliminar ='<a href="#" onclick="delete_recepcionista('.$recepcionista->id.')"  data-toggle="modal" data-target="#eliminar_recepcionista" rel="tooltip" title="Eliminar" class="btn btn-simple btn-danger btn-icon remove-item"><i class="material-icons">close</i></a>';
 

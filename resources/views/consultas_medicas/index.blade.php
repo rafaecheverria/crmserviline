@@ -52,5 +52,6 @@
 	</div>
 </div>
 @include('consultas_medicas.modal_atender')
+@include('consultas_medicas.modal_ver')
 @include('consultas_medicas.updateCitaPendiente')
 @endsection

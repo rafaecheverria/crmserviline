@@ -32,5 +32,6 @@
 @include('recepcionistas.modal_agregar')
 @include('recepcionistas.modal_editar')
 @include('recepcionistas.modal_eliminar')
+@include('../clave.usuarios')
 @endsection
 

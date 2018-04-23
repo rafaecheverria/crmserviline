@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\User;
 use App\Role;
 use App\Http\Requests\CreateRecepcionistaRequest;
+use App\Http\Requests\ValidaPasswordRequest;
 use App\Http\Requests\UpdateRecepcionistaRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
@@ -74,19 +75,18 @@ class UserController extends ApiController
         $user = User::findOrFail($id);
             return response()->json([
                 "id" => $user->id,
+                "nombres" => $user->nombres. " ". $user->apellidos,
             ]);
     }
 
-      public function putClave(ValidaPasswordRequest $request, $id) 
+      public function actualizaClave(ValidaPasswordRequest $request, $id) 
     {
        if($request->ajax()){
             $user = User::findOrFail($id);
-            $user->password = Hash::make($request->password);
+            $user->password = bcrypt($request->password);
             $user->save();
             return response()->json([
-             "tipo" => "recepcionista",
-             "nombres" => $user->nombres,
-             "apellidos" => $user->apellidos,
+             "nombres" => $user->nombres ." ". $user->apellidos,
              "message" => "La contraseña del usuario ".$user->nombres." ".$user->apellidos." fue actualizada correctamente!"
             ]);
         }

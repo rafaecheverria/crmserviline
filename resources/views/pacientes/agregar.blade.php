@@ -77,8 +77,7 @@
                                 </div>
                             </div>
                     </div>
-                    @role('administrador') <!-- al terminar esta sección debemos manejar estos datos con abilidades y persmisos a cada perfil "administrador", "doctor", 
-                    "recepcionista", "paciente"-->
+                    
                 <div class="tab-pane" id="add_2">
                         <div class="row sinpadding">
                             <div class="col-sm-12">
@@ -108,7 +107,7 @@
                             <div class="col-md-12">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Peso</label>
-                                    <input id="peso_add" name="peso_add" type="text" class="form-control" />                    
+                                    <input id="peso_add" name="peso_add" type="number" class="form-control" />                    
                                 </div>
                             </div>
                         </div>
@@ -116,7 +115,7 @@
                             <div class="col-md-12">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Estatura</label>
-                                    <input id="altura_add" name="altura_add" type="text" class="form-control" />                    
+                                    <input id="altura_add" name="altura_add" type="number" class="form-control" />                    
                                 </div>
                             </div>
                         </div>
@@ -144,7 +143,7 @@
                                 </div>
                             </div>
                         </div>
-                        @endrole
+                        
                     </form>
                 </div>
             </div>
@@ -157,11 +156,14 @@
                             <i class="material-icons">info</i>Básica
                         </a>
                     </li>
+                    @role(['administrador', 'doctor']) <!-- al terminar esta sección debemos manejar estos datos con abilidades y persmisos a cada perfil "administrador", "doctor", 
+                    "recepcionista", "paciente"-->
                     <li>
                         <a href="#add_2" role="tab" data-toggle="tab">
                             <i class="material-icons">fingerprint</i>Personal
                         </a>
                     </li>
+                    @endrole
                 </ul>
             </div>
         </div>

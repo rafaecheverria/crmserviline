@@ -13,7 +13,7 @@ class ValidaPasswordRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,18 @@ class ValidaPasswordRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'password'         => 'required|min:6',
+            'passwordConfirm'  => 'required|same:password',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'password.required'        => 'El campo password es obligatorio.',
+            'password.min:6'             => 'El campo password debe tener un mínimo de 6 caracteres.',
+            'passwordConfirm.required' => 'El campo confirmación es obligatorio.',
+            'passwordConfirm.same'     => 'Las contraseñas no coiciden.',
         ];
     }
 }

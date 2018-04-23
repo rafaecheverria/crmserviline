@@ -24,6 +24,7 @@ class CitasMedicasController extends Controller
         $doctores = User::select(['id', 'nombres', 'apellidos'])->withRole('doctor')->orderBy('apellidos', 'asc')->get();
         $pacientes = User::select(['id', 'nombres', 'apellidos'])->withRole('paciente')->orderBy('apellidos', 'asc')->get();
         $especialidades = Speciality::select(['id', 'nombre'])->orderBy('nombre', 'asc')->get();
+        //$especialidades_doctor = User::findOrFail(Auth::User()->id)->specialities;
         $cantidad_pacientes = User::withRole('paciente')->count();
         $reservas = Query::where('estado', 'pendiente')->count();
         return view('citas_medicas.index',compact('doctores', 'pacientes', 'cantidad_pacientes', 'reservas', 'especialidades'));
@@ -33,7 +34,7 @@ class CitasMedicasController extends Controller
     {
         if (Auth::user()->hasRole('doctor')) {
             $data = Query::join('users', 'queries.paciente_id', '=', 'users.id')
-            ->select('users.nombres as title', 'queries.doctor_id as doctor_id', 'queries.paciente_id as paciente_id', 'queries.descripcion as descripcion', 'queries.id as id', 'queries.fecha_inicio as start', 'queries.fecha_fin as end', 'queries.color as color', 'queries.estado as estado')
+            ->select('users.nombres as title', 'queries.doctor_id as doctor_id', 'queries.paciente_id as paciente_id', 'queries.descripcion as descripcion', 'queries.speciality_id as speciality_id', 'queries.id as id', 'queries.fecha_inicio as start', 'queries.fecha_fin as end', 'queries.color as color', 'queries.estado as estado')
             ->where('doctor_id', Auth::user()->id)->get();
         }else{
              $data = Query::join('users', 'queries.paciente_id', '=', 'users.id')
@@ -48,16 +49,10 @@ class CitasMedicasController extends Controller
     {
         if($request->ajax()){
             $cita = new Query($request->all());
-            if (Auth::user()->hasRole('doctor')) {
-               $cita->doctor_id = Auth::user()->id; //inserta el doctor en sesión
-               $cita->speciality_id = Auth::user()->speciality_id; //inserta especialidad del usuario en sesión
-            }else{
-                $cita->doctor_id = $request->doctor_id; //inserta el doctor del formulario.
-                $cita->speciality_id = $request->speciality_id;
-            }
             $Finicio = Date::parse($request->fecha_inicio)->format('Y-m-d');
             $cita->fecha_inicio = $Finicio . " " . $request->hora_inicio;
             $cita->fecha_fin    = $Finicio . " " . $request->hora_fin;
+            $cita->speciality_id = $request->speciality_id;
             $cita->estado       = 'pendiente';
             $cita->color        = '#298A08';
             $cita->unity_id     = 1;

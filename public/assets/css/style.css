@@ -114,3 +114,14 @@ table, th, td{
   border-collapse: collapse;
   margin: 0px;
 }
+.fc-icon-fa {
+  font-family: FontAwesome;
+}
+/*.fc button, .fc button:hover, .fc button:focus, .fc button:active, .fc button.active, .fc button:active:focus, .fc button:active:hover, .fc button.active:focus, .fc button.active:hover, .open > .fc button.dropdown-toggle, .open > .fc button.dropdown-toggle:focus, .open > .fc button.dropdown-toggle:hover, .fc button.btn-primary, .fc button.btn-primary:hover, .fc button.btn-primary:focus, .fc button.btn-primary:active, .fc button.btn-primary.active, .fc button.btn-primary:active:focus, .fc button.btn-primary:active:hover, .fc button.btn-primary.active:focus, .fc button.btn-primary.active:hover, .open > .fc button.btn-primary.dropdown-toggle, .open > .fc button.btn-primary.dropdown-toggle:focus, .open > .fc button.btn-primary.dropdown-toggle:hover {
+  background-color: #9C27B0;
+  color: #FFFFFF;
+} */
+/*.bootstrap-select.btn-group .dropdown-menu li a:hover {
+     color: whitesmoke !important;
+     background: #bf5279 !important;
+ }*/

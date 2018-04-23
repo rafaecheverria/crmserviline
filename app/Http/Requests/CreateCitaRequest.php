@@ -25,7 +25,7 @@ class CreateCitaRequest extends FormRequest
     {
          return [
             'fecha_inicio'  => 'required',
-            'hora_inicio'   => 'required',
+            'hora_inicio'   => 'date_format:"H:i"|required|before:hora_fin',
             'hora_fin'      => 'required',
             'paciente_id'   => 'required',
             'doctor_id'     => 'required',
@@ -37,8 +37,9 @@ class CreateCitaRequest extends FormRequest
     {
         return [
             'fecha_inicio.required' => 'Fecha inicio es obligatorio.',
-            'hora_inicio.required' => 'hora inicio es obligatorio.',
-            'hora_fin.required' => 'hora fin es obligatorio.',
+            'hora_inicio.required' => 'Hora inicio es obligatorio.',
+            'hora_inicio.before' => 'El campo hora inicio debe ser una hora anterior a hora fin.',
+            'hora_fin.required' => 'Hora fin es obligatorio.',
             'paciente_id.required' => 'Paciente es obligatorio.',
             'doctor_id.required' => 'Doctor es obligatorio.',
             'speciality_id.required' => 'Especialidad es obligatorio.',

@@ -7,25 +7,25 @@ class SpecialityTableSeeder extends Seeder
     public function run()
     {
     	factory(App\Speciality::class)->create([
-	        'nombre' => 'Cardiología',
+	        'nombre' => 'Cardiologia',
         ]);
         factory(App\Speciality::class)->create([
-	        'nombre' => 'Cirugía General',
+	        'nombre' => 'Cirugia General',
         ]);
         factory(App\Speciality::class)->create([
-	        'nombre' => 'Cirugía Infantil',
+	        'nombre' => 'Cirugia Infantil',
         ]);
         factory(App\Speciality::class)->create([
-	        'nombre' => 'Dermatología',
+	        'nombre' => 'Dermatologia',
         ]);
         factory(App\Speciality::class)->create([
-	        'nombre' => 'Geriatría',
+	        'nombre' => 'Geriatria',
         ]);
         factory(App\Speciality::class)->create([
-	        'nombre' => 'Pediatría',
+	        'nombre' => 'Pediatria',
         ]);
         factory(App\Speciality::class)->create([
-	        'nombre' => 'Psicología',
+	        'nombre' => 'Psicologia',
         ]);
         //factory(App\Speciality::class, 3)->create();  
     }

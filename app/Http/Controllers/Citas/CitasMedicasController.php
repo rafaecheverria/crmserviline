@@ -48,22 +48,38 @@ class CitasMedicasController extends Controller
     public function store(CreateCitaRequest $request)
     {
         if($request->ajax()){
+
+            $reserva_ocupada = "";
             $cita = new Query($request->all());
             $Finicio = Date::parse($request->fecha_inicio)->format('Y-m-d');
             $cita->fecha_inicio = $Finicio . " " . $request->hora_inicio;
             $cita->fecha_fin    = $Finicio . " " . $request->hora_fin;
-            $cita->speciality_id = $request->speciality_id;
-            $cita->estado       = 'pendiente';
-            $cita->color        = '#298A08';
-            $cita->unity_id     = 1;
-            $cita->save();
-            $reservas = Query::where('estado', 'pendiente')->count();
-            return response()->json([
-                "message"      => "La cita ha sido reservada correctamente",
-                "reserva"      => $reservas,
-                "doctor"       => $cita->doctor_id,
-                "especialidad" => $cita->speciality_id
+            $query_doctor = Query::where('doctor_id', '=', $request->doctor_id)->where('estado', '=', 'pendiente')->whereBetween('fecha_inicio', array($cita->fecha_inicio,$cita->fecha_fin))->count();
+            if ($query_doctor > 0) {
+                return response()->json([
+                "success" => false,
+                "message" => "El doctor tienen una consulta pendiente en el rango de horas seleccionado,porfavor verifique y vuelta a intentarlo",
                 ]);
+            }else{
+                $cita = new Query($request->all());
+                $Finicio = Date::parse($request->fecha_inicio)->format('Y-m-d');
+                $cita->fecha_inicio = $Finicio . " " . $request->hora_inicio;
+                $cita->fecha_fin    = $Finicio . " " . $request->hora_fin;
+                $cita->speciality_id = $request->speciality_id;
+                $cita->estado       = 'pendiente';
+                $cita->color        = '#298A08';
+                $cita->unity_id     = 1;
+                $cita->save();
+                $reservas = Query::where('estado', 'pendiente')->count();
+                return response()->json([
+                    "success"      => true,
+                    "message"      => "La cita ha sido reservada correctamente",
+                    "reserva"      => $reservas,
+                    "doctor"       => $cita->doctor_id,
+                    "especialidad" => $cita->speciality_id,
+
+                    ]);
+            }
         }
     }
 

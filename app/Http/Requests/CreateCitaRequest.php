@@ -25,7 +25,7 @@ class CreateCitaRequest extends FormRequest
     {
          return [
             'fecha_inicio'  => 'required',
-            'hora_inicio'   => 'date_format:"H:i"|required|before:hora_fin',
+            'hora_inicio'   => 'required|before:hora_fin',
             'hora_fin'      => 'required',
             'paciente_id'   => 'required',
             'doctor_id'     => 'required',

@@ -1,5 +1,5 @@
 <!-- notice modal -->
-<div class="modal fade" id="update_cita_pendiente" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal_update_cita" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header-success">
@@ -15,20 +15,20 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="control-label">FECHA</label>
-                            <input id="fecha_inicio" name="fecha_inicio" type="text" class="form-control datepicker" 
+                            <input id="fecha_inicio_e" name="fecha_inicio" type="text" class="form-control datepicker" 
                             />                    
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="control-label">HORA INICIO</label>
-                            <input id="hora_inicio" name="hora_inicio" type="text" class="form-control timepicker" />                    
+                            <input id="hora_inicio_e" name="hora_inicio_e" type="text" class="form-control timepicker" />                    
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="control-label">HORA FIN</label>
-                            <input id="hora_fin" name="hora_fin" type="text" class="form-control timepicker" />                   
+                            <input id="hora_fin_e" name="hora_fin" type="text" class="form-control timepicker" />                   
                         </div>
                     </div>
                 </div>
@@ -38,7 +38,7 @@
                         <div class="col-md-12"> 
                             <div class="form-group">
                               <label class="control-label">ESPECIALIDAD</label>
-                              <select id="speciality_id_e_up" name="speciality_id" class="selectpicker show-tick" data-dropup-auto="false" data-size="5" data-live-search="true" data-style="select-with-transition">
+                              <select id="speciality_id_e" name="speciality_id" class="selectpicker show-tick" data-dropup-auto="false" data-size="5" data-live-search="true" data-style="select-with-transition">
                                    
                               </select>
                             </div>
@@ -50,8 +50,11 @@
                         <div class="col-md-6"> 
                             <div class="form-group">
                               <label class="control-label">ESPECIALIDAD</label>
-                              <select id="speciality_id" name="speciality_id" class="selectpicker show-tick" data-dropup-auto="false" data-size="5" data-style="select-with-transition">
-                                    
+                              <select id="speciality_id_e" name="speciality_id" class="selectpicker show-tick" data-dropup-auto="false" data-size="5" data-style="select-with-transition">
+                                    <option value="">-- Seleccione --</option>
+                                     @foreach($especialidades as $especialidad)
+                                        <option value="{{ $especialidad->id }}">{{ $especialidad->nombre}}</option>
+                                    @endforeach
                               </select>
                             </div>
                         </div>
@@ -60,7 +63,7 @@
                         <div class="col-md-6"> 
                             <div class="form-group">
                               <label class="control-label">DOCTOR</label>
-                              <select id="doctor_id" name="doctor_id" class="selectpicker show-tick" data-dropup-auto="false" data-size="5" data-live-search="true" data-style="select-with-transition">
+                              <select id="doctor_id_e" name="doctor_id" class="selectpicker show-tick" data-dropup-auto="false" data-size="5" data-live-search="true" data-style="select-with-transition">
                                    
                               </select>
                             </div>
@@ -73,7 +76,7 @@
                         <div class="col-md-12"> 
                             <div class="form-group">
                               <label class="control-label">PACIENTE</label>
-                              <select id="paciente_id" name="paciente_id" class="selectpicker show-tick" data-dropup-auto="false" data-size="5" data-live-search="true" data-style="select-with-transition">
+                              <select id="paciente_id_e" name="paciente_id" class="selectpicker show-tick" data-dropup-auto="false" data-size="5" data-live-search="true" data-style="select-with-transition">
                                     <option value="">-- Seleccione --</option>
                                      @foreach($pacientes as $paciente)
                                         <option value="{{ $paciente->id }}">{{ $paciente->apellidos }} {{ $paciente->nombres }}</option>
@@ -88,7 +91,7 @@
                     <div class="col-md-12"> 
                         <div class="form-group">
                             <label class="control-label">OBSERVACIÓN</label>
-                            <input id="descripcion" name="descripcion" type="text" class="form-control" />      
+                            <input id="descripcion_e" name="descripcion" type="text" class="form-control" />      
                         </div>
                     </div>
                 </div>

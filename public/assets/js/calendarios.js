@@ -87,7 +87,6 @@ $(document).ready(function() {
                 },
 
                 select: function(start, end) { //evento que abre el modal agregar.
-
                 start = moment(start.format());
                     $("#fecha_inicio").val(start.format("DD-MM-YYYY"))
                     $('#hora_inicio').datetimepicker({

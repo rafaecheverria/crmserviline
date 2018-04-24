@@ -10,20 +10,20 @@ $(document).ready(function() {
     })
 
      
-$("#up_evento #speciality_id_e").change(function(event){ //carga los doctores en el select #doctor_id según la especialidad elegida.
+$("#speciality_id_e").change(function(event){ //carga los doctores en el select #doctor_id según la especialidad elegida.
     var id = event.target.value;
     if (!id) 
         $("#doctor_id_e").html("<option>--Seleccione--</option>")
         $('.selectpicker').selectpicker('refresh') //refresca el select para que cambie su valor
         $.get("get-doctor/"+id+"",function(response,speciality){
-        $("#up_evento #doctor_id_e").empty()
+        $("#doctor_id_e").empty()
         $('.selectpicker').selectpicker('refresh') //refresca el select para que cambie su valor
         if (response == "") {
-             $("#up_evento #doctor_id_e").html("<option>--Seleccione--</option>")
+             $("#doctor_id_e").html("<option>--Seleccione--</option>")
               $('.selectpicker').selectpicker('refresh') //refresca el select para que cambie su valor
         }else{
             for(i = 0; i <response.length; i++) {
-                $("#up_evento #doctor_id_e").append("<option value='"+response[i].id+"'>"+response[i].apellidos+" "+response[i].nombres+"</option>")
+                $("#doctor_id_e").append("<option value='"+response[i].id+"'>"+response[i].apellidos+" "+response[i].nombres+"</option>")
             }
             $('.selectpicker').selectpicker('refresh') //refresca el select para que cambie su valor
         }
@@ -40,7 +40,7 @@ $("#speciality_id").change(function(event){ //carga los doctores en el select #d
         $('.selectpicker').selectpicker('refresh') //refresca el select para que cambie su valor
         $("#doctor_id").empty()
         if (response == "") {
-             $("#up_evento #doctor_id").html("<option>--Seleccione--</option>")
+             $("#doctor_id").html("<option>--Seleccione--</option>")
               $('.selectpicker').selectpicker('refresh') //refresca el select para que cambie su valor
         }else{
             for(i = 0; i <response.length; i++) {
@@ -112,7 +112,6 @@ $( "#guardar_cita" ).click(function(event){
        // event.preventDefault();
         var dataString  = $( '#form_cita' ).serializeArray();
         var route = "/citas";
-        console.log(dataString)
         $.ajax({
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             url: route,
@@ -120,15 +119,19 @@ $( "#guardar_cita" ).click(function(event){
             datatype: 'json',
             data:dataString,
             success:function(data){
-                $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
-                $('#form_cita')[0].reset()
-                $("#citas_medicas").fullCalendar('refetchEvents')
-                $('#reserva').html(data.reserva)
-                //$("#add_evento #doctor_id").html("<option>--Seleccione--</option>")
-                //$("#add_evento #doctor_id").empty()
-                $("#add_evento").modal("hide")
-                //$('.selectpicker').selectpicker('refresh')
-
+                console.log(data.mensaje)
+                if (data.success == false) {
+                    $.notify({icon: "add_alert", message: data.message},{type: 'warning', timer: 1000})
+                }else{
+                    $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
+                    $('#form_cita')[0].reset()
+                    $("#citas_medicas").fullCalendar('refetchEvents')
+                    $('#reserva').html(data.reserva)
+                    $("#add_evento #doctor_id").html("<option>--Seleccione--</option>")
+                    $("#add_evento #doctor_id").empty()
+                    $("#add_evento").modal("hide")
+                    $('.selectpicker').selectpicker('refresh')
+                }
             },
             error:function(data){
                 var error = data.responseJSON.errors;
@@ -847,16 +850,16 @@ function actualizar_especialidad($id)
 
 function getDoctorUp(especialidad, id_doctor){
     $.get("get-doctor/"+especialidad+"",function(response,speciality){
-    $("#up_evento #doctor_id_e").empty()
+    $("#doctor_id_e").empty()
     $('.selectpicker').selectpicker('refresh')
     if (response == "") {
-         $("#up_evento #doctor_id_e").html("<option>--Seleccione--</option>")
+         $("#doctor_id_e").html("<option>--Seleccione--</option>")
          $('.selectpicker').selectpicker('refresh')
     }else{
         for(i = 0; i <response.length; i++) {
-            $("#up_evento #doctor_id_e").append("<option value='"+response[i].id+"'>"+response[i].apellidos+" "+response[i].nombres+"</option>")
+            $("#doctor_id_e").append("<option value='"+response[i].id+"'>"+response[i].apellidos+" "+response[i].nombres+"</option>")
         }
-        $('#up_evento #doctor_id_e').val(id_doctor)
+        $('#doctor_id_e').val(id_doctor)
         $('.selectpicker').selectpicker('refresh')
     }
 })
@@ -879,17 +882,17 @@ function getDoctorAdd(especialidad){
 // si falla el select especialidades en el update cita en sesion doctor, es porque no tiene permisos "leer especialidades"
 function select_especialidad_up(doctor_id, speciality_id){ //lista las especialidades del doctor en sesion 
         $.get("get-especialidad/"+doctor_id+"",function(response,speciality){
-        $("#speciality_id_e_up").empty()
+        $("#speciality_id_e").empty()
         $('.selectpicker').selectpicker('refresh')
         if (response == "") {
-             $("#speciality_id_e_up").html("<option>--Seleccione--</option>")
+             $("#speciality_id_e").html("<option>--Seleccione--</option>")
              $('.selectpicker').selectpicker('refresh')
         }else{
             for(i = 0; i <response.length; i++) {
-                $("#speciality_id_e_up").append("<option value='"+response[i].id+"'>"+response[i].nombre+"</option>")
+                $("#speciality_id_e").append("<option value='"+response[i].id+"'>"+response[i].nombre+"</option>")
                 $('.selectpicker').selectpicker('refresh')
             }
-            $('#speciality_id_e_up').val(speciality_id)
+            $('#speciality_id_e').val(speciality_id)
             $('.selectpicker').selectpicker('refresh')
         }
     })
@@ -1429,14 +1432,12 @@ function cargar_consulta_atendida(id)// Carga los datos en el modal para editar,
                type: 'GET',
             success:function(data){
                 $("#id_consulta_pendiente").val(data.id)
-                $("#fecha_inicio").val(data.fecha_inicio)
-                $("#hora_inicio").val(data.hora_inicio)
-                $('#hora_fin').val(data.hora_fin)
-                $('#paciente_id').val(data.paciente)
-                $('#speciality_id').val(data.especialidad)
-                $('#descripcion').val(data.descripcion)
-
-
+                $("#fecha_inicio_e").val(data.fecha_inicio)
+                $("#hora_inicio_e").val(data.hora_inicio)
+                $('#hora_fin_e').val(data.hora_fin)
+                $('#paciente_id_e').val(data.paciente)
+                $('#speciality_id_e').val(data.especialidad)
+                $('#descripcion_e').val(data.descripcion)
                 var doctor_id = $("#doctor_id_e_up").val()
                 getDoctorUp(data.especialidad, data.doctor)
                 select_especialidad_up(doctor_id, data.especialidad)

@@ -54,4 +54,5 @@
 @include('consultas_medicas.modal_atender')
 @include('consultas_medicas.modal_ver')
 @include('consultas_medicas.updateCitaPendiente')
+@include('consultas_medicas.modal_pago')
 @endsection

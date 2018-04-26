@@ -7,7 +7,7 @@
                 <h6>EDITAR PACIENTE: <b><span class="title-name_e"></span></b></h6>
             </div>
             <div class="modal-body-edit">
-                @include('pacientes.form_editar')
+                @include('pacientes.form_editar') 
             </div>
             <div class="modal-footer text-center">
                 <a href="#" id="update_editar_paciente" class="btn btn-info pull-right">Actualizar</a>

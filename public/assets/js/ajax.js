@@ -9,6 +9,36 @@ $(document).ready(function() {
         $("#btn-guardar").html('<a href="#" onclick="guardar_especialidad();" class="btn btn-fill btn-success">Guardar</a>')
     })
 
+    $("#fonasa").click(function(event){
+        var html = "";
+        html+="<select id='prevision_select' data-style='select-with-transition'>";
+        html+="<option>FONASA A</option>";
+        html+="<option>FONASA B</option>";
+        html+="<option>FONASA C</option>";
+        html+= "</select>";
+        $("#prevision").html(html)
+        $("#prevision_select").selectpicker()
+    })
+
+    $("#particular").click(function(event){
+        var html = "";
+        html+="<select id='prevision_select' data-style='select-with-transition' disabled='true'>";
+        html+="<option>PARTICULAR</option>";
+        html+= "</select>";
+        $("#prevision").html(html)
+        $("#prevision_select").selectpicker()
+    })
+ $("#isapre").click(function(event){
+        var html = "";
+        html+="<select id='prevision_select' data-style='select-with-transition'";
+        html+="<option>CONASALUD</option>";
+        html+="<option>CRUZ BLANCA</option>";
+        html+="<option>PARTICULAR</option>";
+        html+="<option>BANMÉDICA</option>";
+        html+= "</select>";
+        $("#prevision").html(html)
+        $("#prevision_select").selectpicker()
+    })
      
 $("#speciality_id_e").change(function(event){ //carga los doctores en el select #doctor_id según la especialidad elegida.
     var id = event.target.value;
@@ -465,9 +495,9 @@ $( "#update_micuenta" ).click(function(event){  //actualiza los datos del doctor
     })
 $( "#actualizar_usuario" ).click(function(event){  //actualiza los datos del doctor.
         var id= $( '#id' ).val()
-        var tipo = $(".tipo").val()
+        var tipo = $("#tipo").val()
         var route = ""
-        if (tipo === "doctor") {route = "/doctores/"+id+""}else{route = "/recepcionistas/"+id+""}
+        if (tipo === "doctor") {route = "/doctores/"+id+"";}else{route = "/recepcionistas/"+id+"";}
         var dataString  = $( '#form_editar_usuario' ).serializeArray()
         $.ajax({
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -691,10 +721,10 @@ $( "#ingresar" ).click(function(event){
 
     $(function(){
     
-        $avatarInput = $('#avatarInput');
-        $avatarImage = $('.avatarImage');
-        $avatarForm = $('#avatarForm');
-        avatarUrl = "/users/avatar";
+        $avatarInput = $('#avatarInput')
+        $avatarImage = $('.avatarImage')
+        $avatarForm = $('#avatarForm')
+        avatarUrl = "/users/avatar"
         $id = $('#id_avatar').val();
 
         $avatarImage.on('click', function(){    
@@ -704,8 +734,7 @@ $( "#ingresar" ).click(function(event){
         $avatarInput.on('change', function(){
 
         var formData = new FormData();
-        formData.append('avatar', $avatarInput[0].files[0]);
-
+        formData.append('avatar', $avatarInput[0].files[0])
             $.ajax({
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 url: avatarUrl+'?'+$avatarForm.serialize(),
@@ -716,20 +745,19 @@ $( "#ingresar" ).click(function(event){
                 contentType: false,
 
             beforeSend: function(){
-                    $avatarImage.attr('src', '/assets/img/touchloader.gif');
+                    $avatarImage.attr('src', '/assets/img/touchloader.gif')
             },
             success: function(data){
-                    $avatarImage.attr('src', '/assets/img/perfiles/'+data.file_name+'?'+ new Date().getTime());
-                    $('#pacientes').DataTable().ajax.reload();
-                    $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000});
+                    $avatarImage.attr('src', '/assets/img/perfiles/'+data.file_name+'?'+ new Date().getTime())
+                    $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
             },
             error: function(data){
                 var error = data.responseJSON.errors;
                 for(var i in error){
                     var message = error[i];
                       $avatarImage.attr('src');
-                      $avatarImage.attr('src', '/assets/img/perfiles/'+data.file_name+'?'+ new Date().getTime());
-                     $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000});
+                      $avatarImage.attr('src', '/assets/img/perfiles/'+data.file_name+'?'+ new Date().getTime())
+                     $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000})
                 }
             }
         })
@@ -738,29 +766,29 @@ $( "#ingresar" ).click(function(event){
 })
 
 // Subir Imagen de Perfil 
-    var $avatarInput, $avatarImage, $avatarForm;
-    var avatarUrl;
+    var $txt_input, $avatar_img, $formAvatar;
+    var Url;
 
     $(function(){
     
-        $avatarInput = $('#txt_input');
-        $avatarImage = $('.avatar_img');
-        $avatarForm = $('#formAvatar');
-        avatarUrl = "/users/avatar";
+        $txt_input = $('#txt_input');
+        $avatar_img = $('.avatar_img');
+        $formAvatar = $('#formAvatar');
+        Url = "/users/avatar";
         $id = $('#id_img').val();
 
-        $avatarImage.on('click', function(){    
-            $avatarInput.click()
+        $avatar_img.on('click', function(){    
+            $txt_input.click()
         });
         
-        $avatarInput.on('change', function(){
+        $txt_input.on('change', function(){
 
         var formData = new FormData();
-        formData.append('avatar', $avatarInput[0].files[0]);
+        formData.append('avatar', $txt_input[0].files[0]);
 
             $.ajax({
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                url: avatarUrl+'?'+$avatarForm.serialize(),
+                url: Url+'?'+$formAvatar.serialize(),
                 method: 'POST',
                 data: formData,
                 cache: true,
@@ -768,19 +796,19 @@ $( "#ingresar" ).click(function(event){
                 contentType: false,
 
             beforeSend: function(){
-                    $avatarImage.attr('src', '/assets/img/touchloader.gif');
+                    $avatar_img.attr('src', '/assets/img/touchloader.gif');
             },
             success: function(data){
-                    $avatarImage.attr('src', '/assets/img/perfiles/'+data.file_name+'?'+ new Date().getTime());
-                    $('#pacientes').DataTable().ajax.reload();
+                    $avatar_img.attr('src', '/assets/img/perfiles/'+data.file_name+'?'+ new Date().getTime());
+                   // $('#pacientes').DataTable().ajax.reload();
                     $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000});
             },
             error: function(data){
                 var error = data.responseJSON.errors;
                 for(var i in error){
                     var message = error[i];
-                      $avatarImage.attr('src');
-                      $avatarImage.attr('src', '/assets/img/perfiles/'+data.file_name+'?'+ new Date().getTime());
+                      $avatar_img.attr('src');
+                      $avatar_img.attr('src', '/assets/img/perfiles/'+data.file_name+'?'+ new Date().getTime());
                      $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000});
                 }
             }
@@ -969,9 +997,9 @@ function carga_usuario(id)//carga datos del doctor y recepcionista en el modal e
             $("INPUT[name=direccion]").val([data.direccion])
             $("INPUT[name=nacimiento]").val([data.nacimiento])
             $("INPUT[name=id]").val(data.id)
-            $(".avatarImage").attr('src', 'assets/img/perfiles/'+data.avatar+'?'+ new Date().getTime());
+            $(".avatarImage").attr('src', 'assets/img/perfiles/'+data.avatar+'?'+ new Date().getTime())
             $("INPUT[name=genero]").val([data.genero]) //carga valor de radiobutton desde mysql
-           $('.title-name').html(data.nombres+" "+ data.apellidos)
+            $('.title-name').html(data.nombres+" "+ data.apellidos)
           },
        error:function(){
            alert('la operación falló');
@@ -1018,13 +1046,12 @@ function carga_paciente(id)//carga datos del paciente en el modal editar.
 {
    //event.preventDefault(); este evento no funciona con firefox y envia error, no cargan los datos en el modal.
    var route = "/pacientes/"+id+"/edit";
-   var csrf_token = $('meta[name="csrf-token"]').attr('content');
     $.ajax({
            url: route,
            type: 'GET',
         success:function(data){
-            $('#id_paciente').val(data.id)
-            $(".avatarImage").attr('src', 'assets/img/perfiles/'+data.avatar+'?'+ new Date().getTime());
+            $("#id_paciente").val(data.id)
+            $(".avatarImage").attr('src', 'assets/img/perfiles/'+data.avatar+'?'+ new Date().getTime())
             $('#rut_e').val(data.rut)
             $('#nombres_e').val(data.nombres)
             $('#apellidos_e').val(data.apellidos)
@@ -1043,9 +1070,9 @@ function carga_paciente(id)//carga datos del paciente en el modal editar.
             $('.title-name_e').html(data.nombres)
           },
        error:function(){
-           alert('la operación falló');
+           alert('la operación falló')
           }
-    });
+    })
 }
 function permisos_roles(id) //carga modal que contiene el select multiple de permisos del rol.
 {

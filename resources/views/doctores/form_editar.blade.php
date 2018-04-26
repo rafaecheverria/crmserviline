@@ -3,7 +3,7 @@
         <div class="col-md-8">
             <form class="form" id="form_editar_usuario">
                 <input type="text" name="id" id="id" hidden="true"> 
-                <input type="text" name="tipo" class="tipo" value="doctor" hidden="true">
+                <input type="text" name="tipo" class="tipo" id="tipo" value="doctor" hidden="true">
                 <div class="row sinpadding">
                     <div class="col-md-12">
                         <div class="form-group">

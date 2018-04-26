@@ -51,6 +51,7 @@ class ConsultasMedicasController extends Controller
                  $atender ="";
                  $editar ="";
                  $eliminar = "";
+                 $pagar = '<a href="#" onclick="atender('.$consulta->id.')" data-toggle="modal" data-target="#modal_pago" rel="tooltip" title="Pagar" class="btn btn-simple btn-primary btn-icon"><i class="material-icons">attach_money</i></a>';
                  if (Auth::user()->can('editar-atender')) {
                    $atender = '<a href="#" onclick="atender('.$consulta->id.')" data-toggle="modal" data-target="#modal_atender" rel="tooltip" title="Atender" class="btn btn-simple btn-primary btn-icon"><i class="material-icons">done_all</i></a>';
                 }
@@ -61,7 +62,7 @@ class ConsultasMedicasController extends Controller
                 $eliminar = '<a href="#" onclick="delete_cita_pendiente('.$consulta->id.')" data-toggle="modal" data-target="#eliminar_paciente" rel="tooltip" title="Eliminar" class="btn btn-simple btn-danger btn-icon"><i class="material-icons">close</i></a>';
                 }
 
-                return $atender.$editar.$eliminar;
+                return $pagar.$atender.$editar.$eliminar;
             })->make(true);
     }
     

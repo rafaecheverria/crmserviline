@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Paciente;
 
 use App\User;
+use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -48,7 +49,8 @@ class FichaPacienteController extends Controller
     public function reporte($id)
     {
         $pacientes = User::findOrFail($id);
-        $pdf = \PDF::loadView('pacientes.pdf_ficha', ['pacientes' => $pacientes]);
+        $edad = Carbon::parse($pacientes->nacimiento)->age;
+        $pdf = \PDF::loadView('pacientes.pdf_ficha', ['pacientes' => $pacientes, 'edad' => $edad]);
         return $pdf->download("paciente.pdf");
     }
 

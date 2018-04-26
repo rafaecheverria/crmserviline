@@ -4,7 +4,7 @@
             <div class="tab-content">
                 <div class="tab-pane active" id="1">
                     <form class="form" id="form_editar_paciente">
-                        <input type="text" id="id_paciente" hidden="true">
+                        <input type="text" name="id" id="id_paciente" hidden="true">
                         <div class="row sinpadding">
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -141,7 +141,7 @@
         </div>
         <div class="col-md-4">
             <div class="row">
-                @include('..personas/avatar')
+                @include('../personas/avatar')
             </div>
             <br>
             <div class="row">

@@ -1,4 +1,4 @@
-<div class="sidebar" data-active-color="rose" data-background-color="black" data-image="{{ asset('assets/img/sidebar-1.jpg') }}">
+<div class="sidebar" data-active-color="rose" data-background-color="black" data-image="{{ asset('assets/img/sidebar.jpg') }}">
     <div class="logo">
         <a href="http://www.creative-tim.com" class="simple-text">
             DOCLICK
@@ -15,7 +15,7 @@
             <form id="formAvatar" method="post">
                 {{ csrf_field() }}
                 <input type="text" name="id" id="id_img" value="{{Auth::User()->id}}" class="hidden">
-                <input type="file" id="txt_input" class="hidden">
+                <input type="file" id="txt_input" name="avatar" class="hidden">
             </form>
              <a href="#">
             <div class="photo">

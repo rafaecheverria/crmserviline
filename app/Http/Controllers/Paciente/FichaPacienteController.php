@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Paciente;
 
 use App\User;
+use Jenssegers\Date\Date;
 use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -50,8 +51,9 @@ class FichaPacienteController extends Controller
     {
         $pacientes = User::findOrFail($id);
         $edad = Carbon::parse($pacientes->nacimiento)->age;
-        $pdf = \PDF::loadView('pacientes.pdf_ficha', ['pacientes' => $pacientes, 'edad' => $edad]);
-        return $pdf->download("paciente.pdf");
+        $fecha = Date::now()->toFormattedDateString();
+        $pdf = \PDF::loadView('pacientes.pdf_ficha', ['pacientes' => $pacientes, 'edad' => $edad, 'fecha' => $fecha]);
+        return $pdf->download($pacientes->nombres ." ". $pacientes->apellidos.".pdf");
     }
 
     public function show($id)

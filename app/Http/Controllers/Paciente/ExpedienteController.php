@@ -32,4 +32,15 @@ class ExpedienteController extends Controller
            "paciente" => $paciente->nombres . " " . $paciente->apellidos,
         ]);
     }
+
+    public function reporte($id)
+    {
+        //$especialidades = Speciality::select(['id', 'nombre'])->orderBy('nombre', 'asc')->get();
+        $paciente       = User::findOrFail($id);
+        $edad           = Carbon::parse($paciente->nacimiento)->age;
+        $query_paciente = Query::select(['id', 'sintomas', 'examenes', 'tratamiento', 'observaciones'])->where('paciente_id', '=', $paciente->id)->get();
+        $fecha          = Date::now()->toFormattedDateString();
+        $pdf            = \PDF::loadView('pacientes.pdf_expediente', ['paciente' => $paciente, 'edad' => $edad, 'fecha' => $fecha, 'query_paciente' => $query_paciente]);
+        return $pdf->download($paciente->nombres ." ". $paciente->apellidos.".pdf");
+    }
 }

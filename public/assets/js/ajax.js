@@ -1177,7 +1177,6 @@ function ficha_paciente(id) //carga datos en la ficha del paciente.
 
 function expediente_paciente(id) //carga datos en el expediente del paciente.
 {
-   
    var route = "/expediente/"+id+"";
    var csrf_token = $('meta[name="csrf-token"]').attr('content');
    var html = "";
@@ -1201,7 +1200,7 @@ function expediente_paciente(id) //carga datos en el expediente del paciente.
                         html+="</ol></div></div></div></div>";
                 }
             }
-             $('#boton').html('<a href="pdf/'+data.id_paciente+'" id="download_ficha" class="btn btn-info pull-right"><span class="btn-label"><i class="material-icons">file_download</i></span>Descargar</a>')
+             $('#boton').html('<a href="pdf-expediente/'+data.array[0].id+'" id="download_expediente" class="btn btn-info pull-right"><span class="btn-label"><i class="material-icons">file_download</i></span>Descargar</a>')
             }else{
 
                 html+="<p>Este paciente no tiene historial clínico</p>";
@@ -1214,7 +1213,7 @@ function expediente_paciente(id) //carga datos en el expediente del paciente.
         error:function(){
            alert('la operación falló');
         }
-    });
+    })
 }
 
 function eliminar_recep(id)

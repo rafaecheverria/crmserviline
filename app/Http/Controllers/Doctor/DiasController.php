@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Doctor;
 
 use App\Dias;
+use Jenssegers\Date\Date;
+use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -19,8 +21,6 @@ class DiasController extends Controller
     public function store(Request $request)
     {
         if($request->ajax()){
-
-            $reserva_ocupada = "";
             $dia = new Dias($request->all());
             $Finicio = Date::parse($request->fecha_inicio)->format('Y-m-d');
             $dia->fecha_inicio = $Finicio . " " . $request->hora_inicio;
@@ -29,10 +29,10 @@ class DiasController extends Controller
             if ($query_dias > 0) {
                 return response()->json([
                 "success" => false,
-                "message" => "El doctor ya tiene este dia disponible para agendar citas",
+                "message" => "El doctor ya tiene habilitado este día para agendar citas",
                 ]);
             }else{
-                $dia = new Query($request->all());
+                $dia = new Dias($request->all());
                 $Finicio = Date::parse($request->fecha_inicio)->format('Y-m-d');
                 $dia->fecha_inicio = $Finicio . " " . $request->hora_inicio;
                 $dia->fecha_fin    = $Finicio . " " . $request->hora_fin;
@@ -42,9 +42,7 @@ class DiasController extends Controller
                 return response()->json([
                     "success"      => true,
                     "message"      => "Se asignó este día para agendar citas",
-                    "reserva"      => $reservas,
                     "doctor"       => $cita->doctor_id,
-                    "especialidad" => $cita->speciality_id,
                 ]);
             }
         }

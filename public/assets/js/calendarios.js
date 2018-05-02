@@ -231,7 +231,7 @@ $( "#guardar_dia" ).click(function(event){
         var dataString  = $( '#form_dias' ).serializeArray();
         var route = "/dias";
         console.log(dataString);
-        /*$.ajax({
+        $.ajax({
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             url: route,
             type: 'post',
@@ -260,7 +260,7 @@ $( "#guardar_dia" ).click(function(event){
                     }
                 }
             }
-        })*/
+        })
     })
 
    })

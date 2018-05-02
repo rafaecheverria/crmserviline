@@ -1,4 +1,3 @@
-
             <form>
                 <input id="id_ver_cita" hidden="true" />
                 <div class="row sinpadding">

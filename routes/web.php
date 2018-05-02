@@ -19,6 +19,7 @@ Route::middleware(['auth', 'role:administrador|doctor|recepcionista'])->group(fu
 	Route::resource('mi-cuenta', 'User\PerfilController', ['only' => 'update']); 
 	Route::resource('citas', 'Citas\CitasMedicasController', ['only' => ['index', 'store', 'update', 'destroy', 'edit']]);
 	Route::resource('consultas', 'Citas\ConsultasMedicasController')->middleware(['permission:leer-citas']);
+	Route::resource('dias','Doctor\DiasController');
 	Route::get('get-doctor/{id}','Doctor\DoctorController@getDoctor');
 	Route::get('get-especialidad/{id}','Doctor\EspecialidadDoctorController@getEspecialidad');
 	Route::get('getClave/{id}','User\UserController@getClave');
@@ -27,6 +28,7 @@ Route::middleware(['auth', 'role:administrador|doctor|recepcionista'])->group(fu
 	Route::get('atender/{id}','Citas\ConsultasMedicasController@atender')->middleware(['permission:leer-consultas']);
 	Route::get('consultas-carga','Citas\ConsultasMedicasController@carga_atendidos')->middleware(['permission:leer-citas']);
 	Route::get('api','Citas\CitasMedicasController@api')->middleware(['permission:leer-consultas']);
+	Route::get('dias-doctor/{id}','Doctor\DiasController@dias'); //carga los eventos en el fullcalendar.
 	Route::get('pdf/{id}', 'Paciente\FichaPacienteController@reporte')->middleware(['permission:leer-pacientes']);
 	Route::get('pdf-expediente/{id}', 'Paciente\ExpedienteController@reporte')->middleware(['permission:leer-pacientes']);
 	Route::get('/', 'Citas\CitasMedicasController@index');

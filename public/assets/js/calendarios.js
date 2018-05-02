@@ -226,38 +226,75 @@ $(document).ready(function() {
                     },
                 })
 
-        $('#nacimiento').datetimepicker({
-        icons: {
-            date: "fa fa-calendar",
-            up: "fa fa-chevron-up",
-            down: "fa fa-chevron-down",
-            previous: 'fa fa-chevron-left',
-            next: 'fa fa-chevron-right',
-            today: 'fa fa-screenshot',
-            clear: 'fa fa-trash',
-            close: 'fa fa-remove'
-        },
-        format: 'DD-MM-YYYY',
+$( "#guardar_dia" ).click(function(event){
+       // event.preventDefault();
+        var dataString  = $( '#form_dias' ).serializeArray();
+        var route = "/dias";
+        console.log(dataString);
+        /*$.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            url: route,
+            type: 'post',
+            datatype: 'json',
+            data:dataString,
+            success:function(data){
+                if (data.success == false) {
+                    $.notify({icon: "add_alert", message: data.message},{type: 'warning', timer: 1000})
+                }else{
+                    $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
+                    $('#form_cita')[0].reset()
+                    $("#citas_medicas").fullCalendar('refetchEvents')
+                    $('#reserva').html(data.reserva)
+                    $("#add_evento #doctor_id").html("<option>--Seleccione--</option>")
+                    $("#add_evento #doctor_id").empty()
+                    $("#add_evento").modal("hide")
+                    $('.selectpicker').selectpicker('refresh')
+                }
+            },
+            error:function(data){
+                var error = data.responseJSON.errors;
+                for(var i in error){
+                    for(var j in error[i]){
+                        var message = error[i][j];
+                        $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000});
+                    }
+                }
+            }
+        })*/
     })
 
-    $dias = $('#dias_doctor');
-        today = new Date();
-        y = today.getFullYear();
-        m = today.getMonth();
-        d = today.getDate();
+   })
 
-        $dias.fullCalendar({
-            header: {
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                left: 'title',
-                center: 'today prev,next',
-                right: 'year,month,agendaWeek,agendaDay,listYear, actualizar, agregarEvento',
-            },
-            dayClick: function(date, jsEvent, view, resourceObj) {
-            alert('Date: ' + date.format());
-            alert('Resource ID: ' + resourceObj.id);
+function getDias(id)
+{
+$("#doctor_id_dia").val(id);
+$dias = $('#dias_doctor');
+    today = new Date();
+    y = today.getFullYear();
+    m = today.getMonth();
+    d = today.getDate();
 
-          }
-        })
-        
-})
+    $dias.fullCalendar({
+        header: {
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            left: 'title',
+            center: 'today prev,next',
+            right: 'year,month,agendaWeek,agendaDay,listYear, actualizar, agregarEvento',
+        },
+        defaultDate: today,
+        selectable: true,
+        selectHelper: true,
+        navLinks: true,
+        locale:'es',
+        select: function(start, end) {
+        start = moment(start.format());
+        $("#fecha_inicio_dia").val(start.format("DD-MM-YYYY"));
+        $("#modal_form_dias").modal("show")
+
+      },
+      editable: true,
+      eventLimit: true, 
+      events: "/dias-doctor/"+id+"",
+
+    })
+}

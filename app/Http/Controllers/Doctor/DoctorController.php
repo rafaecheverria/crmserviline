@@ -28,7 +28,7 @@ class DoctorController extends ApiController
         $doctores = User::select(['id', 'rut', 'nombres', 'apellidos', 'email'])->withRole('doctor');
         return datatables()->eloquent($doctores)
             ->addColumn('action', function ($doctor) {
-                $dias = '<a href="#" onclick="getClave('.$doctor->id.')" data-toggle="modal" data-target="#modal_dias" rel="tooltip" title="Agendar días" class="btn btn-simple btn-warning btn-icon edit"><i class="material-icons">today</i></a>';
+                $dias = '<a href="#" onclick="getDias('.$doctor->id.')" data-toggle="modal" data-target="#modal_dias" rel="tooltip" title="Agendar días" class="btn btn-simple btn-warning btn-icon edit"><i class="material-icons">today</i></a>';
 
                 $clave = '<a href="#" onclick="getClave('.$doctor->id.')" data-toggle="modal" data-target="#modal_clave" rel="tooltip" title="Resetear contraseña" class="btn btn-simple btn-primary btn-icon edit"><i class="material-icons">vpn_key</i></a>';
 
@@ -42,6 +42,7 @@ class DoctorController extends ApiController
             })
             ->make(true);
     }
+
 
     public function create()
     {

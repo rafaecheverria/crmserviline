@@ -4,6 +4,61 @@ function redirect(ruta)
     //setTimeout("location."+ruta, 5000);
 }
 $(document).ready(function() {
+
+$('#dias').datepicker({
+    multidate:true,
+});
+
+ $('#nacimiento_add').datetimepicker({
+        format: 'DD-MM-YYYY',
+        locale:'es',
+        icons: {
+            time: "fa fa-clock-o",
+            date: "fa fa-calendar",
+            up: "fa fa-chevron-up",
+            down: "fa fa-chevron-down",
+            previous: 'fa fa-chevron-left',
+            next: 'fa fa-chevron-right',
+            today: 'fa fa-screenshot',
+            clear: 'fa fa-trash',
+            close: 'fa fa-remove',
+            inline: true
+        }
+     });
+ $('#nacimiento_e').datetimepicker({
+        format: 'DD-MM-YYYY',
+        locale:'es',
+        icons: {
+            time: "fa fa-clock-o",
+            date: "fa fa-calendar",
+            up: "fa fa-chevron-up",
+            down: "fa fa-chevron-down",
+            previous: 'fa fa-chevron-left',
+            next: 'fa fa-chevron-right',
+            today: 'fa fa-screenshot',
+            clear: 'fa fa-trash',
+            close: 'fa fa-remove',
+            inline: true
+        }
+     });
+$('.timepicker').datetimepicker({
+//      format: 'H:mm',    // use this format if you want the 24hours timepicker
+        format: 'HH:mm',    //use this format if you want the 12hours timpiecker with AM/PM toggle
+        icons: {
+            time: "fa fa-clock-o",
+            date: "fa fa-calendar",
+            up: "fa fa-chevron-up",
+            down: "fa fa-chevron-down",
+            previous: 'fa fa-chevron-left',
+            next: 'fa fa-chevron-right',
+            today: 'fa fa-screenshot',
+            clear: 'fa fa-trash',
+            close: 'fa fa-remove',
+            inline: true
+
+        }
+     });
+
     $("#limpiar").click(function(){
         $("#nombre").val("")
         $("#btn-guardar").html('<a href="#" onclick="guardar_especialidad();" class="btn btn-fill btn-success">Guardar</a>')
@@ -80,39 +135,7 @@ $("#speciality_id").change(function(event){ //carga los doctores en el select #d
         }
         })
 })
-$('.datepicker').datetimepicker({
-            format: 'DD-MM-YYYY',
-            locale:'es',
-            icons: {
-                time: "fa fa-clock-o",
-                date: "fa fa-calendar",
-                up: "fa fa-chevron-up",
-                down: "fa fa-chevron-down",
-                previous: 'fa fa-chevron-left',
-                next: 'fa fa-chevron-right',
-                today: 'fa fa-screenshot',
-                clear: 'fa fa-trash',
-                close: 'fa fa-remove',
-                inline: true
-            }
-         });
-$('.timepicker').datetimepicker({
-//          format: 'H:mm',    // use this format if you want the 24hours timepicker
-            format: 'HH:mm',    //use this format if you want the 12hours timpiecker with AM/PM toggle
-            icons: {
-                time: "fa fa-clock-o",
-                date: "fa fa-calendar",
-                up: "fa fa-chevron-up",
-                down: "fa fa-chevron-down",
-                previous: 'fa fa-chevron-left',
-                next: 'fa fa-chevron-right',
-                today: 'fa fa-screenshot',
-                clear: 'fa fa-trash',
-                close: 'fa fa-remove',
-                inline: true
 
-            }
-         });
 $( "#delete_cita" ).click(function(event){ //esta funcion elimina una cita oendiente desde el cale ndario.
     var id= $( '#id' ).val()
     var popup = confirm("¿ Esta seguro de eliminar esta cita ?")
@@ -1200,7 +1223,7 @@ function expediente_paciente(id) //carga datos en el expediente del paciente.
                         html+="</ol></div></div></div></div>";
                 }
             }
-             $('#boton').html('<a href="pdf-expediente/'+data.array[0].id+'" id="download_expediente" class="btn btn-info pull-right"><span class="btn-label"><i class="material-icons">file_download</i></span>Descargar</a>')
+             $('#boton').html('<a href="pdf-expediente/'+data.paciente_id+'" id="download_expediente" class="btn btn-info pull-right"><span class="btn-label"><i class="material-icons">file_download</i></span>Descargar</a>')
             }else{
 
                 html+="<p>Este paciente no tiene historial clínico</p>";

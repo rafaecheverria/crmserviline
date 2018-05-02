@@ -11,7 +11,7 @@
       <div id="logo">
         <img src="http://www.clinicadentalnaves.com/img/logoClinicaDentalNaves.png">
       </div>
-      <h1>FICHA PERSONAL DEL PACIENTE</h1>
+      <h1>EXPEDIENTE CLÍNICO DEL PACIENTE</h1>
       <div id="company" class="clearfix">
         <div id="img_perfil">
         <img src="assets/img/perfiles/{{$paciente->avatar}}">
@@ -33,6 +33,9 @@
       <table>
         <tbody>
           <tr>
+            <td colspan="2">{{Date::parse($query->fecha_inicio)->toFormattedDateString()}}</td>
+          </tr>
+          <tr>
             <td colspan="4">Síntomas</td>
             <td class="total">{{$query->sintomas}}</td>
           </tr>
@@ -46,11 +49,12 @@
           </tr>
           <tr>
             <td colspan="4">Observaciones</td>
-            <td class="total">{{$query->obsevaciones}}</td>
+            <td class="total">{{$query->observaciones}}</td>
           </tr>
         </tbody>
       </table>
-      @endforeach
+      <div class="divider"></div>
+       @endforeach
       <div id="notices">
         <div>Advertencia:</div>
         <div class="notice" align="justify">La información que se muestra en esta ficha clínica, de los estudios y demás documentos donde se registren procedimientos y tratamientos a los que fue sometido el paciente <b>{{$paciente->nombres}} {{$paciente->apellidos}}</b>, es considerada como <b>información sensible</b> y por tanto tiene la calidad de reservada. Quienes no estén relacionados directamente con la atención no tendrán acceso a la información, salvo las excepciones legales.</div>

@@ -49,7 +49,7 @@ class PacienteController extends Controller
 
     public function show()
     {
-         $users = User::select(['id', 'rut', 'nombres', 'apellidos', 'telefono', 'nacimiento'])->withRole('paciente');
+        $users = User::select(['id', 'rut', 'nombres', 'apellidos', 'telefono', 'nacimiento'])->withRole('paciente');
         return  datatables()->of($users)
                 ->editColumn('nacimiento', function ($user) {
                  return $user->getYearsAttribute();

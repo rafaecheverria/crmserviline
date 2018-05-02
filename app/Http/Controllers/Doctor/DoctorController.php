@@ -28,6 +28,8 @@ class DoctorController extends ApiController
         $doctores = User::select(['id', 'rut', 'nombres', 'apellidos', 'email'])->withRole('doctor');
         return datatables()->eloquent($doctores)
             ->addColumn('action', function ($doctor) {
+                $dias = '<a href="#" onclick="getClave('.$doctor->id.')" data-toggle="modal" data-target="#modal_dias" rel="tooltip" title="Agendar días" class="btn btn-simple btn-warning btn-icon edit"><i class="material-icons">today</i></a>';
+
                 $clave = '<a href="#" onclick="getClave('.$doctor->id.')" data-toggle="modal" data-target="#modal_clave" rel="tooltip" title="Resetear contraseña" class="btn btn-simple btn-primary btn-icon edit"><i class="material-icons">vpn_key</i></a>';
 
                 $especialidad = '<a href="#" onclick="especialidad_doctor('.$doctor->id.')" data-toggle="modal" data-target="#modal_especialidades" rel="tooltip" title="Especialidades" class="btn btn-simple btn-info btn-icon edit"><i class="material-icons">recent_actors</i></a>';
@@ -36,7 +38,7 @@ class DoctorController extends ApiController
 
                 $eliminar ='<a href="#" onclick="delete_doctor('.$doctor->id.')"  data-toggle="modal" data-target="#eliminar_doctor" rel="tooltip" title="Eliminar" class="btn btn-simple btn-danger btn-icon remove-item"><i class="material-icons">close</i></a>';
 
-                    return $clave.$especialidad.$editar.$eliminar;
+                    return $dias.$clave.$especialidad.$editar.$eliminar;
             })
             ->make(true);
     }

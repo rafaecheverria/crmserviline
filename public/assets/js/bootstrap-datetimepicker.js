@@ -2346,7 +2346,7 @@
             input = element;
         } else {
             input = element.find(options.datepickerInput);
-            if (input.size() === 0) {
+            if (input.length === 0) {
                 input = element.find('input');
             } else if (!input.is('input')) {
                 throw new Error('CSS class "' + options.datepickerInput + '" cannot be applied to non input element');

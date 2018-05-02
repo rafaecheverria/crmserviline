@@ -239,5 +239,25 @@ $(document).ready(function() {
         },
         format: 'DD-MM-YYYY',
     })
+
+    $dias = $('#dias_doctor');
+        today = new Date();
+        y = today.getFullYear();
+        m = today.getMonth();
+        d = today.getDate();
+
+        $dias.fullCalendar({
+            header: {
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                left: 'title',
+                center: 'today prev,next',
+                right: 'year,month,agendaWeek,agendaDay,listYear, actualizar, agregarEvento',
+            },
+            dayClick: function(date, jsEvent, view, resourceObj) {
+            alert('Date: ' + date.format());
+            alert('Resource ID: ' + resourceObj.id);
+
+          }
+        })
         
 })

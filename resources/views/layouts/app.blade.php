@@ -14,7 +14,7 @@
     {!! Html::style('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css') !!}
     {!! Html::style('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons') !!}   
     {!! Html::style('assets/css/material-dashboard.css') !!}
-      
+    
     <title>{{ config('app.name', 'Laravel') }}</title>
 </head>
 <body>
@@ -26,32 +26,32 @@
         </div>
     </div>  
 </body>
-{!! Html::script('assets/js/jquery-3.1.1.min.js') !!}
-{!! Html::script('assets/js/jquery-ui.min.js') !!}
-{!! Html::script('assets/js/bootstrap.min.js') !!}
-{!! Html::script('assets/js/material.min.js') !!}
-{!! Html::script('assets/js/perfect-scrollbar.jquery.min.js') !!}
-{!! Html::script('assets/js/jquery.validate.min.js') !!}
-{!! Html::script('assets/js/moment.min.js') !!}
-{!! Html::script('assets/js/locale.js') !!}
-{!! Html::script('assets/js/chartist.min.js') !!}
-{!! Html::script('assets/js/jquery.bootstrap-wizard.js') !!}
-{!! Html::script('assets/js/bootstrap-notify.js') !!}
-{!! Html::script('assets/js/bootstrap-datetimepicker.js') !!}
-<!--{!! Html::script('assets/js/jquery-jvectormap.js') !!}-->
-{!! Html::script('assets/js/nouislider.min.js') !!}
-<!--{!! Html::script('https://maps.googleapis.com/maps/api/js') !!}-->
-{!! Html::script('assets/js/jquery.select-bootstrap.js') !!}
-{!! Html::script('assets/js/jquery.datatables.js') !!}
-{!! Html::script('assets/js/sweetalert2.js') !!}
-{!! Html::script('assets/js/jasny-bootstrap.min.js') !!}
-{!! Html::script('plugins/fullcalendar/fullcalendar.min.js') !!}
-{!! Html::script('plugins/fullcalendar/locale/es.js') !!}
-{!! Html::script('assets/js/jquery.tagsinput.js') !!}
-{!! Html::script('assets/js/material-dashboard.js') !!}
-{!! Html::script('assets/js/demo.js') !!}
-{!! Html::script('assets/js/jquery.Rut.js') !!}
-{!! Html::script('assets/js/calendarios.js') !!}
-{!! Html::script('assets/js/ajax.js') !!}
-{!! Html::script('assets/js/listas.js') !!}
+<script src="assets/js/jquery-3.1.1.min.js"></script>
+<script src="assets/js/jquery-ui.min.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/material.min.js"></script>
+<script src="assets/js/perfect-scrollbar.jquery.min.js"></script>
+<script src="assets/js/jquery.validate.min.js"></script>
+<script src="assets/js/moment.min.js"></script>
+<script src="assets/js/locale.js"></script>
+<script src="assets/js/chartist.min.js"></script>
+<script src="assets/js/jquery.bootstrap-wizard.js"></script>
+<script src="assets/js/bootstrap-notify.js"></script>
+<script src="assets/js/bootstrap-datetimepicker.js"></script>
+<!--<script src="assets/js/jquery-jvectormap.js"></script>-->
+<script src="assets/js/nouislider.min.js"></script>
+<!--<script src="assets/js/https://maps.googleapis.com/maps/api/js"></script>-->
+<script src="assets/js/jquery.select-bootstrap.js"></script>
+<script src="assets/js/jquery.datatables.js"></script>
+<script src="assets/js/jasny-bootstrap.min.js"></script>
+<script src="plugins/fullcalendar/fullcalendar.min.js"></script>
+<script src="plugins/fullcalendar/locale/es.js"></script>
+<script src="assets/js/jquery.tagsinput.js"></script>
+<script src="assets/js/material-dashboard.js"></script>
+<script src="assets/js/demo.js"></script>
+<script src="assets/js/jquery.Rut.js"></script>
+<script src="assets/js/calendarios.js"></script>
+<script src="assets/js/ajax.js"></script>
+<script src="assets/js/listas.js"></script>
+
 </html>

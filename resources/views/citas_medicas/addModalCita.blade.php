@@ -14,19 +14,19 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label">FECHA</label>
-                                    <input id="fecha_inicio" name="fecha_inicio" type="text" class="form-control" placeholder="dd-mm-aaaa" />                    
+                                    <input id="fecha_inicio" name="fecha_inicio" type="text" class="form-control datepicker" placeholder="dd-mm-aaaa" />                    
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label class="control-label">HORA INICIO</label>
-                                    <input id="hora_inicio" name="hora_inicio" type="text" class="form-control" placeholder="00:00" />                    
+                                    <input id="hora_inicio" name="hora_inicio" type="text" class="form-control timepicker" placeholder="00:00" />                    
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label class="control-label">HORA FIN</label>
-                                    <input id="hora_fin" name="hora_fin" type="text" class="form-control" placeholder="00:00" />       
+                                    <input id="hora_fin" name="hora_fin" type="text" class="form-control timepicker" placeholder="00:00" />       
                                 </div>
                             </div>
                         </div>

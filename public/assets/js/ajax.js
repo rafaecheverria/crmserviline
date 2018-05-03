@@ -9,7 +9,7 @@ $('#dias').datepicker({
     multidate:true,
 });
 
- $('.datepicker').datetimepicker({
+$('.datepicker').datetimepicker({
         format: 'DD-MM-YYYY',
         locale:'es',
         icons: {

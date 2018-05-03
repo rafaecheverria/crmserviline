@@ -25,7 +25,7 @@ class DiasController extends Controller
             $Finicio = Date::parse($request->fecha_inicio)->format('Y-m-d');
             $dia->fecha_inicio = $Finicio . " " . $request->hora_inicio;
             $dia->fecha_fin    = $Finicio . " " . $request->hora_fin;
-            $query_dias = Dias::where('doctor_id', '=', $request->doctor_id)->count();
+            $query_dias = Dias::where('fecha_inicio', '=', $dia->fecha_inicio)->where('doctor_id', '=', $request->doctor_id)->count();
             if ($query_dias > 0) {
                 return response()->json([
                 "success" => false,
@@ -38,11 +38,12 @@ class DiasController extends Controller
                 $dia->fecha_fin    = $Finicio . " " . $request->hora_fin;
                 $dia->doctor_id    = $request->doctor_id;
                 $dia->color        = '#298A08';
+                $dia->title        = "Disponible";
                 $dia->save();
                 return response()->json([
                     "success"      => true,
                     "message"      => "Se asignó este día para agendar citas",
-                    "doctor"       => $cita->doctor_id,
+                    "doctor"       => $dia->doctor_id,
                 ]);
             }
         }

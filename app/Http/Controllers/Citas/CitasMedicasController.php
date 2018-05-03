@@ -99,7 +99,7 @@ class CitasMedicasController extends Controller
             'descripcion'  => $cita_pendiente->descripcion,
         ]);
     }
-    public function update(CreateCitaRequest $request, $id)
+    public function update(Request $request, $id)
     {
         if($request->ajax()){
             $cita = Query::findOrFail($id);

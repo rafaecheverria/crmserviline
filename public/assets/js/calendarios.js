@@ -1,4 +1,5 @@
 $(document).ready(function() {
+   
     $calendar = $('#citas_medicas');
             today = new Date();
             y = today.getFullYear();
@@ -23,42 +24,9 @@ $(document).ready(function() {
                       text: '+',
                       click: function() {
                         document.getElementById("fecha_inicio").readOnly = false;
-                        $("#fecha_inicio").datetimepicker({
-                            format: 'DD-MM-YYYY',
-                            icons : {
-                                up: "fa fa-chevron-up",
-                                down: "fa fa-chevron-down",
-                                previous: 'fa fa-chevron-left',
-                                next: 'fa fa-chevron-right',
-                                today: 'fa fa-screenshot',
-                                clear: 'fa fa-trash',
-                                close: 'fa fa-remove',
-                            }
-                        });
-                        $('#hora_inicio').datetimepicker({
-                            format: 'HH:mm',
-                            icons : {
-                                up: "fa fa-chevron-up",
-                                down: "fa fa-chevron-down",
-                                previous: 'fa fa-chevron-left',
-                                next: 'fa fa-chevron-right',
-                                today: 'fa fa-screenshot',
-                                clear: 'fa fa-trash',
-                                close: 'fa fa-remove',
-                            }
-                        })
-                        $('#hora_fin').datetimepicker({
-                            format: 'HH:mm',
-                            icons : {
-                                up: "fa fa-chevron-up",
-                                down: "fa fa-chevron-down",
-                                previous: 'fa fa-chevron-left',
-                                next: 'fa fa-chevron-right',
-                                today: 'fa fa-screenshot',
-                                clear: 'fa fa-trash',
-                                close: 'fa fa-remove',
-                            }
-                        })
+                        $("#fecha_inicio").datetimepicker();
+                        $('#hora_inicio').datetimepicker()
+                        $('#hora_fin').datetimepicker()
 
                        var doctor_id = $("#doctor_id_add").val() //carga las especialidades del doctor en sesion a un select "speciality_id"
                        select_especialidad_add(doctor_id)
@@ -89,34 +57,10 @@ $(document).ready(function() {
                 select: function(start, end) { //evento que abre el modal agregar.
                 start = moment(start.format());
                     $("#fecha_inicio").val(start.format("DD-MM-YYYY"))
-                    $('#hora_inicio').datetimepicker({
-                        format: 'HH:mm',
-                        icons : {
-                            up: "fa fa-chevron-up",
-                            down: "fa fa-chevron-down",
-                            previous: 'fa fa-chevron-left',
-                            next: 'fa fa-chevron-right',
-                            today: 'fa fa-screenshot',
-                            clear: 'fa fa-trash',
-                            close: 'fa fa-remove',
-                        }
-                    })
-                    $('#hora_fin').datetimepicker({
-                        format: 'HH:mm',
-                        icons : {
-                            up: "fa fa-chevron-up",
-                            down: "fa fa-chevron-down",
-                            previous: 'fa fa-chevron-left',
-                            next: 'fa fa-chevron-right',
-                            today: 'fa fa-screenshot',
-                            clear: 'fa fa-trash',
-                            close: 'fa fa-remove',
-                        }
-                    })
-
-                   var doctor_id = $("#doctor_id_add").val() //carga las especialidades del doctor en sesion a un select "speciality_id"
-                   select_especialidad_add(doctor_id)
-                  // $('#form_cita')[0].reset()
+                    $('#hora_inicio').datetimepicker()
+                    $('#hora_fin').datetimepicker()
+                    var doctor_id = $("#doctor_id_add").val() //carga las especialidades del doctor en sesion a un select "speciality_id"
+                    select_especialidad_add(doctor_id)
                    $('.selectpicker').selectpicker('refresh')
                    $("#add_evento").modal("show")
                 },
@@ -179,42 +123,9 @@ $(document).ready(function() {
                         var time_start = $.fullCalendar.moment(event.start).format('HH:mm');
                         var time_end = $.fullCalendar.moment(event.end).format('HH:mm');
                         $("#up_evento #id").val(event.id);
-                        $("#up_evento #fecha_inicio_e").datetimepicker({
-                            format: 'DD-MM-YYYY',
-                            icons : {
-                                up: "fa fa-chevron-up",
-                                down: "fa fa-chevron-down",
-                                previous: 'fa fa-chevron-left',
-                                next: 'fa fa-chevron-right',
-                                today: 'fa fa-screenshot',
-                                clear: 'fa fa-trash',
-                                close: 'fa fa-remove',
-                            }
-                        }).val(date_start);
-                        $("#up_evento #hora_inicio_e").datetimepicker({
-                            format: 'HH:mm',
-                            icons : {
-                                up: "fa fa-chevron-up",
-                                down: "fa fa-chevron-down",
-                                previous: 'fa fa-chevron-left',
-                                next: 'fa fa-chevron-right',
-                                today: 'fa fa-screenshot',
-                                clear: 'fa fa-trash',
-                                close: 'fa fa-remove',
-                            }
-                        }).val(time_start);
-                        $("#up_evento #hora_fin_e").datetimepicker({
-                            format: 'HH:mm',
-                            icons : {
-                                up: "fa fa-chevron-up",
-                                down: "fa fa-chevron-down",
-                                previous: 'fa fa-chevron-left',
-                                next: 'fa fa-chevron-right',
-                                today: 'fa fa-screenshot',
-                                clear: 'fa fa-trash',
-                                close: 'fa fa-remove',
-                            }
-                        }).val(time_end);
+                        $("#up_evento #fecha_inicio_e").datetimepicker().val(date_start);
+                        $("#up_evento #hora_inicio_e").datetimepicker().val(time_start);
+                        $("#up_evento #hora_fin_e").datetimepicker().val(time_end);
                         $("#up_evento #paciente_id_e").val(event.paciente_id)
                         $("#up_evento #descripcion_e").val(event.descripcion)
                         $("#up_evento #speciality_id_e").val(especialidad)
@@ -225,6 +136,8 @@ $(document).ready(function() {
                         }
                     },
                 })
+
+
 
 $( "#guardar_dia" ).click(function(event){
        // event.preventDefault();
@@ -242,13 +155,8 @@ $( "#guardar_dia" ).click(function(event){
                     $.notify({icon: "add_alert", message: data.message},{type: 'warning', timer: 1000})
                 }else{
                     $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
-                    $('#form_cita')[0].reset()
-                    $("#citas_medicas").fullCalendar('refetchEvents')
-                    $('#reserva').html(data.reserva)
-                    $("#add_evento #doctor_id").html("<option>--Seleccione--</option>")
-                    $("#add_evento #doctor_id").empty()
-                    $("#add_evento").modal("hide")
-                    $('.selectpicker').selectpicker('refresh')
+                    $("#dias_doctor").fullCalendar('refetchEvents')
+                    $("#modal_form_dias").modal("hide")
                 }
             },
             error:function(data){
@@ -261,13 +169,18 @@ $( "#guardar_dia" ).click(function(event){
                 }
             }
         })
+        })
+     $('#modal_dias').on('hidden.bs.modal', function (e) { //destruye el calentçdario anterior para cargar los nuevos eventos del usuario seleccionado.
+        $('#dias_doctor').fullCalendar('destroy');
     })
 
-   })
+})
 
 function getDias(id)
 {
-$("#doctor_id_dia").val(id);
+var url = "dias-doctor/"+id+"";
+event.preventDefault();
+$("#doctor_id_dia").val(id)
 $dias = $('#dias_doctor');
     today = new Date();
     y = today.getFullYear();
@@ -276,16 +189,16 @@ $dias = $('#dias_doctor');
 
     $dias.fullCalendar({
         header: {
-            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-            left: 'title',
-            center: 'today prev,next',
-            right: 'year,month,agendaWeek,agendaDay,listYear, actualizar, agregarEvento',
+            headers : {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            left    : 'title',
+            center  : 'today prev,next',
+            right   : 'year,month,agendaWeek,agendaDay,listYear, actualizar, agregarEvento',
         },
-        defaultDate: today,
-        selectable: true,
+        defaultDate : today,
+        selectable  : true,
         selectHelper: true,
-        navLinks: true,
-        locale:'es',
+        navLinks    : true,
+        locale      :'es',
         select: function(start, end) {
         start = moment(start.format());
         $("#fecha_inicio_dia").val(start.format("DD-MM-YYYY"));
@@ -293,8 +206,13 @@ $dias = $('#dias_doctor');
 
       },
       editable: true,
-      eventLimit: true, 
-      events: "/dias-doctor/"+id+"",
+      //eventLimit: true, 
+      events: {
+        url: url,
+        type: "GET",
+
+      }
 
     })
+     
 }

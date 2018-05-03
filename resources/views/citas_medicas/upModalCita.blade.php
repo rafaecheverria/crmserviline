@@ -21,13 +21,13 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="control-label">HORA INICIO</label>
-                            <input id="hora_inicio_e" name="hora_inicio" type="text" class="form-control" />                    
+                            <input id="hora_inicio_e" name="hora_inicio" type="text" class="form-control timepicker" />                    
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="control-label">HORA FIN</label>
-                            <input id="hora_fin_e" name="hora_fin" type="text" class="form-control" />                    
+                            <input id="hora_fin_e" name="hora_fin" type="text" class="form-control timepicker" />                    
                         </div>
                     </div>
                 </div>

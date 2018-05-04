@@ -36,6 +36,7 @@ $(document).ready(function() {
                       }
                     }
                   },
+               // businessHours: true, // display business hours
                 defaultDate: today,
                 selectable: true,
                 selectHelper: true,
@@ -135,6 +136,7 @@ $(document).ready(function() {
                         $("#up_evento").modal("show")
                         }
                     },
+
                 })
 
 
@@ -194,12 +196,13 @@ $dias = $('#dias_doctor');
             center  : 'today prev,next',
             right   : 'year,month,agendaWeek,agendaDay,listYear, actualizar, agregarEvento',
         },
+        //businessHours: true,
         defaultDate : today,
         selectable  : true,
         selectHelper: true,
         navLinks    : true,
         locale      :'es',
-        select: function(start, end) {
+    select: function(start, end) {
         start = moment(start.format());
         $("#fecha_inicio_dia").val(start.format("DD-MM-YYYY"));
         $("#modal_form_dias").modal("show")

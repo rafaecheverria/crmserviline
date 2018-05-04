@@ -48,6 +48,10 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Speciality');
     }
+    public function dias()
+    {
+        return $this->belongsTo('App\Dias');
+    }
     public function unities()
     {
         return $this->belongsToMany('App\Unity');

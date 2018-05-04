@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Citas;
 use App\User;
 use App\Query;
 use App\Speciality;
+use App\Dias;
 use Jenssegers\Date\Date;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -54,7 +55,14 @@ class CitasMedicasController extends Controller
             $Finicio = Date::parse($request->fecha_inicio)->format('Y-m-d');
             $cita->fecha_inicio = $Finicio . " " . $request->hora_inicio;
             $cita->fecha_fin    = $Finicio . " " . $request->hora_fin;
-            $query_doctor = Query::where('doctor_id', '=', $request->doctor_id)->where('estado', '=', 'pendiente')->whereBetween('fecha_inicio', array($cita->fecha_inicio,$cita->fecha_fin))->count();
+            $dias_doctor = Dias::dias_doctor($request->doctor_id, $cita->fecha_inicio);
+            if ($dias_doctor ==false) {
+                return response()->json([
+                "success" => false,
+                "message" => "El doctor no tiene agenda abierta en la fecha que seleccionó",
+                ]);
+            }else{
+                $query_doctor = Query::where('doctor_id', '=', $request->doctor_id)->where('estado', '=', 'pendiente')->whereBetween('fecha_inicio', array($cita->fecha_inicio,$cita->fecha_fin))->count();
             if ($query_doctor > 0) {
                 return response()->json([
                 "success" => false,
@@ -80,6 +88,9 @@ class CitasMedicasController extends Controller
 
                     ]);
             }
+
+            }
+            
         }
     }
 

@@ -49,25 +49,17 @@ class CitasMedicasController extends Controller
     public function store(CreateCitaRequest $request)
     {
         if($request->ajax()){
-
-            $reserva_ocupada = "";
-            $cita = new Query($request->all());
-            $Finicio = Date::parse($request->fecha_inicio)->format('Y-m-d');
+            $reserva_ocupada    = "";
+            $cita               = new Query($request->all());
+            $Finicio            = Date::parse($request->fecha_inicio)->format('Y-m-d');
             $cita->fecha_inicio = $Finicio . " " . $request->hora_inicio;
             $cita->fecha_fin    = $Finicio . " " . $request->hora_fin;
-            $dias_doctor = Dias::dias_doctor($request->doctor_id, $cita->fecha_inicio);
-            if ($dias_doctor ==false) {
-                return response()->json([
-                "success" => false,
-                "message" => "El doctor no tiene agenda abierta en la fecha que seleccionó",
-                ]);
+            $dias_doctor        = Dias::dias_doctor($request->doctor_id, $cita->fecha_inicio);
+            //$rango_horas        = Dias::rango_horas($request->doctor_id, $cita->fecha_inicio, $cita->fecha_fin);
+            $query_doctor = Query::where('doctor_id', '=', $request->doctor_id)->where('estado', '=', 'pendiente')->whereBetween('fecha_inicio', array($cita->fecha_inicio,$cita->fecha_fin))->count();
+            if ($dias_doctor == false){return response()->json(["success" => false,"message" => "El doctor no tiene agenda abierta en la fecha que seleccionó",]);
             }else{
-                $query_doctor = Query::where('doctor_id', '=', $request->doctor_id)->where('estado', '=', 'pendiente')->whereBetween('fecha_inicio', array($cita->fecha_inicio,$cita->fecha_fin))->count();
-            if ($query_doctor > 0) {
-                return response()->json([
-                "success" => false,
-                "message" => "El doctor tienen una consulta pendiente en el rango de horas seleccionado,porfavor verifique y vuelta a intentarlo",
-                ]);
+            if ($query_doctor > 0){return response()->json(["success" => false,"message" => "El doctor tiene una consulta pendiente en el rango de horas seleccionado,porfavor verifique y vuelta a intentarlo",]);
             }else{
                 $cita = new Query($request->all());
                 $Finicio = Date::parse($request->fecha_inicio)->format('Y-m-d');
@@ -89,7 +81,7 @@ class CitasMedicasController extends Controller
                     ]);
             }
 
-            }
+          }
             
         }
     }

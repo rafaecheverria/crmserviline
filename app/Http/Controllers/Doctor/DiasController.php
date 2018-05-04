@@ -12,11 +12,12 @@ class DiasController extends Controller
 {
 
     public function dias($id)
-        {
-            $data = Dias::join('users', 'dias.doctor_id', '=', 'users.id')
-            ->select('users.nombres as title', 'dias.doctor_id as doctor_id', 'dias.observacion as observacion', 'dias.id as id', 'dias.fecha_inicio as start', 'dias.fecha_fin as end', 'dias.color as color')
-            ->where('dias.doctor_id', $id)->get();
-            return Response()->json($data);
+    {
+        $data = Dias::join('users', 'dias.doctor_id', '=', 'users.id')
+        ->select('users.nombres as title', 'dias.doctor_id as doctor_id', 'dias.observacion as observacion', 'dias.id as id', 'dias.fecha_inicio as start', 'dias.fecha_fin as end', 'dias.color as color')
+        ->where('dias.doctor_id', $id)->get();
+        $data->title = "hola";
+        return Response()->json($data);
     }
     public function store(Request $request)
     {

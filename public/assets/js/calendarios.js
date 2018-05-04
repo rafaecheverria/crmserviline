@@ -213,7 +213,6 @@ $dias = $('#dias_doctor');
       events: {
         url: url,
         type: "GET",
-
       }
 
     })

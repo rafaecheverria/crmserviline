@@ -1,7 +1,7 @@
 <div class="sidebar" data-active-color="rose" data-background-color="black" data-image="{{ asset('assets/img/sidebar.jpg') }}">
     <div class="logo">
-        <a href="http://www.creative-tim.com" class="simple-text">
-            DOCLICK
+        <a href="#" class="simple-text">
+            CRM SERVILINE
         </a>
     </div>
     <div class="logo logo-mini">
@@ -18,10 +18,10 @@
                 <input type="file" id="txt_input" name="avatar" class="hidden">
             </form>
              <a href="#">
-            <div class="photo">
-                <img src="/assets/img/perfiles/{{ Auth::User()->avatar }}" class="img-responsive avatar_img" />
-            </div>
-        </a>
+                <div class="photo">
+                    <img src="/assets/img/perfiles/{{ Auth::User()->avatar }}" class="img-responsive avatar_img" />
+                </div>
+            </a>
 
             <div class="info">
                 <a data-toggle="collapse" href="#collapseExample" class="collapsed">

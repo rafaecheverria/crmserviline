@@ -1,0 +1,131 @@
+.btn-buscar{
+  margin-top: -10px;
+}
+.buscar{
+  margin-top: 8px;
+}
+.panel-main{
+  margin: 0px 0px 0px 10px;
+}
+.profesores{
+  margin-top: 5px;
+}
+.button-group-actions{
+  margin-top: -10px;
+  text-align:right;
+}
+.titulo_table{
+  text-align: right;
+}
+.combo{
+  margin-top: 12px;
+ 
+}
+
+.card-bootom{
+	margin-top: 20px;
+}
+
+.loader {
+  background:black url('/assets/img/animation3.gif') no-repeat 10px 50%;
+    border:1px solid #8ed9f6;
+}
+.avatarImage{
+  margin-top:  27px;
+}
+.modal-header-info {
+    color:#fff;
+    padding:9px 15px;
+    border-bottom:1px solid #eee;
+    background-color: #5bc0de;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+     border-top-left-radius: 5px;
+     border-top-right-radius: 5px;
+}
+
+.modal-header-primary {
+    color:#fff;
+    padding:9px 15px;
+    border-bottom:1px solid #eee;
+    background-color: #9c27b0;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+     border-top-left-radius: 5px;
+     border-top-right-radius: 5px;
+}
+.modal-header-red {
+    color:#fff;
+    padding:9px 15px;
+    border-bottom:1px solid #eee;
+    background-color:#f44336;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+     border-top-left-radius: 5px;
+     border-top-right-radius: 5px;
+}
+
+.modal-header-success {
+    color:#fff;
+    padding:9px 15px;
+    border-bottom:1px solid #eee;
+    background-color:#4caf50;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+     border-top-left-radius: 5px;
+     border-top-right-radius: 5px;
+}
+
+
+table, th, td{
+    text-align: left;
+}
+
+.modal-content .modal-body-edit {
+  padding-top: 15px;
+  padding-right: 15px;
+  padding-bottom: 16px;
+  padding-left: 5px;
+}
+
+.modal-content .modal-body-add {
+  padding-top: 23px;
+  padding-right: 15px;
+  padding-bottom: 24px;
+  padding-left: 5px;
+}
+
+.sinpadding [class*="col-"] {
+    margin-top: -25px;
+}
+
+#top-button-add{
+  width: 92%;
+  border-radius:1px;
+  border-spacing: 0;
+  border-collapse: collapse;
+  margin: 0px;
+}
+.fc-icon-fa {
+  font-family: FontAwesome;
+}
+/*.fc button, .fc button:hover, .fc button:focus, .fc button:active, .fc button.active, .fc button:active:focus, .fc button:active:hover, .fc button.active:focus, .fc button.active:hover, .open > .fc button.dropdown-toggle, .open > .fc button.dropdown-toggle:focus, .open > .fc button.dropdown-toggle:hover, .fc button.btn-primary, .fc button.btn-primary:hover, .fc button.btn-primary:focus, .fc button.btn-primary:active, .fc button.btn-primary.active, .fc button.btn-primary:active:focus, .fc button.btn-primary:active:hover, .fc button.btn-primary.active:focus, .fc button.btn-primary.active:hover, .open > .fc button.btn-primary.dropdown-toggle, .open > .fc button.btn-primary.dropdown-toggle:focus, .open > .fc button.btn-primary.dropdown-toggle:hover {
+  background-color: #9C27B0;
+  color: #FFFFFF;
+} */
+/*.bootstrap-select.btn-group .dropdown-menu li a:hover {
+     color: whitesmoke !important;
+     background: #bf5279 !important;
+ }*/
+
+ .fc-nonbusiness {
+  background: #90EE90  
+}

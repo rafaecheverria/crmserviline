@@ -18,11 +18,9 @@
     <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">-->
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons" />
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
-    <!-- Styles
+    <title>{{ config('app.name', 'Serviline') }}</title>
+<!-- Styles
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
  -->
 </head>
 <body>

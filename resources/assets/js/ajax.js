@@ -756,6 +756,7 @@ $( "#ingresar" ).click(function(event){
                     $avatarImage.attr('src', '/assets/img/touchloader.gif')
             },
             success: function(data){
+                alet('succ')
                     $avatarImage.attr('src', '/assets/img/perfiles/'+data.file_name+'?'+ new Date().getTime())
                     $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
             },

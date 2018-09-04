@@ -10,7 +10,7 @@ Route::middleware(['auth', 'role:administrador|doctor|recepcionista'])->group(fu
 	Route::resource('especialidad-doctor', 'Doctor\EspecialidadDoctorController', ['only' => ['edit', 'update']])->middleware(['permission:leer-doctores|leer-especialidades']);
 	Route::resource('permisos-roles', 'Roles\PermisosRolesController', ['only' => ['edit', 'update']])->middleware(['permission:leer-roles']);
 	Route::resource('especialidades', 'Especialidad\EspecialidadController')->middleware(['permission:leer-especialidades']);
-	Route::resource('pacientes', 'Paciente\PacienteController')->middleware(['permission:leer-pacientes']);
+	Route::resource('contactos', 'Contacto\ContactosController');
 	Route::resource('roles', 'Roles\RolController')->middleware(['permission:leer-roles']);
 	Route::resource('permisos', 'Permisos\PermisoController')->middleware(['permission:leer-permisos']);
 	//Route::resource('antecedentes', 'Paciente\AntecedenteController', ['only' => ['update', 'edit']]);

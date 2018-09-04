@@ -56,6 +56,12 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Unity');
     }
+
+     public function organizaciones()
+    {
+        return $this->hasOne('App\Organizacion');
+    }
+
     public function setNombresAttribute($valor)
     {
         $this->attributes['nombres'] = strtolower($valor);

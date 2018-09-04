@@ -48,10 +48,26 @@
                 </a>
             </li>
             @permission('leer-pacientes')
-                 <li>
+            <li>
+                <a href="{{ url('contactos') }}">
+                    <i class="material-icons">contact_phone</i>
+                    <p>Contactos</p>
+                </a>
+            </li>
+            @endpermission
+            @permission('leer-pacientes')
+            <li>
                 <a href="{{ url('pacientes') }}">
-                    <i class="material-icons">account_box</i>
-                    <p>Pacientes</p>
+                    <i class="material-icons">business</i>
+                    <p>Organizaciones</p>
+                </a>
+            </li>
+            @endpermission
+            @permission('leer-pacientes')
+            <li>
+                <a href="{{ url('pacientes') }}">
+                    <i class="material-icons">list_alt</i>
+                    <p>Oportunidades</p>
                 </a>
             </li>
             @endpermission

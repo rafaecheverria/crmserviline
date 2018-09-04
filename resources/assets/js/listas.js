@@ -2,7 +2,7 @@ $(document).ready(function() {
 	listar_doctores()
     listar_recepcionistas()
     listar_personas()
-    listar_pacientes()
+    listar_contactos()
     listar_especialidades()
     listar_permisos()
     listar_roles()
@@ -199,15 +199,15 @@ var listar_citas_atendidas = function()
         ],
     })
 }
-var listar_pacientes = function()
+var listar_contactos = function()
 {
-    var table = $('#pacientes').DataTable({
+    var table = $('#contactos').DataTable({
         "headers": {'X-CSRF-TOKEN':$('input[name=_token]').attr('content')},
         "processing": true,
         "serverSide": true,
         "order": [[ 3, "asc" ]],
         "ajax": {
-             "url": "pacientes/show",
+             "url": "contactos/show",
             },
 
         "pagingType": "simple_numbers",

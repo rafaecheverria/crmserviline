@@ -80,7 +80,9 @@ $('.timepicker').datetimepicker({
         $("#prevision_select").selectpicker()
     })
      
-$("#speciality_id_e").change(function(event){ //carga los doctores en el select #doctor_id según la especialidad elegida.
+
+
+/*$("#speciality_id_e").change(function(event){ //carga los doctores en el select #doctor_id según la especialidad elegida.
     var id = event.target.value;
     if (!id) 
         $("#doctor_id_e").html("<option>--Seleccione--</option>")
@@ -319,6 +321,7 @@ $( "#update_consulta" ).click(function(event){
             }
         }) 
     })
+    */
 $( "#update_role_user" ).click(function(event){ 
         var id= $( '#id' ).val()
         var route = "/update-roles/"+id+""

@@ -3,6 +3,7 @@ $(document).ready(function() {
     listar_recepcionistas()
     listar_personas()
     listar_contactos()
+    listar_organizaciones()
     listar_especialidades()
     listar_permisos()
     listar_roles()
@@ -228,6 +229,35 @@ var listar_contactos = function()
             {data: 'nacimiento', name: 'nacimiento'}
         ]
 	})
+}
+var listar_organizaciones = function()
+{
+    var table = $('#organizaciones').DataTable({
+        "headers": {'X-CSRF-TOKEN':$('input[name=_token]').attr('content')},
+        "processing": true,
+        "serverSide": true,
+        "order": [[ 3, "asc" ]],
+        "ajax": {
+             "url": "organizaciones/show",
+            },
+
+        "pagingType": "simple_numbers",
+        "lengthMenu": [
+            [10, 25, 50, -1],
+            [10, 25, 50, "Todos"]
+        ],
+        "language": {
+            url: "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+        },
+        "responsive": true,
+        "columns":[
+            {data: 'action', name: 'action', orderable: false, searchable: false, class:"text-left"},
+            {data: 'rut', name: 'rut'},
+            {data: 'nombre', name: 'nombre'},
+            {data: 'telefono', name: 'telefono'},
+            {data: 'direccion', name: 'direccion'}
+        ]
+    })
 }
 var listar_personas = function()
 {

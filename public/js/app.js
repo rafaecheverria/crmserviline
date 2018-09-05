@@ -23840,6 +23840,27 @@ $('.timepicker').datetimepicker({
         $("#prevision").html(html)
         $("#prevision_select").selectpicker()
     })
+
+ $("#region_id").change(function(event){ //carga las Ciudades en el select #ciudad_id según la región elegida.
+    var id = event.target.value;
+    if (!id) 
+        alert(id)
+        $("#ciudad_id").html("<option>--Seleccione--</option>")
+        $('.selectpicker').selectpicker('refresh') //refresca el select para que cambie su valor
+        $.get("get-ciudad/"+id+"",function(response,region){
+        $("#ciudad_id").empty()
+        $('.selectpicker').selectpicker('refresh') //refresca el select para que cambie su valor
+        if (response == "") {
+             $("#ciudad_id").html("<option>--Seleccione--</option>")
+              $('.selectpicker').selectpicker('refresh') //refresca el select para que cambie su valor
+        }else{
+            for(i = 0; i <response.length; i++) {
+                $("#ciudad_id").append("<option value='"+response[i].id+"'>"+response[i].nombre+"</option>")
+            }
+            $('.selectpicker').selectpicker('refresh') //refresca el select para que cambie su valor
+        }
+    })
+})
      
 $("#speciality_id_e").change(function(event){ //carga los doctores en el select #doctor_id según la especialidad elegida.
     var id = event.target.value;
@@ -25327,6 +25348,7 @@ $(document).ready(function() {
     listar_recepcionistas()
     listar_personas()
     listar_contactos()
+    listar_organizaciones()
     listar_especialidades()
     listar_permisos()
     listar_roles()
@@ -25552,6 +25574,35 @@ var listar_contactos = function()
             {data: 'nacimiento', name: 'nacimiento'}
         ]
 	})
+}
+var listar_organizaciones = function()
+{
+    var table = $('#organizaciones').DataTable({
+        "headers": {'X-CSRF-TOKEN':$('input[name=_token]').attr('content')},
+        "processing": true,
+        "serverSide": true,
+        "order": [[ 3, "asc" ]],
+        "ajax": {
+             "url": "organizaciones/show",
+            },
+
+        "pagingType": "simple_numbers",
+        "lengthMenu": [
+            [10, 25, 50, -1],
+            [10, 25, 50, "Todos"]
+        ],
+        "language": {
+            url: "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+        },
+        "responsive": true,
+        "columns":[
+            {data: 'action', name: 'action', orderable: false, searchable: false, class:"text-left"},
+            {data: 'rut', name: 'rut'},
+            {data: 'nombre', name: 'nombre'},
+            {data: 'telefono', name: 'telefono'},
+            {data: 'direccion', name: 'direccion'}
+        ]
+    })
 }
 var listar_personas = function()
 {

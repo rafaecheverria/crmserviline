@@ -11,4 +11,9 @@ class Region extends Model
     protected $fillable = [
         'id', 'nombre'
     ];
+
+    public function ciudades()
+    {
+        return $this->belongsToMany('App\Ciudad');
+    }
 }

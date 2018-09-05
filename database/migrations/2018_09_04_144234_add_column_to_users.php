@@ -14,9 +14,9 @@ class AddColumnToUsers extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('organizacion_id')->unsigned()->nullable();
+            $table->integer('organizaciones_id')->unsigned()->nullable();
 
-            $table->foreign('organizacion_id')->references('id')->on('organizacion')
+            $table->foreign('organizaciones_id')->references('id')->on('organizaciones')
             ->onUpdate('cascade')->onDelete('cascade');
         });
     }

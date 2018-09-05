@@ -57,7 +57,7 @@
             @endpermission
             @permission('leer-pacientes')
             <li>
-                <a href="{{ url('pacientes') }}">
+                <a href="{{ url('organizaciones') }}">
                     <i class="material-icons">business</i>
                     <p>Organizaciones</p>
                 </a>
@@ -72,13 +72,13 @@
             </li>
             @endpermission
            @permission('leer-citas')
-            <li>
+            <!--<li>
                 <a href="{{url('consultas')}}">
                     <i class="material-icons">chrome_reader_mode</i>
                     <p>Consultas Médicas
                     </p>
                 </a>
-            </li>
+            </li> -->
             @endpermission
             @permission('leer-mantenimientos')
             <li>

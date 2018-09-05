@@ -79,6 +79,27 @@ $('.timepicker').datetimepicker({
         $("#prevision").html(html)
         $("#prevision_select").selectpicker()
     })
+
+ $("#region_id").change(function(event){ //carga las Ciudades en el select #ciudad_id según la región elegida.
+    var id = event.target.value;
+    if (!id) 
+        alert(id)
+        $("#ciudad_id").html("<option>--Seleccione--</option>")
+        $('.selectpicker').selectpicker('refresh') //refresca el select para que cambie su valor
+        $.get("get-ciudad/"+id+"",function(response,region){
+        $("#ciudad_id").empty()
+        $('.selectpicker').selectpicker('refresh') //refresca el select para que cambie su valor
+        if (response == "") {
+             $("#ciudad_id").html("<option>--Seleccione--</option>")
+              $('.selectpicker').selectpicker('refresh') //refresca el select para que cambie su valor
+        }else{
+            for(i = 0; i <response.length; i++) {
+                $("#ciudad_id").append("<option value='"+response[i].id+"'>"+response[i].nombre+"</option>")
+            }
+            $('.selectpicker').selectpicker('refresh') //refresca el select para que cambie su valor
+        }
+    })
+})
      
 $("#speciality_id_e").change(function(event){ //carga los doctores en el select #doctor_id según la especialidad elegida.
     var id = event.target.value;

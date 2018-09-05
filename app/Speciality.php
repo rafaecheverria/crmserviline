@@ -17,7 +17,6 @@ class Speciality extends Model
         $especialidades = User::findOrFail($id)->specialities; //lista las especialidades del doctor en sesión.
         return $especialidades;
     }
-
     public function users()
     {
         return $this->belongsToMany('App\User');

@@ -11,6 +11,7 @@ Route::middleware(['auth', 'role:administrador|doctor|recepcionista'])->group(fu
 	Route::resource('permisos-roles', 'Roles\PermisosRolesController', ['only' => ['edit', 'update']])->middleware(['permission:leer-roles']);
 	Route::resource('especialidades', 'Especialidad\EspecialidadController')->middleware(['permission:leer-especialidades']);
 	Route::resource('contactos', 'Contacto\ContactosController');
+	Route::resource('organizaciones', 'Organizacion\OrganizacionesController');
 	Route::resource('roles', 'Roles\RolController')->middleware(['permission:leer-roles']);
 	Route::resource('permisos', 'Permisos\PermisoController')->middleware(['permission:leer-permisos']);
 	//Route::resource('antecedentes', 'Paciente\AntecedenteController', ['only' => ['update', 'edit']]);
@@ -20,6 +21,7 @@ Route::middleware(['auth', 'role:administrador|doctor|recepcionista'])->group(fu
 	Route::resource('citas', 'Citas\CitasMedicasController', ['only' => ['index', 'store', 'update', 'destroy', 'edit']]);
 	Route::resource('consultas', 'Citas\ConsultasMedicasController')->middleware(['permission:leer-citas']);
 	Route::resource('dias','Doctor\DiasController');
+	Route::get('get-ciudad/{id}','Region\RegionesController@getCiudad');
 	Route::get('get-doctor/{id}','Doctor\DoctorController@getDoctor');
 	Route::get('get-especialidad/{id}','Doctor\EspecialidadDoctorController@getEspecialidad');
 	Route::get('getClave/{id}','User\UserController@getClave');

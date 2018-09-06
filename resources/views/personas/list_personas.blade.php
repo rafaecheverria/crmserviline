@@ -6,6 +6,7 @@
             <th>Nombre</th>
             <th>Apellidos</th>
             <th>Email</th>
+             <th>Roles</th>
             <th class="text-right">Acciones</th>
         </tr>
     </thead>

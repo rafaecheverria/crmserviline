@@ -49,7 +49,7 @@ class ContactosController extends Controller
 
     public function show()
     {
-        $users = User::select(['id', 'rut', 'nombres', 'apellidos', 'telefono', 'nacimiento']);
+        $users = User::select(['id', 'rut', 'nombres', 'apellidos', 'telefono', 'nacimiento'])->withRole('cliente');
         return  datatables()->of($users)
                 ->editColumn('nacimiento', function ($user) {
                  return $user->getYearsAttribute();

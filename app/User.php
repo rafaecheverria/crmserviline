@@ -59,7 +59,7 @@ class User extends Authenticatable
 
      public function organizaciones()
     {
-        return $this->hasOne('App\Organizacion');
+        return $this->belongsToMany('App\Organizacion');
     }
 
     public function setNombresAttribute($valor)

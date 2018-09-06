@@ -37,7 +37,7 @@ class UserController extends ApiController
 
     public function show()
     {
-         $users = User::with('roles')->selectRaw('distinct users.*');
+        $users = User::with('roles')->selectRaw('distinct users.*');
         return  datatables()
                 ->of($users)
                 ->addColumn('roles', function (User $user) {

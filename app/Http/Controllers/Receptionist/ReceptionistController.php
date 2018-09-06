@@ -45,8 +45,7 @@ class ReceptionistController extends ApiController
     }
 
     public function show()
-    {
-            
+    {   
          $recepcionistas = User::with('roles')->selectRaw('distinct users.*')->withRole('recepcionista');
         return  datatables()->eloquent($recepcionistas)
                     ->addColumn('action', function ($recepcionista) {

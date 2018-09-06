@@ -283,6 +283,7 @@ var listar_personas = function()
             {data: 'nombres', name: 'nombres'},
             {data: 'apellidos', name: 'apellidos'},
             {data: 'email', name: 'email'},
+            {data: 'roles', name: 'roles'},
             {data: 'action', name: 'action', orderable: false, searchable: false, class:"text-right"}
         ],
     })

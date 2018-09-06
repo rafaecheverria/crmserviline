@@ -7,7 +7,7 @@
                 <h6>AGREGAR ORGANIZACIÓN </h6>
             </div>
             <div class="modal-body-add">
-                @include('organizaciones.agregar')
+                @include('organizaciones.form_agregar')
             </div>
             <div class="modal-footer text-center">
                 <a href="#" id="add_organizacion" class="btn btn-info pull-right">Agregar</a>

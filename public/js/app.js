@@ -23842,18 +23842,19 @@ $('.timepicker').datetimepicker({
     })
 
  $("#region_id").change(function(event){ //carga las Ciudades en el select #ciudad_id según la región elegida.
+    $("#display").hide();
     var id = event.target.value;
     if (!id) 
-        alert(id)
         $("#ciudad_id").html("<option>--Seleccione--</option>")
         $('.selectpicker').selectpicker('refresh') //refresca el select para que cambie su valor
         $.get("get-ciudad/"+id+"",function(response,region){
         $("#ciudad_id").empty()
         $('.selectpicker').selectpicker('refresh') //refresca el select para que cambie su valor
         if (response == "") {
-             $("#ciudad_id").html("<option>--Seleccione--</option>")
+             $("#ciudad_id").html("<option>--Seleccione--</option>");
               $('.selectpicker').selectpicker('refresh') //refresca el select para que cambie su valor
         }else{
+             $("#ciudad_id").html("<option value='0'>--Seleccione--</option>");
             for(i = 0; i <response.length; i++) {
                 $("#ciudad_id").append("<option value='"+response[i].id+"'>"+response[i].nombre+"</option>")
             }
@@ -23861,6 +23862,17 @@ $('.timepicker').datetimepicker({
         }
     })
 })
+
+ $("#ciudad_id").change(function(event){ //Muestra u oculta el formulario de registro de una organización según la opción elegida en el select ciudad.
+    $id = event.target.value;
+    if ($id > 0) {
+        $("#display").show();
+    }else{
+        $("#display").hide();
+        $('#region_id').prop('disabled', false);
+        
+    }
+ })
      
 $("#speciality_id_e").change(function(event){ //carga los doctores en el select #doctor_id según la especialidad elegida.
     var id = event.target.value;
@@ -24446,7 +24458,7 @@ $( "#add_paciente" ).click(function(event){
             }
         })
     })
-$( "#add_usuario" ).click(function(event){  //esta funcion agrega nuevos doctores y recepcionistas.
+/*$( "#add_usuario" ).click(function(event){  //esta funcion agrega nuevos doctores y recepcionistas.
         var route = ""
         var dataString  = $( '#form_add_usuario' ).serializeArray()
         var tipo = $(".tipo").val()
@@ -24480,7 +24492,37 @@ $( "#add_usuario" ).click(function(event){  //esta funcion agrega nuevos doctore
                 }
             }
         })
+    })*/
+
+    $( "#add_organizacion" ).click(function(event){  //esta funcion agrega nuevos doctores y recepcionistas.
+        var route = "organizaciones"
+        var dataString  = $( '#form_add_organizacion' ).serializeArray()
+        //console.log(dataString);
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            url: route,
+            type: 'POST',
+            datatype: 'json',
+            data:dataString,
+            success:function(data){
+                     $('#organizaciones').DataTable().ajax.reload();
+                     $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
+                     $('#form_add_organizacion')[0].reset()
+                     $('#modal_agregar_organizacion').modal('toggle')        
+            },
+            error:function(data){
+                var error = data.responseJSON.errors;
+                for(var i in error){
+                    for(var j in error[i]){
+                        var message = error[i][j];
+                       $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000})
+                    }
+                }
+            }
+        })
     })
+
+
 
 $( "#ingresar" ).click(function(event){ 
         event.preventDefault();
@@ -25342,7 +25384,6 @@ function cargar_consulta_atendida(id)// Carga los datos en el modal para editar,
 
 
 
-
 $(document).ready(function() {
 	listar_doctores()
     listar_recepcionistas()
@@ -25628,6 +25669,7 @@ var listar_personas = function()
             {data: 'nombres', name: 'nombres'},
             {data: 'apellidos', name: 'apellidos'},
             {data: 'email', name: 'email'},
+            {data: 'roles', name: 'roles'},
             {data: 'action', name: 'action', orderable: false, searchable: false, class:"text-right"}
         ],
     })

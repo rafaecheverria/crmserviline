@@ -193,6 +193,10 @@ table, th, td{
  .fc-nonbusiness {
   background: #90EE90  
 }
+
+#add_contact{
+  margin-top: 50px;
+}
 /*! =========================================================
  *
  Material Dashboard PRO - V1.1.0

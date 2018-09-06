@@ -9,11 +9,11 @@ class Organizacion extends Model
 	protected $table = "organizaciones";
 
 	 protected $fillable = [
-        'id', 'nombre', 'email', 'rut', 'telefono', 'direccion', 'actividad', 'descripcion', 'estado', 'logo', 
+        'id', 'nombre', 'email', 'rut', 'telefono', 'direccion', 'actividad', 'descripcion', 'estado', 'logo', 'tipo'
     ];
 	
     public function User()
     {
-        return $this->belongsTo('App/User');
+        return $this->belongsToMany('App\User');
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Organizacion;
 use App\Organizacion;
 use App\Region;
 use App\Ciudad;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -18,7 +19,8 @@ class OrganizacionesController extends Controller
     public function index()
     {
          $regiones = Region::select(['id', 'nombre'])->orderBy('nombre', 'asc')->get();
-        return view('organizaciones.index', compact('regiones'));
+         $contactos = User::select(['id', 'nombres', 'apellidos'])->withRole("contacto")->orderBy('nombres', 'asc')->get();
+        return view('organizaciones.index', compact('regiones', 'contactos'));
     }
 
      public function getCiudad(Request $request, $id)
@@ -47,7 +49,22 @@ class OrganizacionesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       if($request->ajax()){
+            $organizacion = new User();
+            $organizacion->rut                = $request->rut_add;
+            $organizacion->nombre            = $request->nombre_add; 
+            $organizacion->email              = $request->email_add;
+            $organizacion->telefono           = $request->telefono_add;
+            $organizacion->direccion          = $request->direccion_add;
+            $organizacion->tipo               = $request->tipo_add;
+            $organizacion->avatar             = "default.jpg";
+            $organizacion->save();
+            $organizacion->attachRole(2); //2 es el numero id del rol doctor
+            return response()->json([
+                "tipo" => "doctor",
+                "message" => "El doctor ".$doctor->nombres." ".$doctor->apellidos." ha sido guardado exitosamente !"
+                ]);
+        }
     }
 
     /**

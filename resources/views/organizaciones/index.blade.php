@@ -4,13 +4,11 @@
 <div class="content">
     <div class="container-fluid">
         <div class="row">
-
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header card-header-icon" data-background-color="blue">
                          <i class="material-icons">assignment</i>
                     </div>
-
                     <div class="card-content">
                         <table id="top-button-add">
                             <tr>
@@ -27,11 +25,10 @@
                         @endcomponent
                     </div>
                 </div>
-
             </div>
-
         </div>
     </div>
 </div>
 @include('organizaciones.modal_agregar')
+@include('organizaciones.modal_editar')
 @endsection

@@ -71,8 +71,7 @@
                      <div class="col-md-10 col-lg-10 col-sm-10"> 
                             <div class="form-group">
                               <label class="control-label">Propietario del Contacto</label>
-                              <select id="region_id" name="region_id[]" multiple="multiple" class="selectpicker show-tick" data-dropup-auto="false" data-size="5" data-live-search="true" data-style="select-with-transition">
-                                    <option value=""> Seleccione </option>
+                              <select id="contacto_id" name="contacto_id[]" multiple="multiple" class="selectpicker show-tick" data-dropup-auto="false" data-size="5" data-live-search="true" data-style="select-with-transition">
                                      @foreach($contactos as $contacto)
                                         <option value="{{ $contacto->id }}">{{ $contacto->nombres }} {{$contacto->apellidos }}</option>
                                     @endforeach

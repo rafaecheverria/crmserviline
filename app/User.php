@@ -95,7 +95,7 @@ class User extends Authenticatable
 
     public function getFullNameAttribute()
     {
-        return $this->attributes['nombres'] .' '. $this->attributes['apellidos'];
+        return $this->nombres . ' ' . $this->apellidos;
     }
 
     protected $hidden = [

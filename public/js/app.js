@@ -24497,7 +24497,6 @@ $( "#add_paciente" ).click(function(event){
     $( "#add_organizacion" ).click(function(event){  //esta funcion agrega nuevos doctores y recepcionistas.
         var route = "organizaciones"
         var dataString  = $( '#form_add_organizacion' ).serializeArray()
-        //console.log(dataString);
         $.ajax({
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             url: route,
@@ -24505,6 +24504,7 @@ $( "#add_paciente" ).click(function(event){
             datatype: 'json',
             data:dataString,
             success:function(data){
+                    console.log(data);
                      $('#organizaciones').DataTable().ajax.reload();
                      $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
                      $('#form_add_organizacion')[0].reset()
@@ -24813,6 +24813,47 @@ function roles_user(id)// carga datos en el modal roles_user del módulo de pers
           }
     });
 }
+function organizacion_user(id)// carga datos en el modal roles_user del módulo de personas.
+{
+   event.preventDefault();
+   var route = "/organizaciones/"+id+"/edit";
+   var csrf_token = $('meta[name="csrf-token"]').attr('content');
+    $.ajax({
+           url: route,
+           type: 'GET',
+        success:function(data){
+        
+            $('#id').val(data.id)
+            $('#rut_up').val(data.rut)
+            $('#nombre_up').val(data.nombre)
+            $('#email_up').val(data.email)
+            $('#giro_up').val(data.giro)
+            $('#direccion_up').val(data.direccion)
+            $('#telefono_up').val(data.telefono)
+            //$('.title-name').html(data.nombres +' '+ data.apellidos)
+            //$('#image-modal').html('<img src="/assets/img/perfiles/'+data.avatar+'" alt="Thumbnail Image" class="img-rounded img-responsive">')
+            const crearOption = (value, name, selected) => `<option value="${value}"${selected.includes(value) ? ' selected' : ''}>${name}</option>`
+            const obj = data.contactos
+            const values = Object.keys(obj)
+            const opciones = values.map(x => crearOption(x, obj[x], data.my_contactos))
+            const select = document.getElementById('contacto_id_up')
+                 select.innerHTML = ''
+                 opciones.forEach(x => { select.insertAdjacentHTML('beforeend', x) })
+            const valor = data.my_contactos
+                 i = 0, size = valor.length
+                      for(i; i < size; i++){
+                    $('select option[value='+valor[i]+']').attr('selected', 'selected')
+                }
+
+                console.log(data.my_contactos)
+           $('.selectpicker').selectpicker('refresh')
+           
+          },
+       error:function(){
+           alert('la operación falló');
+          }
+    });
+}
 
 function carga_usuario(id)//carga datos del doctor y recepcionista en el modal editar.
 {
@@ -24954,7 +24995,6 @@ function especialidad_doctor(id) //carga modal que contiene el select multiple d
             $('#nombres').html(data.nombres)
             $('#estudios_complementarios').val(data.estudios_complementarios)
             $('.title-name').html(data.nombres)
-            //$('.selectpicker3').selectpicker()
             const crearOption = (value, name, selected) => `<option value="${value}"${selected.includes(value) ? ' selected' : ''}>${name}</option>`
             const obj = data.especialidades
             const values = Object.keys(obj)
@@ -24967,6 +25007,7 @@ function especialidad_doctor(id) //carga modal que contiene el select multiple d
                       for(i; i < size; i++){
                     $('select option[value='+valor[i]+']').attr('selected', 'selected')
                 }
+                console.log(data.my_especialidades)
            $('.selectpicker').selectpicker('refresh')
           },
        error:function(){

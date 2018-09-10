@@ -23841,7 +23841,7 @@ $('.timepicker').datetimepicker({
         $("#prevision_select").selectpicker()
     })
 
- $("#region_id_add").change(function(event){ //carga las Ciudades en el select #ciudad_id según la región elegida.
+ /*$("#region_id_add").change(function(event){ //carga las Ciudades en el select #ciudad_id según la región elegida.
     $("#display").hide();
     var id = event.target.value;
     if (!id) 
@@ -23872,41 +23872,44 @@ $('.timepicker').datetimepicker({
         $('#region_id_add').prop('disabled', false);
         
     }
- })
- $("#region_id_up").change(function(event){ //carga las Ciudades en el select #ciudad_id según la región elegida.
+ })*/
+ $("#region_id").change(function(event){ //carga las Ciudades en el select #ciudad_id según la región elegida.
     $("#display").hide();
     var id = event.target.value;
     if (!id) 
-        $("#ciudad_id_up").html("<option>--Seleccione--</option>")
+        $("#ciudad_id").html("<option>--Seleccione--</option>")
         $('.selectpicker').selectpicker('refresh') //refresca el select para que cambie su valor
         $.get("get-ciudad/"+id+"",function(response,region){
-        $("#ciudad_id_up").empty()
+        $("#ciudad_id").empty()
         $('.selectpicker').selectpicker('refresh') //refresca el select para que cambie su valor
         if (response == "") {
-             $("#ciudad_id_up").html("<option>--Seleccione--</option>");
+             $("#ciudad_id").html("<option>--Seleccione--</option>");
               $('.selectpicker').selectpicker('refresh') //refresca el select para que cambie su valor
         }else{
-             $("#ciudad_id_up").html("<option value='0'>--Seleccione--</option>");
+             $("#ciudad_id").html("<option value='0'>--Seleccione--</option>");
             for(i = 0; i <response.length; i++) {
-                $("#ciudad_id_up").append("<option value='"+response[i].id+"'>"+response[i].nombre+"</option>")
+                $("#ciudad_id").append("<option value='"+response[i].id+"'>"+response[i].nombre+"</option>")
             }
             $('.selectpicker').selectpicker('refresh') //refresca el select para que cambie su valor
         }
     })
 })
 
- $("#ciudad_id_up").change(function(event){ //Muestra u oculta el formulario de registro de una organización según la opción elegida en el select ciudad.
+ $("#ciudad_id").change(function(event){ //Muestra u oculta el formulario de registro de una organización según la opción elegida en el select ciudad.
     $id = event.target.value;
     if ($id > 0) {
         $("#display").show();
+        $('#contacto_id').val("default").selectpicker('refresh')
+        $("#rut").focus();
     }else{
         $("#display").hide();
-        $('#region_id_up').prop('disabled', false);
+        $('#region_id').prop('disabled', false);
+        $('#contacto_id').val("default").selectpicker('refresh')
         
     }
  })
      
-     
+/* 
 $("#speciality_id_e").change(function(event){ //carga los doctores en el select #doctor_id según la especialidad elegida.
     var id = event.target.value;
     if (!id) 
@@ -23947,7 +23950,7 @@ $("#speciality_id").change(function(event){ //carga los doctores en el select #d
         }
         })
 })
-
+*/
 $( "#delete_cita" ).click(function(event){ //esta funcion elimina una cita oendiente desde el cale ndario.
     var id= $( '#id' ).val()
     var popup = confirm("¿ Esta seguro de eliminar esta cita ?")
@@ -24527,36 +24530,6 @@ $( "#add_paciente" ).click(function(event){
         })
     })*/
 
-    $( "#add_organizacion" ).click(function(event){  //esta funcion agrega nuevos doctores y recepcionistas.
-        var route = "organizaciones"
-        var dataString  = $( '#form_add_organizacion' ).serializeArray()
-        $.ajax({
-            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-            url: route,
-            type: 'POST',
-            datatype: 'json',
-            data:dataString,
-            success:function(data){
-                    console.log(data);
-                     $('#organizaciones').DataTable().ajax.reload();
-                     $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
-                     $('#form_add_organizacion')[0].reset()
-                     $('#modal_agregar_organizacion').modal('toggle')        
-            },
-            error:function(data){
-                var error = data.responseJSON.errors;
-                for(var i in error){
-                    for(var j in error[i]){
-                        var message = error[i][j];
-                       $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000})
-                    }
-                }
-            }
-        })
-    })
-
-
-
 $( "#ingresar" ).click(function(event){ 
         event.preventDefault();
         var dataString  = $( '#form_login' ).serializeArray();
@@ -24762,16 +24735,16 @@ function getDoctorUp(especialidad, id_doctor){
 //recibe la ciudad segun la region.
 function getCiudadUp(region_id, ciudad_id){
     $.get("get-ciudad/"+region_id+"",function(response,region){
-    $("#ciudad_id_up").empty()
+    $("#ciudad_id").empty()
     $('.selectpicker').selectpicker('refresh')
     if (response == "") {
-         $("#ciudad_id_up").html("<option>--Seleccione--</option>")
+         $("#ciudad_id").html("<option>--Seleccione--</option>")
          $('.selectpicker').selectpicker('refresh')
     }else{
         for(i = 0; i <response.length; i++) {
-            $("#ciudad_id_up").append("<option value='"+response[i].id+"'>"+response[i].nombre+"</option>")
+            $("#ciudad_id").append("<option value='"+response[i].id+"'>"+response[i].nombre+"</option>")
         }
-        $('#ciudad_id_up').val(ciudad_id)
+        $('#ciudad_id').val(ciudad_id)
         $('.selectpicker').selectpicker('refresh')
     }
 })
@@ -24790,25 +24763,6 @@ function getDoctorAdd(especialidad){
         }
     })
 }
-// si falla el select especialidades en el update cita en sesion doctor, es porque no tiene permisos "leer especialidades"
-function select_region_up(ciudad_id, region_id){ //lista las especialidades del doctor en sesion 
-        $.get("get-region/"+ciudad_id+"",function(response,region){
-        $("#region_id_up").empty()
-        $('.selectpicker').selectpicker('refresh')
-        if (response == "") {
-             $("#region_id_up").html("<option>--Seleccione--</option>")
-             $('.selectpicker').selectpicker('refresh')
-        }else{
-            for(i = 0; i <response.length; i++) {
-                $("#region_id_up").append("<option value='"+response[i].id+"'>"+response[i].nombre+"</option>")
-                $('.selectpicker').selectpicker('refresh')
-            }
-            $('#region_id_up').val(speciality_id)
-            $('.selectpicker').selectpicker('refresh')
-        }
-    })
-}
-
 
 function select_especialidad_add(id, speciality_id){
     if (id == "0") {
@@ -24864,54 +24818,116 @@ function roles_user(id)// carga datos en el modal roles_user del módulo de pers
           }
     });
 }
-function organizacion_user(id)// carga datos en el modal roles_user del módulo de personas.
+
+// inicia gestión de organizacion
+function organizacion_user(id, tipo)// carga datos en el modal organizacion_user del módulo de organizacion, si el tipo es 2 es porque el llamado es editar sio es 1 es agregar.
 {
-   event.preventDefault();
-   var route = "/organizaciones/"+id+"/edit";
-   var csrf_token = $('meta[name="csrf-token"]').attr('content');
-   //var region = $("#region_id_up").val();
-    $.ajax({
-           url: route,
-           type: 'GET',
-        success:function(data){
-        
-            $('#id').val(data.id)
-            $('#rut_up').val(data.rut)
-            $('#nombre_up').val(data.nombre)
-            $('#email_up').val(data.email)
-            $('#giro_up').val(data.giro)
-            $('#direccion_up').val(data.direccion)
-            $('#telefono_up').val(data.telefono)
-            $("#region_id_up").val(data.region_id)
+    $("#modal_organizacion").modal('show')
+    event.preventDefault();
+    if (tipo == 1) {
+        $("#boton_organizacion").html("<a href='#' onclick='organizacion(0,1)' class='btn btn-info pull-right'>Agregar</a>")
+        $("#display").hide();
+        $("#ciudad_id").html("<option>--Seleccione--</option>")
+        document.getElementById("form_organizacion").reset();
+        $('.selectpicker').selectpicker('refresh')
+    }else{
+        $("#boton_organizacion").html("<a href='#' onclick='organizacion("+id+",2)' class='btn btn-info pull-right'>Actualizar</a>")
+        $("#display").show(); //muestra los campos del formuario organizaciones
+        var route = "/organizaciones/"+id+"/edit";
+        var csrf_token = $('meta[name="csrf-token"]').attr('content');
+            $.ajax({
+               url: route,
+               type: 'GET',
+            success:function(data){
+                $('#id').val(data.id)
+                $('#rut').val(data.rut)
+                $('#nombre').val(data.nombre)
+                $('#email').val(data.email)
+                $('#giro').val(data.giro)
+                $('#direccion').val(data.direccion)
+                $('#telefono').val(data.telefono)
+                $("INPUT[name=tipo]").val([data.tipo]) //carga valor de radiobutton desde mysql
+                $("#region_id").val(data.region_id)
+                var ciudad_id = $("#ciudad_id").val()
+                getCiudadUp(data.region_id, data.ciudad_id)
+                const crearOption = (value, name, selected) => `<option value="${value}"${selected.includes(value) ? ' selected' : ''}>${name}</option>`
+                const obj = data.contactos
+                const values = Object.keys(obj)
+                const opciones = values.map(x => crearOption(x, obj[x], data.my_contactos))
+                const select = document.getElementById('contacto_id')
+                     select.innerHTML = ''
+                     opciones.forEach(x => { select.insertAdjacentHTML('beforeend', x) })
+                const valor = data.my_contactos
+                     i = 0, size = valor.length
+                          for(i; i < size; i++){
+                        $('select option[value='+valor[i]+']').attr('selected', 'selected')
+                    }
 
-           // alert(data.ciudad_id)
-            var ciudad_id = $("#ciudad_id_up").val()
-            getCiudadUp(data.region_id, data.ciudad_id)
-            select_region_up(ciudad_id, data.region_id)
-
-
-            const crearOption = (value, name, selected) => `<option value="${value}"${selected.includes(value) ? ' selected' : ''}>${name}</option>`
-            const obj = data.contactos
-            const values = Object.keys(obj)
-            const opciones = values.map(x => crearOption(x, obj[x], data.my_contactos))
-            const select = document.getElementById('contacto_id_up')
-                 select.innerHTML = ''
-                 opciones.forEach(x => { select.insertAdjacentHTML('beforeend', x) })
-            const valor = data.my_contactos
-                 i = 0, size = valor.length
-                      for(i; i < size; i++){
-                    $('select option[value='+valor[i]+']').attr('selected', 'selected')
-                }
-
-                console.log(data.my_contactos)
-           $('.selectpicker').selectpicker('refresh')
-           
-          },
-       error:function(){
-           alert('la operación falló');
-          }
-    });
+                    //console.log(data.my_contactos)
+               $('.selectpicker').selectpicker('refresh')
+               
+              },
+           error:function(){
+               alert('la operación falló');
+              }
+        });
+    }    
 }
+function organizacion(id,tipo){
+    event.preventDefault()
+    var dataString  = $( '#form_organizacion' ).serializeArray()
+    if (tipo == 1) {
+    var route = "organizaciones"
+    $.ajax({
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        url: route,
+        type: 'POST',
+        datatype: 'json',
+        data:dataString,
+        success:function(data){
+                console.log(data);
+                 $('#organizaciones').DataTable().ajax.reload();
+                 $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
+                 $('#form_organizacion')[0].reset()
+                 $('#modal_organizacion').modal('toggle')        
+        },
+        error:function(data){
+            var error = data.responseJSON.errors;
+            for(var i in error){
+                for(var j in error[i]){
+                    var message = error[i][j];
+                   $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000})
+                }
+            }
+        }
+    })
+    }else{
+        var route = "/organizaciones/"+id+""
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            url: route,
+            type: 'PUT',
+            datatype: 'json',
+            data:dataString,
+            success:function(data){
+                $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
+                $('#organizaciones').DataTable().ajax.reload();
+                $('#modal_organizacion').modal('toggle')
+            },
+            error:function(data){
+                var error = data.responseJSON.errors;
+                for(var i in error){
+                    for(var j in error[i]){
+                        var message = error[i][j];
+                       $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000})
+                    }
+                }
+            }
+        }) 
+
+    }
+}
+//finaliza gestion de organización
 
 function carga_usuario(id)//carga datos del doctor y recepcionista en el modal editar.
 {

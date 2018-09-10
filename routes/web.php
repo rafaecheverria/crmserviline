@@ -22,7 +22,7 @@ Route::middleware(['auth', 'role:administrador|doctor|recepcionista'])->group(fu
 	Route::resource('dias','Doctor\DiasController');
 	Route::get('get-ciudad/{id}','Region\RegionesController@getCiudad');
 	Route::get('get-doctor/{id}','Doctor\DoctorController@getDoctor');
-	Route::get('get-region/{id}','Region\RegionesController@getRegion');
+	//Route::get('get-region/{id}','Region\RegionesController@getRegion');
 	Route::get('getClave/{id}','User\UserController@getClave');
 	Route::put('put-clave/{id}','User\UserController@actualizaClave');
 	Route::get('atender/{id}','Citas\ConsultasMedicasController@atender')->middleware(['permission:leer-consultas']);

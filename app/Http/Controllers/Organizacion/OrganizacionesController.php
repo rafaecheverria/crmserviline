@@ -35,21 +35,20 @@ class OrganizacionesController extends Controller
     {
        if($request->ajax()){
             $organizacion = new Organizacion();
-            $organizacion->rut         = $request->rut_add;
-            $organizacion->nombre      = $request->nombre_add; 
-            $organizacion->email       = $request->email_add;
-            $organizacion->telefono    = $request->telefono_add;
-            $organizacion->direccion   = $request->direccion_add;
-            $organizacion->tipo        = $request->tipo_add;
-            $organizacion->giro        = $request->giro_add;
-            $organizacion->ciudad_id   = $request->ciudad_id_add;
-            $organizacion->region_id   = $request->region_id_add;
+            $organizacion->rut         = $request->rut;
+            $organizacion->nombre      = $request->nombre; 
+            $organizacion->email       = $request->email;
+            $organizacion->telefono    = $request->telefono;
+            $organizacion->direccion   = $request->direccion;
+            $organizacion->tipo        = $request->tipo;
+            $organizacion->giro        = $request->giro;
+            $organizacion->ciudad_id   = $request->ciudad_id;
+            $organizacion->region_id   = $request->region_id;
             $organizacion->logo        = "default.jpg";
             $organizacion->save();
             $organizacion->users()->sync($request->contacto_id);  
             return response()->json([
-                "tipo" => "doctor",
-                "message" => "Se guardó"
+                "message" => "La empresa ".$organizacion->nombre." ha sido guardada exitosamente!"
                 ]);
         }
     }
@@ -61,7 +60,7 @@ class OrganizacionesController extends Controller
                     ->addColumn('action', function ($organizacion) {
                         $ficha = '<a href="#" onclick="ficha_paciente('.$organizacion->id.')" data-toggle="modal" data-target="#modal_ficha" rel="tooltip" title="Ficha del paciente" class="btn btn-simple btn-primary btn-icon"><i class="material-icons">folder_shared</i></a>';
                         $expediente = '<a href="#" onclick="expediente_paciente('.$organizacion->id.')" data-toggle="modal" data-target="#modal_expediente" rel="tooltip" title="Expediente" class="btn btn-simple btn-info btn-icon"><i class="material-icons">content_paste</i></a>';
-                        $editar = '<a href="#" onclick="organizacion_user('.$organizacion->id.')" data-toggle="modal" data-target="#modal_editar_organizacion" rel="tooltip" title="Editar" class="btn btn-simple btn-success btn-icon edit"><i class="material-icons">edit</i></a>';
+                        $editar = '<a href="#" onclick="organizacion_user('.$organizacion->id.',  2)" rel="tooltip" title="Editar" class="btn btn-simple btn-success btn-icon edit"><i class="material-icons">edit</i></a>';
                         $eliminar = '<a href="#" onclick="delete_paciente('.$organizacion->id.')" data-toggle="modal" data-target="#eliminar_paciente" rel="tooltip" title="Editar" class="btn btn-simple btn-danger btn-icon"><i class="material-icons">close</i></a>';
 
                         return $ficha.$expediente.$editar.$eliminar;
@@ -95,7 +94,23 @@ class OrganizacionesController extends Controller
 
     public function update(Request $request, $id)
     {
-        //
+        if($request->ajax()){
+            $organizacion = Organizacion::findOrFail($id);
+            $organizacion->rut         = $request->rut;
+            $organizacion->nombre      = $request->nombre; 
+            $organizacion->email       = $request->email;
+            $organizacion->telefono    = $request->telefono;
+            $organizacion->direccion   = $request->direccion;
+            $organizacion->tipo        = $request->tipo;
+            $organizacion->giro        = $request->giro;
+            $organizacion->ciudad_id   = $request->ciudad_id;
+            $organizacion->region_id   = $request->region_id;
+            $organizacion->save();
+            return response()->json([
+             "nombre" => $organizacion->nombre,
+             "message" => "La empresa ".$organizacion->nombre." ha sido actualizada exitosamente!"
+            ]);
+        }
     }
 
     public function destroy($id)

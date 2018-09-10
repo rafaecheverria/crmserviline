@@ -13,7 +13,7 @@
                         <table id="top-button-add">
                             <tr>
                                 <td><h4 class="card-title"><small>ORGANIZACIONES / EMPRESAS</small></h4></td>         
-                                <td class="pull-right"><a href="#" data-toggle="modal" data-target="#modal_agregar_organizacion" rel="tooltip" title="Agregar organización" class="btn btn-info btn-round btn-fab btn-fab-mini">
+                                <td class="pull-right"><a href="#" onclick="organizacion_user(0,1)" rel="tooltip" title="Agregar organización" class="btn btn-info btn-round btn-fab btn-fab-mini">
                                         <i class="material-icons">add</i>
                                     </a>
                                 </td>
@@ -29,6 +29,5 @@
         </div>
     </div>
 </div>
-@include('organizaciones.modal_agregar')
-@include('organizaciones.modal_editar')
+@include('organizaciones.modal')
 @endsection

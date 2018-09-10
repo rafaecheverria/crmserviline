@@ -16,12 +16,4 @@ class RegionesController extends Controller
             return response()->json($ciudades);
         }
     }
-
-     public function getRegion(Request $request, $id)
-    {
-        if ($request->ajax()) {
-            $regiones = Region::regiones($id);
-            return response()->json($regiones);
-        }
-    }
 }

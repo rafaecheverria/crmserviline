@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Ciudad;
 use Illuminate\Database\Eloquent\Model;
 
 class Region extends Model
@@ -11,6 +12,12 @@ class Region extends Model
     protected $fillable = [
         'id', 'nombre'
     ];
+
+    /*public static function regiones($id) //obtiene las especialidades del doctor en session.
+    {
+        $regiones = Ciudad::findOrFail($id)->ciudades; //lista las especialidades del doctor en sesión.
+        return $regiones;
+    }*/
 
     public function ciudades()
     {

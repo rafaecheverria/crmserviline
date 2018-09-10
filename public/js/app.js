@@ -23841,38 +23841,71 @@ $('.timepicker').datetimepicker({
         $("#prevision_select").selectpicker()
     })
 
- $("#region_id").change(function(event){ //carga las Ciudades en el select #ciudad_id según la región elegida.
+ $("#region_id_add").change(function(event){ //carga las Ciudades en el select #ciudad_id según la región elegida.
     $("#display").hide();
     var id = event.target.value;
     if (!id) 
-        $("#ciudad_id").html("<option>--Seleccione--</option>")
+        $("#ciudad_id_add").html("<option>--Seleccione--</option>")
         $('.selectpicker').selectpicker('refresh') //refresca el select para que cambie su valor
         $.get("get-ciudad/"+id+"",function(response,region){
-        $("#ciudad_id").empty()
+        $("#ciudad_id_add").empty()
         $('.selectpicker').selectpicker('refresh') //refresca el select para que cambie su valor
         if (response == "") {
-             $("#ciudad_id").html("<option>--Seleccione--</option>");
+             $("#ciudad_id_add").html("<option>--Seleccione--</option>");
               $('.selectpicker').selectpicker('refresh') //refresca el select para que cambie su valor
         }else{
-             $("#ciudad_id").html("<option value='0'>--Seleccione--</option>");
+             $("#ciudad_id_add").html("<option value='0'>--Seleccione--</option>");
             for(i = 0; i <response.length; i++) {
-                $("#ciudad_id").append("<option value='"+response[i].id+"'>"+response[i].nombre+"</option>")
+                $("#ciudad_id_add").append("<option value='"+response[i].id+"'>"+response[i].nombre+"</option>")
             }
             $('.selectpicker').selectpicker('refresh') //refresca el select para que cambie su valor
         }
     })
 })
 
- $("#ciudad_id").change(function(event){ //Muestra u oculta el formulario de registro de una organización según la opción elegida en el select ciudad.
+ $("#ciudad_id_add").change(function(event){ //Muestra u oculta el formulario de registro de una organización según la opción elegida en el select ciudad.
     $id = event.target.value;
     if ($id > 0) {
         $("#display").show();
     }else{
         $("#display").hide();
-        $('#region_id').prop('disabled', false);
+        $('#region_id_add').prop('disabled', false);
         
     }
  })
+ $("#region_id_up").change(function(event){ //carga las Ciudades en el select #ciudad_id según la región elegida.
+    $("#display").hide();
+    var id = event.target.value;
+    if (!id) 
+        $("#ciudad_id_up").html("<option>--Seleccione--</option>")
+        $('.selectpicker').selectpicker('refresh') //refresca el select para que cambie su valor
+        $.get("get-ciudad/"+id+"",function(response,region){
+        $("#ciudad_id_up").empty()
+        $('.selectpicker').selectpicker('refresh') //refresca el select para que cambie su valor
+        if (response == "") {
+             $("#ciudad_id_up").html("<option>--Seleccione--</option>");
+              $('.selectpicker').selectpicker('refresh') //refresca el select para que cambie su valor
+        }else{
+             $("#ciudad_id_up").html("<option value='0'>--Seleccione--</option>");
+            for(i = 0; i <response.length; i++) {
+                $("#ciudad_id_up").append("<option value='"+response[i].id+"'>"+response[i].nombre+"</option>")
+            }
+            $('.selectpicker').selectpicker('refresh') //refresca el select para que cambie su valor
+        }
+    })
+})
+
+ $("#ciudad_id_up").change(function(event){ //Muestra u oculta el formulario de registro de una organización según la opción elegida en el select ciudad.
+    $id = event.target.value;
+    if ($id > 0) {
+        $("#display").show();
+    }else{
+        $("#display").hide();
+        $('#region_id_up').prop('disabled', false);
+        
+    }
+ })
+     
      
 $("#speciality_id_e").change(function(event){ //carga los doctores en el select #doctor_id según la especialidad elegida.
     var id = event.target.value;
@@ -24726,6 +24759,23 @@ function getDoctorUp(especialidad, id_doctor){
 })
 }
 
+//recibe la ciudad segun la region.
+function getCiudadUp(region_id, ciudad_id){
+    $.get("get-ciudad/"+region_id+"",function(response,region){
+    $("#ciudad_id_up").empty()
+    $('.selectpicker').selectpicker('refresh')
+    if (response == "") {
+         $("#ciudad_id_up").html("<option>--Seleccione--</option>")
+         $('.selectpicker').selectpicker('refresh')
+    }else{
+        for(i = 0; i <response.length; i++) {
+            $("#ciudad_id_up").append("<option value='"+response[i].id+"'>"+response[i].nombre+"</option>")
+        }
+        $('#ciudad_id_up').val(ciudad_id)
+        $('.selectpicker').selectpicker('refresh')
+    }
+})
+}
 function getDoctorAdd(especialidad){
     $.get("get-doctor/"+especialidad+"",function(response,speciality){
         $("#up_evento #doctor_id").empty()
@@ -24741,23 +24791,24 @@ function getDoctorAdd(especialidad){
     })
 }
 // si falla el select especialidades en el update cita en sesion doctor, es porque no tiene permisos "leer especialidades"
-function select_especialidad_up(doctor_id, speciality_id){ //lista las especialidades del doctor en sesion 
-        $.get("get-especialidad/"+doctor_id+"",function(response,speciality){
-        $("#speciality_id_e").empty()
+function select_region_up(ciudad_id, region_id){ //lista las especialidades del doctor en sesion 
+        $.get("get-region/"+ciudad_id+"",function(response,region){
+        $("#region_id_up").empty()
         $('.selectpicker').selectpicker('refresh')
         if (response == "") {
-             $("#speciality_id_e").html("<option>--Seleccione--</option>")
+             $("#region_id_up").html("<option>--Seleccione--</option>")
              $('.selectpicker').selectpicker('refresh')
         }else{
             for(i = 0; i <response.length; i++) {
-                $("#speciality_id_e").append("<option value='"+response[i].id+"'>"+response[i].nombre+"</option>")
+                $("#region_id_up").append("<option value='"+response[i].id+"'>"+response[i].nombre+"</option>")
                 $('.selectpicker').selectpicker('refresh')
             }
-            $('#speciality_id_e').val(speciality_id)
+            $('#region_id_up').val(speciality_id)
             $('.selectpicker').selectpicker('refresh')
         }
     })
 }
+
 
 function select_especialidad_add(id, speciality_id){
     if (id == "0") {
@@ -24818,6 +24869,7 @@ function organizacion_user(id)// carga datos en el modal roles_user del módulo 
    event.preventDefault();
    var route = "/organizaciones/"+id+"/edit";
    var csrf_token = $('meta[name="csrf-token"]').attr('content');
+   //var region = $("#region_id_up").val();
     $.ajax({
            url: route,
            type: 'GET',
@@ -24830,8 +24882,14 @@ function organizacion_user(id)// carga datos en el modal roles_user del módulo 
             $('#giro_up').val(data.giro)
             $('#direccion_up').val(data.direccion)
             $('#telefono_up').val(data.telefono)
-            //$('.title-name').html(data.nombres +' '+ data.apellidos)
-            //$('#image-modal').html('<img src="/assets/img/perfiles/'+data.avatar+'" alt="Thumbnail Image" class="img-rounded img-responsive">')
+            $("#region_id_up").val(data.region_id)
+
+           // alert(data.ciudad_id)
+            var ciudad_id = $("#ciudad_id_up").val()
+            getCiudadUp(data.region_id, data.ciudad_id)
+            select_region_up(ciudad_id, data.region_id)
+
+
             const crearOption = (value, name, selected) => `<option value="${value}"${selected.includes(value) ? ' selected' : ''}>${name}</option>`
             const obj = data.contactos
             const values = Object.keys(obj)
@@ -25682,7 +25740,9 @@ var listar_organizaciones = function()
             {data: 'rut', name: 'rut'},
             {data: 'nombre', name: 'nombre'},
             {data: 'telefono', name: 'telefono'},
-            {data: 'direccion', name: 'direccion'}
+            {data: 'direccion', name: 'direccion'},
+            {data: 'email', name: 'email'},    
+            {data: 'giro', name: 'giro'}   
         ]
     })
 }

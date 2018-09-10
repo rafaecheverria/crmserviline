@@ -6,7 +6,7 @@
                         <div class="col-md-12"> 
                             <div class="form-group">
                               <label class="control-label">Región</label>
-                              <select id="region_id" name="region_id" class="selectpicker show-tick" data-dropup-auto="false" data-size="5" data-live-search="true" data-style="select-with-transition">
+                              <select id="region_id_add" name="region_id_add" class="selectpicker show-tick" data-dropup-auto="false" data-size="5" data-live-search="true" data-style="select-with-transition">
                                     <option value=""> Seleccione </option>
                                      @foreach($regiones as $region)
                                         <option value="{{ $region->id }}">{{ $region->nombre }}</option>
@@ -17,7 +17,7 @@
                         <div class="col-md-12"> 
                             <div class="form-group">
                               <label class="control-label">Ciudad</label>
-                              <select id="ciudad_id" data-live-search="true" name="ciudad_id" class="selectpicker show-tick" data-dropup-auto="false" data-size="5" data-style="select-with-transition">
+                              <select id="ciudad_id_add" data-live-search="true" name="ciudad_id_add" class="selectpicker show-tick" data-dropup-auto="false" data-size="5" data-style="select-with-transition">
                                     <option value="0"> Seleccione </option>
                               </select>
                             </div>

@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Region;
+use App\Ciudad;
 use Illuminate\Database\Eloquent\Model;
 
 class Ciudad extends Model
@@ -23,4 +24,5 @@ class Ciudad extends Model
         $ciudades = Ciudad::where('regiones_id', '=', $id)->get(); //lista las ciudades que tinen el id de la especialidad que recibe como parametro
         return $ciudades;
     }
+
 }

@@ -886,25 +886,42 @@ function actualizar_especialidad($id)
           }
     });
 }
-
-function getDoctorUp(especialidad, id_doctor){
-    $.get("get-doctor/"+especialidad+"",function(response,speciality){
-    $("#doctor_id_e").empty()
+//recibe la ciudad segun la region.
+function getCiudadUp(region_id, ciudad_id){
+    $.get("get-ciudad/"+region_id+"",function(response,region){
+    $("#ciudad_id_up").empty()
     $('.selectpicker').selectpicker('refresh')
     if (response == "") {
-         $("#doctor_id_e").html("<option>--Seleccione--</option>")
+         $("#ciudad_id_up").html("<option>--Seleccione--</option>")
          $('.selectpicker').selectpicker('refresh')
     }else{
         for(i = 0; i <response.length; i++) {
-            $("#doctor_id_e").append("<option value='"+response[i].id+"'>"+response[i].apellidos+" "+response[i].nombres+"</option>")
+            $("#ciudad_id_up").append("<option value='"+response[i].id+"'>"+response[i].nombre+"</option>")
         }
-        $('#doctor_id_e').val(id_doctor)
+        $('#ciudad_id_up').val(ciudad_id)
         $('.selectpicker').selectpicker('refresh')
     }
 })
 }
+function select_region_up(ciudad_id, region_id){ //lista las especialidades del doctor en sesion 
+        $.get("get-region/"+ciudad_id+"",function(response,region){
+        $("#region_id_up").empty()
+        $('.selectpicker').selectpicker('refresh')
+        if (response == "") {
+             $("#region_id_up").html("<option>--Seleccione--</option>")
+             $('.selectpicker').selectpicker('refresh')
+        }else{
+            for(i = 0; i <response.length; i++) {
+                $("#region_id_up").append("<option value='"+response[i].id+"'>"+response[i].nombre+"</option>")
+                $('.selectpicker').selectpicker('refresh')
+            }
+            $('#region_id_up').val(speciality_id)
+            $('.selectpicker').selectpicker('refresh')
+        }
+    })
+}
 
-function getDoctorAdd(especialidad){
+/*function getDoctorAdd(especialidad){
     $.get("get-doctor/"+especialidad+"",function(response,speciality){
         $("#up_evento #doctor_id").empty()
         if (response == "") {
@@ -917,9 +934,9 @@ function getDoctorAdd(especialidad){
             $('.selectpicker').selectpicker('refresh')
         }
     })
-}
+}*/
 // si falla el select especialidades en el update cita en sesion doctor, es porque no tiene permisos "leer especialidades"
-function select_especialidad_up(doctor_id, speciality_id){ //lista las especialidades del doctor en sesion 
+/*function select_especialidad_up(doctor_id, speciality_id){ //lista las especialidades del doctor en sesion 
         $.get("get-especialidad/"+doctor_id+"",function(response,speciality){
         $("#speciality_id_e").empty()
         $('.selectpicker').selectpicker('refresh')
@@ -935,7 +952,7 @@ function select_especialidad_up(doctor_id, speciality_id){ //lista las especiali
             $('.selectpicker').selectpicker('refresh')
         }
     })
-}
+}*/
 
 function select_especialidad_add(id, speciality_id){
     if (id == "0") {

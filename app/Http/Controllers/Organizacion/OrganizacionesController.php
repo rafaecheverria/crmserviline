@@ -35,14 +35,16 @@ class OrganizacionesController extends Controller
     {
        if($request->ajax()){
             $organizacion = new Organizacion();
-            $organizacion->rut                = $request->rut_add;
-            $organizacion->nombre             = $request->nombre_add; 
-            $organizacion->email              = $request->email_add;
-            $organizacion->telefono           = $request->telefono_add;
-            $organizacion->direccion          = $request->direccion_add;
-            $organizacion->tipo               = $request->tipo_add;
-            $organizacion->giro               = $request->giro_add;
-            $organizacion->logo               = "default.jpg";
+            $organizacion->rut         = $request->rut_add;
+            $organizacion->nombre      = $request->nombre_add; 
+            $organizacion->email       = $request->email_add;
+            $organizacion->telefono    = $request->telefono_add;
+            $organizacion->direccion   = $request->direccion_add;
+            $organizacion->tipo        = $request->tipo_add;
+            $organizacion->giro        = $request->giro_add;
+            $organizacion->ciudad_id   = $request->ciudad_id_add;
+            $organizacion->region_id   = $request->region_id_add;
+            $organizacion->logo        = "default.jpg";
             $organizacion->save();
             $organizacion->users()->sync($request->contacto_id);  
             return response()->json([
@@ -54,7 +56,7 @@ class OrganizacionesController extends Controller
 
     public function show()
     {
-        $organizaciones = Organizacion::select(['id', 'rut', 'nombre', 'telefono', 'direccion']);
+        $organizaciones = Organizacion::select(['id', 'rut', 'nombre', 'telefono', 'direccion', 'email', 'giro']);
         return  datatables()->of($organizaciones)
                     ->addColumn('action', function ($organizacion) {
                         $ficha = '<a href="#" onclick="ficha_paciente('.$organizacion->id.')" data-toggle="modal" data-target="#modal_ficha" rel="tooltip" title="Ficha del paciente" class="btn btn-simple btn-primary btn-icon"><i class="material-icons">folder_shared</i></a>';
@@ -72,22 +74,23 @@ class OrganizacionesController extends Controller
          if($request->ajax()) {
         $organizacion = Organizacion::findOrFail($id);
         $contactos    = User::withRole('contacto')->orderBy('apellidos', 'DESC')->pluck('nombres', 'id');
-        $my_contactos = $organizacion->users->pluck('id')->ToArray();
-        
-        
+        $my_contactos = $organizacion->users->pluck('id')->ToArray();        
         return response()->json([
-            'success'    => true,
-            'rut'        => $organizacion->rut,
-            'id'         => $organizacion->id,
-            'nombre'     => $organizacion->nombre,
-            'email'      => $organizacion->email,
-            'telefono'   => $organizacion->telefono,
-            'giro'       => $organizacion->giro,
-            'logo'       => $organizacion->logo,
-            'contactos'      => $contactos,
-            'my_contactos'   => $my_contactos
+            'success'      => true,
+            'rut'          => $organizacion->rut,
+            'id'           => $organizacion->id,
+            'nombre'       => $organizacion->nombre,
+            'email'        => $organizacion->email,
+            'telefono'     => $organizacion->telefono,
+            'direccion'    => $organizacion->direccion,
+            'giro'         => $organizacion->giro,
+            'logo'         => $organizacion->logo,
+            'ciudad_id'    => $organizacion->ciudad_id,
+            'region_id'    => $organizacion->region_id,
+            'contactos'    => $contactos,
+            'my_contactos' => $my_contactos
         ]);
-    }
+        }
     }
 
     public function update(Request $request, $id)

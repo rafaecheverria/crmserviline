@@ -80,38 +80,6 @@ $('.timepicker').datetimepicker({
         $("#prevision_select").selectpicker()
     })
 
- /*$("#region_id_add").change(function(event){ //carga las Ciudades en el select #ciudad_id según la región elegida.
-    $("#display").hide();
-    var id = event.target.value;
-    if (!id) 
-        $("#ciudad_id_add").html("<option>--Seleccione--</option>")
-        $('.selectpicker').selectpicker('refresh') //refresca el select para que cambie su valor
-        $.get("get-ciudad/"+id+"",function(response,region){
-        $("#ciudad_id_add").empty()
-        $('.selectpicker').selectpicker('refresh') //refresca el select para que cambie su valor
-        if (response == "") {
-             $("#ciudad_id_add").html("<option>--Seleccione--</option>");
-              $('.selectpicker').selectpicker('refresh') //refresca el select para que cambie su valor
-        }else{
-             $("#ciudad_id_add").html("<option value='0'>--Seleccione--</option>");
-            for(i = 0; i <response.length; i++) {
-                $("#ciudad_id_add").append("<option value='"+response[i].id+"'>"+response[i].nombre+"</option>")
-            }
-            $('.selectpicker').selectpicker('refresh') //refresca el select para que cambie su valor
-        }
-    })
-})
-
- $("#ciudad_id_add").change(function(event){ //Muestra u oculta el formulario de registro de una organización según la opción elegida en el select ciudad.
-    $id = event.target.value;
-    if ($id > 0) {
-        $("#display").show();
-    }else{
-        $("#display").hide();
-        $('#region_id_add').prop('disabled', false);
-        
-    }
- })*/
  $("#region_id").change(function(event){ //carga las Ciudades en el select #ciudad_id según la región elegida.
     $("#display").hide();
     var id = event.target.value;
@@ -148,49 +116,7 @@ $('.timepicker').datetimepicker({
     }
  })
      
-/* 
-$("#speciality_id_e").change(function(event){ //carga los doctores en el select #doctor_id según la especialidad elegida.
-    var id = event.target.value;
-    if (!id) 
-        $("#doctor_id_e").html("<option>--Seleccione--</option>")
-        $('.selectpicker').selectpicker('refresh') //refresca el select para que cambie su valor
-        $.get("get-doctor/"+id+"",function(response,speciality){
-        $("#doctor_id_e").empty()
-        $('.selectpicker').selectpicker('refresh') //refresca el select para que cambie su valor
-        if (response == "") {
-             $("#doctor_id_e").html("<option>--Seleccione--</option>")
-              $('.selectpicker').selectpicker('refresh') //refresca el select para que cambie su valor
-        }else{
-            for(i = 0; i <response.length; i++) {
-                $("#doctor_id_e").append("<option value='"+response[i].id+"'>"+response[i].apellidos+" "+response[i].nombres+"</option>")
-            }
-            $('.selectpicker').selectpicker('refresh') //refresca el select para que cambie su valor
-        }
-    })
-})
-
-
-$("#speciality_id").change(function(event){ //carga los doctores en el select #doctor_id según la especialidad elegida.
-    var id = event.target.value;
-    if (!id) 
-        $("#doctor_id").html("<option>--Seleccione--</option>")
-        $('.selectpicker').selectpicker('refresh') //refresca el select para que cambie su valor
-        $.get("get-doctor/"+id+"",function(response,speciality){
-        $('.selectpicker').selectpicker('refresh') //refresca el select para que cambie su valor
-        $("#doctor_id").empty()
-        if (response == "") {
-             $("#doctor_id").html("<option>--Seleccione--</option>")
-              $('.selectpicker').selectpicker('refresh') //refresca el select para que cambie su valor
-        }else{
-            for(i = 0; i <response.length; i++) {
-                $("#doctor_id").append("<option value='"+response[i].id+"'>"+response[i].apellidos+" "+response[i].nombres+"</option>")
-            }
-            $('.selectpicker').selectpicker('refresh') //refresca el select para que cambie su valor
-        }
-        })
-})
-*/
-$( "#delete_cita" ).click(function(event){ //esta funcion elimina una cita oendiente desde el cale ndario.
+/*$( "#delete_cita" ).click(function(event){ //esta funcion elimina una cita oendiente desde el cale ndario.
     var id= $( '#id' ).val()
     var popup = confirm("¿ Esta seguro de eliminar esta cita ?")
     var route = "/citas/"+id+"";
@@ -250,8 +176,9 @@ $( "#guardar_cita" ).click(function(event){
                 }
             }
         })
-    })
-$( "#btn_guardar_doc" ).click(function(event){ 
+    })*/
+
+/*$( "#btn_guardar_doc" ).click(function(event){ 
         event.preventDefault();
         var dataString  = $( '#form_doc' ).serializeArray();
         var route = "/doctores";
@@ -301,6 +228,7 @@ $( "#btn_guardar_rec" ).click(function(event){
             }
         })
     })
+
 
 $( "#update_cita" ).click(function(event){ 
         event.preventDefault()
@@ -388,6 +316,7 @@ $( "#update_consulta" ).click(function(event){
             }
         }) 
     })
+    */
 $( "#update_role_user" ).click(function(event){ 
         var id= $( '#id' ).val()
         var route = "/update-roles/"+id+""
@@ -1101,10 +1030,7 @@ function organizacion_user(id, tipo)// carga datos en el modal organizacion_user
                           for(i; i < size; i++){
                         $('select option[value='+valor[i]+']').attr('selected', 'selected')
                     }
-
-                    //console.log(data.my_contactos)
                $('.selectpicker').selectpicker('refresh')
-               
               },
            error:function(){
                alert('la operación falló');
@@ -1112,6 +1038,10 @@ function organizacion_user(id, tipo)// carga datos en el modal organizacion_user
         });
     }    
 }
+$("#contacto_id").change(function(event){
+    var nombres = $('#contacto_id option:selected').text();
+    $("#show_contact").html("<a href='#'>"+nombres+"</a>");
+});
 function organizacion(id,tipo){
     event.preventDefault()
     var dataString  = $( '#form_organizacion' ).serializeArray()

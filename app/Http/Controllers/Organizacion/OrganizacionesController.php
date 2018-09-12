@@ -84,6 +84,7 @@ class OrganizacionesController extends Controller
             'direccion'    => $organizacion->direccion,
             'giro'         => $organizacion->giro,
             'logo'         => $organizacion->logo,
+            'tipo'         => $organizacion->tipo,
             'ciudad_id'    => $organizacion->ciudad_id,
             'region_id'    => $organizacion->region_id,
             'contactos'    => $contactos,
@@ -106,6 +107,7 @@ class OrganizacionesController extends Controller
             $organizacion->ciudad_id   = $request->ciudad_id;
             $organizacion->region_id   = $request->region_id;
             $organizacion->save();
+            $organizacion->users()->sync($request->contacto_id); 
             return response()->json([
              "nombre" => $organizacion->nombre,
              "message" => "La empresa ".$organizacion->nombre." ha sido actualizada exitosamente!"

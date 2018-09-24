@@ -15,7 +15,8 @@ class OrganizacionesController extends Controller
     {
          $regiones = Region::select(['id', 'nombre'])->orderBy('nombre', 'asc')->get();
          $contactos = User::select(['id', 'nombres', 'apellidos'])->withRole("contacto")->orderBy('nombres', 'asc')->get();
-        return view('organizaciones.index', compact('regiones', 'contactos'));
+         $vendedores = User::select(['id', 'nombres', 'apellidos'])->withRole("vendedor")->orderBy('nombres', 'asc')->get();
+        return view('organizaciones.index', compact('regiones', 'contactos', 'vendedores'));
     }
 
      public function getCiudad(Request $request, $id)
@@ -44,6 +45,7 @@ class OrganizacionesController extends Controller
             $organizacion->giro        = $request->giro;
             $organizacion->ciudad_id   = $request->ciudad_id;
             $organizacion->region_id   = $request->region_id;
+            $organizacion->vendedor_id = $request->vendedor_id;
             $organizacion->logo        = "default.jpg";
             $organizacion->save();
             $organizacion->users()->sync($request->contacto_id);  
@@ -87,6 +89,7 @@ class OrganizacionesController extends Controller
             'tipo'         => $organizacion->tipo,
             'ciudad_id'    => $organizacion->ciudad_id,
             'region_id'    => $organizacion->region_id,
+            'vendedor_id'  => $organizacion->vendedor_id,
             'contactos'    => $contactos,
             'my_contactos' => $my_contactos
         ]);
@@ -106,6 +109,7 @@ class OrganizacionesController extends Controller
             $organizacion->giro        = $request->giro;
             $organizacion->ciudad_id   = $request->ciudad_id;
             $organizacion->region_id   = $request->region_id;
+            $organizacion->vendedor_id = $request->vendedor_id;
             $organizacion->save();
             $organizacion->users()->sync($request->contacto_id); 
             return response()->json([

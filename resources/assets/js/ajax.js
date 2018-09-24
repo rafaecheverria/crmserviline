@@ -97,12 +97,26 @@ $('.timepicker').datetimepicker({
             for(i = 0; i <response.length; i++) {
                 $("#ciudad_id").append("<option value='"+response[i].id+"'>"+response[i].nombre+"</option>")
             }
+            $("#ciudad-show").show()
             $('.selectpicker').selectpicker('refresh') //refresca el select para que cambie su valor
         }
     })
 })
 
  $("#ciudad_id").change(function(event){ //Muestra u oculta el formulario de registro de una organización según la opción elegida en el select ciudad.
+    $id = event.target.value;
+    if ($id > 0) {
+        $("#vendedor-show").show();
+        $('#vendedor_id').val("default").selectpicker('refresh')
+        $("#rut").focus();
+    }else{
+        $("#vendedor-show").hide();
+        //$('#ciudad').prop('disabled', false);
+        $('#vendedor_id').val("default").selectpicker('refresh')
+        
+    }
+ })
+ $("#vendedor_id").change(function(event){ //Muestra u oculta el formulario de registro de una organización según la opción elegida en el select ciudad.
     $id = event.target.value;
     if ($id > 0) {
         $("#display").show();
@@ -115,6 +129,8 @@ $('.timepicker').datetimepicker({
         
     }
  })
+ 
+
      
 /*$( "#delete_cita" ).click(function(event){ //esta funcion elimina una cita oendiente desde el cale ndario.
     var id= $( '#id' ).val()
@@ -1000,6 +1016,8 @@ function organizacion_user(id, tipo)// carga datos en el modal organizacion_user
         $('.selectpicker').selectpicker('refresh')
     }else{
         $("#boton_organizacion").html("<a href='#' onclick='organizacion("+id+",2)' class='btn btn-info pull-right'>Actualizar</a>")
+        $("#vendedor-show").show();
+        $("#ciudad-show").show();
         $("#display").show(); //muestra los campos del formuario organizaciones
         var route = "/organizaciones/"+id+"/edit";
         var csrf_token = $('meta[name="csrf-token"]').attr('content');
@@ -1014,6 +1032,7 @@ function organizacion_user(id, tipo)// carga datos en el modal organizacion_user
                 $('#giro').val(data.giro)
                 $('#direccion').val(data.direccion)
                 $('#telefono').val(data.telefono)
+                $('#vendedor_id').val(data.vendedor_id)
                 $("INPUT[name=tipo]").val([data.tipo]) //carga valor de radiobutton desde mysql
                 $("#region_id").val(data.region_id)
                 var ciudad_id = $("#ciudad_id").val()
@@ -1038,10 +1057,10 @@ function organizacion_user(id, tipo)// carga datos en el modal organizacion_user
         });
     }    
 }
-$("#contacto_id").change(function(event){
-    var nombres = $('#contacto_id option:selected').text();
+/*$("#contacto_id").change(function(event){
+    var nombres = $('#contacto_id option:selected').text();  Carga el nombre del elemento seleccionado en el select contacto_id del formulario organizaciones.
     $("#show_contact").html("<a href='#'>"+nombres+"</a>");
-});
+});*/
 function organizacion(id,tipo){
     event.preventDefault()
     var dataString  = $( '#form_organizacion' ).serializeArray()
@@ -1054,7 +1073,6 @@ function organizacion(id,tipo){
         datatype: 'json',
         data:dataString,
         success:function(data){
-                console.log(data);
                  $('#organizaciones').DataTable().ajax.reload();
                  $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
                  $('#form_organizacion')[0].reset()
@@ -1250,7 +1268,6 @@ function especialidad_doctor(id) //carga modal que contiene el select multiple d
                       for(i; i < size; i++){
                     $('select option[value='+valor[i]+']').attr('selected', 'selected')
                 }
-                console.log(data.my_especialidades)
            $('.selectpicker').selectpicker('refresh')
           },
        error:function(){

@@ -15,6 +15,7 @@
                               </select>
                             </div>
                         </div>
+                        <div id="ciudad-show" style="display: none;">
                         <div class="col-md-12 sinpadding"> 
                             <div class="form-group">
                               <label class="control-label">CIUDAD</label>
@@ -23,7 +24,29 @@
                               </select>
                             </div>
                         </div>
+                        </div>
                     </div>
+                    <div id="vendedor-show" style="display: none;">
+                    <div class="row sinpadding">
+                     <div class="col-md-10 col-lg-10 col-sm-10"> 
+                            <div class="form-group">
+                              <label class="control-label">DUEÑO DEL CONTACTO</label>
+                              <!-- <div id="show_contact"></div> -->
+                              <select id="vendedor_id" name="vendedor_id" class="selectpicker show-tick" data-dropup-auto="false" data-size="5" data-live-search="true" data-style="select-with-transition">
+                                    <option value="0"> Seleccione </option>
+                                     @foreach($vendedores as $vendedor)
+                                        <option value="{{ $vendedor->id }}">{{ $vendedor->nombres }} {{$vendedor->apellidos }}</option>
+                                    @endforeach
+                              </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-lg-2 col-sm-2"> 
+                            <div id="add_contact">
+                              <a href="#" class="btn btn-rose btn-round btn-sm">+</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                     <div id="display" style="display: none;">
                     <div class="row sinpadding">
@@ -68,27 +91,11 @@
                             </div>
                         </div>
                     </div>
-                    <!--
                     <div class="row sinpadding">
                      <div class="col-md-10 col-lg-10 col-sm-10"> 
                             <div class="form-group">
                               <label class="control-label">CONTACTO DIRECTO CON LA EMPRESA</label>
-                              <div id="show_contact"></div>
-                             <input type="text" id="contact_id" class="tagsinput" data-role="tagsinput" data-color="rose"/>
-                            </div>
-                        </div>
-                        <div class="col-md-2 col-lg-2 col-sm-2"> 
-                            <div id="add_contact">
-                              <a href="#" class="btn btn-rose btn-round btn-sm">+</a>
-                            </div>
-                        </div>
-                    </div>
-                    -->
-                    <div class="row sinpadding">
-                     <div class="col-md-10 col-lg-10 col-sm-10"> 
-                            <div class="form-group">
-                              <label class="control-label">CONTACTO DIRECTO CON LA EMPRESA</label>
-                              <div id="show_contact"></div>
+                              <!-- <div id="show_contact"></div> -->
                               <select id="contacto_id" name="contacto_id[]" multiple="multiple" class="selectpicker show-tick" data-dropup-auto="false" data-size="5" data-live-search="true" data-style="select-with-transition">
                                      @foreach($contactos as $contacto)
                                         <option value="{{ $contacto->id }}">{{ $contacto->nombres }} {{$contacto->apellidos }}</option>
@@ -107,28 +114,28 @@
                             <div class="col-sm-3">
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="tipo" value="micro">MICRO
+                                            <input type="radio" name="tipo" value="micro">Micro
                                         </label>
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="tipo" value="peuqena">PEQUEÑA
+                                            <input type="radio" name="tipo" value="peuqena">Pequeña
                                         </label>
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="tipo" value="mediana">MEDIANA
+                                            <input type="radio" name="tipo" value="mediana">Mediana
                                         </label>
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="tipo" value="grande">GRANDE
+                                            <input type="radio" name="tipo" value="grande">Grande
                                         </label>
                                     </div>
                                 </div>

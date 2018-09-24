@@ -15,7 +15,7 @@
                         <table id="top-button-add">
                             <tr>
                                 <td><h4 class="card-title"><small>LISTA DE CONTACTOS</small></h4></td>         
-                                <td class="pull-right"><a href="#" data-toggle="modal" data-target="#modal_agregar_paciente" rel="tooltip" title="Agregar paciente" class="btn btn-info btn-round btn-fab btn-fab-mini">
+                                <td class="pull-right"><a href="#" data-toggle="modal" data-target="#modal_agregar_contacto" rel="tooltip" title="Agregar paciente" class="btn btn-info btn-round btn-fab btn-fab-mini">
                                         <i class="material-icons">add</i>
                                     </a>
                                 </td>
@@ -34,7 +34,6 @@
     </div>
 </div>
 @include('contactos.modal_ficha')
-@include('contactos.modal_editar')
-@include('contactos.modal_agregar')
 @include('contactos.modal_expediente')
+@include('contactos.modal')
 @endsection

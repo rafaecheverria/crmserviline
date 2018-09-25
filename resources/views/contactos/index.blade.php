@@ -36,4 +36,5 @@
 @include('contactos.modal_ficha')
 @include('contactos.modal_expediente')
 @include('contactos.modal')
+@include('../cargos.modal')
 @endsection

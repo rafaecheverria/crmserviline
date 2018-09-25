@@ -24763,8 +24763,8 @@ function roles_user(id)// carga datos en el modal roles_user del módulo de pers
           }
     });
 }
-
-// inicia gestión de organizacion
+//----------------------------------------------------------------------------------------
+// inicia crud organización
 function organizacion_user(id, tipo)// carga datos en el modal organizacion_user del módulo de organizacion, si el tipo es 2 es porque el llamado es editar sio es 1 es agregar.
 {
     $("#modal_organizacion").modal('show')
@@ -24875,7 +24875,58 @@ function organizacion(id,tipo){
 
     }
 }
-//finaliza gestion de organización
+//finaliza crud organización.
+
+//---------------------------------------------------------------------------------------------------
+
+//Inicia crud cargo
+function mostrar_cargo(id, tipo){
+    $("#modal_agregar_cargo").modal('show')
+    $("#boton_cargo").html("<a href='#' onclick='cargo(0,1)' class='btn btn-info pull-right'>Agregar</a>")
+}
+
+
+function cargo(id, tipo)// carga datos en el modal roles_user del módulo de personas.
+{
+   event.preventDefault();  
+   var dataString  = $( '#form_cargo' ).serializeArray()
+    if (tipo == 1) {
+    var route = "cargos"
+     $.ajax({
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        url: route,
+        type: 'POST',
+        datatype: 'json',
+        data:dataString,
+        success:function(data){
+            //var select = document.getElementById('cargo_id')
+           // selected_option(data.cargos, data.my_cargo, select)
+           $("#cargo_id").empty()
+           for (i=0 ; i>data.cargos.length; i++) {
+               $("#cargo_id").append("<option value='"+data.cargos[i].id+"'>"+data.cargos[i].nombre+"</option>")
+           }
+            $('.selectpicker').selectpicker('refresh')
+            console.log(data.cargos)
+            $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
+            $('#form_cargo')[0].reset()
+            $("#modal_agregar_cargo").modal('hide') 
+        },
+        error:function(data){
+            var error = data.responseJSON.errors;
+            for(var i in error){
+                for(var j in error[i]){
+                    var message = error[i][j];
+                   $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000})
+                }
+            }
+        }
+
+    })
+    }else{
+        //codigo para editar
+    }
+}
+//Finaliza crud cargo
 
 function carga_usuario(id)//carga datos del doctor y recepcionista en el modal editar.
 {

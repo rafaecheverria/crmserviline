@@ -15,7 +15,7 @@ class User extends Authenticatable
     protected $table = "users";
 
     protected $fillable = [
-        'id', 'nombres', 'apellidos', 'email', 'password', 'rut', 'telefono', 'direccion', 'nacimiento', 'titulo', 'estudios_complementarios', 'posicion', 'fecha_admision', 'descripcion', 'actividad', 'avatar', 'sangre', 'vih', 'peso', 'altura', 'alergia', 'medicamento_actual', 'enfermedad'
+        'id', 'nombres', 'apellidos', 'email', 'password', 'rut', 'telefono', 'direccion', 'nacimiento', 'titulo', 'estudios_complementarios', 'posicion', 'fecha_admision', 'descripcion', 'actividad', 'avatar', 'sangre', 'vih', 'peso', 'altura', 'alergia', 'medicamento_actual', 'enfermedad', 'cargo_id'
     ];
 
      protected $appends = ['years'];
@@ -43,6 +43,10 @@ class User extends Authenticatable
     public function roles()
     {
         return $this->belongsToMany('App\Role');
+    }
+    public function cargos()
+    {
+        return $this->hasOne('App\Cargo');
     }
     public function specialities()
     {

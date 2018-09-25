@@ -105,7 +105,7 @@
                         </div>
                         <div class="col-md-2 col-lg-2 col-sm-2"> 
                             <div id="add_contact">
-                              <a href="#" class="btn btn-rose btn-round btn-sm">+</a>
+                              <a href="#" data-toggle="modal" data-target="#modal_agregar_contacto" class="btn btn-rose btn-round btn-sm">+</a>
                             </div>
                         </div>
                     </div>

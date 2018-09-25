@@ -7,6 +7,7 @@ use App\Speciality;
 use App\Unity;
 use App\Region;
 use App\Ciudad;
+use App\Cargo;
 
 class DatabaseSeeder extends Seeder
 {
@@ -23,6 +24,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PermissionsTableSeeder::class);
         $this->call(RegionesTableSeeder::class);
         $this->call(CiudadesTableSeeder::class);
+        $this->call(CargosTableSeeder::class);
 
         DB::table('speciality_user')->insert(array(
             array('user_id' => 852, 'speciality_id' => 1),

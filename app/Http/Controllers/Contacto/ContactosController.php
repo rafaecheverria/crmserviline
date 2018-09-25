@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Contacto;
 use App\User;
 use App\Role;
 use App\Query;
+use App\Cargo;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ValidatePacienteRequest;
@@ -16,7 +17,8 @@ class ContactosController extends Controller
 {
     public function index()
     {
-        return view('contactos.index');
+        $cargos = Cargo::select(['id', 'nombre'])->orderBy('nombre', 'asc')->get();
+        return view('contactos.index', compact('cargos'));
     }
 
     public function store(ValidateAddPacienteRequest $request)

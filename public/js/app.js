@@ -23810,7 +23810,7 @@ $('.timepicker').datetimepicker({
         $("#btn-guardar").html('<a href="#" onclick="guardar_especialidad();" class="btn btn-fill btn-success">Guardar</a>')
     })
 
-    $("#fonasa").click(function(event){
+    /*$("#fonasa").click(function(event){
         var html = "";
         html+="<select id='prevision_select' data-style='select-with-transition'>";
         html+="<option>FONASA A</option>";
@@ -23839,7 +23839,7 @@ $('.timepicker').datetimepicker({
         html+= "</select>";
         $("#prevision").html(html)
         $("#prevision_select").selectpicker()
-    })
+    })*/
 
  $("#region_id").change(function(event){ //carga las Ciudades en el select #ciudad_id según la región elegida.
     $("#display").hide();
@@ -24763,6 +24763,7 @@ function roles_user(id)// carga datos en el modal roles_user del módulo de pers
           }
     });
 }
+
 //----------------------------------------------------------------------------------------
 // inicia crud organización
 function organizacion_user(id, tipo)// carga datos en el modal organizacion_user del módulo de organizacion, si el tipo es 2 es porque el llamado es editar sio es 1 es agregar.
@@ -24818,10 +24819,6 @@ function organizacion_user(id, tipo)// carga datos en el modal organizacion_user
         });
     }    
 }
-/*$("#contacto_id").change(function(event){
-    var nombres = $('#contacto_id option:selected').text();  Carga el nombre del elemento seleccionado en el select contacto_id del formulario organizaciones.
-    $("#show_contact").html("<a href='#'>"+nombres+"</a>");
-});*/
 function organizacion(id,tipo){
     event.preventDefault()
     var dataString  = $( '#form_organizacion' ).serializeArray()
@@ -24877,16 +24874,15 @@ function organizacion(id,tipo){
 }
 //finaliza crud organización.
 
-//---------------------------------------------------------------------------------------------------
+//------------------------------
 
 //Inicia crud cargo
+
 function mostrar_cargo(id, tipo){
     $("#modal_agregar_cargo").modal('show')
     $("#boton_cargo").html("<a href='#' onclick='cargo(0,1)' class='btn btn-info pull-right'>Agregar</a>")
 }
-
-
-function cargo(id, tipo)// carga datos en el modal roles_user del módulo de personas.
+function cargo(id, tipo)//Inserta un cargo en el select cargo_id del modal agregar contacto.
 {
    event.preventDefault();  
    var dataString  = $( '#form_cargo' ).serializeArray()
@@ -24899,17 +24895,15 @@ function cargo(id, tipo)// carga datos en el modal roles_user del módulo de per
         datatype: 'json',
         data:dataString,
         success:function(data){
-            //var select = document.getElementById('cargo_id')
-           // selected_option(data.cargos, data.my_cargo, select)
-           $("#cargo_id").empty()
-           for (i=0 ; i>data.cargos.length; i++) {
-               $("#cargo_id").append("<option value='"+data.cargos[i].id+"'>"+data.cargos[i].nombre+"</option>")
+           $("#cargo_id").empty() //Limpia el select "cargo_id"del modal "agregar contacto"
+           for (i=0;i<data.cargos.length;i++) { //llena el select del modal "agregar contacto" con el cargo nuego agregado recientemente.
+            $("#cargo_id").append("<option value='"+data.cargos[i].id+"'>"+data.cargos[i].nombre+"</option>")
+            $('#cargo_id option[value='+data.my_cargo+']').attr('selected', 'selected')// Selecciona el cargo insertado recientemente
            }
-            $('.selectpicker').selectpicker('refresh')
-            console.log(data.cargos)
-            $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
-            $('#form_cargo')[0].reset()
-            $("#modal_agregar_cargo").modal('hide') 
+           $('.selectpicker').selectpicker('refresh')
+           $("#modal_agregar_cargo").modal('hide')
+           $('#form_cargo')[0].reset()
+           $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
         },
         error:function(data){
             var error = data.responseJSON.errors;
@@ -24927,6 +24921,70 @@ function cargo(id, tipo)// carga datos en el modal roles_user del módulo de per
     }
 }
 //Finaliza crud cargo
+
+//----------------------
+ 
+//Inicia crud contacto
+
+function contacto(id,tipo){
+    event.preventDefault()
+    var dataString  = $( '#form_contacto' ).serializeArray()
+    if (tipo == 1) {
+    var route = "organizaciones"
+    $.ajax({
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        url: route,
+        type: 'POST',
+        datatype: 'json',
+        data:dataString,
+        success:function(data){
+                 $('#organizaciones').DataTable().ajax.reload();
+                 $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
+                 $('#form_organizacion')[0].reset()
+                 $('#modal_organizacion').modal('toggle')        
+        },
+        error:function(data){
+            var error = data.responseJSON.errors;
+            for(var i in error){
+                for(var j in error[i]){
+                    var message = error[i][j];
+                   $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000})
+                }
+            }
+        }
+    })
+    }else{
+        var route = "/organizaciones/"+id+""
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            url: route,
+            type: 'PUT',
+            datatype: 'json',
+            data:dataString,
+            success:function(data){
+                $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
+                $('#organizaciones').DataTable().ajax.reload();
+                $('#modal_organizacion').modal('toggle')
+            },
+            error:function(data){
+                var error = data.responseJSON.errors;
+                for(var i in error){
+                    for(var j in error[i]){
+                        var message = error[i][j];
+                       $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000})
+                    }
+                }
+            }
+        }) 
+
+    }
+}
+
+
+
+
+
+//Finaliza crud contacto
 
 function carga_usuario(id)//carga datos del doctor y recepcionista en el modal editar.
 {

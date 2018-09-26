@@ -1,9 +1,8 @@
 <div class="col-md-12">
     <div class="row">
         <div class="col-md-12">
-                <form class="form" id="form_organizacion">
+                <form class="form" id="form_contacto">
                     <input type="text" name="id" id="id" hidden="true"> 
-
                     <div class="row sinpadding">
                         <div class="col-md-6">
                             <div class="form-group label-floating">

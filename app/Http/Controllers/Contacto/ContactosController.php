@@ -8,8 +8,6 @@ use App\Query;
 use App\Cargo;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\ValidatePacienteRequest;
-use App\Http\Requests\ValidateAddPacienteRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -21,26 +19,20 @@ class ContactosController extends Controller
         return view('contactos.index', compact('cargos'));
     }
 
-    public function store(ValidateAddPacienteRequest $request)
+    public function store(Request $request)
     {
         if($request->ajax()){
             $contacto = new User();
-            $contacto->rut                = $request->rut_add;
-            $contacto->nombres            = $request->nombres_add;
-            $contacto->apellidos          = $request->apellidos_add;
-            $contacto->nacimiento         = Carbon::parse($request->nacimiento_add)->format('Y-m-d');
-            $contacto->email              = $request->email_add;
-            $contacto->telefono           = $request->telefono_add;
-            $contacto->direccion          = $request->direccion_add;
-            $contacto->genero             = $request->genero_add;
-            $contacto->sangre             = $request->sangre_add;
-            $contacto->vih                = $request->vih_add;
-            $contacto->peso               = $request->peso_add;
-            $contacto->altura             = $request->altura_add;
-            $contacto->alergia            = $request->alergia_add;
-            $contacto->medicamento_actual = $request->medicamento_add;
-            $contacto->enfermedad         = $request->enfermedad_add;
-            $contacto->avatar             = "default.jpg";
+            $contacto->rut            = $request->rut;
+            $contacto->nombres        = $request->nombres;
+            $contacto->apellidos      = $request->apellidos;
+            //$contacto->nacimiento   = Carbon::parse($request->nacimiento_add)->format('Y-m-d');
+            $contacto->email          = $request->email;
+            $contacto->telefono       = $request->telefono;
+            $contacto->direccion      = $request->direccion;
+            $contacto->genero         = $request->genero;
+            $contacto->cargo_id       = $request->cargo_id;
+            $contacto->avatar         = "default.jpg";
             $contacto->save();
             $contacto->attachRole(4); //4 es el numero id del rol paciente
             return response()->json([
@@ -92,7 +84,7 @@ class ContactosController extends Controller
         ]);
     }
 
-     public function update(ValidatePacienteRequest $request, $id)
+     public function update(Request $request, $id)
     {
         if($request->ajax()){
             $user = User::findOrFail($id);

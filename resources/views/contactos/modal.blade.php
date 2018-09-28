@@ -10,7 +10,8 @@
                 @include('contactos.formulario')
             </div>
             <div class="modal-footer text-center">
-                <a href="#" id="add_paciente" class="btn btn-info pull-right">Agregar</a>
+                <div id="boton_contacto"></div>
+                <!-- <a href="#" id="add_paciente" class="btn btn-info pull-right">Agregar</a> -->
             </div>
         </div>
     </div>

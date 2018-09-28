@@ -464,7 +464,7 @@ $( "#update_editar_permiso" ).click(function(event){ //actualiza los datos del m
         })
     })
 $( "#update_editar_paciente" ).click(function(event){ 
-        event.preventDefault()
+        //event.preventDefault()
         var id= $( '#id_paciente' ).val()
         var route = "/pacientes/"+id+""
         var dataString  = $( '#form_editar_paciente' ).serializeArray()
@@ -551,7 +551,7 @@ $( "#actualizar_usuario" ).click(function(event){  //actualiza los datos del doc
     })
 
 	$( "#update_clave" ).click(function(event){ 
-		event.preventDefault()
+		//event.preventDefault()
         var id= $( '#id_user_clave' ).val()
         var route = "/put-clave/"+id+""
 		var dataString  = $( '#form_clave' ).serializeArray();
@@ -578,7 +578,7 @@ $( "#actualizar_usuario" ).click(function(event){  //actualiza los datos del doc
 		})
 	})
     $( "#update_miclave" ).click(function(event){ 
-        event.preventDefault()
+       // event.preventDefault()
         var id= $( '#mi_pass' ).val()
         var route = "/put-clave/"+id+""
         var dataString  = $( '#form_mi_clave' ).serializeArray();
@@ -715,7 +715,7 @@ $( "#add_paciente" ).click(function(event){
     })*/
 
 $( "#ingresar" ).click(function(event){ 
-        event.preventDefault();
+        //event.preventDefault();
         var dataString  = $( '#form_login' ).serializeArray();
         var route = "login";
         $.ajax({
@@ -971,7 +971,7 @@ function select_especialidad_add(id, speciality_id){
 }
 function roles_user(id)// carga datos en el modal roles_user del módulo de personas.
 {
-   event.preventDefault();
+  // event.preventDefault();
    var route = "/personas/"+id+"/edit";
    var csrf_token = $('meta[name="csrf-token"]').attr('content');
     $.ajax({
@@ -1008,7 +1008,7 @@ function roles_user(id)// carga datos en el modal roles_user del módulo de pers
 function organizacion_user(id, tipo)// carga datos en el modal organizacion_user del módulo de organizacion, si el tipo es 2 es porque el llamado es editar sio es 1 es agregar.
 {
     $("#modal_organizacion").modal('show')
-    event.preventDefault();
+    //event.preventDefault();
     if (tipo == 1) {
         $("#boton_organizacion").html("<a href='#' onclick='organizacion(0,1)' class='btn btn-info pull-right'>Agregar</a>")
         $("#display").hide();
@@ -1059,7 +1059,7 @@ function organizacion_user(id, tipo)// carga datos en el modal organizacion_user
     }    
 }
 function organizacion(id,tipo){
-    event.preventDefault()
+    //event.preventDefault()
     var dataString  = $( '#form_organizacion' ).serializeArray()
     if (tipo == 1) {
     var route = "organizaciones"
@@ -1113,6 +1113,8 @@ function organizacion(id,tipo){
 }
 //finaliza crud organización.
 
+
+
 //------------------------------
 
 //Inicia crud cargo
@@ -1123,7 +1125,7 @@ function mostrar_cargo(id, tipo){
 }
 function cargo(id, tipo)//Inserta un cargo en el select cargo_id del modal agregar contacto.
 {
-   event.preventDefault();  
+   //event.preventDefault();  
    var dataString  = $( '#form_cargo' ).serializeArray()
     if (tipo == 1) {
     var route = "cargos"
@@ -1165,11 +1167,18 @@ function cargo(id, tipo)//Inserta un cargo en el select cargo_id del modal agreg
  
 //Inicia crud contacto
 
+function mostrar_contacto(id){ //estamos aqui
+    $("#modal_contacto").modal('show')
+    $("#boton_contacto").html("<a href='#' onclick='cargo(0,1)' class='btn btn-info pull-right'>Agregar</a>")
+    
+}
+
 function contacto(id,tipo){
-    event.preventDefault()
+    //event.preventDefault()
     var dataString  = $( '#form_contacto' ).serializeArray()
+    console.log(dataString)
     if (tipo == 1) {
-    var route = "organizaciones"
+    var route = "contactos" 
     $.ajax({
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         url: route,
@@ -1177,6 +1186,7 @@ function contacto(id,tipo){
         datatype: 'json',
         data:dataString,
         success:function(data){
+
                  $('#organizaciones').DataTable().ajax.reload();
                  $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
                  $('#form_organizacion')[0].reset()

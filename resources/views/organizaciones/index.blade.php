@@ -30,4 +30,6 @@
     </div>
 </div>
 @include('organizaciones.modal')
+@include('../contactos.modal')
+@include('../cargos.modal')
 @endsection

@@ -6,6 +6,7 @@ use App\Organizacion;
 use App\Region;
 use App\Ciudad;
 use App\User;
+use App\Cargo;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -13,10 +14,11 @@ class OrganizacionesController extends Controller
 {
     public function index()
     {
-         $regiones = Region::select(['id', 'nombre'])->orderBy('nombre', 'asc')->get();
-         $contactos = User::select(['id', 'nombres', 'apellidos'])->withRole("contacto")->orderBy('nombres', 'asc')->get();
-         $vendedores = User::select(['id', 'nombres', 'apellidos'])->withRole("vendedor")->orderBy('nombres', 'asc')->get();
-        return view('organizaciones.index', compact('regiones', 'contactos', 'vendedores'));
+        $regiones = Region::select(['id', 'nombre'])->orderBy('nombre', 'asc')->get();
+        $contactos = User::select(['id', 'nombres', 'apellidos'])->withRole("contacto")->orderBy('nombres', 'asc')->get();
+        $vendedores = User::select(['id', 'nombres', 'apellidos'])->withRole("vendedor")->orderBy('nombres', 'asc')->get();
+        $cargos = Cargo::select(['id', 'nombre'])->orderBy('nombre', 'asc')->get();
+        return view('organizaciones.index', compact('regiones', 'contactos', 'vendedores', 'cargos'));
     }
 
      public function getCiudad(Request $request, $id)

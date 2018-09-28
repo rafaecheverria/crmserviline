@@ -2,18 +2,18 @@
     <div class="row">
         <div class="col-md-12">
                 <form class="form" id="form_contacto">
-                    <input type="text" name="id" id="id" hidden="true"> 
+                    <input type="text" name="id" id="id_user" hidden="true"> 
                     <div class="row sinpadding">
                         <div class="col-md-6">
                             <div class="form-group label-floating">
                                 <label class="control-label">Rut:</label>
-                                <input type="text" class="form-control" id="rut" name="rut">
+                                <input type="text" class="form-control" id="rut_user" name="rut">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group label-floating">
                                 <label class="control-label">Nombres:</label>
-                                <input type="text" class="form-control" id="nombres" name="nombres" >
+                                <input type="text" class="form-control" id="nombres_user" name="nombres" >
                             </div>
                         </div>
                     </div>
@@ -21,13 +21,13 @@
                         <div class="col-md-6">
                             <div class="form-group label-floating">
                                 <label class="control-label">Apellidos:</label>
-                                <input type="text" class="form-control" id="apellidos" name="apellidos">
+                                <input type="text" class="form-control" id="apellidos_user" name="apellidos">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group label-floating">
                                 <label class="control-label">Email:</label>
-                                <input type="email" class="form-control" id="email" name="email" >
+                                <input type="email" class="form-control" id="email_user" name="email" >
                             </div>
                         </div>
                     </div>
@@ -36,19 +36,19 @@
                         <div class="col-md-6">
                             <div class="form-group label-floating">
                                 <label class="control-label">Dirección:</label>
-                                <input type="text" class="form-control" id="direccion" name="direccion" >
+                                <input type="text" class="form-control" id="direccion_user" name="direccion" >
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group label-floating">
                                 <label class="control-label">Teléfono:</label>
-                                <input type="text" class="form-control" id="telefono" name="telefono" >
+                                <input type="text" class="form-control" id="telefono_user" name="telefono" >
                             </div>
                         </div>
                     </div>
                     <br>
-            <div class="row sinpadding">
-                     <div class="col-md-10 col-lg-10 col-sm-10"> 
+                    <div class="row sinpadding">
+                        <div class="col-md-10 col-lg-10 col-sm-10"> 
                             <div class="form-group">
                               <label class="control-label">Cargo</label>
                               <!-- <div id="show_contact"></div> -->
@@ -63,6 +63,23 @@
                         <div class="col-md-2 col-lg-2 col-sm-2"> 
                             <div id="add_contact">
                               <a href="#" onclick="mostrar_cargo(0,1)" class="btn btn-rose btn-round btn-sm">+</a>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                    <div class="col-sm-6">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="genero_add" value="masculino">MASCULINO
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="genero_add" value="femenino">FEMENINO
+                                </label>
                             </div>
                         </div>
                     </div>

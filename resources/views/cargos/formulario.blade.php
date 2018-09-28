@@ -6,7 +6,7 @@
                 <div class="col-md-12">
                     <div class="form-group label-floating">
                         <label class="control-label">Esciba el nombre del cargo:</label>
-                        <input type="text" class="form-control" id="nombre" name="nombre" >
+                        <input type="text" class="form-control" id="nombre_cargo" name="nombre" >
                     </div>
                 </div>
             </form>

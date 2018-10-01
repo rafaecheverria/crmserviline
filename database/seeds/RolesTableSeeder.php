@@ -11,18 +11,6 @@ class RolesTableSeeder extends Seeder
 	        'display_name' => 'Adminsitrador',
         ]);
         factory(App\Role::class)->create([
-	        'name' 		   => 'doctor',
-	        'display_name' => 'Doctor',
-        ]);
-        factory(App\Role::class)->create([
-	        'name'		   => 'recepcionista',
-	        'display_name' => 'Recepcionista',
-        ]);
-        factory(App\Role::class)->create([
-	        'name'		   => 'paciente',
-	        'display_name' => 'Paciente',
-        ]);
-        factory(App\Role::class)->create([
             'name'         => 'vendedor',
             'display_name' => 'Vendedor',
         ]);

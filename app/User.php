@@ -18,11 +18,11 @@ class User extends Authenticatable
         'id', 'nombres', 'apellidos', 'email', 'password', 'rut', 'telefono', 'direccion', 'nacimiento', 'titulo', 'estudios_complementarios', 'posicion', 'fecha_admision', 'descripcion', 'actividad', 'avatar', 'sangre', 'vih', 'peso', 'altura', 'alergia', 'medicamento_actual', 'enfermedad', 'cargo_id'
     ];
 
-     protected $appends = ['years', 'full_name' ];
+    protected $appends = ['years' ];
 
-     public function getFullNameAttribute()
+    public function getFullNameAttribute($value)
     {
-        return "{$this->nombres} {$this->apellidos}";
+       return ucfirst($this->nombres) . ' ' . ucfirst($this->apellidos);
     }
      /*
     public function getNacimientoAttribute($value)

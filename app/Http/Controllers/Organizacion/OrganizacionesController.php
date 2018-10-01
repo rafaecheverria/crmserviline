@@ -76,7 +76,7 @@ class OrganizacionesController extends Controller
     {
          if($request->ajax()) {
         $organizacion = Organizacion::findOrFail($id);
-        $contactos    = User::withRole('contacto')->orderBy('apellidos', 'desc')->pluck('full_name', 'id');
+        $contactos    = User::withRole('contacto')->orderBy('apellidos', 'asc')->get()->pluck('full_name', 'id');
         $my_contactos = $organizacion->users->pluck('id')->ToArray();        
         return response()->json([
             'success'      => true,

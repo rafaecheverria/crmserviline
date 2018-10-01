@@ -33,14 +33,22 @@ class ContactosController extends Controller
             $contacto->cargo_id  = $request->cargo_id;
             $contacto->avatar    = "default.jpg";
             $contacto->save();
-            $contacto->attachRole(6); //4 es el numero id del rol contacto
-            $contactos = User::select(['id', 'nombres', 'apellidos'])->withRole("contacto")->orderBy('apellidos', 'asc')->get();
+                if ($request->origen === "vendedor") {
+                    $contacto->attachRole(2); //3 es el numero id del rol vendedor
+                    $contactos = User::select(['id', 'nombres', 'apellidos'])->withRole("contacto")->orderBy('apellidos', 'asc')->get();
+                    $origen = "vendedor";
+                }else{
+                    $contacto->attachRole(3); //2 es el numero id del rol contacto
+                    $contactos = User::select(['id', 'nombres', 'apellidos'])->withRole("contacto")->orderBy('apellidos', 'asc')->get();
+                    $origen = "contacto_empresa";
+                }
             $my_contacto = $contacto->id;
             return response()->json([
                 "message"     => "El contacto ".$contacto->nombres." ".$contacto->apellidos." ha se agregó exitosamente",
                 "contactos"   => $contactos,
-                "my_contacto" => $my_contacto
-                ]); 
+                "my_contacto" => $my_contacto,
+                "origen"      => $origen
+                ]);
         }
     }
 

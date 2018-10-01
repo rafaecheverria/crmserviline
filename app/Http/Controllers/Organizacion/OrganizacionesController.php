@@ -15,7 +15,7 @@ class OrganizacionesController extends Controller
     public function index()
     {
         $regiones = Region::select(['id', 'nombre'])->orderBy('nombre', 'asc')->get();
-        $contactos = User::select(['id', 'nombres', 'apellidos'])->withRole("contacto")->orderBy('nombres', 'asc')->get();
+        $contactos = User::select(['id', 'nombres', 'apellidos'])->withRole("contacto")->orderBy('apellidos', 'asc')->get();
         $vendedores = User::select(['id', 'nombres', 'apellidos'])->withRole("vendedor")->orderBy('nombres', 'asc')->get();
         $cargos = Cargo::select(['id', 'nombre'])->orderBy('nombre', 'asc')->get();
         return view('organizaciones.index', compact('regiones', 'contactos', 'vendedores', 'cargos'));
@@ -76,7 +76,7 @@ class OrganizacionesController extends Controller
     {
          if($request->ajax()) {
         $organizacion = Organizacion::findOrFail($id);
-        $contactos    = User::withRole('contacto')->orderBy('apellidos', 'DESC')->pluck('nombres', 'id');
+        $contactos    = User::withRole('contacto')->orderBy('apellidos', 'desc')->pluck('full_name', 'id');
         $my_contactos = $organizacion->users->pluck('id')->ToArray();        
         return response()->json([
             'success'      => true,

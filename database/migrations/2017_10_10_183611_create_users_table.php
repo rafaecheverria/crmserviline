@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
             $table->string('apellidos');
             $table->string('telefono');
             $table->string('direccion');
-            $table->date('nacimiento');
+            $table->date('nacimiento')->nullable();
             $table->string('actividad')->nullable();
             $table->string('fecha_admision')->nullable();
             $table->string('diagnostico')->nullable();

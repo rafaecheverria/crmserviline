@@ -345,6 +345,7 @@ $( "#update_role_user" ).click(function(event){
 
             success:function(data){
                 $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
+                $('#personas').DataTable().ajax.reload();
                 $('#roleModal').modal('toggle');
             },
             error:function(data){
@@ -1118,7 +1119,6 @@ function organizacion(id,tipo){
 //------------------------------
 
 //Inicia crud cargo
-
 function mostrar_cargo(id, tipo){
     $("#modal_agregar_cargo").modal('show')
     $("#boton_cargo").html("<a href='#' onclick='cargo(0,1)' class='btn btn-info pull-right'>Agregar</a>")
@@ -1167,17 +1167,27 @@ function cargo(id, tipo)//Inserta un cargo en el select cargo_id del modal agreg
  
 //Inicia crud contacto
 
-function mostrar_contacto(id){ //estamos aqui
+function mostrar_contacto(id,origen){ //estamos aqui
     $("#modal_contacto").modal('show')
-    $("#boton_contacto").html("<a href='#' onclick='cargo(0,1)' class='btn btn-info pull-right'>Agregar</a>")
+    if (origen == 1) {
+        //muestrea el formulario de vendedor.
+        $(".title-contacto").html("Agregar Vendedor")
+        $("#show-cargo").hide();
+        $("#boton_contacto").html("<a href='#' onclick='contacto(0,1)' class='btn btn-info pull-right'>Agregar Vendedor</a>")
+    }else{
+        $(".title-contacto").html("Agregar Contacto")
+        $("#show-cargo").show();
+        //muestra el formulario de contacto de la empresa.
+        $("#boton_contacto").html("<a href='#' onclick='contacto(0,1)' class='btn btn-info pull-right'>Agregar Contacto</a>")
+    }
+    
     
 }
 
 function contacto(id,tipo){
     //event.preventDefault()
     var dataString  = $( '#form_contacto' ).serializeArray()
-    console.log(dataString)
-    if (tipo == 1) {
+   if (tipo == 1) {
     var route = "contactos" 
     $.ajax({
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -1186,11 +1196,14 @@ function contacto(id,tipo){
         datatype: 'json',
         data:dataString,
         success:function(data){
-
-                 $('#organizaciones').DataTable().ajax.reload();
-                 $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
-                 $('#form_organizacion')[0].reset()
-                 $('#modal_organizacion').modal('toggle')        
+            for (i=0;i<data.contactos.length;i++) { //llena el select del modal "agregar contacto" con el cargo nuego agregado recientemente.
+            $("#contacto_id").append("<option value='"+data.contactos[i].id+"'>"+data.contactos[i].nombres+" "+data.contactos[i].apellidos+"</option>")
+            $('#contacto_id option[value='+data.my_contacto+']').attr('selected', 'selected')// Selecciona el cargo insertado recientemente
+           }
+             $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
+             $('#form_contacto')[0].reset()
+             $('#modal_contacto').modal('hide')
+             $("#contacto_id").selectpicker("refresh")      
         },
         error:function(data){
             var error = data.responseJSON.errors;
@@ -1225,7 +1238,6 @@ function contacto(id,tipo){
                 }
             }
         }) 
-
     }
 }
 

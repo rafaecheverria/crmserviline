@@ -23,27 +23,30 @@ class ContactosController extends Controller
     {
         if($request->ajax()){
             $contacto = new User();
-            $contacto->rut            = $request->rut_user;
-            $contacto->nombres        = $request->nombres_user;
-            $contacto->apellidos      = $request->apellidos_user;
-            //$contacto->nacimiento   = Carbon::parse($request->nacimiento_add)->format('Y-m-d');
-            $contacto->email          = $request->email_user;
-            $contacto->telefono       = $request->telefono_user;
-            $contacto->direccion      = $request->direccion_user;
-            $contacto->genero         = $request->genero;
-            $contacto->cargo_id       = $request->cargo_id;
-            $contacto->avatar         = "default.jpg";
+            $contacto->rut       = $request->rut_user;
+            $contacto->nombres   = $request->nombres_user;
+            $contacto->apellidos = $request->apellidos_user;
+            $contacto->email     = $request->email_user;
+            $contacto->telefono  = $request->telefono_user;
+            $contacto->direccion = $request->direccion_user;
+            $contacto->genero    = $request->genero;
+            $contacto->cargo_id  = $request->cargo_id;
+            $contacto->avatar    = "default.jpg";
             $contacto->save();
-            $contacto->attachRole(6); //4 es el numero id del rol paciente
+            $contacto->attachRole(6); //4 es el numero id del rol contacto
+            $contactos = User::select(['id', 'nombres', 'apellidos'])->withRole("contacto")->orderBy('apellidos', 'asc')->get();
+            $my_contacto = $contacto->id;
             return response()->json([
-                "message" => "El paciente ".$paciente->nombres." ".$paciente->apellidos." ha sido guardado exitosamente !"
+                "message"     => "El contacto ".$contacto->nombres." ".$contacto->apellidos." ha se agregó exitosamente",
+                "contactos"   => $contactos,
+                "my_contacto" => $my_contacto
                 ]); 
         }
     }
 
     public function show()
     {
-        $users = User::select(['id', 'rut', 'nombres', 'apellidos', 'telefono', 'nacimiento'])->withRole('cliente');
+        $users = User::select(['id', 'rut', 'nombres', 'apellidos', 'telefono', 'nacimiento'])->withRole('contacto');
         return  datatables()->of($users)
                 ->editColumn('nacimiento', function ($user) {
                  return $user->getYearsAttribute();

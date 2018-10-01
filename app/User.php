@@ -18,7 +18,12 @@ class User extends Authenticatable
         'id', 'nombres', 'apellidos', 'email', 'password', 'rut', 'telefono', 'direccion', 'nacimiento', 'titulo', 'estudios_complementarios', 'posicion', 'fecha_admision', 'descripcion', 'actividad', 'avatar', 'sangre', 'vih', 'peso', 'altura', 'alergia', 'medicamento_actual', 'enfermedad', 'cargo_id'
     ];
 
-     protected $appends = ['years'];
+     protected $appends = ['years', 'full_name' ];
+
+     public function getFullNameAttribute()
+    {
+        return "{$this->nombres} {$this->apellidos}";
+    }
      /*
     public function getNacimientoAttribute($value)
     {
@@ -97,10 +102,7 @@ class User extends Authenticatable
         return Carbon::parse($this->nacimiento)->age;
     }
 
-    public function getFullNameAttribute()
-    {
-        return $this->nombres . ' ' . $this->apellidos;
-    }
+    
 
     protected $hidden = [
         'password', 'remember_token',

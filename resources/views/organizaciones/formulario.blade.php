@@ -42,7 +42,7 @@
                         </div>
                         <div class="col-md-2 col-lg-2 col-sm-2"> 
                             <div id="add_contact">
-                              <a href="#" class="btn btn-rose btn-round btn-sm">+</a>
+                              <a href="#" onclick="mostrar_contacto(1,1)" class="btn btn-rose btn-round btn-sm">+</a>
                             </div>
                         </div>
                     </div>
@@ -96,7 +96,7 @@
                             <div class="form-group">
                               <label class="control-label">CONTACTO DIRECTO CON LA EMPRESA</label>
                               <!-- <div id="show_contact"></div> -->
-                              <select id="contacto_id" name="contacto_id[]" multiple="multiple" class="selectpicker show-tick" data-dropup-auto="false" data-size="5" data-live-search="true" data-style="select-with-transition">
+                              <select id="contacto_id" name="contacto_id[]" multiple="multiple" class="selectpicker show-tick" data-size="5" data-live-search="true" data-style="select-with-transition">
                                      @foreach($contactos as $contacto)
                                         <option value="{{ $contacto->id }}">{{ $contacto->nombres }} {{$contacto->apellidos }}</option>
                                     @endforeach
@@ -105,7 +105,7 @@
                         </div>
                         <div class="col-md-2 col-lg-2 col-sm-2"> 
                             <div id="add_contact">
-                              <a href="#" onclick="mostrar_contacto(1)" class="btn btn-rose btn-round btn-sm">+</a>
+                              <a href="#" onclick="mostrar_contacto(1,2)" class="btn btn-rose btn-round btn-sm">+</a>
                             </div>
                         </div>
                     </div>

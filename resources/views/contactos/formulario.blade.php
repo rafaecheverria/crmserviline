@@ -7,13 +7,13 @@
                         <div class="col-md-6">
                             <div class="form-group label-floating">
                                 <label class="control-label">Rut:</label>
-                                <input type="text" class="form-control" id="rut_user" name="rut">
+                                <input type="text" class="form-control" id="rut_user" name="rut_user">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group label-floating">
                                 <label class="control-label">Nombres:</label>
-                                <input type="text" class="form-control" id="nombres_user" name="nombres" >
+                                <input type="text" class="form-control" id="nombres_user" name="nombres_user" >
                             </div>
                         </div>
                     </div>
@@ -21,13 +21,13 @@
                         <div class="col-md-6">
                             <div class="form-group label-floating">
                                 <label class="control-label">Apellidos:</label>
-                                <input type="text" class="form-control" id="apellidos_user" name="apellidos">
+                                <input type="text" class="form-control" id="apellidos_user" name="apellidos_user">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group label-floating">
                                 <label class="control-label">Email:</label>
-                                <input type="email" class="form-control" id="email_user" name="email" >
+                                <input type="email" class="form-control" id="email_user" name="email_user" >
                             </div>
                         </div>
                     </div>
@@ -36,17 +36,18 @@
                         <div class="col-md-6">
                             <div class="form-group label-floating">
                                 <label class="control-label">Dirección:</label>
-                                <input type="text" class="form-control" id="direccion_user" name="direccion" >
+                                <input type="text" class="form-control" id="direccion_user" name="direccion_user" >
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group label-floating">
                                 <label class="control-label">Teléfono:</label>
-                                <input type="text" class="form-control" id="telefono_user" name="telefono" >
+                                <input type="text" class="form-control" id="telefono_user" name="telefono_user" >
                             </div>
                         </div>
                     </div>
                     <br>
+                    <div id="show-cargo"  style="display: none;">
                     <div class="row sinpadding">
                         <div class="col-md-10 col-lg-10 col-sm-10"> 
                             <div class="form-group">
@@ -66,19 +67,20 @@
                             </div>
                         </div>
                     </div>
+                    </div>
                     <br>
                     <div class="row">
                     <div class="col-sm-6">
                             <div class="radio">
                                 <label>
-                                    <input type="radio" name="genero_add" value="masculino">MASCULINO
+                                    <input type="radio" name="genero" value="masculino">MASCULINO
                                 </label>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="radio">
                                 <label>
-                                    <input type="radio" name="genero_add" value="femenino">FEMENINO
+                                    <input type="radio" name="genero" value="femenino">FEMENINO
                                 </label>
                             </div>
                         </div>

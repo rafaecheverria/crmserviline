@@ -22,32 +22,34 @@ class ContactosController extends Controller
     public function store(Request $request)
     {
         if($request->ajax()){
-            $contacto = new User();
-            $contacto->rut       = $request->rut_user;
-            $contacto->nombres   = $request->nombres_user;
-            $contacto->apellidos = $request->apellidos_user;
-            $contacto->email     = $request->email_user;
-            $contacto->telefono  = $request->telefono_user;
-            $contacto->direccion = $request->direccion_user;
-            $contacto->genero    = $request->genero;
-            $contacto->cargo_id  = $request->cargo_id;
-            $contacto->avatar    = "default.jpg";
-            $contacto->save();
-                if ($request->origen === "vendedor") {
-                    $contacto->attachRole(2); //3 es el numero id del rol vendedor
-                    $contactos = User::select(['id', 'nombres', 'apellidos'])->withRole("contacto")->orderBy('apellidos', 'asc')->get();
-                    $origen = "vendedor";
+            $persona = new User();
+            $persona->rut       = $request->rut_user;
+            $persona->nombres   = $request->nombres_user;
+            $persona->apellidos = $request->apellidos_user;
+            $persona->email     = $request->email_user;
+            $persona->telefono  = $request->telefono_user;
+            $persona->direccion = $request->direccion_user;
+            $persona->genero    = $request->genero;
+            $persona->cargo_id  = $request->cargo_id;
+            $persona->avatar    = "default.jpg";
+            $persona->save();
+            if ($request->tipo_user === "vendedor") {
+                    $persona->attachRole(2); //2 es el numero id del rol vendedor
+                    $tipo_user = "vendedor";
+                    $id = "vendedor_id";
                 }else{
-                    $contacto->attachRole(3); //2 es el numero id del rol contacto
-                    $contactos = User::select(['id', 'nombres', 'apellidos'])->withRole("contacto")->orderBy('apellidos', 'asc')->get();
-                    $origen = "contacto_empresa";
+                    $persona->attachRole(3); //3 es el numero id del rol contacto
+                    $tipo_user = "contacto";
+                    $id = "contacto_id";
                 }
-            $my_contacto = $contacto->id;
+            $personas = User::select(['id', 'nombres', 'apellidos'])->withRole($request->tipo_user)->orderBy('apellidos', 'asc')->get();
+            $my_persona = $persona->id;
             return response()->json([
-                "message"     => "El contacto ".$contacto->nombres." ".$contacto->apellidos." ha se agregó exitosamente",
-                "contactos"   => $contactos,
-                "my_contacto" => $my_contacto,
-                "origen"      => $origen
+                "message"    => "El ".$request->tipo_user." ".$persona->nombres." ".$persona->apellidos." se agregó exitosamente",
+                "personas"   => $personas,
+                "my_persona" => $my_persona,
+                "tipo_user"  => $tipo_user,
+                "id"         => $id
                 ]);
         }
     }

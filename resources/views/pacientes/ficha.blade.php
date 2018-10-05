@@ -10,12 +10,11 @@
                     <li class="active">
                         <a href="#basica" data-toggle="tab">Básica</a>
                     </li>
-                     @role(['administrador', 'doctor']) <!-- al terminar esta sección debemos manejar estos datos con abilidades y persmisos a cada perfil "administrador", "doctor", 
+                    <!-- al terminar esta sección debemos manejar estos datos con habilidades y persmisos a cada perfil "administrador", "doctor", 
                     "recepcionista", "paciente"-->
                     <li>
                         <a href="#personal" data-toggle="tab">Personal</a>
                     </li>
-                    @endrole
                 </ul>
             </div>
         </div>

@@ -4,7 +4,7 @@ function redirect(ruta)
     //setTimeout("location."+ruta, 5000);
 }
 $(document).ready(function() {
-
+//$('.material-datatables label').addClass('form-group');
 $('#dias').datepicker({
     multidate:true,
 });
@@ -244,7 +244,6 @@ $( "#btn_guardar_rec" ).click(function(event){
             }
         })
     })
-
 
 $( "#update_cita" ).click(function(event){ 
         event.preventDefault()
@@ -998,8 +997,12 @@ function roles_user(id)// carga datos en el modal roles_user del módulo de pers
                 }
            $('.selectpicker2').selectpicker('refresh')
           },
-       error:function(){
-           alert('la operación falló');
+       error:function(jqXHR, textStatus, errorThrown){
+           if (jqXHR.status == 500) {
+                      alert('Internal error: ' + jqXHR.responseText);
+                  } else {
+                      alert('Unexpected error.');
+                  }
           }
     });
 }
@@ -1009,7 +1012,7 @@ function roles_user(id)// carga datos en el modal roles_user del módulo de pers
 function organizacion_user(id, tipo)// carga datos en el modal organizacion_user del módulo de organizacion, si el tipo es 2 es porque el llamado es editar sio es 1 es agregar.
 {
     $("#modal_organizacion").modal('show')
-    //event.preventDefault();
+    event.preventDefault();
     if (tipo == 1) {
         $("#boton_organizacion").html("<a href='#' onclick='organizacion(0,1)' class='btn btn-info pull-right'>Agregar</a>")
         $("#display").hide();
@@ -1053,9 +1056,14 @@ function organizacion_user(id, tipo)// carga datos en el modal organizacion_user
                     }
                $('.selectpicker').selectpicker('refresh')
               },
-           error:function(){
-               alert('la operación falló');
-              }
+           error:function(jqXHR, textStatus, errorThrown){
+           if (jqXHR.status == 500) {
+                      alert('Internal error: ' + jqXHR.responseText);
+                  } else {
+                      //alert('Unexpected error.');
+                      alert('Internal error: ' + jqXHR.responseText);
+                  }
+          }
         });
     }    
 }
@@ -1111,6 +1119,34 @@ function organizacion(id,tipo){
         }) 
 
     }
+}
+function ficha(id) //carga datos en la ficha.
+{
+   $("#ficha_modal").modal("show")
+   var route = "/ficha/"+id+"";
+   var csrf_token = $('meta[name="csrf-token"]').attr('content');
+   var tipo ="";
+   var image = new Image();
+    $.ajax({
+           url: route,
+           type: 'GET',
+        success:function(data){
+            if (data.tipo == "Pequena") {tipo = "Pequeña"}
+            $(".img_pac").attr('src', 'assets/img/perfiles/'+data.logo+'?'+ new Date().getTime());
+            $('.rut').html(data.rut)
+            $('.nombre').html(data.nombre)
+            $('.email').html(data.email)
+            $('.telefono').html(data.telefono)
+            $('.direccion').html(data.direccion)
+            $('.tipo').html(tipo)
+            $('.estado').html(data.estado)
+            $('.title-name').html(data.nombre)
+            $('#descargar').html('<a href="pdf/'+data.id+'" id="download_ficha" class="btn btn-info pull-right"><span class="btn-label"><i class="material-icons">file_download</i></span>Descargar</a>')
+          },
+       error:function(){
+           alert('la operación falló');
+          }
+    });
 }
 //finaliza crud organización.
 
@@ -1410,7 +1446,7 @@ function especialidad_doctor(id) //carga modal que contiene el select multiple d
     });
 }
 
-function ficha_paciente(id) //carga datos en la ficha del paciente.
+/*function ficha_paciente(id) //carga datos en la ficha del paciente.
 {
    var route = "/ficha/"+id+"";
    var csrf_token = $('meta[name="csrf-token"]').attr('content');
@@ -1441,7 +1477,7 @@ function ficha_paciente(id) //carga datos en la ficha del paciente.
            alert('la operación falló');
           }
     });
-}
+}*/
 
 function expediente_paciente(id) //carga datos en el expediente del paciente.
 {
@@ -1524,11 +1560,66 @@ function eliminar_doc(id)
        });
     }
 }
-function delete_paciente(id)
+function eliminar(id, nombre, ruta) //funcion general para eliminar cualquier registro de la base de datos.
 {
-    $('#eliminar').html('<button type="button" class="btn btn-simple" data-dismiss="modal">Cancelar</button><a href="#" onclick="del_paciente('+id+')"; type="button" class="btn btn-success btn-simple">Sí, Borrar</a>')
+const swalWithBootstrapButtons = swal.mixin({
+  confirmButtonClass: 'btn btn-success',
+  cancelButtonClass: 'btn btn-danger',
+  buttonsStyling: false,
+})
+
+swalWithBootstrapButtons({
+  title: 'Estás seguro de eliminar a '+nombre+ '?',
+  text: "No podrás revertir esto.!",
+  type: 'warning',
+  showCancelButton: true,
+  confirmButtonText: 'Si, Eliminar!',
+  cancelButtonText: 'No, cancelar!',
+  reverseButtons: true
+}).then((result) => {
+    //alert(ruta+id)
+  if (result.value) {
+    var csrf_token = $('meta[name="csrf-token"]').attr('content')
+    var route = ruta+id;
+    $.ajax({
+            url: route,
+            type: 'POST',
+            data: {'_method' : 'DELETE', '_token' : csrf_token},
+            success:function(data){
+                console.log(data)
+                $('#organizaciones').DataTable().ajax.reload();
+                $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000});
+            }, 
+            error:function(){
+                alert('la operación falló');
+            }
+       });
+
+    swalWithBootstrapButtons(
+      'Eliminado!',
+      'El registro de ha eliminado.',
+      'success'
+    )
+  } else if (
+    // Read more about handling dismissals
+    result.dismiss === swal.DismissReason.cancel
+  ) {
+    swalWithBootstrapButtons(
+      'Cancelado',
+      'No has eliminado el registro',
+      'error'
+    )
+  }
+})
+    /*switch(modal){
+        case 1://elimina un registro de organizaciones
+            $("#modal_organizacion").modal("show")
+            $("#contenido-modal").html("<span>¿Está seguro que desea eliminar éste registro?</span>");
+            $("#boton_organizacion").html('<button type="button" class="btn btn-simple" data-dismiss="modal">Cancelar</button><a href="#" onclick="del_paciente('+id+')"; type="button" class="btn btn-success btn-simple">Sí, Borrar</a>')
+        break;
+    }*/
 }
-function del_paciente(id)
+/*function del_paciente(id)
 {// elimina un paciente
     var route = "/pacientes/"+id+"";
     var csrf_token = $('meta[name="csrf-token"]').attr('content');
@@ -1545,7 +1636,7 @@ function del_paciente(id)
                 alert('la operación falló');
             }
        });
-}
+}*/
 function delete_especialidad(id)
 {
     $('#eliminar').html('<button type="button" class="btn btn-simple" data-dismiss="modal">Cancelar</button><a href="#" onclick="del_especialidad('+id+')"; type="button" class="btn btn-success btn-simple">Sí, Borrar</a>')

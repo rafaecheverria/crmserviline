@@ -350,7 +350,7 @@ Copyright (c) 2015 Daniel Eden
   -webkit-animation-name: fadeOutUp;
   animation-name: fadeOutUp;
 }
-
+/*
 body.swal2-in {
   overflow-y: hidden;
 }
@@ -1028,7 +1028,7 @@ body.swal2-iosfix {
 .swal2-hide.swal2-noanimation {
   -webkit-animation: none;
   animation: none;
-}
+}*/
 
 @-webkit-keyframes animate-success-tip {
   0% {
@@ -1173,11 +1173,11 @@ body.swal2-iosfix {
   -webkit-animation: animate-success-long 0.75s;
   animation: animate-success-long 0.75s;
 }
-
+/*
 .swal2-success.animate::after {
   -webkit-animation: rotatePlaceholder 4.25s ease-in;
   animation: rotatePlaceholder 4.25s ease-in;
-}
+}*/
 
 @-webkit-keyframes animate-error-icon {
   0% {

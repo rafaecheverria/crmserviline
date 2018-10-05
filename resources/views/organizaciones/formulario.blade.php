@@ -1,6 +1,5 @@
-<div class="col-md-12">
-    <div class="row">
-        <div class="col-md-12">
+
+        
                 <form class="form" id="form_organizacion">
                     <input type="text" name="id" id="id" hidden="true"> 
                      <div class="row sinpadding">
@@ -121,7 +120,7 @@
                                 <div class="col-sm-3">
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" name="tipo" value="peuqena">Pequeña
+                                            <input type="radio" name="tipo" value="pequena">Pequeña
                                         </label>
                                     </div>
                                 </div>
@@ -142,6 +141,5 @@
                             </div> 
                         </div>
                    </form>
-        </div>
-    </div>
-</div>
+
+    

@@ -217,7 +217,9 @@ var listar_contactos = function()
             [10, 25, 50, "Todos"]
         ],
         "language": {
-            url: "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+            url: "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json",
+            search: "_INPUT_",
+            class: "form-group",
         },
         "responsive": true,
         "columns":[
@@ -229,6 +231,7 @@ var listar_contactos = function()
             {data: 'nacimiento', name: 'nacimiento'}
         ]
 	})
+        //$('.material-datatables label').addClass('form-group');
 }
 var listar_organizaciones = function()
 {

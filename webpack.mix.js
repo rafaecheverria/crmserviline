@@ -33,16 +33,17 @@ mix.scripts([
 	'resources/assets/js/jquery.tagsinput.js',
 	'resources/assets/js/material-dashboard.js',
 	'resources/assets/js/demo.js',
-	//'resources/assets/js/jquery.Rut.js',
+	'resources/assets/js/sweetalert2.js',
 	'resources/assets/js/calendarios.js',
 	'resources/assets/js/ajax.js',
 	'resources/assets/js/listas.js',
 	], 'public/js/app.js')
 .styles([
 	'resources/assets/css/bootstrap.min.css',
+	'resources/assets/css/sweetalert2.css',
 	'resources/assets/css/demo.css',
 	'resources/assets/css/style.css',
 	
 	'resources/assets/css/material-dashboard.css',
-	], 'public/css/app.css');
 
+	], 'public/css/app.css');

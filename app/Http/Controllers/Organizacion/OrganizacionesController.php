@@ -48,6 +48,7 @@ class OrganizacionesController extends Controller
             $organizacion->ciudad_id   = $request->ciudad_id;
             $organizacion->region_id   = $request->region_id;
             $organizacion->vendedor_id = $request->vendedor_id;
+            $organizacion->estado      = "prospecto";
             $organizacion->logo        = "default.jpg";
             $organizacion->save();
             $organizacion->users()->sync($request->contacto_id);  
@@ -62,14 +63,34 @@ class OrganizacionesController extends Controller
         $organizaciones = Organizacion::select(['id', 'rut', 'nombre', 'telefono', 'direccion', 'email', 'giro']);
         return  datatables()->of($organizaciones)
                     ->addColumn('action', function ($organizacion) {
-                        $ficha = '<a href="#" onclick="ficha_paciente('.$organizacion->id.')" data-toggle="modal" data-target="#modal_ficha" rel="tooltip" title="Ficha del paciente" class="btn btn-simple btn-primary btn-icon"><i class="material-icons">folder_shared</i></a>';
+                        $ruta = "organizaciones/";
+                        $ficha = '<a href="#" onclick="ficha('.$organizacion->id.')" data-toggle="modal" data-target="#modal_ficha" rel="tooltip" title="Ficha del paciente" class="btn btn-simple btn-primary btn-icon"><i class="material-icons">folder_shared</i></a>';
                         $expediente = '<a href="#" onclick="expediente_paciente('.$organizacion->id.')" data-toggle="modal" data-target="#modal_expediente" rel="tooltip" title="Expediente" class="btn btn-simple btn-info btn-icon"><i class="material-icons">content_paste</i></a>';
-                        $editar = '<a href="#" onclick="organizacion_user('.$organizacion->id.',  2)" rel="tooltip" title="Editar" class="btn btn-simple btn-success btn-icon edit"><i class="material-icons">edit</i></a>';
-                        $eliminar = '<a href="#" onclick="delete_paciente('.$organizacion->id.')" data-toggle="modal" data-target="#eliminar_paciente" rel="tooltip" title="Editar" class="btn btn-simple btn-danger btn-icon"><i class="material-icons">close</i></a>';
+                        $editar = '<a href="#" onclick="organizacion_user('.$organizacion->id.',2)" rel="tooltip" title="Editar" class="btn btn-simple btn-success btn-icon edit"><i class="material-icons">edit</i></a>';
+                        $eliminar = '<a href="#" onclick="eliminar('.$organizacion->id.',\''.$organizacion->nombre.'\',\''.$ruta.'\')" rel="tooltip" title="Eliminar" class="btn btn-simple btn-danger btn-icon"><i class="material-icons">close</i></a>';
 
                         return $ficha.$expediente.$editar.$eliminar;
                        
                     })->make(true);
+    }
+
+    public function ficha($id)
+    {
+        $organizacion = Organizacion::findOrFail($id);
+        //$edad     = $paciente->getYearsAttribute();
+        //$edad = $paciente->nacimiento->diffInYears(now());
+        return response()->json([
+            'success'     => true,
+            'id'          => $organizacion->id,
+            'logo'        => $organizacion->logo,
+            'rut'         => $organizacion->rut,
+            'nombre'      => ucfirst($organizacion->nombre),
+            'email'       => $organizacion->email,
+            'telefono'    => $organizacion->telefono,
+            'direccion'   => ucfirst($organizacion->direccion),
+            'tipo'        => ucfirst($organizacion->tipo),
+            'estado'      => ucfirst($organizacion->estado),
+        ]);
     }
 
     public function edit(Request $request, $id)
@@ -123,6 +144,13 @@ class OrganizacionesController extends Controller
 
     public function destroy($id)
     {
-        //
+        $organizacion = Organizacion::findOrFail($id);
+        Organizacion::destroy($id);
+        //$reservas = Query::where('estado', 'pendiente')->count(); //actualiza la tarjeta del home
+        return response()->json([
+            'success' => true,
+            "message" => "La empresa ".$organizacion->nombre." se ha eliminado correctamente.",
+        ]);
     }
+    
 }

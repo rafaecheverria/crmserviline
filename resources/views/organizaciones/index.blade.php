@@ -32,4 +32,5 @@
 @include('organizaciones.modal')
 @include('../contactos.modal')
 @include('../cargos.modal')
+@include('organizaciones.modal_ficha')
 @endsection

@@ -1131,17 +1131,28 @@ function ficha(id) //carga datos en la ficha.
            url: route,
            type: 'GET',
         success:function(data){
-            if (data.tipo == "Pequena") {tipo = "Pequeña"}
+            //console.log(data.contactos)
+            if (data.tipo == "Pequena") {data.tipo = "Pequeña"}
             $(".img_pac").attr('src', 'assets/img/perfiles/'+data.logo+'?'+ new Date().getTime());
             $('.rut').html(data.rut)
             $('.nombre').html(data.nombre)
             $('.email').html(data.email)
             $('.telefono').html(data.telefono)
             $('.direccion').html(data.direccion)
-            $('.tipo').html(tipo)
+            $('.tipo').html(data.tipo)
             $('.estado').html(data.estado)
+            $('.actualizacion').html(data.actualizacion)
+            /*for (i=0;i<data.contacto.length;i++) {
+                console.log(data.contacto)
+                $('#contacto').html("<td>"+data.contacto[i]+"</td>")
+            }*/
+            data.contacto.forEach(function(element) {
+                console.log(element)
+              $('#contacto').html("<td>"+element+"</td>")
+            });
             $('.title-name').html(data.nombre)
             $('#descargar').html('<a href="pdf/'+data.id+'" id="download_ficha" class="btn btn-info pull-right"><span class="btn-label"><i class="material-icons">file_download</i></span>Descargar</a>')
+            
           },
        error:function(){
            alert('la operación falló');

@@ -4,7 +4,7 @@
         <div class="modal-content">
             <div class="modal-header-info">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="material-icons">clear</i></button>
-                <h6>FICHA ORGANIZACIÓN</h6>
+                <h6>FICHA EMPRESA</h6>
             </div>
             <div class="modal-body-add">
                 <div class="col-md-12">

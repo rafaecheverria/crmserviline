@@ -79,17 +79,23 @@ class OrganizacionesController extends Controller
         $organizacion = Organizacion::findOrFail($id);
         //$edad     = $paciente->getYearsAttribute();
         //$edad = $paciente->nacimiento->diffInYears(now());
+        $contacto    = $organizacion->users->map(function($contactos){
+                            return str_limit($contactos->full_name);
+                        });
+
         return response()->json([
-            'success'     => true,
-            'id'          => $organizacion->id,
-            'logo'        => $organizacion->logo,
-            'rut'         => $organizacion->rut,
-            'nombre'      => ucfirst($organizacion->nombre),
-            'email'       => $organizacion->email,
-            'telefono'    => $organizacion->telefono,
-            'direccion'   => ucfirst($organizacion->direccion),
-            'tipo'        => ucfirst($organizacion->tipo),
-            'estado'      => ucfirst($organizacion->estado),
+            'success'      => true,
+            'id'           => $organizacion->id,
+            'logo'         => $organizacion->logo,
+            'rut'          => $organizacion->rut,
+            'nombre'       => ucfirst($organizacion->nombre),
+            'email'        => $organizacion->email,
+            'telefono'     => $organizacion->telefono,
+            'direccion'    => ucfirst($organizacion->direccion),
+            'tipo'         => ucfirst($organizacion->tipo),
+            'estado'       => ucfirst($organizacion->estado),
+            'actualizacion'=> $organizacion->getUpdatedAttribute(),
+            'contacto'    => $contacto
         ]);
     }
 

@@ -77,25 +77,20 @@ class OrganizacionesController extends Controller
     public function ficha($id)
     {
         $organizacion = Organizacion::findOrFail($id);
-        //$edad     = $paciente->getYearsAttribute();
-        //$edad = $paciente->nacimiento->diffInYears(now());
-        $contacto    = $organizacion->users->map(function($contactos){
-                            return str_limit($contactos->full_name);
-                        });
-
+        $contacto    = $organizacion->users;
         return response()->json([
             'success'      => true,
             'id'           => $organizacion->id,
             'logo'         => $organizacion->logo,
             'rut'          => $organizacion->rut,
-            'nombre'       => ucfirst($organizacion->nombre),
+            'nombre'       => ucwords($organizacion->nombre),
             'email'        => $organizacion->email,
             'telefono'     => $organizacion->telefono,
-            'direccion'    => ucfirst($organizacion->direccion),
-            'tipo'         => ucfirst($organizacion->tipo),
-            'estado'       => ucfirst($organizacion->estado),
+            'direccion'    => ucwords($organizacion->direccion),
+            'tipo'         => ucwords($organizacion->tipo),
+            'estado'       => ucwords($organizacion->estado),
             'actualizacion'=> $organizacion->getUpdatedAttribute(),
-            'contacto'    => $contacto
+            'contacto'     => $contacto,
         ]);
     }
 

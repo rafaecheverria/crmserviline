@@ -41,10 +41,6 @@
                         <td id="telefono" class="telefono"></td>
                     </tr>
                     <tr>
-                        <th>Contactos:</th>
-                        <div id="contacto" class="contacto"></div>
-                    </tr>
-                    <tr>
                         <th>Dirección:</th>
                         <td id="direccion" class="direccion"></td>
                     </tr>
@@ -55,6 +51,20 @@
                     <tr>
                         <th>Última Actualización:</th>
                         <td id="actualizacion" class="actualizacion"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="row">
+        <div class="col-md-7 col-md-offset-4">
+            <table class="table">
+                <thead class="text-danger">
+                    <th>CONTACTO EMPRESA</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td id="contacto_2" class="contacto_2"></td>
                     </tr>
                 </tbody>
             </table>

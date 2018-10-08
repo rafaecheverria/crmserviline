@@ -22,9 +22,12 @@ class Organizacion extends Model
     {
         return $this->hasOne('App\User');
     }*/
-    public function getUpdatedAttribute()
+    public function setNombreAttribute($valor)
     {
-        //return Carbon::parse($this->fecha_inicio)->format('d-m-Y'); 
+        $this->attributes['nombre'] = ucwords($valor);
+    }
+    public function getUpdatedAttribute()
+    {   //return Carbon::parse($this->fecha_inicio)->format('d-m-Y'); 
         return Date::parse($this->updated_at)->toDayDateTimeString();
        
     }

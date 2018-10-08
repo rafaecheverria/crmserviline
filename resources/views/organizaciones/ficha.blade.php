@@ -6,61 +6,49 @@
             </div>
             <br>
             <div class="row">
-                <div class="table-responsive">
-                    <table class="table ancho-columna">
-                        <tbody>
-                            <tr class="headt">
-                                <th><h6>Estado: </h6></th>
-                                <td><h6><b><p id="estado" class="estado text-primary"></p></b></h6></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="no-padding">
-                    <a href="#" class="btn btn-primary btn-md btn-block"><i class="material-icons">edit</i> cambiar estado</a>
-                </div>
+                <b><p id="estado" class="estado text-primary text-center"></p></b>
             </div> 
         </div>
         <div class="col-md-8">
             <table class="table">
                 <tbody>
                     <tr>
-                        <th>Nombre Empresa:</th>
-                        <td id="nombre" class="nombre"></td>
+                        <th>EMPRESA:</th>
+                        <p><td id="nombre" class="nombre"></td></p></small>
                     </tr>
                     <tr>
-                        <th>Rut:</th>
+                        <th>RUT:</th>
                         <td id="rut" class="rut"></td>
                     </tr>
                     <tr>
-                        <th>Email:</th>
+                        <th>EMAIL:</th>
                         <td id="email" class="email"></td>
                     </tr>
                     <tr>
-                        <th>Teléfono:</th>
+                        <th>TELÉFONO:</th>
                         <td id="telefono" class="telefono"></td>
                     </tr>
                     <tr>
-                        <th>Dirección:</th>
+                        <th>DIRECCIÓN:</th>
                         <td id="direccion" class="direccion"></td>
                     </tr>
                     <tr>
-                        <th>Tipo:</th>
+                        <th>TIPO:</th>
                         <td id="tipo" class="tipo"></td>
                     </tr>
                     <tr>
-                        <th>Última Actualización:</th>
+                        <th>ACTUALIZACIÓN:</th>
                         <td id="actualizacion" class="actualizacion"></td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
-    <div id="row">
-        <div class="col-md-7 col-md-offset-4">
+
+        <div class="col-md-8 col-md-offset-2">
             <table class="table">
                 <thead class="text-danger">
-                    <th>CONTACTO EMPRESA</th>
+                    <th class="text-center">CONTACTO</th>
                 </thead>
                 <tbody>
                     <tr>
@@ -69,5 +57,4 @@
                 </tbody>
             </table>
         </div>
-    </div>
 </div>

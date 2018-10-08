@@ -24896,7 +24896,7 @@ function ficha(id) //carga datos en la ficha.
            type: 'GET',
         success:function(data){
             //console.log(data.contacto)
-            if (data.tipo == "Pequena") {data.tipo = "Pequeña"}
+            if (data.tipo == "PEQUENA") {data.tipo = "PEQUEÑA"}
             $(".img_pac").attr('src', 'assets/img/perfiles/'+data.logo+'?'+ new Date().getTime());
             $('.rut').html(data.rut)
             $('.nombre').html(data.nombre)
@@ -24909,30 +24909,15 @@ function ficha(id) //carga datos en la ficha.
             $('#contacto_2').html(html)
             console.log(data.contacto)
             for (i=0;i<data.contacto.length;i++) {
-                $("#contacto_2").html( $("#contacto_2").html() + "<a href='#' onclick='javascript:alert("+data.contacto[i].id+")'><li>" + data.contacto[i].nombres + " " + data.contacto[i].apellidos + "</li></a>")
+                $("#contacto_2").html( $("#contacto_2").html() + "<a href='#' onclick='javascript:alert("+data.contacto[i].id+")'><ol id='lista3'><li>" + data.contacto[i].nombres + " " + data.contacto[i].apellidos + "</li></ol></a>")
             }
-            /*$('td')data.contacto.forEach(function(element) {
-              html+='<td>'+element+'</td>';
-            });*/
-            //console.log(data.id)
-           /* $.each(data.contacto, function (ind, elem) { 
-                //var textID = elem.text;
-                //console.log('¡Hola :'+textID+'!')
-                $('.contacto_2').html( $('.contacto_2').html() + '<a href="#"><li>' + elem +'</li></a>')
-            });*/
-            //$(".contacto").html(html.join(""));
-            /*$('td').each(function(indice, elemento) {
-                console.log('El elemento con el índice '+indice+'contiene'+$(elemento).text());
-            });
-            */
-
-            
             $('.title-name').html(data.nombre)
             $('#descargar').html('<a href="pdf/'+data.id+'" id="download_ficha" class="btn btn-info pull-right"><span class="btn-label"><i class="material-icons">file_download</i></span>Descargar</a>')
             
           },
        error:function(){
-           alert('la operación falló');
+            redirect('/');
+           $.notify({icon: "add_alert", message: "Su sesión ha finalizado, porfavor vuelta a logearse"},{type: 'danger', timer: 1000})
           }
     });
 }

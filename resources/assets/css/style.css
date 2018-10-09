@@ -147,37 +147,38 @@ table, th, td{
     margin-top: -42px;
 }
 
-#lista3 {
+.lista3 {
     counter-reset: li;
     list-style: circle; 
     *list-style: circle; 
+    text-align: center;
     /*font: 15px 'trebuchet MS', 'lucida sans';*/
     padding: 0;
     margin-bottom: 0.5em;
     /*text-shadow: 0 1px 0 rgba(255,255,255,.5);*/
 }
 
-#lista3 ol {
+.lista3 ol {
     margin: 0 0 0 2em; 
 }
 
-#lista3 li{
+.lista3 li{
     position: relative;
     display: block;
-    padding: .4em .4em .4em .8em;
+    padding: .4em .4em .4em .4em;
     *padding: .4em;
-    margin: .5em 0 .5em 2.5em;
-    background: #9C27B0;
+    margin: .5em 0 .5em 0.5em;
+    background: #5BC0DE;
     color: #fff;
     text-decoration: none;
     transition: all .3s ease-out;   
-}
+}*/
 
-#lista3 li:hover{
-    background: #9C2700;
+.lista3 li:hover{
+    background: #039BE5;
 }   
 
-#lista3 li:before{
+.lista3 li:before{
     position: absolute; 
     left: -2.5em;
     top: 50%;
@@ -190,7 +191,7 @@ table, th, td{
     font-weight: bold;
 }
 
-#lista3 li:after{
+.lista3 li:after{
     position: absolute; 
     content: '';
     border: .5em solid transparent;
@@ -200,9 +201,9 @@ table, th, td{
     transition: all .3s ease-out;               
 }
 
-#lista3 li:hover:after{
+.lista3 li:hover:after{
     left: -.5em;
-    border-left-color: #fa8072;             
+    border-left-color: #039BE5;            
 }
 .row-contacto{
   /*font: 15px 'trebuchet MS', 'lucida sans';*/
@@ -210,3 +211,4 @@ table, th, td{
   margin-bottom: 0em;
   text-shadow: 0 1px 0 rgba(255,255,255,.5);
 }
+

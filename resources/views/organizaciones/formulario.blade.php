@@ -1,5 +1,4 @@
 
-        
                 <form class="form" id="form_organizacion">
                     <input type="text" name="id" id="id" hidden="true"> 
                      <div class="row sinpadding">

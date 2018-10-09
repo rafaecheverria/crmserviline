@@ -24819,13 +24819,8 @@ function organizacion_user(id, tipo)// carga datos en el modal organizacion_user
                     }
                $('.selectpicker').selectpicker('refresh')
               },
-           error:function(jqXHR, textStatus, errorThrown){
-           if (jqXHR.status == 500) {
-                      alert('Internal error: ' + jqXHR.responseText);
-                  } else {
-                      //alert('Unexpected error.');
-                      alert('Internal error: ' + jqXHR.responseText);
-                  }
+           error:function(){
+          alert("La operación falló")
           }
         });
     }    
@@ -24904,16 +24899,14 @@ function ficha(id) //carga datos en la ficha.
             $('.telefono').html(data.telefono)
             $('.direccion').html(data.direccion)
             $('.tipo').html(data.tipo)
-            $('.estado').html(data.estado)
+            $('#estado').html("<a href='#' onclick='cambiar_estado("+data.id+", "+data.estado.toLowerCase()+")'<ol class='lista3'><li>"+data.estado+"</li></ol></a>")
             $('.actualizacion').html(data.actualizacion)
             $('#contacto_2').html(html)
-            console.log(data.contacto)
             for (i=0;i<data.contacto.length;i++) {
-                $("#contacto_2").html( $("#contacto_2").html() + "<a href='#' onclick='javascript:alert("+data.contacto[i].id+")'><ol id='lista3'><li>" + data.contacto[i].nombres + " " + data.contacto[i].apellidos + "</li></ol></a>")
+                $("#contacto_2").html( $("#contacto_2").html() + "<a href='#' onclick='javascript:alert("+data.contacto[i].id+")'><ol class='lista3'><li>" + data.contacto[i].nombres.toUpperCase() + " " + data.contacto[i].apellidos.toUpperCase() + "</li></ol></a>")
             }
             $('.title-name').html(data.nombre)
             $('#descargar').html('<a href="pdf/'+data.id+'" id="download_ficha" class="btn btn-info pull-right"><span class="btn-label"><i class="material-icons">file_download</i></span>Descargar</a>')
-            
           },
        error:function(){
             redirect('/');
@@ -24921,8 +24914,14 @@ function ficha(id) //carga datos en la ficha.
           }
     });
 }
-//finaliza crud organización.
 
+function cambiar_estado(id,estado){
+    console.log(estado)
+    $("#modal_estado").modal("show")
+    //$("#estado").val(estado) 
+    //$('#estado option[value='+estado+']').attr('selected','selected')
+}
+//finaliza crud organización.
 
 
 //------------------------------

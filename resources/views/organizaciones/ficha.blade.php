@@ -6,7 +6,7 @@
             </div>
             <br>
             <div class="row">
-                <b><p id="estado" class="estado text-primary text-center"></p></b>
+                <div id="estado"></div>
             </div> 
         </div>
         <div class="col-md-8">

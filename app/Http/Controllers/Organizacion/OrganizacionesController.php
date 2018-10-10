@@ -62,7 +62,11 @@ class OrganizacionesController extends Controller
     {
         $organizaciones = Organizacion::select(['id', 'rut', 'nombre', 'telefono', 'direccion', 'email', 'giro']);
         return  datatables()->of($organizaciones)
-                    ->addColumn('action', function ($organizacion) {
+            ->editColumn('direccion', function ($dir) {
+                return ucwords($dir->direccion);
+            })->editColumn('giro', function ($gir) {
+                return ucwords($gir->giro);
+            })->addColumn('action', function ($organizacion) {
                         $ruta = "organizaciones/";
                         $ficha = '<a href="#" onclick="ficha('.$organizacion->id.')" data-toggle="modal" data-target="#modal_ficha" rel="tooltip" title="Ficha del paciente" class="btn btn-simple btn-primary btn-icon"><i class="material-icons">folder_shared</i></a>';
                         $expediente = '<a href="#" onclick="expediente_paciente('.$organizacion->id.')" data-toggle="modal" data-target="#modal_expediente" rel="tooltip" title="Expediente" class="btn btn-simple btn-info btn-icon"><i class="material-icons">content_paste</i></a>';

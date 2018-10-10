@@ -17,6 +17,7 @@ var listar_permisos = function()
         "headers": {'X-CSRF-TOKEN':$('input[name=_token]').attr('content')},
         "processing": true,
         "serverSide": true,
+        "fixedHeader": true,
         "order": [[ 1, "asc" ]],
         "ajax": {
              "url": "permisos/show",
@@ -42,6 +43,7 @@ var listar_roles = function()
         "headers": {'X-CSRF-TOKEN':$('input[name=_token]').attr('content')},
         "processing": true,
         "serverSide": true,
+        "fixedHeader": true,
         "order": [[ 1, "asc" ]],
         "ajax": {
              "url": "roles/show",
@@ -67,6 +69,7 @@ var listar_especialidades = function()
         "headers": {'X-CSRF-TOKEN':$('input[name=_token]').attr('content')},
         "processing": true,
         "serverSide": true,
+        "fixedHeader": true,
         "order": [[ 1, "asc" ]],
         "ajax": {
              "url": "especialidades/show",
@@ -92,6 +95,7 @@ var listar_doctores = function()
         "headers": {'X-CSRF-TOKEN':$('input[name=_token]').attr('content')},
         "processing": true,
         "serverSide": true,
+        "fixedHeader": true,
         "order": [[ 3, "asc" ]],
         "ajax": {
              "url": "doctores/show",
@@ -120,6 +124,7 @@ var listar_recepcionistas = function()
         "headers": {'X-CSRF-TOKEN':$('input[name=_token]').attr('content')},
         "processing": true,
         "serverSide": true,
+        "fixedHeader": true,
         "order": [[ 3, "asc" ]],
         "ajax": {
              "url": "recepcionistas/show",
@@ -148,6 +153,7 @@ var listar_citas_pendientes = function()
         "headers": {'X-CSRF-TOKEN':$('input[name=_token]').attr('content')},
         "processing": true,
         "serverSide": true,
+        "fixedHeader": true,
         "bInfo": false,
         "order": [[ 1, "desc" ]],
         "ajax": {
@@ -177,6 +183,7 @@ var listar_citas_atendidas = function()
         "headers": {'X-CSRF-TOKEN':$('input[name=_token]').attr('content')},
         "processing": true,
         "serverSide": true,
+        "fixedHeader": true,
         "bInfo": false,
         "order": [[ 1, "desc" ]],
         "ajax": {
@@ -206,6 +213,7 @@ var listar_contactos = function()
         "headers": {'X-CSRF-TOKEN':$('input[name=_token]').attr('content')},
         "processing": true,
         "serverSide": true,
+        "fixedHeader": true,
         "order": [[ 3, "asc" ]],
         "ajax": {
              "url": "contactos/show",
@@ -239,6 +247,7 @@ var listar_organizaciones = function()
         "headers": {'X-CSRF-TOKEN':$('input[name=_token]').attr('content')},
         "processing": true,
         "serverSide": true,
+        "fixedHeader": true,
         "order": [[ 3, "asc" ]],
         "ajax": {
              "url": "organizaciones/show",
@@ -270,6 +279,7 @@ var listar_personas = function()
         "headers": {'X-CSRF-TOKEN':$('input[name=_token]').attr('content')},
         "processing": true,
         "serverSide": true,
+        "fixedHeader": true,
         "order": [[ 2, "asc" ]],
         "ajax": {
              "url": "personas/show",

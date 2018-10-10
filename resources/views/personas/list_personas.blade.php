@@ -1,5 +1,5 @@
-<div class="material-datatables">
-<table id="personas" class="table dataTable table-responsive nowrap dataTables_wrapper table-striped table-no-bordered table-hover">
+<div class="material-datatables table-responsive">
+<table id="personas" class="table cell-border table-striped table-hover">
     <thead>
         <tr>
             <th>Rut</th>

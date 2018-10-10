@@ -6,7 +6,7 @@
             </div>
             <br>
             <div class="row">
-                <div id="estado"></div>
+               
             </div> 
         </div>
         <div class="col-md-8">
@@ -40,21 +40,21 @@
                         <th>ACTUALIZACIÓN:</th>
                         <td id="actualizacion" class="actualizacion"></td>
                     </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-        <div class="col-md-8 col-md-offset-2">
-            <table class="table">
-                <thead class="text-danger">
-                    <th class="text-center">CONTACTO</th>
-                </thead>
-                <tbody>
                     <tr>
-                        <td id="contacto_2" class="contacto_2"></td>
+                        <th>ESTADO:</th>
+                        <td  id="estado" data-toggle="modal" data-target="#modal_estado"></td>
+                    </tr>
+                    <tr>
+                        <th>CONTACTOS:</th>
+                        <td><div id="contacto_2" class="contacto_2"></div></td>
+                    </tr>
+                     <tr>
+                        <th></th>
+                        <td></td>
                     </tr>
                 </tbody>
             </table>
+
         </div>
+    </div>
 </div>

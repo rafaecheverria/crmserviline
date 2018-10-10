@@ -1015,13 +1015,13 @@ function organizacion_user(id, tipo)// carga datos en el modal organizacion_user
     $('.contacto_2').html("")
     //event.preventDefault();
     if (tipo == 1) {
-        $("#boton_organizacion").html("<a href='#' onclick='organizacion(0,1)' class='btn btn-info pull-right'>Agregar</a>")
+        $("#boton_organizacion").html("<a href='#' onclick='organizacion(0,1)' class='btn btn-primary pull-right'>Agregar</a>")
         $("#display").hide();
         $("#ciudad_id").html("<option>--Seleccione--</option>")
         document.getElementById("form_organizacion").reset();
         $('.selectpicker').selectpicker('refresh')
     }else{
-        $("#boton_organizacion").html("<a href='#' onclick='organizacion("+id+",2)' class='btn btn-info pull-right'>Actualizar</a>")
+        $("#boton_organizacion").html("<a href='#' onclick='organizacion("+id+",2)' class='btn btn-primary pull-right'>Actualizar</a>")
         $("#vendedor-show").show();
         $("#ciudad-show").show();
         $("#display").show(); //muestra los campos del formuario organizaciones
@@ -1137,14 +1137,15 @@ function ficha(id) //carga datos en la ficha.
             $('.telefono').html(data.telefono)
             $('.direccion').html(data.direccion)
             $('.tipo').html(data.tipo)
-            $('#estado').html("<a href='#' onclick='cambiar_estado("+data.id+", "+data.estado.toLowerCase()+")'<ol class='lista3'><li>"+data.estado+"</li></ol></a>")
+            $('#estado').html("<a href='#' <span class='label label-danger'>"+data.estado+"</span></a>")
+            $("#id_empresa").val(data.id)
             $('.actualizacion').html(data.actualizacion)
             $('#contacto_2').html(html)
             for (i=0;i<data.contacto.length;i++) {
-                $("#contacto_2").html( $("#contacto_2").html() + "<a href='#' onclick='javascript:alert("+data.contacto[i].id+")'><ol class='lista3'><li>" + data.contacto[i].nombres.toUpperCase() + " " + data.contacto[i].apellidos.toUpperCase() + "</li></ol></a>")
+                $("#contacto_2").html( $("#contacto_2").html() + "<h6><a href='#' onclick='javascript:alert("+data.contacto[i].id+")'><span class='label label-primary'>" + data.contacto[i].nombres.toUpperCase() + " " + data.contacto[i].apellidos.toUpperCase() + "</span></a></h6>")
             }
             $('.title-name').html(data.nombre)
-            $('#descargar').html('<a href="pdf/'+data.id+'" id="download_ficha" class="btn btn-info pull-right"><span class="btn-label"><i class="material-icons">file_download</i></span>Descargar</a>')
+            $('#descargar').html('<a href="pdf/'+data.id+'" id="download_ficha" class="btn btn-primary pull-right"><span class="btn-label"><i class="material-icons">file_download</i></span>Descargar</a>')
           },
        error:function(){
             redirect('/');
@@ -1153,9 +1154,11 @@ function ficha(id) //carga datos en la ficha.
     });
 }
 
-function cambiar_estado(id,estado){
-    console.log(estado)
+function cambiar_estado(){
+   
     $("#modal_estado").modal("show")
+    var dataString  = $( '#form_estado' ).serializeArray()
+    console.log(dataString) 
     //$("#estado").val(estado) 
     //$('#estado option[value='+estado+']').attr('selected','selected')
 }

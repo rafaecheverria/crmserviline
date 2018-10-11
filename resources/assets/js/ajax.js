@@ -1078,7 +1078,7 @@ function organizacion(id,tipo){
                  $('#organizaciones').DataTable().ajax.reload();
                  $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
                  $('#form_organizacion')[0].reset()
-                 $('#modal_organizacion').modal('toggle')        
+                 $('#modal_organizacin').modal('toggle')        
         },
         error:function(data){
             var error = data.responseJSON.errors;
@@ -1137,8 +1137,9 @@ function ficha(id) //carga datos en la ficha.
             $('.telefono').html(data.telefono)
             $('.direccion').html(data.direccion)
             $('.tipo').html(data.tipo)
-            $('#estado').html("<a href='#' <span class='label label-danger'>"+data.estado+"</span></a>")
+            $('#estado').html("<a href='#' <span class='label' style='background:"+data.color+"'>"+data.estado+"</span></a>")
             $("#id_empresa").val(data.id)
+            $("#select_estado").val(data.cargar_estado)
             $('.actualizacion').html(data.actualizacion)
             $('#contacto_2').html(html)
             for (i=0;i<data.contacto.length;i++) {
@@ -1148,23 +1149,40 @@ function ficha(id) //carga datos en la ficha.
             $('#descargar').html('<a href="pdf/'+data.id+'" id="download_ficha" class="btn btn-primary pull-right"><span class="btn-label"><i class="material-icons">file_download</i></span>Descargar</a>')
           },
        error:function(){
-            redirect('/');
+            redirect('/')
            $.notify({icon: "add_alert", message: "Su sesión ha finalizado, porfavor vuelta a logearse"},{type: 'danger', timer: 1000})
           }
-    });
+    })
 }
 
 function cambiar_estado(){
-   
-    $("#modal_estado").modal("show")
     var dataString  = $( '#form_estado' ).serializeArray()
-    console.log(dataString) 
-    //$("#estado").val(estado) 
-    //$('#estado option[value='+estado+']').attr('selected','selected')
+    var id = $("#id_empresa").val()
+    var route = "/update_estado/"+id+""
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            url: route,
+            type: 'PUT',
+            datatype: 'json',
+            data:dataString,
+            success:function(data){
+                $('#estado').html("<a href='#' <span class='label' style='background:"+data.color+"'>"+data.estado+"</span></a>")
+                $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
+                $('#organizaciones').DataTable().ajax.reload();
+                $('#modal_organizacion').modal('toggle')
+            },
+            error:function(data){
+                var error = data.responseJSON.errors;
+                for(var i in error){
+                    for(var j in error[i]){
+                        var message = error[i][j];
+                       $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000})
+                    }
+                }
+            }
+        }) 
 }
 //finaliza crud organización.
-
-
 //------------------------------
 
 //Inicia crud cargo

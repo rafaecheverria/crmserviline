@@ -4,20 +4,22 @@
       <input id="id_empresa" name="id" hidden="true" />
       <div class="form-group">
         <label class="control-label">ESTADO</label>
-        <select id="estado" name="estado" class="form-control">
+        <select id="select_estado" name="estado" class="form-control">
           <option value="0"> SELECCIONE ESTADO</option>
-          <option value="prospecto">PROSPECTO</option>
-          <option value="reunion">REUNIÓN</option>
-          <option value="propuesta">PROPUESTA</option>
-          <option value="negociacion">NEGOCIACIÓN</option>
-          <option value="cierre">CIERRE</option>
+          <option value="prospecto" style="background: #F44336; color: white;">PROSPECTO</option>
+          <option value="reunión" style="background: #FF9800; color: white;">REUNIÓN</option>
+          <option value="propuesta" style="background: #00BCD4; color: white;">PROPUESTA</option>
+          <option value="negociación" style="background: #9C27B0; color: white;">NEGOCIACIÓN</option>
+          <option value="cierre" style="background: #4CAF50; color: white;">CIERRE</option>
         </select>
       </div>
     </form>
+    <br>
+    <br>
   </div>
   <div class="col-md-3">
     <div id="add_contact">
-      <a class="btn btn-rose btn-sm" onclick="cambiar_estado()">Cambiar Estado</a>
+      <a class="btn btn-primary btn-sm" onclick="cambiar_estado()">Cambiar Estado</a>
     </div>
   </div>
 </div>

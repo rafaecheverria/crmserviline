@@ -11,7 +11,7 @@ class Organizacion extends Model
 	protected $table = "organizaciones";
 
 	 protected $fillable = [
-        'id', 'nombre', 'email', 'rut', 'telefono', 'direccion', 'actividad', 'descripcion', 'estado', 'logo', 'tipo', 'ciudad_id', 'region_id', 'vendedor_id', 'created_at', 'updated_at'
+        'id', 'nombre', 'email', 'rut', 'telefono', 'direccion', 'actividad', 'descripcion', 'estado', 'logo', 'tipo', 'ciudad_id', 'region_id', 'vendedor_id', 'created_at', 'updated_at', 'color'
     ];
 	
     public function users()

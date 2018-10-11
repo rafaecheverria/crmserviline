@@ -48,7 +48,8 @@ class OrganizacionesController extends Controller
             $organizacion->ciudad_id   = $request->ciudad_id;
             $organizacion->region_id   = $request->region_id;
             $organizacion->vendedor_id = $request->vendedor_id;
-            $organizacion->estado      = "prospecto";
+            $organizacion->estado      = "prospecto"; //estado proscpecto
+            $organizacion->color       = "#F44336";
             $organizacion->logo        = "default.jpg";
             $organizacion->save();
             $organizacion->users()->sync($request->contacto_id);  
@@ -68,14 +69,47 @@ class OrganizacionesController extends Controller
                 return ucwords($gir->giro);
             })->addColumn('action', function ($organizacion) {
                         $ruta = "organizaciones/";
-                        $ficha = '<a href="#" onclick="ficha('.$organizacion->id.')" data-toggle="modal" data-target="#modal_ficha" rel="tooltip" title="Ficha del paciente" class="btn btn-simple btn-primary btn-icon"><i class="material-icons">folder_shared</i></a>';
-                        $expediente = '<a href="#" onclick="expediente_paciente('.$organizacion->id.')" data-toggle="modal" data-target="#modal_expediente" rel="tooltip" title="Expediente" class="btn btn-simple btn-info btn-icon"><i class="material-icons">content_paste</i></a>';
+                        $ficha = '<a href="#" onclick="ficha('.$organizacion->id.')" data-toggle="modal" data-target="#modal_ficha" rel="tooltip" title="Ficha del paciente" class="btn btn-simple btn-primary btn-icon"><i class="material-icons">business</i></a>';
+                        $expediente = '<a href="#" onclick="expediente_paciente('.$organizacion->id.')" data-toggle="modal" data-target="#modal_expediente" rel="tooltip" title="Expediente" class="btn btn-simple btn-info btn-icon"><i class="material-icons">cached</i></a>';
                         $editar = '<a href="#" onclick="organizacion_user('.$organizacion->id.',2)" rel="tooltip" title="Editar" class="btn btn-simple btn-success btn-icon edit"><i class="material-icons">edit</i></a>';
                         $eliminar = '<a href="#" onclick="eliminar('.$organizacion->id.',\''.$organizacion->nombre.'\',\''.$ruta.'\')" rel="tooltip" title="Eliminar" class="btn btn-simple btn-danger btn-icon"><i class="material-icons">close</i></a>';
 
                         return $ficha.$expediente.$editar.$eliminar;
                        
                     })->make(true);
+    }
+
+    public function update_estado(Request $request, $id){
+        if($request->ajax()){
+            $organizacion = Organizacion::findOrFail($id);
+            $color = "";
+            switch ($request->estado) {
+                case 'prospecto':
+                    $color = "#F44336";
+                    break;
+                    case 'reunión':
+                    $color = "#FF9800";
+                    break;
+                    case 'propuesta':
+                    $color = "#00BCD4";
+                    break;
+                    case 'negociación':
+                    $color = "#9C27B0";
+                    break;
+                    case 'cierre':
+                    $color = "#4CAF50";
+                    break;
+            }
+            $organizacion->estado  = $request->estado;
+            $organizacion->color = $color;
+            $organizacion->save();
+            return response()->json([
+             "message"=> "El estado de ".$organizacion->nombre." ha sido actualizado exitosamente!",
+             "estado" =>  $organizacion->estado,
+             "color"  =>   $organizacion->color,
+            ]);
+        }
+
     }
 
     public function ficha($id)
@@ -93,6 +127,8 @@ class OrganizacionesController extends Controller
             'direccion'    => strtoupper($organizacion->direccion),
             'tipo'         => strtoupper($organizacion->tipo),
             'estado'       => strtoupper($organizacion->estado),
+            'cargar_estado'=> $organizacion->estado,
+            'color'        => $organizacion->color,
             'actualizacion'=> strtoupper($organizacion->getUpdatedAttribute()),
             'contacto'     => $contacto,
         ]);

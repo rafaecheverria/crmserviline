@@ -12,6 +12,7 @@ Route::middleware(['auth', 'role:administrador|doctor|recepcionista'])->group(fu
 	Route::resource('especialidades', 'Especialidad\EspecialidadController')->middleware(['permission:leer-especialidades']);
 	Route::resource('contactos', 'Contacto\ContactosController');
 	Route::resource('organizaciones', 'Organizacion\OrganizacionesController');
+	Route::get('historial_estado/{id}', 'Organizacion\OrganizacionesController@historial_estado');
 	Route::put('update_estado/{id}', 'Organizacion\OrganizacionesController@update_estado');
 	Route::get('ficha/{id}', 'Organizacion\OrganizacionesController@ficha');
 

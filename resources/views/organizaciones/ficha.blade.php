@@ -42,7 +42,7 @@
                     </tr>
                     <tr>
                         <th>ESTADO:</th>
-                        <td  id="estado" data-toggle="modal" data-target="#modal_estado"></td>
+                        <td  id="estado"></td>
                     </tr>
                     <tr>
                         <th>CONTACTOS:</th>

@@ -268,8 +268,7 @@ var listar_organizaciones = function()
             {data: 'nombre', name: 'nombre'},
             {data: 'telefono', name: 'telefono'},
             {data: 'direccion', name: 'direccion'},
-            {data: 'email', name: 'email'},    
-            {data: 'giro', name: 'giro'}   
+            {data: 'email', name: 'email'},   
         ]
     })
 }

@@ -157,3 +157,11 @@ table, th, td{
 .div-badges{
   margin-bottom: 50px;
 }
+
+span.btn.btn-success.btn-simple.editar_estado{
+  padding: 0px 0px;
+  margin: 0px 10px;
+}
+span.btn.btn-success.btn-simple.editar_estado i.material-icons:hover{
+  color: #2EC6DA;
+}

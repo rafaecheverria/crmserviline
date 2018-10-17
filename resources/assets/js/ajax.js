@@ -1128,7 +1128,6 @@ function ficha(id) //carga datos en la ficha.
            url: route,
            type: 'GET',
         success:function(data){
-            //console.log(data.contacto)
             if (data.tipo == "PEQUENA") {data.tipo = "PEQUEÑA"}
             $(".img_pac").attr('src', 'assets/img/perfiles/'+data.logo+'?'+ new Date().getTime());
             $('.rut').html(data.rut)
@@ -1137,9 +1136,8 @@ function ficha(id) //carga datos en la ficha.
             $('.telefono').html(data.telefono)
             $('.direccion').html(data.direccion)
             $('.tipo').html(data.tipo)
-            $('#estado').html("<a href='#' <span class='label' style='background:"+data.color+"'>"+data.estado+"</span></a>")
+            $('#estado').html("<a href='#' onclick='historial_estados("+data.id+")' <span class='label' style='background:"+data.color+"'>"+data.nombre_estado+" ("+data.notas_estado+")"+"</span></a>" + " " +"<a href='#'><span class='btn btn-success btn-simple editar_estado'><i class='material-icons'>edit</i></span></a>")
             $("#id_empresa").val(data.id)
-            $("#select_estado").val(data.cargar_estado)
             $('.actualizacion').html(data.actualizacion)
             $('#contacto_2').html(html)
             for (i=0;i<data.contacto.length;i++) {
@@ -1147,11 +1145,52 @@ function ficha(id) //carga datos en la ficha.
             }
             $('.title-name').html(data.nombre)
             $('#descargar').html('<a href="pdf/'+data.id+'" id="download_ficha" class="btn btn-primary pull-right"><span class="btn-label"><i class="material-icons">file_download</i></span>Descargar</a>')
+            
           },
        error:function(){
-            redirect('/')
+            //redirect('/')
            $.notify({icon: "add_alert", message: "Su sesión ha finalizado, porfavor vuelta a logearse"},{type: 'danger', timer: 1000})
           }
+    })
+}
+
+function historial_estados(id) //carga datos del historial de los estados con el id de la organización.
+{
+   $("#modal_historial_estado").modal("show");
+   var route = "/historial_estado/"+id+"";
+   var csrf_token = $('meta[name="csrf-token"]').attr('content');
+   var html = "";
+    $.ajax({
+        url: route,
+        type: 'GET',
+        success:function(data){
+            console.log(data.todo)
+            console.log(data.estados)
+                for(i=0;i<data.estados.length;i++){
+                    for(i=0;i<data.todo.length;i++){
+                    html+="<div class='panel-group' id='accordion' role='tablist' aria-multiselectable='true'>";
+                    html+="<div class='panel panel-default'>";
+                    html+="<div class='panel-heading' role='tab' id='"+data.estados[i].id+"'>";
+                    html+="<a class='collapsed' role='button' data-toggle='collapse' data-parent='#accordion' href='#"+data.estados[i].id+"1' aria-expanded='false' aria-controls='"+data.estados[i].id+"1'>";
+                    html+="<h4 class='panel-title'>"+data.estados[i].estado+"<i class='material-icons'>keyboard_arrow_down</i></h4></a></div>";
+                    html+="<div id='"+data.estados[i].id+"1' class='panel-collapse collapse' role='tabpanel' aria-labelledby='"+data.estados[i].id+"'>";
+                    html+="<div class='panel-body'>";
+                    html+="<div id='divider'></div><ol><li><h6><strong>Síntomas</strong></h5><p align='justify'><small>"+data.todo[i].nota+"</small></p></li>";
+                    html+="<li><h6><strong>Exámenes</strong></h6><p align='justify'><small>"+data.todo[i].nota+"</small></p></li>";
+                    html+="<li><h6><strong>Tratamiento</strong></h6><p align='justify'><small>NOTA2</small></p></li>";
+                    html+="<li><h6><strong>Observaciones</strong></h6><p align='justify'><small>NOTA3</small></p></li>";
+                    html+="</ol></div></div></div></div>";
+                }
+            }
+             //$('#boton').html('<a href="pdf-expediente/'+data.paciente_id+'" id="download_expediente" class="btn btn-info pull-right"><span class="btn-label"><i class="material-icons">file_download</i></span>Descargar</a>')
+
+            $("#colapse").html(html)
+            //$(".title-name").html(data.paciente)
+            
+        },
+        error:function(){
+           alert('la operación falló');
+        }
     })
 }
 
@@ -1510,46 +1549,6 @@ function especialidad_doctor(id) //carga modal que contiene el select multiple d
     });
 }*/
 
-function expediente_paciente(id) //carga datos en el expediente del paciente.
-{
-   var route = "/expediente/"+id+"";
-   var csrf_token = $('meta[name="csrf-token"]').attr('content');
-   var html = "";
-    $.ajax({
-        url: route,
-        type: 'GET',
-        success:function(data){
-           if (data.array.length > 0) {
-                for(i=0;i<data.array.length;i++){
-                    for(i=0;i<data.fecha.length;i++){
-                        html+="<div class='panel-group' id='accordion' role='tablist' aria-multiselectable='true'>";
-                        html+="<div class='panel panel-default'>";
-                        html+="<div class='panel-heading' role='tab' id='"+data.array[i].id+"'>";
-                        html+="<a class='collapsed' role='button' data-toggle='collapse' data-parent='#accordion' href='#"+data.array[i].id+"1' aria-expanded='false' aria-controls='"+data.array[i].id+"1'>";
-                        html+="<h4 class='panel-title'>"+data.fecha[i]+"<i class='material-icons'>keyboard_arrow_down</i></h4></a></div>";
-                        html+="<div id='"+data.array[i].id+"1' class='panel-collapse collapse' role='tabpanel' aria-labelledby='"+data.array[i].id+"'>";
-                        html+="<div class='panel-body'><table><tbody><tr><th>Atendido por: </th><td>&nbsp;</td><td> Dr/a. "+data.array[i].nombres_doctor.ucwords()+" "+data.array[i].apellidos_doctor.ucwords()+"</td><td>&nbsp;</td><td>&nbsp;</td><th>Especialidad:</th><td>&nbsp;</td><td>"+data.array[i].especialidad.ucwords()+"</td></tr></tbody></table><div id='divider'></div><ol><li><h6><strong>Síntomas</strong></h5><p align='justify'><small>"+data.array[i].sintomas+"</small></p></li>"
-                        html+="<li><h6><strong>Exámenes</strong></h6><p align='justify'><small>"+data.array[i].examenes+"</small></p></li>";
-                        html+="<li><h6><strong>Tratamiento</strong></h6><p align='justify'><small>"+data.array[i].tratamiento+"</small></p></li>";
-                        html+="<li><h6><strong>Observaciones</strong></h6><p align='justify'><small>"+data.array[i].observaciones+"</small></p></li>";
-                        html+="</ol></div></div></div></div>";
-                }
-            }
-             $('#boton').html('<a href="pdf-expediente/'+data.paciente_id+'" id="download_expediente" class="btn btn-info pull-right"><span class="btn-label"><i class="material-icons">file_download</i></span>Descargar</a>')
-            }else{
-
-                html+="<p>Este paciente no tiene historial clínico</p>";
-                $('#boton').html('<a href="#" data-dismiss="modal" class="btn btn-danger pull-right"><span class="btn-label"><i class="material-icons">close</i></span>Cerrar</a>')
-            }
-            $("#colapse").html(html)
-            $(".title-name").html(data.paciente)
-            
-        },
-        error:function(){
-           alert('la operación falló');
-        }
-    })
-}
 
 function eliminar_recep(id)
 {

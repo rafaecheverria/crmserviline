@@ -42,7 +42,7 @@ class UserController extends ApiController
                 ->of($users)
                 ->addColumn('roles', function (User $user) {
                     return $user->roles->map(function($roles) {
-                        return str_limit($roles->display_name);
+                        return str_limit($roles->name);
                         })
                 ->implode('-');
                 })->addColumn('action', function ($user) {

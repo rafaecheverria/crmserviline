@@ -8,7 +8,6 @@
             <th>Teléfono</th>
             <th>Dirección</th>
             <th>Email</th>
-            <th>Giro</th>
         </tr>
     </thead>
     <tbody>

@@ -25,6 +25,8 @@ class DatabaseSeeder extends Seeder
         $this->call(RegionesTableSeeder::class);
         $this->call(CiudadesTableSeeder::class);
         $this->call(CargosTableSeeder::class);
+        $this->call(OrganizacionTableSeeder::class);
+        $this->call(EstadoTableSeeder::class);
 
         DB::table('speciality_user')->insert(array(
             array('user_id' => 852, 'speciality_id' => 1),

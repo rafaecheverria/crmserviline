@@ -6,11 +6,6 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateOrganizacionesTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('organizaciones', function (Blueprint $table) {
@@ -21,18 +16,12 @@ class CreateOrganizacionesTable extends Migration
             $table->string('telefono');
             $table->string('direccion');
             $table->string('actividad')->nullable();
-            $table->string('descripcion')->nullable();
-            $table->string('estado')->nullable();
+            $table->string('descripcion')->nullable();        
             $table->string('logo')->default('default.jpg');
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('organizaciones');

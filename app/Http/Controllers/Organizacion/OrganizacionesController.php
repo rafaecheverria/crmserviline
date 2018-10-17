@@ -7,6 +7,7 @@ use App\Region;
 use App\Ciudad;
 use App\User;
 use App\Cargo;
+use App\Estado;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -29,9 +30,36 @@ class OrganizacionesController extends Controller
         }
     }
 
-    public function create()
+    public function historial_estado($id)
     {
-        //
+        $organizacion = Organizacion::findOrFail($id); //obtiene la organización seleccionada.
+        $nota = $organizacion->estados()->first()->pivot->nota;
+        $organizacion = Organizacion::findOrFail($id);
+        $datos_estado = $organizacion->estados()->orderBy('fecha_actualizado', 'DESC')->take(1)->get(); //obtiene el ultimo estado.
+        $estados = $organizacion->estados()->orderBy('fecha_actualizado', 'ASC')->get(); //obtiene el ultimo estado.
+        $todo = $organizacion->estados()->select('estado_id', 'organizacion_id', 'nota', 'fecha_creado', 'fecha_actualizado')->orderBy('fecha_actualizado', 'DESC')->get();
+
+        foreach($datos_estado as $i => $v)
+        {
+            $color = $v['color'];
+            $nombre_estado =  $v['estado'];
+            $id_estado = $v['id'];
+           //'notas_estados' => $organizacion->estados()->where('organizacion_id', $organizacion->id)->where('estado_id', $v['id'])->first()->pivot->nota,
+        }
+
+        return response()->json([
+           "color"    => $color,
+           "nombre_estado"    => $nombre_estado,
+           "id_estado" => $id_estado,
+           "todo" => $todo,
+           "estados" => $estados,
+        ]);
+
+
+        return response()->json([
+            'nota' => $nota,
+        ]);
+
     }
 
     public function store(Request $request)
@@ -48,7 +76,7 @@ class OrganizacionesController extends Controller
             $organizacion->ciudad_id   = $request->ciudad_id;
             $organizacion->region_id   = $request->region_id;
             $organizacion->vendedor_id = $request->vendedor_id;
-            $organizacion->estado      = "prospecto"; //estado proscpecto
+            //$organizacion->estado();
             $organizacion->color       = "#F44336";
             $organizacion->logo        = "default.jpg";
             $organizacion->save();
@@ -61,12 +89,10 @@ class OrganizacionesController extends Controller
 
     public function show()
     {
-        $organizaciones = Organizacion::select(['id', 'rut', 'nombre', 'telefono', 'direccion', 'email', 'giro']);
+        $organizaciones = Organizacion::select(['id', 'rut', 'nombre', 'telefono', 'direccion', 'email']);
         return  datatables()->of($organizaciones)
             ->editColumn('direccion', function ($dir) {
                 return ucwords($dir->direccion);
-            })->editColumn('giro', function ($gir) {
-                return ucwords($gir->giro);
             })->addColumn('action', function ($organizacion) {
                         $ruta = "organizaciones/";
                         $ficha = '<a href="#" onclick="ficha('.$organizacion->id.')" data-toggle="modal" data-target="#modal_ficha" rel="tooltip" title="Ficha del paciente" class="btn btn-simple btn-primary btn-icon"><i class="material-icons">business</i></a>';
@@ -82,31 +108,11 @@ class OrganizacionesController extends Controller
     public function update_estado(Request $request, $id){
         if($request->ajax()){
             $organizacion = Organizacion::findOrFail($id);
-            $color = "";
-            switch ($request->estado) {
-                case 'prospecto':
-                    $color = "#F44336";
-                    break;
-                    case 'reunión':
-                    $color = "#FF9800";
-                    break;
-                    case 'propuesta':
-                    $color = "#00BCD4";
-                    break;
-                    case 'negociación':
-                    $color = "#9C27B0";
-                    break;
-                    case 'cierre':
-                    $color = "#4CAF50";
-                    break;
-            }
             $organizacion->estado  = $request->estado;
             $organizacion->color = $color;
             $organizacion->save();
             return response()->json([
              "message"=> "El estado de ".$organizacion->nombre." ha sido actualizado exitosamente!",
-             "estado" =>  $organizacion->estado,
-             "color"  =>   $organizacion->color,
             ]);
         }
 
@@ -116,21 +122,35 @@ class OrganizacionesController extends Controller
     {
         $organizacion = Organizacion::findOrFail($id);
         $contacto    = $organizacion->users;
+        $color = "";
+        $nombre_estado = "";
+        $id_estado = 0;
+        $datos_estado = $organizacion->estados()->orderBy('fecha_actualizado', 'DESC')->take(1)->get(); //obtiene el ultimo estado.
+        foreach($datos_estado as $i => $v)
+        {
+            $color = $v['color'];
+            $nombre_estado =  $v['estado'];
+            $id_estado = $v['id'];
+           //'notas_estados' => $organizacion->estados()->where('organizacion_id', $organizacion->id)->where('estado_id', $v['id'])->first()->pivot->nota,
+        }
+            // 
+        $notas_estado = $organizacion->estados()->select('nota')->where('estado_id', $id_estado)->get()->count();
         return response()->json([
-            'success'      => true,
-            'id'           => $organizacion->id,
-            'logo'         => $organizacion->logo,
-            'rut'          => $organizacion->rut,
-            'nombre'       => strtoupper($organizacion->nombre),
-            'email'        => strtoupper($organizacion->email),
-            'telefono'     => $organizacion->telefono,
-            'direccion'    => strtoupper($organizacion->direccion),
-            'tipo'         => strtoupper($organizacion->tipo),
-            'estado'       => strtoupper($organizacion->estado),
-            'cargar_estado'=> $organizacion->estado,
-            'color'        => $organizacion->color,
-            'actualizacion'=> strtoupper($organizacion->getUpdatedAttribute()),
+            'notas_estado'  => $notas_estado,
+            'color' => $color,
+            'nombre_estado' => $nombre_estado,
+            'id_estado' => $id_estado,
+            'success'  => true,
+            'id'       => $organizacion->id,
+            'logo'     => $organizacion->logo,
+            'rut'      => $organizacion->rut,
+            'nombre'   => strtoupper($organizacion->nombre),
+            'email'    => strtoupper($organizacion->email),
+            'telefono' => $organizacion->telefono,
+            'direccion'=> strtoupper($organizacion->direccion),
+            'tipo'     => strtoupper($organizacion->tipo),
             'contacto'     => $contacto,
+            'actualizacion'=> strtoupper($organizacion->getUpdatedAttribute()),
         ]);
     }
 

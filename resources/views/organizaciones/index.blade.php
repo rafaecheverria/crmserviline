@@ -34,4 +34,5 @@
 @include('../cargos.modal')
 @include('organizaciones.modal_ficha')
 @include('organizaciones.modal_estado')
+@include('organizaciones.modal_historial')
 @endsection

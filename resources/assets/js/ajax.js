@@ -1164,10 +1164,8 @@ function historial_estados(id) //carga datos del historial de los estados con el
         url: route,
         type: 'GET',
         success:function(data){
-            console.log(data.todo)
-            console.log(data.estados)
-                for(i=0;i<data.estados.length;i++){
-                    for(i=0;i<data.todo.length;i++){
+            console.log(data.notas)
+                for(i=0;i<data.estados.length;i++){                
                     html+="<div class='panel-group' id='accordion' role='tablist' aria-multiselectable='true'>";
                     html+="<div class='panel panel-default'>";
                     html+="<div class='panel-heading' role='tab' id='"+data.estados[i].id+"'>";
@@ -1175,12 +1173,13 @@ function historial_estados(id) //carga datos del historial de los estados con el
                     html+="<h4 class='panel-title'>"+data.estados[i].estado+"<i class='material-icons'>keyboard_arrow_down</i></h4></a></div>";
                     html+="<div id='"+data.estados[i].id+"1' class='panel-collapse collapse' role='tabpanel' aria-labelledby='"+data.estados[i].id+"'>";
                     html+="<div class='panel-body'>";
-                    html+="<div id='divider'></div><ol><li><h6><strong>Síntomas</strong></h5><p align='justify'><small>"+data.todo[i].nota+"</small></p></li>";
-                    html+="<li><h6><strong>Exámenes</strong></h6><p align='justify'><small>"+data.todo[i].nota+"</small></p></li>";
-                    html+="<li><h6><strong>Tratamiento</strong></h6><p align='justify'><small>NOTA2</small></p></li>";
-                    html+="<li><h6><strong>Observaciones</strong></h6><p align='justify'><small>NOTA3</small></p></li>";
+              
+                        //if (data.notas[i].estado_id = data.estados[i].id) {
+                        html+="<div id='divider'></div><ol><li><h6><strong>"+data.notas[i].fecha_actualizado+"</strong></h5><p align='justify'><small>"+data.notas[i].nota+"</small></p></li>";
+                        //}
+                    
                     html+="</ol></div></div></div></div>";
-                }
+                
             }
              //$('#boton').html('<a href="pdf-expediente/'+data.paciente_id+'" id="download_expediente" class="btn btn-info pull-right"><span class="btn-label"><i class="material-icons">file_download</i></span>Descargar</a>')
 

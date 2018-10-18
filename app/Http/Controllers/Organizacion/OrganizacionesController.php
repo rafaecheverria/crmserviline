@@ -33,33 +33,37 @@ class OrganizacionesController extends Controller
     public function historial_estado($id)
     {
         $organizacion = Organizacion::findOrFail($id); //obtiene la organización seleccionada.
-        $nota = $organizacion->estados()->first()->pivot->nota;
-        $organizacion = Organizacion::findOrFail($id);
+        //$nota = $organizacion->estados()->first()->pivot->nota;
         $datos_estado = $organizacion->estados()->orderBy('fecha_actualizado', 'DESC')->take(1)->get(); //obtiene el ultimo estado.
-        $estados = $organizacion->estados()->orderBy('fecha_actualizado', 'ASC')->get(); //obtiene el ultimo estado.
-        $todo = $organizacion->estados()->select('estado_id', 'organizacion_id', 'nota', 'fecha_creado', 'fecha_actualizado')->orderBy('fecha_actualizado', 'DESC')->get();
+         //$ver = $organizacion->estados()->orderBy('fecha_actualizado', 'DESC')->get()->toArray();//obtiene el ultimo estado.
 
+        /* obtiene los estados de la empresa seleccionada, el siguiente codido elimina la duplicidad de un estado ya que una empresa puede guardar el mismos estado con diferentes notas*/
+        $obtener_estados = $organizacion->estados()->orderBy('fecha_actualizado', 'ASC')->get()->toArray(); //obtiene el ultimo estado.
+        $unificar_array = array_unique(array_column($obtener_estados, 'estado'));
+        $array_unificado = array_intersect_key($obtener_estados, $unificar_array);
+        $estados = array_values($array_unificado);
+/*
+        $todo = $organizacion->estados()->select('estado_id', 'organizacion_id', 'nota', 'fecha_creado', 'fecha_actualizado')->orderBy('fecha_actualizado', 'DESC')->get();
+*/
+        $notas = $organizacion->estados()->select('estado_id', 'organizacion_id', 'nota', 'fecha_creado', 'fecha_actualizado')->orderBy('fecha_actualizado', 'DESC')->get();
         foreach($datos_estado as $i => $v)
         {
             $color = $v['color'];
             $nombre_estado =  $v['estado'];
             $id_estado = $v['id'];
-           //'notas_estados' => $organizacion->estados()->where('organizacion_id', $organizacion->id)->where('estado_id', $v['id'])->first()->pivot->nota,
+            $notas_estado = $organizacion->estados()->where('organizacion_id', $organizacion->id)->where('estado_id', $v['id'])->first()->pivot->nota;
         }
 
         return response()->json([
-           "color"    => $color,
+           /*"color"    => $color,
            "nombre_estado"    => $nombre_estado,
            "id_estado" => $id_estado,
-           "todo" => $todo,
+           "todo" => $todo,*/
+           /*"notas_estado" => $notas_estado,*/
            "estados" => $estados,
+           //"ver" => $ver,
+           "notas" => $notas,
         ]);
-
-
-        return response()->json([
-            'nota' => $nota,
-        ]);
-
     }
 
     public function store(Request $request)

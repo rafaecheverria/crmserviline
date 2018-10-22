@@ -23770,7 +23770,7 @@ $(document).ready(function() {
 $('#dias').datepicker({
     multidate:true,
 });
-
+$('[data-toggle="tooltip"]').tooltip();
 $('.datepicker').datetimepicker({
         format: 'DD-MM-YYYY',
         locale:'es',
@@ -24926,28 +24926,18 @@ function historial_estados(id) //carga datos del historial de los estados con el
         url: route,
         type: 'GET',
         success:function(data){
-            console.log(data.notas)
-                for(i=0;i<data.estados.length;i++){                
-                    html+="<div class='panel-group' id='accordion' role='tablist' aria-multiselectable='true'>";
-                    html+="<div class='panel panel-default'>";
-                    html+="<div class='panel-heading' role='tab' id='"+data.estados[i].id+"'>";
-                    html+="<a class='collapsed' role='button' data-toggle='collapse' data-parent='#accordion' href='#"+data.estados[i].id+"1' aria-expanded='false' aria-controls='"+data.estados[i].id+"1'>";
-                    html+="<h4 class='panel-title'>"+data.estados[i].estado+"<i class='material-icons'>keyboard_arrow_down</i></h4></a></div>";
-                    html+="<div id='"+data.estados[i].id+"1' class='panel-collapse collapse' role='tabpanel' aria-labelledby='"+data.estados[i].id+"'>";
-                    html+="<div class='panel-body'>";
-              
-                        //if (data.notas[i].estado_id = data.estados[i].id) {
-                        html+="<div id='divider'></div><ol><li><h6><strong>"+data.notas[i].fecha_actualizado+"</strong></h5><p align='justify'><small>"+data.notas[i].nota+"</small></p></li>";
-                        //}
-                    
-                    html+="</ol></div></div></div></div>";
-                
-            }
-             //$('#boton').html('<a href="pdf-expediente/'+data.paciente_id+'" id="download_expediente" class="btn btn-info pull-right"><span class="btn-label"><i class="material-icons">file_download</i></span>Descargar</a>')
-
+            var datos = data.agrupar;
+            html+="<table class='table table-condensed table-hover table-striped table-responsive' border='1'>";
+            html+="<thead><td class='tamano_celda_th'>FECHA</td><td>ESTADO</td><td>NOTA</td><td colspan='2'><a href='#' data-toggle='tooltip' data-placement='top' class='btn btn-primary btn-round btn-fab btn-fab-mini' title='Agregar Nota'><i class='material-icons'>add</i></a> <a href='#' class='btn btn-primary btn-round btn-fab btn-fab-mini' data-toggle='tooltip' data-placement='top' title='Agregar Nota'><i class='material-icons'>add</i></a></td></thead>";
+            html+="<tbody>";
+            for(var i in datos){
+                for(var j in datos[i]){
+                    html+="<tr><td><b class='text-primary'>"+datos[i][j][4]+"</b></td><td><span class='label' style='background:"+datos[i][j][5]+"'>"+datos[i][j][1]+"</span></td><td colspan='2'><span>"+datos[i][j][2]+"</span></td><td class='tamano_celda_td' colspan='2'><a href='#' class='text-center'><span class='btn btn-simple btn-success editar_estado'><i class='material-icons'>edit</i></span></a></td></tr>";
+                    }
+                }
+                html+="</tbody>";
+                html+="</table>";
             $("#colapse").html(html)
-            //$(".title-name").html(data.paciente)
-            
         },
         error:function(){
            alert('la operación falló');

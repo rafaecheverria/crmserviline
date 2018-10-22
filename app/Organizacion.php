@@ -8,8 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Organizacion extends Model
 {
-	protected $table = "organizaciones";
-
+    protected $table = "organizaciones";
 	 protected $fillable = [
         'id', 'nombre', 'email', 'rut', 'telefono', 'direccion', 'actividad', 'descripcion', 'estado', 'logo', 'tipo', 'ciudad_id', 'region_id', 'vendedor_id'
     ];
@@ -20,7 +19,7 @@ class Organizacion extends Model
     }
     public function estados()
     {
-        return $this->belongsToMany('App\Estado')->withPivot('nota', 'fecha_creado', 'fecha_actualizado');
+        return $this->belongsToMany('App\Estado', 'estado_organizacion', 'organizacion_id','estado_id')->withPivot('nota', 'fecha_creado', 'fecha_actualizado');
     }
     public function setNombreAttribute($valor)
     {
@@ -28,6 +27,8 @@ class Organizacion extends Model
     }
     public function getUpdatedAttribute()
     {
-        return Date::parse($this->updated_at)->toDayDateTimeString();
+        //return Date::parse($this->updated_at)->toDayDateTimeString();
+        return Date::parse($this->updated_at)->format('j F Y');
+        
     }
 }

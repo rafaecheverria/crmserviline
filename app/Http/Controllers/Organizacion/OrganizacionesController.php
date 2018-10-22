@@ -8,6 +8,8 @@ use App\Ciudad;
 use App\User;
 use App\Cargo;
 use App\Estado;
+use Jenssegers\Date\Date;
+use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -33,36 +35,17 @@ class OrganizacionesController extends Controller
     public function historial_estado($id)
     {
         $organizacion = Organizacion::findOrFail($id); //obtiene la organización seleccionada.
-        //$nota = $organizacion->estados()->first()->pivot->nota;
-        $datos_estado = $organizacion->estados()->orderBy('fecha_actualizado', 'DESC')->take(1)->get(); //obtiene el ultimo estado.
-         //$ver = $organizacion->estados()->orderBy('fecha_actualizado', 'DESC')->get()->toArray();//obtiene el ultimo estado.
+        $nota = $organizacion->estados()->first()->pivot->nota;
+        $datos_estado = $organizacion->estados()->orderBy('fecha_actualizado', 'ASC')->take(1)->get(); //obtiene el ultimo estado.
+        $historial_estados = $organizacion->estados()->select('estado_id', 'estado', 'color', 'organizacion_id', 'nota','fecha_creado','fecha_actualizado')->orderBy('fecha_actualizado', 'DESC')->get();
 
-        /* obtiene los estados de la empresa seleccionada, el siguiente codido elimina la duplicidad de un estado ya que una empresa puede guardar el mismos estado con diferentes notas*/
-        $obtener_estados = $organizacion->estados()->orderBy('fecha_actualizado', 'ASC')->get()->toArray(); //obtiene el ultimo estado.
-        $unificar_array = array_unique(array_column($obtener_estados, 'estado'));
-        $array_unificado = array_intersect_key($obtener_estados, $unificar_array);
-        $estados = array_values($array_unificado);
-/*
-        $todo = $organizacion->estados()->select('estado_id', 'organizacion_id', 'nota', 'fecha_creado', 'fecha_actualizado')->orderBy('fecha_actualizado', 'DESC')->get();
-*/
-        $notas = $organizacion->estados()->select('estado_id', 'organizacion_id', 'nota', 'fecha_creado', 'fecha_actualizado')->orderBy('fecha_actualizado', 'DESC')->get();
-        foreach($datos_estado as $i => $v)
-        {
-            $color = $v['color'];
-            $nombre_estado =  $v['estado'];
-            $id_estado = $v['id'];
-            $notas_estado = $organizacion->estados()->where('organizacion_id', $organizacion->id)->where('estado_id', $v['id'])->first()->pivot->nota;
-        }
+        $agrupar = $historial_estados->mapToGroups(function ($item, $key) {
+            return [$item['estado'] => [$item['estado_id'], $item['estado'], $item['nota'], Date::parse($item['fecha_creado'])->format('j F Y'), Date::parse($item['fecha_actualizado'])->format('j F Y'), $item['color']]];
+        });
+        $agrupar->toArray();
 
         return response()->json([
-           /*"color"    => $color,
-           "nombre_estado"    => $nombre_estado,
-           "id_estado" => $id_estado,
-           "todo" => $todo,*/
-           /*"notas_estado" => $notas_estado,*/
-           "estados" => $estados,
-           //"ver" => $ver,
-           "notas" => $notas,
+           "agrupar" => $agrupar,
         ]);
     }
 
@@ -80,7 +63,6 @@ class OrganizacionesController extends Controller
             $organizacion->ciudad_id   = $request->ciudad_id;
             $organizacion->region_id   = $request->region_id;
             $organizacion->vendedor_id = $request->vendedor_id;
-            //$organizacion->estado();
             $organizacion->color       = "#F44336";
             $organizacion->logo        = "default.jpg";
             $organizacion->save();
@@ -99,12 +81,12 @@ class OrganizacionesController extends Controller
                 return ucwords($dir->direccion);
             })->addColumn('action', function ($organizacion) {
                         $ruta = "organizaciones/";
-                        $ficha = '<a href="#" onclick="ficha('.$organizacion->id.')" data-toggle="modal" data-target="#modal_ficha" rel="tooltip" title="Ficha del paciente" class="btn btn-simple btn-primary btn-icon"><i class="material-icons">business</i></a>';
-                        $expediente = '<a href="#" onclick="expediente_paciente('.$organizacion->id.')" data-toggle="modal" data-target="#modal_expediente" rel="tooltip" title="Expediente" class="btn btn-simple btn-info btn-icon"><i class="material-icons">cached</i></a>';
+                        $ficha = '<a href="#" onclick="ficha('.$organizacion->id.')" data-toggle="modal" data-target="#modal_ficha" rel="tooltip" title="Ficha Empresa" class="btn btn-simple btn-primary btn-icon"><i class="material-icons">business</i></a>';
+                        $historial = '<a href="#" onclick="historial_estados('.$organizacion->id.')" rel="tooltip" title="Historial de Estados" class="btn btn-simple btn-info btn-icon"><i class="material-icons">history</i></a>';
                         $editar = '<a href="#" onclick="organizacion_user('.$organizacion->id.',2)" rel="tooltip" title="Editar" class="btn btn-simple btn-success btn-icon edit"><i class="material-icons">edit</i></a>';
                         $eliminar = '<a href="#" onclick="eliminar('.$organizacion->id.',\''.$organizacion->nombre.'\',\''.$ruta.'\')" rel="tooltip" title="Eliminar" class="btn btn-simple btn-danger btn-icon"><i class="material-icons">close</i></a>';
 
-                        return $ficha.$expediente.$editar.$eliminar;
+                        return $ficha.$historial.$editar.$eliminar;
                        
                     })->make(true);
     }
@@ -135,9 +117,7 @@ class OrganizacionesController extends Controller
             $color = $v['color'];
             $nombre_estado =  $v['estado'];
             $id_estado = $v['id'];
-           //'notas_estados' => $organizacion->estados()->where('organizacion_id', $organizacion->id)->where('estado_id', $v['id'])->first()->pivot->nota,
         }
-            // 
         $notas_estado = $organizacion->estados()->select('nota')->where('estado_id', $id_estado)->get()->count();
         return response()->json([
             'notas_estado'  => $notas_estado,

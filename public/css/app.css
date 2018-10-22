@@ -231,6 +231,19 @@ span.btn.btn-success.btn-simple.editar_estado i.material-icons:hover{
   color: #2EC6DA;
 }
 
+
+.tamano_celda_th{
+  width: 130px;
+  text-align: center;
+vertical-align:text-left;
+}
+/*.tamano_celda_td{
+  text-align: left;
+  vertical-align:text-left;
+}
+.table-estado.icono_editar_nota{
+    text-align: center;   
+}*/
 /*! =========================================================
  *
  Material Dashboard PRO - V1.1.0

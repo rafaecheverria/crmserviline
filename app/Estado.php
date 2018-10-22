@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Estado extends Model
 {
-    protected $table = "estados";
+   // protected $table = "estados";
     //public $timestamps = false;
     protected $fillable = [
         'id', 'estado', 'color'
@@ -14,6 +14,6 @@ class Estado extends Model
 
     public function organizaciones()
     {
-        return $this->belongsToMany('App\Organizacion')->withPivot('nota', 'fecha_creado', 'fecha_actualizado');
+        return $this->belongsToMany('App\Organizacion', 'estado_organizacion', 'estado_id','organizacion_id')->withPivot('nota', 'fecha_creado', 'fecha_actualizado');
     }
 }

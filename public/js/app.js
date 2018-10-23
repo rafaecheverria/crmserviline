@@ -24926,18 +24926,20 @@ function historial_estados(id) //carga datos del historial de los estados con el
         url: route,
         type: 'GET',
         success:function(data){
+            console.log(data.estado_actual)
             var datos = data.agrupar;
-            html+="<table class='table table-condensed table-hover table-striped table-responsive' border='1'>";
-            html+="<thead><td class='tamano_celda_th'>FECHA</td><td>ESTADO</td><td>NOTA</td><td colspan='2'><a href='#' data-toggle='tooltip' data-placement='top' class='btn btn-primary btn-round btn-fab btn-fab-mini' title='Agregar Nota'><i class='material-icons'>add</i></a> <a href='#' class='btn btn-primary btn-round btn-fab btn-fab-mini' data-toggle='tooltip' data-placement='top' title='Agregar Nota'><i class='material-icons'>add</i></a></td></thead>";
+            html+="<table class='table table-hover table-striped table-responsive'>";
+            html+="<thead><td class='tamano_celda_th'>FECHA</td><td>ESTADO</td><td>NOTA</td><td colspan='2'><a href='#' onclick='cambiar_estado("+data.estado_actual+")' data-toggle='tooltip' data-placement='top' class='btn btn-primary btn-round btn-fab btn-fab-mini' title='Agregar Nota'><i class='material-icons'>edit</i></a></td></thead>";
             html+="<tbody>";
             for(var i in datos){
                 for(var j in datos[i]){
-                    html+="<tr><td><b class='text-primary'>"+datos[i][j][4]+"</b></td><td><span class='label' style='background:"+datos[i][j][5]+"'>"+datos[i][j][1]+"</span></td><td colspan='2'><span>"+datos[i][j][2]+"</span></td><td class='tamano_celda_td' colspan='2'><a href='#' class='text-center'><span class='btn btn-simple btn-success editar_estado'><i class='material-icons'>edit</i></span></a></td></tr>";
+                    html+="<tr><td><b class='text-primary'>"+datos[i][j][4]+"</b></td><td><span class='label' style='background:"+datos[i][j][5]+"'>"+datos[i][j][1]+"</span></td><td colspan='2' class='tamano_celda_td'><span>"+datos[i][j][2]+"</span></td><td class='tamano_celda_td' colspan='2'><a href='#' class='text-center'><span class='btn btn-simple btn-success editar_estado'><i class='material-icons'>edit</i></span></a></td></tr>";
                     }
                 }
                 html+="</tbody>";
                 html+="</table>";
             $("#colapse").html(html)
+            
         },
         error:function(){
            alert('la operación falló');
@@ -24945,8 +24947,28 @@ function historial_estados(id) //carga datos del historial de los estados con el
     })
 }
 
-function cambiar_estado(){
-    var dataString  = $( '#form_estado' ).serializeArray()
+function cambiar_estado(id){
+    console.log(id)
+    $("#modal_estado").modal("show")
+    var value = $("#select_estado option").attr('value');
+    alert(value)
+    $('#select_estado option:eq('+id+')').attr('selected', 'selected')
+    /*while( < id){   
+        //echo '<option id="opt1" value="'. $curso[id_curso] .'" ' . ($se_deshabilita == true ? 'disabled' : '') . '>' . $curso[1] .'</option>';
+        $('#select_estado option').attr('disabled', 'disabled');
+    } */
+
+   /* $("#select_estado option").each(function(){
+        //alert($(this).attr('value'))
+        if ($(this).attr('value') < id) {
+            $('#select_estado option:eq').attr('disabled', 'disabled');
+        }
+    });*/
+     
+
+    //$("#select_estado").html("")
+
+    /*var dataString  = $( '#form_estado' ).serializeArray()
     var id = $("#id_empresa").val()
     var route = "/update_estado/"+id+""
         $.ajax({
@@ -24970,7 +24992,7 @@ function cambiar_estado(){
                     }
                 }
             }
-        }) 
+        }) */
 }
 //finaliza crud organización.
 //------------------------------

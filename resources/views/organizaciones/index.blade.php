@@ -33,6 +33,6 @@
 @include('../contactos.modal')
 @include('../cargos.modal')
 @include('organizaciones.modal_ficha')
-@include('organizaciones.modal_estado')
 @include('organizaciones.modal_historial')
+@include('organizaciones.modal_estado')
 @endsection

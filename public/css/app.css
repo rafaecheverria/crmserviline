@@ -234,13 +234,14 @@ span.btn.btn-success.btn-simple.editar_estado i.material-icons:hover{
 
 .tamano_celda_th{
   width: 130px;
-  text-align: center;
-vertical-align:text-left;
+  text-align: left;
+  vertical-align:text-top;
 }
-/*.tamano_celda_td{
+.tamano_celda_td{
   text-align: left;
   vertical-align:text-left;
-}
+}*/
+/*
 .table-estado.icono_editar_nota{
     text-align: center;   
 }*/

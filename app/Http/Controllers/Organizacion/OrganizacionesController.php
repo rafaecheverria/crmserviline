@@ -36,7 +36,7 @@ class OrganizacionesController extends Controller
     {
         $organizacion = Organizacion::findOrFail($id); //obtiene la organización seleccionada.
         $nota = $organizacion->estados()->first()->pivot->nota;
-        $datos_estado = $organizacion->estados()->orderBy('fecha_actualizado', 'ASC')->take(1)->get(); //obtiene el ultimo estado.
+        $estado_actual = $organizacion->estados()->orderBy('fecha_creado', 'DESC')->take(1)->get(); //obtiene el estado actual (ultimo registro segun fecha creación).
         $historial_estados = $organizacion->estados()->select('estado_id', 'estado', 'color', 'organizacion_id', 'nota','fecha_creado','fecha_actualizado')->orderBy('fecha_actualizado', 'DESC')->get();
 
         $agrupar = $historial_estados->mapToGroups(function ($item, $key) {
@@ -44,8 +44,13 @@ class OrganizacionesController extends Controller
         });
         $agrupar->toArray();
 
+        $id = array();
+        foreach($estado_actual as $v){
+            $id[] = $v->id;
+            } 
         return response()->json([
            "agrupar" => $agrupar,
+           "estado_actual" => $id,
         ]);
     }
 

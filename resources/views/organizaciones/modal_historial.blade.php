@@ -4,9 +4,9 @@
         <div class="modal-content">
             <div class="modal-header-primary">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="material-icons">clear</i></button>
-                <h6>HISTORIAL DE ESTADOS:  <b><span class="title-name"></span></b></h6>
+                <div id="title-estado"></div>
             </div>
-            <div class="modal-body">
+            <div class="modal-body scroll">
                 @include('organizaciones.historial')
             </div>
             <div class="modal-footer text-center">

@@ -47,10 +47,15 @@ class OrganizacionesController extends Controller
         $id = array();
         foreach($estado_actual as $v){
             $id[] = $v->id;
+            $estado[] = $v->estado;
+            $color[] = $v->color;
             } 
         return response()->json([
            "agrupar" => $agrupar,
            "estado_actual" => $id,
+           "estado" => $estado,
+           "color" => $color,
+           "organizacion_id" => $organizacion->id,
         ]);
     }
 

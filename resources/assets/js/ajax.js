@@ -933,7 +933,7 @@ function getCiudadUp(region_id, ciudad_id){
     }
 })
 }
-function getDoctorAdd(especialidad){
+/*function getDoctorAdd(especialidad){
     $.get("get-doctor/"+especialidad+"",function(response,speciality){
         $("#up_evento #doctor_id").empty()
         if (response == "") {
@@ -968,7 +968,7 @@ function select_especialidad_add(id, speciality_id){
         }
         })
     }
-}
+}*/
 function roles_user(id)// carga datos en el modal roles_user del módulo de personas.
 {
   // event.preventDefault();
@@ -1031,6 +1031,10 @@ function organizacion_user(id, tipo)// carga datos en el modal organizacion_user
                url: route,
                type: 'GET',
             success:function(data){
+                console.log(data.region_id)
+                $("#region_id").val(data.region_id)
+                var ciudad_id = $("#ciudad_id").val()
+                getCiudadUp(data.region_id, data.ciudad_id)
                 $('#id').val(data.id)
                 $('#rut').val(data.rut)
                 $('#nombre').val(data.nombre)
@@ -1040,9 +1044,6 @@ function organizacion_user(id, tipo)// carga datos en el modal organizacion_user
                 $('#telefono').val(data.telefono)
                 $('#vendedor_id').val(data.vendedor_id)
                 $("INPUT[name=tipo]").val([data.tipo]) //carga valor de radiobutton desde mysql
-                $("#region_id").val(data.region_id)
-                var ciudad_id = $("#ciudad_id").val()
-                getCiudadUp(data.region_id, data.ciudad_id)
                 const crearOption = (value, name, selected) => `<option value="${value}"${selected.includes(value) ? ' selected' : ''}>${name}</option>`
                 const obj = data.contactos
                 const values = Object.keys(obj)
@@ -1160,14 +1161,16 @@ function historial_estados(id) //carga datos del historial de los estados con el
    var route = "/historial_estado/"+id+"";
    var csrf_token = $('meta[name="csrf-token"]').attr('content');
    var html = "";
+   var title = "";
     $.ajax({
         url: route,
         type: 'GET',
-        success:function(data){
-            console.log(data.estado_actual)
+        success:function(data){        
             var datos = data.agrupar;
+            title += "<h6>ESTADO ACTUAL: <span class='label' style='background:"+data.color+"'>"+data.estado+"</span></h6>";
+
             html+="<table class='table table-hover table-striped table-responsive'>";
-            html+="<thead><td class='tamano_celda_th'>FECHA</td><td>ESTADO</td><td>NOTA</td><td colspan='2'><a href='#' onclick='cambiar_estado("+data.estado_actual+")' data-toggle='tooltip' data-placement='top' class='btn btn-primary btn-round btn-fab btn-fab-mini' title='Agregar Nota'><i class='material-icons'>edit</i></a></td></thead>";
+            html+="<thead><td class='tamano_celda_th'>FECHA</td><td>ESTADO</td><td>NOTA</td><td colspan='2'><a href='#' onclick='agregar_nota("+data.estado_actual+", "+data.organizacion_id+",\"" + data.estado + "\", \"" + data.color + "\")' data-toggle='tooltip' data-placement='top' class='btn btn-primary btn-round btn-fab btn-fab-mini' title='Agregar Nota'><i class='material-icons'>add_comment</i></a></td></thead>";
             html+="<tbody>";
             for(var i in datos){
                 for(var j in datos[i]){
@@ -1177,6 +1180,7 @@ function historial_estados(id) //carga datos del historial de los estados con el
                 html+="</tbody>";
                 html+="</table>";
             $("#colapse").html(html)
+            $("#title-estado").html(title)
             
         },
         error:function(){
@@ -1185,28 +1189,15 @@ function historial_estados(id) //carga datos del historial de los estados con el
     })
 }
 
-function cambiar_estado(id){
-    console.log(id)
+function agregar_nota(estado_id, organizacion_id, estado, color){
+    console.log(organizacion_id)
+    var title = "";
+    title += "<h6>AGREGAR NOTA AL ESTADO: <span class='label' style='background:"+color+"'>"+estado+"</span></h6>";
     $("#modal_estado").modal("show")
-    var value = $("#select_estado option").attr('value');
-    alert(value)
-    $('#select_estado option:eq('+id+')').attr('selected', 'selected')
-    /*while( < id){   
-        //echo '<option id="opt1" value="'. $curso[id_curso] .'" ' . ($se_deshabilita == true ? 'disabled' : '') . '>' . $curso[1] .'</option>';
-        $('#select_estado option').attr('disabled', 'disabled');
-    } */
-
-   /* $("#select_estado option").each(function(){
-        //alert($(this).attr('value'))
-        if ($(this).attr('value') < id) {
-            $('#select_estado option:eq').attr('disabled', 'disabled');
-        }
-    });*/
-     
-
-    //$("#select_estado").html("")
-
-    /*var dataString  = $( '#form_estado' ).serializeArray()
+    $('#select_estado option:eq('+estado_id+')').attr('selected', 'selected')
+    $("#add_nota").html(title);
+/*
+    var dataString  = $( '#form_estado' ).serializeArray()
     var id = $("#id_empresa").val()
     var route = "/update_estado/"+id+""
         $.ajax({
@@ -1638,7 +1629,7 @@ swalWithBootstrapButtons({
 
     swalWithBootstrapButtons(
       'Eliminado!',
-      'El registro de ha eliminado.',
+      'El registro se ha eliminado.',
       'success'
     )
   } else if (

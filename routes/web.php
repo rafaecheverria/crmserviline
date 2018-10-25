@@ -1,8 +1,8 @@
 <?php
 
 Route::middleware(['auth', 'role:administrador|doctor|recepcionista'])->group(function(){
-	Route::resource('clinica','Clinica\ClinicaController')->middleware(['permission:leer-clinicas']);
-	Route::resource('doctores', 'Doctor\DoctorController')->middleware(['permission:leer-doctores']);
+	//Route::resource('clinica','Clinica\ClinicaController')->middleware(['permission:leer-clinicas']);
+	//Route::resource('doctores', 'Doctor\DoctorController')->middleware(['permission:leer-doctores']);
 	Route::resource('recepcionistas', 'Receptionist\ReceptionistController')->middleware(['permission:leer-recepcionistas']);
 	Route::resource('users/avatar', 'User\AvatarController', ['only' => 'store']);
 	Route::resource('personas', 'User\UserController')->middleware(['permission:leer-personas']);
@@ -12,6 +12,7 @@ Route::middleware(['auth', 'role:administrador|doctor|recepcionista'])->group(fu
 	Route::resource('especialidades', 'Especialidad\EspecialidadController')->middleware(['permission:leer-especialidades']);
 	Route::resource('contactos', 'Contacto\ContactosController');
 	Route::resource('organizaciones', 'Organizacion\OrganizacionesController');
+	Route::resource('estado_organizacion', 'Estado_Organizacion\Estado_OrganizacionController');
 	Route::get('historial_estado/{id}', 'Organizacion\OrganizacionesController@historial_estado');
 	Route::put('update_estado/{id}', 'Organizacion\OrganizacionesController@update_estado');
 	Route::get('ficha/{id}', 'Organizacion\OrganizacionesController@ficha');

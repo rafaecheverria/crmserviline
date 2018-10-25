@@ -251,6 +251,14 @@ span.btn.btn-success.btn-simple.editar_estado i.material-icons:hover{
   width: 100%;
   overflow-y: auto;
 }
+  
+.advertencia {  
+color: red;  
+}  
+  
+.indicador {  
+color: #9C27B0;  
+}  
 /*! =========================================================
  *
  Material Dashboard PRO - V1.1.0

@@ -4,6 +4,37 @@ function redirect(ruta)
     //setTimeout("location."+ruta, 5000);
 }
 $(document).ready(function() {
+    var valor, contador, parrafo;  
+// Mostramos un mensaje inicial y lo añadimos al div de id contador.  
+$('<p class="indicador">Tienes 500 caracteres restantes</p>').appendTo('#contador');
+// Definimos el evento para que detecte cada vez que se presione una tecla.  
+$('#nota').keydown(function(){  
+// Redefinimos el valor de contador al máximo permitido (150).  
+contador = 500;  
+/* Quitamos el párrafo con clase advertencia o indicador, en caso de que ya se 
+   haya mostrado un mensaje */  
+$('.advertencia').remove();  
+$('.indicador').remove();  
+// Tomamos el valor actual del contenido del área de texto  
+valor = $('#nota').val().length;  
+// Descontamos ese valor al máximo.  
+contador = contador - valor;  
+/* Dependiendo de cuantos caracteres quedan, mostraremos el mensaje de una 
+   u otra forma (lo definiremos a continuación mediante CSS */  
+if(contador < 0) {  
+   parrafo = '<p class="advertencia">';  
+}else{  
+   parrafo = '<p class="indicador">';  
+}  
+// Mostramos el mensaje con el número de caracteres restantes.  
+$('#contador').append(parrafo + 'Tienes ' + contador + ' caracteres restantes</p>');  
+  
+});  
+
+$('#modal_estado').on('shown.bs.modal', function () {
+    $('#nota').focus();
+})
+
 //$('.material-datatables label').addClass('form-group');
 $('#dias').datepicker({
     multidate:true,
@@ -839,14 +870,14 @@ $( "#ingresar" ).click(function(event){
 
     })
 })
-
+/*
     String.prototype.ucwords = function() {
     str = this.toLowerCase();
     return str.replace(/(^([a-zA-Z\p{M}]))|([ -][a-zA-Z\p{M}])/g,
         function($1){
             return $1.toUpperCase();
         });
-}
+}*/
 
 function guardar_especialidad()
 {
@@ -1133,7 +1164,7 @@ function ficha(id) //carga datos en la ficha.
             $(".img_pac").attr('src', 'assets/img/perfiles/'+data.logo+'?'+ new Date().getTime());
             $('.rut').html(data.rut)
             $('.nombre').html(data.nombre)
-            $('.email').html(data.email)
+            $('.email').html("<a href='mailto:"+data.email+"'><span class='label label-primary'>"+data.email+"</span></a>")
             $('.telefono').html(data.telefono)
             $('.direccion').html(data.direccion)
             $('.tipo').html(data.tipo)
@@ -1158,70 +1189,77 @@ function ficha(id) //carga datos en la ficha.
 function historial_estados(id) //carga datos del historial de los estados con el id de la organización.
 {
    $("#modal_historial_estado").modal("show");
-   var route = "/historial_estado/"+id+"";
-   var csrf_token = $('meta[name="csrf-token"]').attr('content');
-   var html = "";
-   var title = "";
+    var route = "/historial_estado/"+id+"";
+    var csrf_token = $('meta[name="csrf-token"]').attr('content');
     $.ajax({
         url: route,
         type: 'GET',
         success:function(data){        
-            var datos = data.agrupar;
-            title += "<h6>ESTADO ACTUAL: <span class='label' style='background:"+data.color+"'>"+data.estado+"</span></h6>";
-
-            html+="<table class='table table-hover table-striped table-responsive'>";
-            html+="<thead><td class='tamano_celda_th'>FECHA</td><td>ESTADO</td><td>NOTA</td><td colspan='2'><a href='#' onclick='agregar_nota("+data.estado_actual+", "+data.organizacion_id+",\"" + data.estado + "\", \"" + data.color + "\")' data-toggle='tooltip' data-placement='top' class='btn btn-primary btn-round btn-fab btn-fab-mini' title='Agregar Nota'><i class='material-icons'>add_comment</i></a></td></thead>";
-            html+="<tbody>";
-            for(var i in datos){
-                for(var j in datos[i]){
-                    html+="<tr><td><b class='text-primary'>"+datos[i][j][4]+"</b></td><td><span class='label' style='background:"+datos[i][j][5]+"'>"+datos[i][j][1]+"</span></td><td colspan='2' class='tamano_celda_td'><span>"+datos[i][j][2]+"</span></td><td class='tamano_celda_td' colspan='2'><a href='#' class='text-center'><span class='btn btn-simple btn-success editar_estado'><i class='material-icons'>edit</i></span></a></td></tr>";
-                    }
-                }
-                html+="</tbody>";
-                html+="</table>";
-            $("#colapse").html(html)
-            $("#title-estado").html(title)
-            
+            console.log(data)
+            cargar_tabla_historial(data.agrupar, data.color, data.estado, data.organizacion_id, data.estado_actual)
         },
-        error:function(){
-           alert('la operación falló');
+        error:function(data){
+           console.log(data)
         }
     })
 }
 
-function agregar_nota(estado_id, organizacion_id, estado, color){
+function cargar_tabla_historial(datos, color, estado, organizacion, estado_actual){
+    var html = "";
+    var title = "";
+    title += "<h6>ESTADO ACTUAL: <span class='label' style='background:"+color+"'>"+estado+"</span></h6>";
+    html+="<table class='table table-hover table-striped table-responsive'>";
+    html+="<thead><td class='tamano_celda_th'>FECHA</td><td>ESTADO</td><td>NOTA</td><td colspan='2'><a href='#' onclick='mostrar_agregar_nota("+estado_actual+", "+organizacion+",\"" + estado + "\", \"" + color + "\")' data-toggle='tooltip' data-placement='top' class='btn btn-primary btn-round btn-fab btn-fab-mini' title='Agregar Nota'><i class='material-icons'>add_comment</i></a></td></thead>";
+    html+="<tbody>";
+    for(var i in datos){
+        for(var j in datos[i]){
+            html+="<tr><td><b class='text-primary'>"+datos[i][j][4]+"</b></td><td><span class='label' style='background:"+datos[i][j][5]+"'>"+datos[i][j][1]+"</span></td><td colspan='2' class='tamano_celda_td'><span>"+datos[i][j][2]+"</span></td><td class='tamano_celda_td' colspan='2'><a href='#' class='text-center'><span class='btn btn-simple btn-success editar_estado'><i class='material-icons'>edit</i></span></a></td></tr>";
+            }
+        }
+        html+="</tbody>";
+        html+="</table>";
+    $("#colapse").html(html)
+    $("#title-estado").html(title)
+
+}
+
+function mostrar_agregar_nota(estado_id, organizacion_id, estado, color){
     console.log(organizacion_id)
     var title = "";
     title += "<h6>AGREGAR NOTA AL ESTADO: <span class='label' style='background:"+color+"'>"+estado+"</span></h6>";
-    $("#modal_estado").modal("show")
-    $('#select_estado option:eq('+estado_id+')').attr('selected', 'selected')
+    $("#modal_estado").modal("show");
     $("#add_nota").html(title);
-/*
-    var dataString  = $( '#form_estado' ).serializeArray()
-    var id = $("#id_empresa").val()
-    var route = "/update_estado/"+id+""
+    $("#id_estado").val(estado_id)
+    $("#id_empresa").val(organizacion_id)
+}
+
+function agregar_nota(){
+    var dataString  = $( '#form_nota' ).serializeArray()
+    //var csrf_token = $('meta[name="csrf-token"]').attr('content');
+    console.log(dataString)
+    var route = "/estado_organizacion/"
         $.ajax({
-            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+           // headers: csrf_token,
             url: route,
-            type: 'PUT',
+            type: 'POST',
             datatype: 'json',
             data:dataString,
             success:function(data){
-                $('#estado').html("<a href='#' <span class='label' style='background:"+data.color+"'>"+data.estado+"</span></a>")
+                console.log(data)
+                //cargar_tabla_historial(data.historial_estados, data.color, data.estado, data.organizacion_id, data.estado_actual)
                 $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
-                $('#organizaciones').DataTable().ajax.reload();
-                $('#modal_organizacion').modal('toggle')
             },
             error:function(data){
-                var error = data.responseJSON.errors;
+                console.log(data)
+                /*var error = data.responseJSON.errors;
                 for(var i in error){
                     for(var j in error[i]){
                         var message = error[i][j];
                        $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000})
                     }
-                }
+                }*/
             }
-        }) */
+        }) 
 }
 //finaliza crud organización.
 //------------------------------

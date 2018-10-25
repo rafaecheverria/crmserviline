@@ -1,22 +1,17 @@
-<div class="row sinpadding">
-    <form class="form" id="agregar_nota">
-      <input id="id_empresa" name="id" hidden="true" />
-        <label class="control-label">ESTADOS:</label> <select id="select_estado" name="estado" class="form-control">
+    <form class="form" id="form_nota">
+      {{csrf_field()}}
+      <input id="id_estado" name="estado_id" hidden="true" />
+      <input id="id_empresa" name="organizacion_id" hidden="true" />
           <div class="row sinpadding">
               <div class="col-md-12">
                   <div class="form-group">
                       <label class="control-label">NOTA:</label>
-                      <textarea rows="6" type="text" class="form-control" id="nota" name="nota"></textarea>
+                      <textarea rows="6" type="text" class="form-control" id="nota" name="nota" maxlength="500"></textarea>
                   </div>
               </div>
           </div>
     </form>
-    <br>
-    <br>
-  <div class="col-md-3">
-    <div id="add_contact">
-      <a class="btn btn-primary btn-sm" onclick="cambiar_estado()">Cambiar Estado</a>
-    </div>
-  </div>
-</div>
+    <div id="contador"></div>
+    <a class="btn btn-primary btn-sm btn pull-right" onclick="agregar_nota()">Agregar Nota</a>
+
 

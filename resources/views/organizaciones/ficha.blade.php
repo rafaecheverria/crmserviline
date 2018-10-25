@@ -10,7 +10,7 @@
             </div> 
         </div>
         <div class="col-md-8">
-            <table class="table">
+            <table class="table table-hover">
                 <tbody>
                     <tr>
                         <th>EMPRESA:</th>

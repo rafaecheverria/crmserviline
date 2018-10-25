@@ -34,28 +34,21 @@ class OrganizacionesController extends Controller
 
     public function historial_estado($id)
     {
-        $organizacion = Organizacion::findOrFail($id); //obtiene la organización seleccionada.
-        $nota = $organizacion->estados()->first()->pivot->nota;
-        $estado_actual = $organizacion->estados()->orderBy('fecha_creado', 'DESC')->take(1)->get(); //obtiene el estado actual (ultimo registro segun fecha creación).
-        $historial_estados = $organizacion->estados()->select('estado_id', 'estado', 'color', 'organizacion_id', 'nota','fecha_creado','fecha_actualizado')->orderBy('fecha_actualizado', 'DESC')->get();
+        $agrupar = Organizacion::obtener_historial_estados($id);
+        $estado_actual = Organizacion::estado_actual($id);
 
-        $agrupar = $historial_estados->mapToGroups(function ($item, $key) {
-            return [$item['estado'] => [$item['estado_id'], $item['estado'], $item['nota'], Date::parse($item['fecha_creado'])->format('j F Y'), Date::parse($item['fecha_actualizado'])->format('j F Y'), $item['color']]];
-        });
-        $agrupar->toArray();
-
-        $id = array();
         foreach($estado_actual as $v){
-            $id[] = $v->id;
+            $id_estado = $v->id;
             $estado[] = $v->estado;
             $color[] = $v->color;
-            } 
+        }
+
         return response()->json([
            "agrupar" => $agrupar,
-           "estado_actual" => $id,
+           "estado_actual" => $id_estado,
            "estado" => $estado,
            "color" => $color,
-           "organizacion_id" => $organizacion->id,
+           "organizacion_id" => $id,
         ]);
     }
 
@@ -95,9 +88,7 @@ class OrganizacionesController extends Controller
                         $historial = '<a href="#" onclick="historial_estados('.$organizacion->id.')" rel="tooltip" title="Historial de Estados" class="btn btn-simple btn-info btn-icon"><i class="material-icons">history</i></a>';
                         $editar = '<a href="#" onclick="organizacion_user('.$organizacion->id.',2)" rel="tooltip" title="Editar" class="btn btn-simple btn-success btn-icon edit"><i class="material-icons">edit</i></a>';
                         $eliminar = '<a href="#" onclick="eliminar('.$organizacion->id.',\''.$organizacion->nombre.'\',\''.$ruta.'\')" rel="tooltip" title="Eliminar" class="btn btn-simple btn-danger btn-icon"><i class="material-icons">close</i></a>';
-
                         return $ficha.$historial.$editar.$eliminar;
-                       
                     })->make(true);
     }
 

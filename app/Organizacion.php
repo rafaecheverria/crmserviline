@@ -31,4 +31,31 @@ class Organizacion extends Model
         return Date::parse($this->updated_at)->format('j F Y');
         
     }
+
+    public static function obtener_organizacion($id){
+
+        $organizacion = Organizacion::where("id", $id);
+        return $organizacion;
+    }
+
+    public static function obtener_historial_estados($id){
+         $organizacion = Organizacion::findOrFail($id);
+         $historial_estados = $organizacion->estados()->select('estado_id', 'estado', 'color', 'organizacion_id', 'nota','fecha_creado','fecha_actualizado')->orderBy('fecha_actualizado', 'DESC')->get();
+
+        $agrupar = $historial_estados->mapToGroups(function ($item, $key) {
+            return [$item['estado'] => [$item['estado_id'], $item['estado'], $item['nota'], Date::parse($item['fecha_creado'])->format('j F Y'), Date::parse($item['fecha_actualizado'])->format('j F Y'), $item['color']]];
+        });
+        return $agrupar->toArray();
+    }
+    public static function estado_actual($id){
+        $organizacion = Organizacion::findOrFail($id);
+        $estado_actual = $organizacion->estados()->orderBy('fecha_creado', 'DESC')->take(1)->get(); //obtiene el estado actual (ultimo registro segun fecha
+        return $estado_actual;
+    }
+
+    public static function insertar_nota_organizacion_estado($organizacion_id, $estado_id, $nota){
+        $organizacion = Organizacion::findOrFail($organizacion_id);
+        $insertar_nota = $organizacion->estados()->attach($estado_id,['nota'=>$nota, 'fecha_creado' => now(), 'fecha_actualizado' => now()]);
+        return $insertar_nota;
+    }
 }

@@ -16,23 +16,24 @@ class Estado_OrganizacionController extends Controller
     public function store(Request $request)
     {
         if($request->ajax()){
-            $organizacion = Organizacion::obtener_organizacion($request->organizacion_id); 
-            /*$historial_estados = Organizacion::obtener_historial_estados($request->id);
-            $estado_actual = estado_actual($request->organizacion_id);
+            //$organizacion = Organizacion::obtener_organizacion($request->organizacion_id); 
+            Organizacion::insertar_nota_organizacion_estado($request->organizacion_id, $request->estado_id, $request->nota);
+            $historial_estados = Organizacion::obtener_historial_estados($request->organizacion_id);
+            $estado_actual = Organizacion::estado_actual($request->organizacion_id);
                 foreach($estado_actual as $v){
                     $id_estado = $v->id;
-                    $estado[] = $v->estado;
+                    $estado[] = $v->estado; 
                     $color[] = $v->color;
-                }*/
+                }
 
-           Organizacion::insertar_nota_organizacion_estado($request->organizacion_id, $request->estado_id, $request->nota);
+           
             return response()->json([
               "message" => "La nota de agrego a la empresa !",
-              /*"historial_estados" => $historial_estados, //agrupar
+              "historial_estados" => $historial_estados, //agrupar
               "estado_actual" => $id_estado,
               "estado" => $estado,
               "color" => $color,
-              "organizacion_id" => $request->id,*/
+              "organizacion_id" => $request->organizacion_id,
 
             ]);
         }

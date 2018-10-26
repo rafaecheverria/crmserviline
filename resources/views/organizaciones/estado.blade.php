@@ -12,6 +12,6 @@
           </div>
     </form>
     <div id="contador"></div>
-    <a class="btn btn-primary btn-sm btn pull-right" onclick="agregar_nota()">Agregar Nota</a>
+    <a class="btn btn-primary btn-sm btn pull-right" id="boton-agregar-nota" onclick="agregar_nota()">Agregar Nota</a>
 
 

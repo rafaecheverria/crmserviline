@@ -23873,6 +23873,12 @@ $('.timepicker').datetimepicker({
         $("#prevision_select").selectpicker()
     })*/
 
+
+    jQuery('#AvanzaModal').on('hidden.bs.modal', function (e) {
+        jQuery(this).removeData('bs.modal');
+        jQuery(this).find('.modal-content').empty();
+    })
+
  $("#region_id").change(function(event){ //carga las Ciudades en el select #ciudad_id según la región elegida.
     $("#display").hide();
     var id = event.target.value;
@@ -23922,9 +23928,8 @@ $('.timepicker').datetimepicker({
         
     }
  })
- 
 
-     
+      
 /*$( "#delete_cita" ).click(function(event){ //esta funcion elimina una cita oendiente desde el cale ndario.
     var id= $( '#id' ).val()
     var popup = confirm("¿ Esta seguro de eliminar esta cita ?")
@@ -24446,6 +24451,8 @@ $( "#add_permiso" ).click(function(event){
         })
     })
 
+
+
 $( "#add_paciente" ).click(function(event){
         var route = "/pacientes/"
         var dataString  = $( '#form_add_paciente' ).serializeArray()
@@ -24726,42 +24733,7 @@ function getCiudadUp(region_id, ciudad_id){
     }
 })
 }
-/*function getDoctorAdd(especialidad){
-    $.get("get-doctor/"+especialidad+"",function(response,speciality){
-        $("#up_evento #doctor_id").empty()
-        if (response == "") {
-             $("#up_evento #doctor_id").html("<option>--Seleccione--</option>")
-        }else{
-            for(i = 0; i <response.length; i++) {
-                $("#up_evento #doctor_id").append("<option value='"+response[i].id+"'>"+response[i].apellidos+" "+response[i].nombres+"</option>")
-            }
-            $('#up_evento #doctor_id').val(event.doctor_id)
-            $('.selectpicker').selectpicker('refresh')
-        }
-    })
-}
 
-function select_especialidad_add(id, speciality_id){
-    if (id == "0") {
-    }else{
-        $.get("get-especialidad/"+id+"",function(response,speciality){
-        $("#speciality_id_add").empty()
-        $('.selectpicker').selectpicker('refresh')
-        if (response == "") {
-             $("#speciality_id_add").html("<option>--Seleccione--</option>")
-             $('.selectpicker').selectpicker('refresh')
-        }else{
-            for(i = 0; i <response.length; i++) {
-                $("#speciality_id_add").append("<option value='"+response[i].id+"'>"+response[i].nombre+"</option>")
-                $('.selectpicker').selectpicker('refresh')
-            }
-            //$('#up_evento #speciality_id_e_add').val(speciality_id)
-            $('.selectpicker').selectpicker('refresh')
-
-        }
-        })
-    }
-}*/
 function roles_user(id)// carga datos en el modal roles_user del módulo de personas.
 {
   // event.preventDefault();
@@ -24976,13 +24948,14 @@ function cargar_tabla_historial(datos, color, estado, organizacion, estado_actua
     for(var i in datos){
         for(var j in datos[i]){
             html+="<tr><td><b class='text-primary'>"+datos[i][j][4]+"</b></td><td><span class='label' style='background:"+datos[i][j][5]+"'>"+datos[i][j][1]+"</span></td><td colspan='2' class='tamano_celda_td'><span>"+datos[i][j][2]+"</span></td><td class='tamano_celda_td' colspan='2'><a href='#' class='text-center'><span class='btn btn-simple btn-success editar_estado'><i class='material-icons'>edit</i></span></a></td></tr>";
-            }
         }
-        html+="</tbody>";
-        html+="</table>";
+    }
+    html+="</tbody>";
+    html+="</table>";
+    
     $("#colapse").html(html)
     $("#title-estado").html(title)
-
+    return html;
 }
 
 function mostrar_agregar_nota(estado_id, organizacion_id, estado, color){
@@ -24997,19 +24970,24 @@ function mostrar_agregar_nota(estado_id, organizacion_id, estado, color){
 
 function agregar_nota(){
     var dataString  = $( '#form_nota' ).serializeArray()
-    //var csrf_token = $('meta[name="csrf-token"]').attr('content');
     console.log(dataString)
     var route = "/estado_organizacion/"
         $.ajax({
-           // headers: csrf_token,
             url: route,
             type: 'POST',
             datatype: 'json',
             data:dataString,
             success:function(data){
-                console.log(data)
-                //cargar_tabla_historial(data.historial_estados, data.color, data.estado, data.organizacion_id, data.estado_actual)
+                console.log(data.historial_estados)
+                var html = "";
+                $("#modal_estado").modal("hide");
+                html += cargar_tabla_historial(data.historial_estados, data.color, data.estado, data.organizacion_id, data.estado_actual)
+                $('#modal_historial_estado .modal-body').empty();
+                $('#modal_historial_estado .modal-body').append(html);
+               // console.log(html)
                 $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
+
+                
             },
             error:function(data){
                 console.log(data)

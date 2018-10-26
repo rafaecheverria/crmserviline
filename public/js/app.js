@@ -24923,6 +24923,7 @@ function ficha(id) //carga datos en la ficha.
 function historial_estados(id) //carga datos del historial de los estados con el id de la organización.
 {
    $("#modal_historial_estado").modal("show");
+    var html = "";
     var route = "/historial_estado/"+id+"";
     var csrf_token = $('meta[name="csrf-token"]').attr('content');
     $.ajax({
@@ -24930,7 +24931,9 @@ function historial_estados(id) //carga datos del historial de los estados con el
         type: 'GET',
         success:function(data){        
             console.log(data)
-            cargar_tabla_historial(data.agrupar, data.color, data.estado, data.organizacion_id, data.estado_actual)
+            html += cargar_tabla_historial(data.agrupar, data.color, data.estado, data.organizacion_id, data.estado_actual)
+            $('#modal_historial_estado .modal-body').empty();
+            $('#modal_historial_estado .modal-body').append(html);
         },
         error:function(data){
            console.log(data)
@@ -24970,7 +24973,6 @@ function mostrar_agregar_nota(estado_id, organizacion_id, estado, color){
 
 function agregar_nota(){
     var dataString  = $( '#form_nota' ).serializeArray()
-    console.log(dataString)
     var route = "/estado_organizacion/"
         $.ajax({
             url: route,
@@ -24978,16 +24980,12 @@ function agregar_nota(){
             datatype: 'json',
             data:dataString,
             success:function(data){
-                console.log(data.historial_estados)
                 var html = "";
                 $("#modal_estado").modal("hide");
                 html += cargar_tabla_historial(data.historial_estados, data.color, data.estado, data.organizacion_id, data.estado_actual)
                 $('#modal_historial_estado .modal-body').empty();
                 $('#modal_historial_estado .modal-body').append(html);
-               // console.log(html)
-                $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
-
-                
+                $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})             
             },
             error:function(data){
                 console.log(data)

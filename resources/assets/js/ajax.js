@@ -111,12 +111,6 @@ $('.timepicker').datetimepicker({
         $("#prevision_select").selectpicker()
     })*/
 
-
-    jQuery('#AvanzaModal').on('hidden.bs.modal', function (e) {
-        jQuery(this).removeData('bs.modal');
-        jQuery(this).find('.modal-content').empty();
-    })
-
  $("#region_id").change(function(event){ //carga las Ciudades en el select #ciudad_id según la región elegida.
     $("#display").hide();
     var id = event.target.value;
@@ -1161,6 +1155,7 @@ function ficha(id) //carga datos en la ficha.
 function historial_estados(id) //carga datos del historial de los estados con el id de la organización.
 {
    $("#modal_historial_estado").modal("show");
+    var html = "";
     var route = "/historial_estado/"+id+"";
     var csrf_token = $('meta[name="csrf-token"]').attr('content');
     $.ajax({
@@ -1168,7 +1163,9 @@ function historial_estados(id) //carga datos del historial de los estados con el
         type: 'GET',
         success:function(data){        
             console.log(data)
-            cargar_tabla_historial(data.agrupar, data.color, data.estado, data.organizacion_id, data.estado_actual)
+            html += cargar_tabla_historial(data.agrupar, data.color, data.estado, data.organizacion_id, data.estado_actual)
+            $('#modal_historial_estado .modal-body').empty();
+            $('#modal_historial_estado .modal-body').append(html);
         },
         error:function(data){
            console.log(data)

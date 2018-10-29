@@ -8,11 +8,6 @@ use App\Http\Controllers\Controller;
 
 class Estado_OrganizacionController extends Controller
 {
-    public function index()
-    {
-        //
-    }
-
     public function store(Request $request)
     {
         if($request->ajax()){
@@ -25,8 +20,6 @@ class Estado_OrganizacionController extends Controller
                     $estado[] = $v->estado; 
                     $color[] = $v->color;
                 }
-
-           
             return response()->json([
               "message" => "La nota de agrego a la empresa !",
               "historial_estados" => $historial_estados, //agrupar
@@ -34,25 +27,28 @@ class Estado_OrganizacionController extends Controller
               "estado" => $estado,
               "color" => $color,
               "organizacion_id" => $request->organizacion_id,
-
             ]);
         }
     }
 
-     public function edit(Request $request, $id)
+    public function edit(Request $request, $id)
     {
-         if($request->ajax()) {
-        $organizacion = Organizacion::obtener_historial_estados($id);
-        return response()->json([
-            'success'      => true,
-            'nota'          => $organizacion,
-        ]);
-        }
+        
     }
 
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        //
+        if($request->ajax()) {
+        $estado_organizacion = Organizacion::obtener_un_estado_organizacion($id);
+        foreach($estado_organizacion as $v){
+                    $id = $v->id;
+                    $nota = $v->nota; 
+                }
+            return response()->json([
+                'success'      => true,
+                'nota'          => $nota,
+            ]);
+        }
     }
 
     public function update(Request $request, $id)

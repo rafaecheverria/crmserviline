@@ -1193,30 +1193,28 @@ function cargar_tabla_historial(datos, color, estado, organizacion, estado_actua
 }
 
 function mostrar_agregar_nota(estado_id, organizacion_id, estado, color, id){
-    //console.log(organizacion_id)
     var title = "";
-    $("#boton-agregar-nota").html("<a class='btn btn-primary btn-sm btn pull-right' onclick='agregar_nota(0)'>Agregar Nota</a>");
+    $("#boton-agregar-nota").html("<a class='btn btn-primary btn-sm btn pull-right' onclick='agregar_nota(1)'>Agregar Nota</a>");
     title += "<h6>AGREGAR NOTA AL ESTADO: <span class='label' style='background:"+color+"'>"+estado+"</span></h6>";
     $("#modal_estado").modal("show");
     $("#add_nota").html(title);
     $("#id_estado").val(estado_id)
     $("#id_empresa").val(organizacion_id)
     if (id>0) {
-        $("#boton-agregar-nota").html("<a class='btn btn-primary btn-sm btn pull-right' onclick='agregar_nota(0)'>Actualizar Nota</a>");
+        $("#boton-agregar-nota").html("<a class='btn btn-primary btn-sm btn pull-right' onclick='agregar_nota(2)'>Actualizar Nota</a>");
         var route = "/estado_organizacion/"+id+"";
-         alert(route)
          $.ajax({
            url: route,
            type: 'GET',
            success:function(data){
-            console.log(data.nota)
+            $("#id").val(data.id)
+            $("#nota").val(data.nota)
            }
-
         })
     }
 }
 
-function agregar_nota(){
+function agregar_nota(tipo){
     var dataString  = $( '#form_nota' ).serializeArray()
     var route = "/estado_organizacion/"
         $.ajax({

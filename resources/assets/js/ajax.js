@@ -1161,8 +1161,8 @@ function historial_estados(id) //carga datos del historial de los estados con el
     $.ajax({
         url: route,
         type: 'GET',
-        success:function(data){        
-            console.log(data)
+        success:function(data){    
+        console.log(data)    
             html += cargar_tabla_historial(data.agrupar, data.color, data.estado, data.organizacion_id, data.estado_actual)
             $('#modal_historial_estado .modal-body').empty();
             $('#modal_historial_estado .modal-body').append(html);
@@ -1178,29 +1178,42 @@ function cargar_tabla_historial(datos, color, estado, organizacion, estado_actua
     var title = "";
     title += "<h6>ESTADO ACTUAL: <span class='label' style='background:"+color+"'>"+estado+"</span></h6>";
     html+="<table class='table table-hover table-striped table-responsive'>";
-    html+="<thead><td class='tamano_celda_th'>FECHA</td><td>ESTADO</td><td>NOTA</td><td colspan='2'><a href='#' onclick='mostrar_agregar_nota("+estado_actual+", "+organizacion+",\"" + estado + "\", \"" + color + "\")' data-toggle='tooltip' data-placement='top' class='btn btn-primary btn-round btn-fab btn-fab-mini' title='Agregar Nota'><i class='material-icons'>add_comment</i></a></td></thead>";
+    html+="<thead><td class='tamano_celda_th'>FECHA</td><td>ESTADO</td><td>NOTA</td><td colspan='2'><a href='#' onclick='mostrar_agregar_nota("+estado_actual+", "+organizacion+",\"" + estado + "\", \"" + color + "\", "+0+")' data-toggle='tooltip' data-placement='top' class='btn btn-primary btn-round btn-fab btn-fab-mini' title='Agregar Nota'><i class='material-icons'>add_comment</i></a></td></thead>";
     html+="<tbody>";
     for(var i in datos){
         for(var j in datos[i]){
-            html+="<tr><td><b class='text-primary'>"+datos[i][j][4]+"</b></td><td><span class='label' style='background:"+datos[i][j][5]+"'>"+datos[i][j][1]+"</span></td><td colspan='2' class='tamano_celda_td'><span>"+datos[i][j][2]+"</span></td><td class='tamano_celda_td' colspan='2'><a href='#' class='text-center'><span class='btn btn-simple btn-success editar_estado'><i class='material-icons'>edit</i></span></a></td></tr>";
+            html+="<tr><td><b class='text-primary'>"+datos[i][j][4]+"</b></td><td><span class='label' style='background:"+datos[i][j][6]+"'>"+datos[i][j][2]+"</span></td><td colspan='2' class='tamano_celda_td'><p>"+datos[i][j][3]+"</p></td><td class='tamano_celda_td' colspan='2'><a href='#' onclick='mostrar_agregar_nota("+estado_actual+", "+organizacion+",\"" + estado + "\", \"" + color + "\", "+datos[i][j][0]+")' class='text-center'><span class='btn btn-simple btn-success editar_estado'><i class='material-icons'>edit</i></span></a></td></tr>";
         }
     }
     html+="</tbody>";
     html+="</table>";
-    
     $("#colapse").html(html)
     $("#title-estado").html(title)
     return html;
 }
 
-function mostrar_agregar_nota(estado_id, organizacion_id, estado, color){
-    console.log(organizacion_id)
+function mostrar_agregar_nota(estado_id, organizacion_id, estado, color, id){
+    //console.log(organizacion_id)
     var title = "";
+    $("#boton-agregar-nota").html("<a class='btn btn-primary btn-sm btn pull-right' onclick='agregar_nota(0)'>Agregar Nota</a>");
     title += "<h6>AGREGAR NOTA AL ESTADO: <span class='label' style='background:"+color+"'>"+estado+"</span></h6>";
     $("#modal_estado").modal("show");
     $("#add_nota").html(title);
     $("#id_estado").val(estado_id)
     $("#id_empresa").val(organizacion_id)
+    if (id>0) {
+        $("#boton-agregar-nota").html("<a class='btn btn-primary btn-sm btn pull-right' onclick='agregar_nota(0)'>Actualizar Nota</a>");
+        var route = "/estado_organizacion/"+id+"";
+         alert(route)
+         $.ajax({
+           url: route,
+           type: 'GET',
+           success:function(data){
+            console.log(data.nota)
+           }
+
+        })
+    }
 }
 
 function agregar_nota(){

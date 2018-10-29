@@ -39,6 +39,17 @@ class Estado_OrganizacionController extends Controller
         }
     }
 
+     public function edit(Request $request, $id)
+    {
+         if($request->ajax()) {
+        $organizacion = Organizacion::obtener_historial_estados($id);
+        return response()->json([
+            'success'      => true,
+            'nota'          => $organizacion,
+        ]);
+        }
+    }
+
     public function show($id)
     {
         //

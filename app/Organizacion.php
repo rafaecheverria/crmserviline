@@ -40,10 +40,12 @@ class Organizacion extends Model
 
     public static function obtener_historial_estados($id){
          $organizacion = Organizacion::findOrFail($id);
-         $historial_estados = $organizacion->estados()->select('estado_id', 'estado', 'color', 'organizacion_id', 'nota','fecha_creado','fecha_actualizado')->orderBy('fecha_actualizado', 'DESC')->get();
+         $historial_estados = $organizacion->estados()
+         ->join('estados as est', 'estado_organizacion.estado_id', '=', 'est.id')
+         ->select('estado_organizacion.id as id','estado_organizacion.estado_id', 'est.estado', 'est.color', 'estado_organizacion.organizacion_id as organizacion_id', 'estado_organizacion.nota','estado_organizacion.fecha_creado','estado_organizacion.fecha_actualizado')->orderBy('estado_organizacion.fecha_actualizado', 'DESC')->get();
 
         $agrupar = $historial_estados->mapToGroups(function ($item, $key) {
-            return [$item['estado'] => [$item['estado_id'], $item['estado'], $item['nota'], Date::parse($item['fecha_creado'])->format('j F Y'), Date::parse($item['fecha_actualizado'])->format('j F Y'), $item['color']]];
+            return [$item['estado'] => [$item['id'], $item['estado_id'], $item['estado'], $item['nota'], Date::parse($item['fecha_creado'])->format('j F Y'), Date::parse($item['fecha_actualizado'])->format('j F Y'), $item['color']]];
         });
         return $agrupar->toArray();
     }

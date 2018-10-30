@@ -1127,7 +1127,7 @@ function ficha(id) //carga datos en la ficha.
            type: 'GET',
         success:function(data){
             if (data.tipo == "PEQUENA") {data.tipo = "PEQUEÑA"}
-            $(".img_pac").attr('src', 'assets/img/perfiles/'+data.logo+'?'+ new Date().getTime());
+            $(".img_pac").attr('src', 'assets/img/perfiles/'+data.logo+'?'+ new Date().getTime()).addClass("img-circle");
             $('.rut').html(data.rut)
             $('.nombre').html(data.nombre)
             $('.email').html("<a href='mailto:"+data.email+"'><span class='label label-primary'>"+data.email+"</span></a>")
@@ -1176,13 +1176,14 @@ function historial_estados(id) //carga datos del historial de los estados con el
 function cargar_tabla_historial(datos, color, estado, organizacion, estado_actual){
     var html = "";
     var title = "";
+    console.log(datos)
     title += "<h6>ESTADO ACTUAL: <span class='label' style='background:"+color+"'>"+estado+"</span></h6>";
-    html+="<table class='table table-hover table-striped table-responsive'>";
-    html+="<thead><td class='tamano_celda_th'>FECHA</td><td>ESTADO</td><td>NOTA</td><td colspan='2'><a href='#' onclick='mostrar_agregar_nota("+estado_actual+", "+organizacion+",\"" + estado + "\", \"" + color + "\", "+0+")' data-toggle='tooltip' data-placement='top' class='btn btn-primary btn-round btn-fab btn-fab-mini' title='Agregar Nota'><i class='material-icons'>add_comment</i></a></td></thead>";
+    html+="<table class='table table-hover table-striped table-responsive tabe-condensed'>";
+    html+="<thead><td class='tamano_celda_th'>FECHA</td><td>ESTADO</td><td>NOTA</td><td class='text-center'><a href='#' onclick='mostrar_agregar_nota("+estado_actual+", "+organizacion+",\"" + estado + "\", \"" + color + "\", "+0+")' data-toggle='tooltip' data-placement='top' class='btn btn-primary btn-round btn-fab btn-fab-mini' title='Agregar Nota'><i class='material-icons'>add_comment</i></a></td></thead>";
     html+="<tbody>";
     for(var i in datos){
         for(var j in datos[i]){
-            html+="<tr><td><b class='text-primary'>"+datos[i][j][4]+"</b></td><td><span class='label' style='background:"+datos[i][j][6]+"'>"+datos[i][j][2]+"</span></td><td colspan='2' class='tamano_celda_td'><p>"+datos[i][j][3]+"</p></td><td class='tamano_celda_td' colspan='2'><a href='#' onclick='mostrar_agregar_nota("+estado_actual+", "+organizacion+",\"" + estado + "\", \"" + color + "\", "+datos[i][j][0]+")' class='text-center'><span class='btn btn-simple btn-success editar_estado'><i class='material-icons'>edit</i></span></a></td></tr>";
+            html+="<tr><td><b class='text-primary'>"+datos[i][j][6]+"</b></td><td><span class='label' style='background:"+datos[i][j][7]+"'>"+datos[i][j][3]+"</span></td><td>"+datos[i][j][4]+"</td><td class='text-center'><a href='#' onclick='mostrar_agregar_nota("+estado_actual+", "+organizacion+",\"" + estado + "\", \"" + color + "\", "+datos[i][j][0]+")'><span class='btn btn-success btn-simple'><i class='material-icons'>edit</i></span></a><a href='#' onclick='eliminar("+datos[i][j][0]+")'><span class='btn btn-danger btn-simple'><i class='material-icons'>delete</i></span></a></td></tr>";
         }
     }
     html+="</tbody>";
@@ -1192,21 +1193,23 @@ function cargar_tabla_historial(datos, color, estado, organizacion, estado_actua
     return html;
 }
 
-function mostrar_agregar_nota(estado_id, organizacion_id, estado, color, id){
+function mostrar_agregar_nota(estado_id, organizacion_id, estado, color, id){ //route -> estado_organizacion/"+id+""
     var title = "";
-    $("#boton-agregar-nota").html("<a class='btn btn-primary btn-sm btn pull-right' onclick='agregar_nota(1)'>Agregar Nota</a>");
+    $("#nota").val("")
+    $("#boton-agregar-nota").html("<a class='btn btn-primary btn-sm btn pull-right' onclick='agregar_nota(0,1)'>Agregar Nota</a>");
     title += "<h6>AGREGAR NOTA AL ESTADO: <span class='label' style='background:"+color+"'>"+estado+"</span></h6>";
     $("#modal_estado").modal("show");
     $("#add_nota").html(title);
     $("#id_estado").val(estado_id)
     $("#id_empresa").val(organizacion_id)
     if (id>0) {
-        $("#boton-agregar-nota").html("<a class='btn btn-primary btn-sm btn pull-right' onclick='agregar_nota(2)'>Actualizar Nota</a>");
+        $("#boton-agregar-nota").html("<a class='btn btn-primary btn-sm btn pull-right' onclick='agregar_nota("+id+",2)'>Actualizar Nota</a>");
         var route = "/estado_organizacion/"+id+"";
          $.ajax({
            url: route,
            type: 'GET',
            success:function(data){
+            console.log(data)
             $("#id").val(data.id)
             $("#nota").val(data.nota)
            }
@@ -1214,13 +1217,77 @@ function mostrar_agregar_nota(estado_id, organizacion_id, estado, color, id){
     }
 }
 
-function agregar_nota(tipo){
-    var dataString  = $( '#form_nota' ).serializeArray()
-    var route = "/estado_organizacion/"
-        $.ajax({
+function eliminar_nota(id){
+    /*
+    const swalWithBootstrapButtons = swal.mixin({
+  confirmButtonClass: 'btn btn-success',
+  cancelButtonClass: 'btn btn-danger',
+  buttonsStyling: false,
+})
+
+swalWithBootstrapButtons({
+  title: 'Estás seguro de eliminar a '+nombre+ '?',
+  text: "No podrás revertir esto.!",
+  type: 'warning',
+  showCancelButton: true,
+  confirmButtonText: 'Si, Eliminar!',
+  cancelButtonText: 'No, cancelar!',
+  reverseButtons: true
+}).then((result) => {
+    //alert(ruta+id)
+  if (result.value) {
+    var csrf_token = $('meta[name="csrf-token"]').attr('content')
+    var route = ruta+id;
+    $.ajax({
             url: route,
             type: 'POST',
-            datatype: 'json',
+            data: {'_method' : 'DELETE', '_token' : csrf_token},
+            success:function(data){
+                console.log(data)
+                $('#organizaciones').DataTable().ajax.reload();
+                $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000});
+            }, 
+            error:function(){
+                alert('la operación falló');
+            }
+       });
+
+    swalWithBootstrapButtons(
+      'Eliminado!',
+      'El registro se ha eliminado.',
+      'success'
+    )
+  } else if (
+    // Read more about handling dismissals
+    result.dismiss === swal.DismissReason.cancel
+  ) {
+    swalWithBootstrapButtons(
+      'Cancelado',
+      'No has eliminado el registro',
+      'error'
+    )
+  }
+})
+*/
+}
+
+function agregar_nota(id, tipo){
+    var dataString  = $( '#form_nota' ).serializeArray()
+    console.log(dataString)
+    var route = "estado_organizacion";
+    var type = "";
+    var datatype = 'json';
+    if (tipo == 1) {
+        type = 'POST';
+        route = route;
+    }else{
+        type = 'PUT';
+        route = route+"/"+id+"";
+    }
+      $.ajax({
+            url: route,
+            type: type,
+            datatype: datatype,
             data:dataString,
             success:function(data){
                 var html = "";
@@ -1232,15 +1299,15 @@ function agregar_nota(tipo){
             },
             error:function(data){
                 console.log(data)
-                /*var error = data.responseJSON.errors;
+                var error = data.responseJSON.errors;
                 for(var i in error){
                     for(var j in error[i]){
                         var message = error[i][j];
                        $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000})
                     }
-                }*/
+                }
             }
-        }) 
+        })
 }
 //finaliza crud organización.
 //------------------------------
@@ -1628,7 +1695,6 @@ swalWithBootstrapButtons({
   cancelButtonText: 'No, cancelar!',
   reverseButtons: true
 }).then((result) => {
-    //alert(ruta+id)
   if (result.value) {
     var csrf_token = $('meta[name="csrf-token"]').attr('content')
     var route = ruta+id;
@@ -1652,7 +1718,6 @@ swalWithBootstrapButtons({
       'success'
     )
   } else if (
-    // Read more about handling dismissals
     result.dismiss === swal.DismissReason.cancel
   ) {
     swalWithBootstrapButtons(
@@ -1662,32 +1727,8 @@ swalWithBootstrapButtons({
     )
   }
 })
-    /*switch(modal){
-        case 1://elimina un registro de organizaciones
-            $("#modal_organizacion").modal("show")
-            $("#contenido-modal").html("<span>¿Está seguro que desea eliminar éste registro?</span>");
-            $("#boton_organizacion").html('<button type="button" class="btn btn-simple" data-dismiss="modal">Cancelar</button><a href="#" onclick="del_paciente('+id+')"; type="button" class="btn btn-success btn-simple">Sí, Borrar</a>')
-        break;
-    }*/
 }
-/*function del_paciente(id)
-{// elimina un paciente
-    var route = "/pacientes/"+id+"";
-    var csrf_token = $('meta[name="csrf-token"]').attr('content');
-     $.ajax({
-            url: route,
-            type: 'POST',
-            data: {'_method' : 'DELETE', '_token' : csrf_token},
-            success:function(data){
-                $("#eliminar_paciente").modal("hide");
-                $('#pacientes').DataTable().ajax.reload();
-                $.notify({icon: "add_alert", message: data.message},{type: data.type, timer: 1000});
-            }, 
-            error:function(data){
-                alert('la operación falló');
-            }
-       });
-}*/
+
 function delete_especialidad(id)
 {
     $('#eliminar').html('<button type="button" class="btn btn-simple" data-dismiss="modal">Cancelar</button><a href="#" onclick="del_especialidad('+id+')"; type="button" class="btn btn-success btn-simple">Sí, Borrar</a>')

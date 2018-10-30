@@ -34,8 +34,7 @@ class Organizacion extends Model
     }
 
     public static function obtener_organizacion($id){
-
-        $organizacion = Organizacion::where("id", $id);
+        $organizacion = Organizacion::findOrFail($id);
         return $organizacion;
     }
 
@@ -46,7 +45,7 @@ class Organizacion extends Model
          ->select('estado_organizacion.id as id','estado_organizacion.estado_id', 'est.estado', 'est.color', 'estado_organizacion.organizacion_id as organizacion_id', 'estado_organizacion.nota','estado_organizacion.fecha_creado','estado_organizacion.fecha_actualizado')->orderBy('estado_organizacion.fecha_actualizado', 'DESC')->get();
 
         $agrupar = $historial_estados->mapToGroups(function ($item, $key) {
-            return [$item['estado'] => [$item['id'], $item['estado_id'], $item['estado'], $item['nota'], Date::parse($item['fecha_creado'])->format('j F Y'), Date::parse($item['fecha_actualizado'])->format('j F Y'), $item['color']]];
+            return [$item['estado'] => [$item['id'], $item['organizacion_id'], $item['estado_id'], $item['estado'], $item['nota'], Date::parse($item['fecha_creado'])->format('j F Y'), Date::parse($item['fecha_actualizado'])->format('j F Y'), $item['color']]];
         });
         return $agrupar->toArray();
     }
@@ -61,6 +60,11 @@ class Organizacion extends Model
         $insertar_nota = $organizacion->estados()->attach($estado_id,['nota'=>$nota, 'fecha_creado' => now(), 'fecha_actualizado' => now()]);
         return $insertar_nota;
     }
+    public static function actualizar_nota_organizacion_estado($id, $nota){
+       $update = DB::table('estado_organizacion')->where('id', $id)->update(['nota' => $nota]);
+        return $update;
+    }
+
 
     public static function obtener_un_estado_organizacion($id){
         $estado_organizacion = DB::table("estado_organizacion")->select("estado_organizacion.id", "estado_organizacion.nota")->where("id", "=", $id)->get();

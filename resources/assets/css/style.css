@@ -84,11 +84,11 @@
      border-top-right-radius: 5px;
 }
 
-
+/*
 table, th, td{
     text-align: left;
 }
-
+*/
 .modal-content .modal-body-edit {
   padding-top: 15px;
   padding-right: 15px;
@@ -135,16 +135,7 @@ table, th, td{
 #add_contact{
   margin-top: 50px;
 }
-.ancho-columna{
-    width: 19%;
-  }
-  .headt td {
-  /*min-width: 235px;*/
-  height: 0px;
-  padding: 5px;
-  text-align: center;
-  /*background-color: #433;*/
-}
+
 .no-padding {
     margin-top: -42px;
 }
@@ -158,24 +149,19 @@ table, th, td{
   margin-bottom: 50px;
 }
 
-span.btn.btn-success.btn-simple.editar_estado{
+span.btn.btn-simple{
   padding: 0px 0px;
   margin: 0px 10px;
 }
-span.btn.btn-success.btn-simple.editar_estado i.material-icons:hover{
+span.btn.btn-simple i.material-icons:hover{
   color: #2EC6DA;
 }
 
 
 .tamano_celda_th{
-  width: 130px;
-  text-align: left;
-  vertical-align:text-top;
+  width: 150px;
 }
-.tamano_celda_td{
-  text-align: left;
-  vertical-align:text-left;
-}
+
 /*
 .table-estado.icono_editar_nota{
     text-align: center;   
@@ -186,7 +172,7 @@ span.btn.btn-success.btn-simple.editar_estado i.material-icons:hover{
   width: 100%;
   overflow-y: auto;
 }
-  
+
 .advertencia {  
 color: red;  
 }  
@@ -194,3 +180,7 @@ color: red;
 .indicador {  
 color: #9C27B0;  
 }  
+
+ .td-iconos{
+  width: 80px;
+}

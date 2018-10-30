@@ -1162,7 +1162,6 @@ function historial_estados(id) //carga datos del historial de los estados con el
         url: route,
         type: 'GET',
         success:function(data){    
-        console.log(data)    
             html += cargar_tabla_historial(data.agrupar, data.color, data.estado, data.organizacion_id, data.estado_actual)
             $('#modal_historial_estado .modal-body').empty();
             $('#modal_historial_estado .modal-body').append(html);
@@ -1183,7 +1182,7 @@ function cargar_tabla_historial(datos, color, estado, organizacion, estado_actua
     html+="<tbody>";
     for(var i in datos){
         for(var j in datos[i]){
-            html+="<tr><td><b class='text-primary'>"+datos[i][j][6]+"</b></td><td><span class='label' style='background:"+datos[i][j][7]+"'>"+datos[i][j][3]+"</span></td><td>"+datos[i][j][4]+"</td><td class='text-center'><a href='#' onclick='mostrar_agregar_nota("+estado_actual+", "+organizacion+",\"" + estado + "\", \"" + color + "\", "+datos[i][j][0]+")'><span class='btn btn-success btn-simple'><i class='material-icons'>edit</i></span></a><a href='#' onclick='eliminar("+datos[i][j][0]+")'><span class='btn btn-danger btn-simple'><i class='material-icons'>delete</i></span></a></td></tr>";
+            html+="<tr><td><b class='text-primary'>"+datos[i][j][6]+"</b></td><td><span class='label' style='background:"+datos[i][j][7]+"'>"+datos[i][j][3]+"</span></td><td>"+datos[i][j][4]+"</td><td class='text-center'><a href='#' onclick='mostrar_agregar_nota("+estado_actual+", "+organizacion+",\"" + estado + "\", \"" + color + "\", "+datos[i][j][0]+")'><span class='btn btn-success btn-simple'><i class='material-icons'>edit</i></span></a><a href='#' onclick='eliminar("+datos[i][j][0]+", \"" +'nota de '+datos[i][j][3]+ "\", \"" +'estado_organizacion/'+ "\")'><span class='btn btn-danger btn-simple'><i class='material-icons'>delete</i></span></a></td></tr>";
         }
     }
     html+="</tbody>";
@@ -1217,59 +1216,6 @@ function mostrar_agregar_nota(estado_id, organizacion_id, estado, color, id){ //
     }
 }
 
-function eliminar_nota(id){
-    /*
-    const swalWithBootstrapButtons = swal.mixin({
-  confirmButtonClass: 'btn btn-success',
-  cancelButtonClass: 'btn btn-danger',
-  buttonsStyling: false,
-})
-
-swalWithBootstrapButtons({
-  title: 'Estás seguro de eliminar a '+nombre+ '?',
-  text: "No podrás revertir esto.!",
-  type: 'warning',
-  showCancelButton: true,
-  confirmButtonText: 'Si, Eliminar!',
-  cancelButtonText: 'No, cancelar!',
-  reverseButtons: true
-}).then((result) => {
-    //alert(ruta+id)
-  if (result.value) {
-    var csrf_token = $('meta[name="csrf-token"]').attr('content')
-    var route = ruta+id;
-    $.ajax({
-            url: route,
-            type: 'POST',
-            data: {'_method' : 'DELETE', '_token' : csrf_token},
-            success:function(data){
-                console.log(data)
-                $('#organizaciones').DataTable().ajax.reload();
-                $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000});
-            }, 
-            error:function(){
-                alert('la operación falló');
-            }
-       });
-
-    swalWithBootstrapButtons(
-      'Eliminado!',
-      'El registro se ha eliminado.',
-      'success'
-    )
-  } else if (
-    // Read more about handling dismissals
-    result.dismiss === swal.DismissReason.cancel
-  ) {
-    swalWithBootstrapButtons(
-      'Cancelado',
-      'No has eliminado el registro',
-      'error'
-    )
-  }
-})
-*/
-}
 
 function agregar_nota(id, tipo){
     var dataString  = $( '#form_nota' ).serializeArray()
@@ -1604,80 +1550,7 @@ function especialidad_doctor(id) //carga modal que contiene el select multiple d
     });
 }
 
-/*function ficha_paciente(id) //carga datos en la ficha del paciente.
-{
-   var route = "/ficha/"+id+"";
-   var csrf_token = $('meta[name="csrf-token"]').attr('content');
-   var image = new Image();
-    $.ajax({
-           url: route,
-           type: 'GET',
-        success:function(data){
-            $(".img_pac").attr('src', 'assets/img/perfiles/'+data.avatar+'?'+ new Date().getTime());
-            $('#rut').html(data.rut)
-            $('#nombres').html(data.nombres)
-            $('#edad').html(data.edad)
-            $('#email').html(data.email)
-            $('#telefono').html(data.telefono)
-            $('#genero').html(data.genero)
-            $('#direccion').html(data.direccion)
-            $('#sangre2').html(data.sangre)
-            $('#vih2').html(data.vih)
-            $('#peso2').html(data.peso)
-            $('#altura2').html(data.altura)
-            $('#alergia2').html(data.alergia)
-            $('#medicamento2').html(data.medicamento)
-            $('#enfermedad2').html(data.enfermedad)
-            $('.title-name').html(data.nombres)
-            $('#descargar').html('<a href="pdf/'+data.id+'" id="download_ficha" class="btn btn-info pull-right"><span class="btn-label"><i class="material-icons">file_download</i></span>Descargar</a>')
-          },
-       error:function(){
-           alert('la operación falló');
-          }
-    });
-}*/
 
-
-function eliminar_recep(id)
-{
-    var popup = confirm("¿ Esta seguro de eliminar este registro ?")
-    var route = "/recepcionistas/"+id+"";
-    var csrf_token = $('meta[name="csrf-token"]').attr('content');
-    if(popup ==true){
-     $.ajax({
-            url: route,
-            type: 'POST',
-            data: {'_method' : 'DELETE', '_token' : csrf_token},
-            success:function(data){
-                $('#recepcionistas').DataTable().ajax.reload();
-                $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000});
-            }, 
-            error:function(){
-                alert('la operación falló');
-            }
-       });
- }
-}
-function eliminar_doc(id)
-{
-    var popup = confirm("¿ Esta seguro de eliminar este registro ?")
-    var route = "/doctores/"+id+"";
-    var csrf_token = $('meta[name="csrf-token"]').attr('content');
-    if(popup ==true){
-     $.ajax({
-            url: route,
-            type: 'POST',
-            data: {'_method' : 'DELETE', '_token' : csrf_token},
-            success:function(data){
-                $('#datatables').DataTable().ajax.reload();
-                $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000});
-            }, 
-            error:function(){
-                alert('la operación falló');
-            }
-       });
-    }
-}
 function eliminar(id, nombre, ruta) //funcion general para eliminar cualquier registro de la base de datos.
 {
 const swalWithBootstrapButtons = swal.mixin({
@@ -1712,11 +1585,7 @@ swalWithBootstrapButtons({
             }
        });
 
-    swalWithBootstrapButtons(
-      'Eliminado!',
-      'El registro se ha eliminado.',
-      'success'
-    )
+
   } else if (
     result.dismiss === swal.DismissReason.cancel
   ) {

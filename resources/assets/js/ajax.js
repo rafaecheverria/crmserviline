@@ -1574,9 +1574,14 @@ swalWithBootstrapButtons({
     $.ajax({
             url: route,
             type: 'POST',
-            data: {'_method' : 'DELETE', '_token' : csrf_token},
+            data: {'_method' : 'DELETE', '_token' : csrf_token, 'organizacion_id': organizacion_id},
             success:function(data){
                 console.log(data)
+                var html = "";
+                //$("#modal_estado").modal("hide");
+                html += cargar_tabla_historial(data.historial_estados, data.color, data.estado, data.organizacion_id, data.estado_actual)
+                $('#modal_historial_estado .modal-body').empty();
+                $('#modal_historial_estado .modal-body').append(html);
                 $('#organizaciones').DataTable().ajax.reload();
                 $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000});
             }, 

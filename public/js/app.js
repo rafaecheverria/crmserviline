@@ -25336,9 +25336,14 @@ swalWithBootstrapButtons({
     $.ajax({
             url: route,
             type: 'POST',
-            data: {'_method' : 'DELETE', '_token' : csrf_token},
+            data: {'_method' : 'DELETE', '_token' : csrf_token, 'organizacion_id': organizacion_id},
             success:function(data){
                 console.log(data)
+                var html = "";
+                //$("#modal_estado").modal("hide");
+                html += cargar_tabla_historial(data.historial_estados, data.color, data.estado, data.organizacion_id, data.estado_actual)
+                $('#modal_historial_estado .modal-body').empty();
+                $('#modal_historial_estado .modal-body').append(html);
                 $('#organizaciones').DataTable().ajax.reload();
                 $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000});
             }, 
@@ -25899,11 +25904,12 @@ var listar_organizaciones = function()
         //"responsive": true,
         "columns":[
             {data: 'action', name: 'action', orderable: false, searchable: false, class:"text-left"},
-            {data: 'rut', name: 'rut'},
-            {data: 'nombre', name: 'nombre'},
-            {data: 'telefono', name: 'telefono'},
-            {data: 'direccion', name: 'direccion'},
-            {data: 'email', name: 'email'},   
+            {data: 'rut', name: 'organizaciones.rut'},
+            {data: 'nombre', name: 'organizaciones.nombre'},
+            {data: 'telefono', name: 'organizaciones.telefono'},
+            {data: 'direccion', name: 'organizaciones.direccion'},
+            {data: 'email', name: 'organizaciones.email'},   
+            {data: 'estado', name: 'estados.estado'},
         ]
     })
 }

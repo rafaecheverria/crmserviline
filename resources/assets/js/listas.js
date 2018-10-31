@@ -264,11 +264,12 @@ var listar_organizaciones = function()
         //"responsive": true,
         "columns":[
             {data: 'action', name: 'action', orderable: false, searchable: false, class:"text-left"},
-            {data: 'rut', name: 'rut'},
-            {data: 'nombre', name: 'nombre'},
-            {data: 'telefono', name: 'telefono'},
-            {data: 'direccion', name: 'direccion'},
-            {data: 'email', name: 'email'},   
+            {data: 'rut', name: 'organizaciones.rut'},
+            {data: 'nombre', name: 'organizaciones.nombre'},
+            {data: 'telefono', name: 'organizaciones.telefono'},
+            {data: 'direccion', name: 'organizaciones.direccion'},
+            {data: 'email', name: 'organizaciones.email'},   
+            {data: 'estado', name: 'estados.estado'},
         ]
     })
 }

@@ -67,7 +67,7 @@ class Organizacion extends Model
 
     public static function eliminar_nota_organizacion_estado($id){
        $delete = DB::table('estado_organizacion')->where('id', $id)->delete();
-        return $delete;
+       return $delete;
     }
 
 

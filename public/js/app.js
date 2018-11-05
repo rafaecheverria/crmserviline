@@ -24929,15 +24929,14 @@ function historial_estados(id) //carga datos del historial de los estados con el
             $('#modal_historial_estado .modal-body').append(html);
         },
         error:function(data){
-           console.log(data)
-        }
+            alert("la operación falló");
+            }
     })
 }
 
 function cargar_tabla_historial(datos, color, estado, organizacion, estado_actual){
     var html = "";
     var title = "";
-    console.log(datos)
     title += "<h6>ESTADO ACTUAL: <span class='label' style='background:"+color+"'>"+estado+"</span></h6>";
     html+="<table class='table table-hover table-striped table-responsive tabe-condensed'>";
     html+="<thead><td class='tamano_celda_th'>FECHA</td><td>ESTADO</td><td>NOTA</td><td class='text-center'><a href='#' onclick='mostrar_agregar_nota("+estado_actual+", "+organizacion+",\"" + estado + "\", \"" + color + "\", "+0+")' data-toggle='tooltip' data-placement='top' class='btn btn-primary btn-round btn-fab btn-fab-mini' title='Agregar Nota'><i class='material-icons'>add_comment</i></a></td></thead>";
@@ -24980,7 +24979,6 @@ function mostrar_agregar_nota(estado_id, organizacion_id, estado, color, id){
 
 function agregar_nota(id, tipo){
     var dataString  = $( '#form_nota' ).serializeArray()
-    console.log(dataString)
     var route = "estado_organizacion";
     var type = "";
     var datatype = 'json';
@@ -25017,36 +25015,64 @@ function agregar_nota(id, tipo){
         })
 }
 
-function mostrar_cambiar_estado(organizacion_id){
-    $("#titulo_estado").html("<span>Cambiar Estado</span>");
+function mostrar_cambiar_estado(organizacion_id, nombre){
+    $("#titulo_estado").html("<span>Cambiar Estado: </span> <span class='label label-rose'>"+nombre+"</span></h6>");
     $("#modal_cambiar_estado").modal("show");
     var route = "/cargar_estados_segun_actual/"+organizacion_id+"";
     var html = "";
          $.ajax({
            url: route,
            type: 'GET',
-           success:function(data){
+           success:function(data){            
             $("#select-estados").empty();
             for (i=0;i<data.estados.length;i++) {
-              $("#select-estados").append("<option style='background:"+data.estados[i].color+"; color:white' value='"+data.estados[i].id+"'>"+data.estados[i].estado+"</option>")
+                $("#select-estados").append("<option style='background:"+data.estados[i].color+"; color:white' value='"+data.estados[i].id+"'>"+data.estados[i].estado+"</option>")
             }
-            $("#boton-cambiar-estado").html("<a onclick='cambiar_estado("+organizacion_id+")' class='btn btn-primary btn pull-right'>Cambiar Estado</a>");
-           }
+              $("#boton-cambiar-estado").html("<a onclick='cambiar_estado("+organizacion_id+")' class='btn btn-primary btn pull-right'>Cambiar Estado</a>");
+            }
+           
          })
 }
 
 function cambiar_estado(organizacion_id){
+
+ const swalWithBootstrapButtons = swal.mixin({
+  confirmButtonClass: 'btn btn-success',
+  cancelButtonClass: 'btn btn-danger',
+  buttonsStyling: false,
+})
+
+swalWithBootstrapButtons({
+  title: '¿Estás seguro que quieres cambiar el estado de esta empresa?',
+  text: "Si aceptas, NO PODRÁS VOLVER AL ESTADO ACTUAL.!",
+  type: 'warning',
+  showCancelButton: true,
+  confirmButtonText: 'Si, Cambiar!',
+  cancelButtonText: 'No, cancelar!',
+  reverseButtons: true
+}).then((result) => {
+  if (result.value) {
     var dataString  = $( '#form_cambiar_estado' ).serializeArray()
     var csrf_token = $('meta[name="csrf-token"]').attr('content')
+    var route = "/cambiar_estado/"+organizacion_id+"";
     $.ajax({
-        url: "cambiar_estado",
+        headers: csrf_token,
+        url: route,
         datatype: "json",
         type: 'POST',
-        data: {'_token' : csrf_token, 'dataString': dataString, 'organizacion_id': organizacion_id},
+        data: dataString,
        success:function(data){
-        console.log(data)
-           }
+          $("#modal_cambiar_estado").modal("hide");
+          $(".nota").html("");
+          $('#organizaciones').DataTable().ajax.reload();
+          $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000})
+
+        }
     })
+
+
+  } 
+})
 }
 //finaliza crud organización.
 //------------------------------

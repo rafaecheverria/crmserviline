@@ -93,7 +93,7 @@ class OrganizacionesController extends Controller
                         $ruta = "organizaciones/";
                         $ficha = '<a href="#" onclick="ficha('.$organizacion->id.')" data-toggle="modal" data-target="#modal_ficha" rel="tooltip" title="Ficha Empresa" class="btn btn-simple btn-primary btn-icon"><i class="material-icons">business</i></a>';
                         $historial = '<a href="#" onclick="historial_estados('.$organizacion->id.')" rel="tooltip" title="Historial de Estados" class="btn btn-simple btn-info btn-icon"><i class="material-icons">playlist_add</i></a>';
-                        $cambiar_estado = '<a href="#" onclick="mostrar_cambiar_estado('.$organizacion->id.')" rel="tooltip" title="Cambiar Estado" class="btn btn-simple btn-rose btn-icon"><i class="material-icons">low_priority</i></a>';
+                        $cambiar_estado = '<a href="#" onclick="mostrar_cambiar_estado('.$organizacion->id.', \''.$organizacion->nombre.'\')" rel="tooltip" title="Cambiar Estado" class="btn btn-simple btn-rose btn-icon"><i class="material-icons">low_priority</i></a>';
                         $editar = '<a href="#" onclick="organizacion_user('.$organizacion->id.',2)" rel="tooltip" title="Editar" class="btn btn-simple btn-success btn-icon edit"><i class="material-icons">edit</i></a>';
                         $eliminar = '<a href="#" onclick="eliminar('.$organizacion->id.',\''.$organizacion->nombre.'\',\''.$ruta.'\')" rel="tooltip" title="Eliminar" class="btn btn-simple btn-danger btn-icon"><i class="material-icons">close</i></a>';
                         return $ficha.$historial.$cambiar_estado.$editar.$eliminar;

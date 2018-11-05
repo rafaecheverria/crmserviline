@@ -62,16 +62,12 @@ class Organizacion extends Model
         return $insertar_nota;
     }
 
-    public static function cambiar_estado($estado, $nota){
-        
-    }
-
     public static function obtener_estados_segun_actual($organizacion_id){
         $estado_actual = Organizacion::estado_actual($organizacion_id);
         foreach($estado_actual as $v){
                     $id_estado = $v->id;
                 }
-        $estados = Estado::where("id", ">", $id_estado)->get();
+        $estados = Estado::where("id", ">", $id_estado)->where("id", "<", 7)->get();
         return $estados;
     }
     public static function actualizar_nota_organizacion_estado($id, $nota){

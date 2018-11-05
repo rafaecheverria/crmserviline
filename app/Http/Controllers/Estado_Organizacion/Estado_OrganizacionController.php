@@ -30,12 +30,12 @@ class Estado_OrganizacionController extends Controller
         }
     }
 
-    public function cambiar_estado(Request $request)
+    public function cambiar_estado(Request $request, $id)
     {
         if($request->ajax()){
-        Organizacion::insertar_nota_organizacion_estado($request->organizacion_id, $request->estado_id, $request->nota);
+        Organizacion::insertar_nota_organizacion_estado($id, $request->estado_id, $request->nota);
         return response()->json([
-              "message" => $request->dataString,
+              "message" => "Se ha realizado el cambio de estado",
             ]);
         }
     }

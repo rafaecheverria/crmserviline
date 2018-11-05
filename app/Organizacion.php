@@ -4,6 +4,7 @@ namespace App;
 
 use Jenssegers\Date\Date;
 use DB;
+use App\Estado;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
@@ -59,6 +60,19 @@ class Organizacion extends Model
         $organizacion = Organizacion::findOrFail($organizacion_id);
         $insertar_nota = $organizacion->estados()->attach($estado_id,['nota'=>$nota, 'fecha_creado' => now(), 'fecha_actualizado' => now()]);
         return $insertar_nota;
+    }
+
+    public static function cambiar_estado($estado, $nota){
+        
+    }
+
+    public static function obtener_estados_segun_actual($organizacion_id){
+        $estado_actual = Organizacion::estado_actual($organizacion_id);
+        foreach($estado_actual as $v){
+                    $id_estado = $v->id;
+                }
+        $estados = Estado::where("id", ">", $id_estado)->get();
+        return $estados;
     }
     public static function actualizar_nota_organizacion_estado($id, $nota){
        $update = DB::table('estado_organizacion')->where('id', $id)->update(['nota' => $nota]);

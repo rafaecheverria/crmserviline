@@ -218,15 +218,14 @@ span.btn.btn-simple{
   padding: 0px 0px;
   margin: 0px 10px;
 }
-span.btn.btn-simple i.material-icons:hover{
-  color: #2EC6DA;
+a.btn.btn-simple i.material-icons:hover{
+  color: #FF9800;
 }
 
 
 .tamano_celda_th{
   width: 150px;
 }
-
 /*
 .table-estado.icono_editar_nota{
     text-align: center;   

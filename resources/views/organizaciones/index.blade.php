@@ -35,4 +35,5 @@
 @include('organizaciones.modal_ficha')
 @include('organizaciones.modal_historial')
 @include('organizaciones.modal_estado')
+@include('organizaciones.modal_cambiar_estado')
 @endsection

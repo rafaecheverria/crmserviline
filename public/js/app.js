@@ -24944,7 +24944,7 @@ function cargar_tabla_historial(datos, color, estado, organizacion, estado_actua
     html+="<tbody>";
     for(var i in datos){
         for(var j in datos[i]){
-            html+="<tr><td><b class='text-primary'>"+datos[i][j][6]+"</b></td><td><span class='label' style='background:"+datos[i][j][7]+"'>"+datos[i][j][3]+"</span></td><td>"+datos[i][j][4]+"</td><td class='text-center'><a href='#' onclick='mostrar_agregar_nota("+estado_actual+", "+organizacion+",\"" + estado + "\", \"" + color + "\", "+datos[i][j][0]+")'><span class='btn btn-success btn-simple'><i class='material-icons'>edit</i></span></a><a href='#' onclick='eliminar("+datos[i][j][0]+", \"" +'nota de '+datos[i][j][3]+ "\", \"" +'estado_organizacion/'+ "\")'><span class='btn btn-danger btn-simple'><i class='material-icons'>delete</i></span></a></td></tr>";
+            html+="<tr><td><b class='text-primary'>"+datos[i][j][6]+"</b></td><td><span class='label' style='background:"+datos[i][j][7]+"'>"+datos[i][j][3]+"</span></td><td>"+datos[i][j][4]+"</td><td class='text-center'><a href='#' onclick='mostrar_agregar_nota("+estado_actual+", "+organizacion+",\"" + estado + "\", \"" + color + "\", "+datos[i][j][0]+")'><span class='btn btn-success btn-simple'><i class='material-icons'>edit</i></span></a><a href='#' onclick='eliminar("+datos[i][j][0]+", \"" +'nota de '+datos[i][j][3]+ "\", \"" +'estado_organizacion/'+ "\", "+datos[i][j][1]+" )'><span class='btn btn-danger btn-simple'><i class='material-icons'>delete</i></span></a></td></tr>";
         }
     }
     html+="</tbody>";
@@ -24954,7 +24954,7 @@ function cargar_tabla_historial(datos, color, estado, organizacion, estado_actua
     return html;
 }
 
-function mostrar_agregar_nota(estado_id, organizacion_id, estado, color, id){ //route -> estado_organizacion/"+id+""
+function mostrar_agregar_nota(estado_id, organizacion_id, estado, color, id){
     var title = "";
     $("#nota").val("")
     $("#boton-agregar-nota").html("<a class='btn btn-primary btn-sm btn pull-right' onclick='agregar_nota(0,1)'>Agregar Nota</a>");
@@ -24970,7 +24970,6 @@ function mostrar_agregar_nota(estado_id, organizacion_id, estado, color, id){ //
            url: route,
            type: 'GET',
            success:function(data){
-            console.log(data)
             $("#id").val(data.id)
             $("#nota").val(data.nota)
            }
@@ -25016,6 +25015,38 @@ function agregar_nota(id, tipo){
                 }
             }
         })
+}
+
+function mostrar_cambiar_estado(organizacion_id){
+    $("#titulo_estado").html("<span>Cambiar Estado</span>");
+    $("#modal_cambiar_estado").modal("show");
+    var route = "/cargar_estados_segun_actual/"+organizacion_id+"";
+    var html = "";
+         $.ajax({
+           url: route,
+           type: 'GET',
+           success:function(data){
+            $("#select-estados").empty();
+            for (i=0;i<data.estados.length;i++) {
+              $("#select-estados").append("<option style='background:"+data.estados[i].color+"; color:white' value='"+data.estados[i].id+"'>"+data.estados[i].estado+"</option>")
+            }
+            $("#boton-cambiar-estado").html("<a onclick='cambiar_estado("+organizacion_id+")' class='btn btn-primary btn pull-right'>Cambiar Estado</a>");
+           }
+         })
+}
+
+function cambiar_estado(organizacion_id){
+    var dataString  = $( '#form_cambiar_estado' ).serializeArray()
+    var csrf_token = $('meta[name="csrf-token"]').attr('content')
+    $.ajax({
+        url: "cambiar_estado",
+        datatype: "json",
+        type: 'POST',
+        data: {'_token' : csrf_token, 'dataString': dataString, 'organizacion_id': organizacion_id},
+       success:function(data){
+        console.log(data)
+           }
+    })
 }
 //finaliza crud organización.
 //------------------------------
@@ -25313,7 +25344,7 @@ function especialidad_doctor(id) //carga modal que contiene el select multiple d
 }
 
 
-function eliminar(id, nombre, ruta) //funcion general para eliminar cualquier registro de la base de datos.
+function eliminar(id, nombre, ruta, organizacion_id) //funcion general para eliminar cualquier registro de la base de datos.
 {
 const swalWithBootstrapButtons = swal.mixin({
   confirmButtonClass: 'btn btn-success',
@@ -25353,15 +25384,7 @@ swalWithBootstrapButtons({
        });
 
 
-  } else if (
-    result.dismiss === swal.DismissReason.cancel
-  ) {
-    swalWithBootstrapButtons(
-      'Cancelado',
-      'No has eliminado el registro',
-      'error'
-    )
-  }
+  } 
 })
 }
 

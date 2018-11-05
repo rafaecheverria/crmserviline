@@ -30,9 +30,21 @@ class Estado_OrganizacionController extends Controller
         }
     }
 
-    public function edit(Request $request, $id)
+    public function cambiar_estado(Request $request)
     {
-        
+        if($request->ajax()){
+        Organizacion::insertar_nota_organizacion_estado($request->organizacion_id, $request->estado_id, $request->nota);
+        return response()->json([
+              "message" => $request->dataString,
+            ]);
+        }
+    }
+
+    public function get_estados_segun_actual($organizacion_id){
+        $obtener_estados_segun_actual = Organizacion::obtener_estados_segun_actual($organizacion_id)->toArray();
+            return response()->json([
+              "estados" => array_values($obtener_estados_segun_actual),
+            ]);
     }
 
     public function show(Request $request, $id)

@@ -8,7 +8,7 @@
             <th>Teléfono</th>
             <th>Dirección</th>
             <th>Email</th>
-            <th>Estados</th>
+            <th>Estado</th>
         </tr>
     </thead>
     <tbody>

@@ -267,9 +267,9 @@ var listar_organizaciones = function()
             {data: 'rut', name: 'organizaciones.rut'},
             {data: 'nombre', name: 'organizaciones.nombre'},
             {data: 'telefono', name: 'organizaciones.telefono'},
-            {data: 'direccion', name: 'organizaciones.direccion'},
             {data: 'email', name: 'organizaciones.email'},   
             {data: 'estado', name: 'estados.estado'},
+            {data: 'desactivar', name: 'desactivar'},
         ]
     })
 }

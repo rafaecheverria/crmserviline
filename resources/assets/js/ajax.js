@@ -36,6 +36,7 @@ $('#modal_estado').on('shown.bs.modal', function () {
 })
 
 //$('.material-datatables label').addClass('form-group');
+$('#toggle-two').bootstrapToggle();
 $('#dias').datepicker({
     multidate:true,
 });
@@ -1062,10 +1063,11 @@ function organizacion_user(id, tipo)// carga datos en el modal organizacion_user
     }    
 }
 function organizacion(id,tipo){
-    //event.preventDefault()
     var dataString  = $( '#form_organizacion' ).serializeArray()
+    console.log(dataString)
     if (tipo == 1) {
-    var route = "organizaciones"
+    var route = "organizaciones";
+   // alert(route)
     $.ajax({
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         url: route,
@@ -1073,10 +1075,11 @@ function organizacion(id,tipo){
         datatype: 'json',
         data:dataString,
         success:function(data){
+            console.log(data)
                  $('#organizaciones').DataTable().ajax.reload();
                  $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
                  $('#form_organizacion')[0].reset()
-                 $('#modal_organizacin').modal('toggle')        
+                 $('#modal_organizacion').modal('toggle')        
         },
         error:function(data){
             var error = data.responseJSON.errors;
@@ -1300,10 +1303,11 @@ swalWithBootstrapButtons({
         type: 'POST',
         data: dataString,
        success:function(data){
+          $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
           $("#modal_cambiar_estado").modal("hide");
           $(".nota").html("");
           $('#organizaciones').DataTable().ajax.reload();
-          $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000})
+          
 
         }
     })

@@ -66,10 +66,11 @@ class OrganizacionesController extends Controller
             $organizacion->ciudad_id   = $request->ciudad_id;
             $organizacion->region_id   = $request->region_id;
             $organizacion->vendedor_id = $request->vendedor_id;
-            $organizacion->color       = "#F44336";
+            //$organizacion->color       = "#F44336";
             $organizacion->logo        = "default.jpg";
             $organizacion->save();
             $organizacion->users()->sync($request->contacto_id);  
+            $organizacion->estados()->sync(1);
             return response()->json([
                 "message" => "La empresa ".$organizacion->nombre." ha sido guardada exitosamente!"
                 ]);
@@ -85,20 +86,19 @@ class OrganizacionesController extends Controller
                    $estado =  $organizacion->estados()->orderBy("fecha_creado", "DESC")->take(1)->get();
                         return $estado->map(function ($estado) {
                            return '<a href="#" class="label" style="background:'.$estado->color.'">'.$estado->estado.'</a>';
-                        })->implode('<br>');
-                    })
-                ->editColumn('direccion', function ($dir) {
-                    return ucwords($dir->direccion);
-                })->addColumn('action', function ($organizacion) {
-                        $ruta = "organizaciones/";
-                        $ficha = '<a href="#" onclick="ficha('.$organizacion->id.')" data-toggle="modal" data-target="#modal_ficha" rel="tooltip" title="Ficha Empresa" class="btn btn-simple btn-primary btn-icon"><i class="material-icons">business</i></a>';
-                        $historial = '<a href="#" onclick="historial_estados('.$organizacion->id.')" rel="tooltip" title="Historial de Estados" class="btn btn-simple btn-info btn-icon"><i class="material-icons">playlist_add</i></a>';
-                        $cambiar_estado = '<a href="#" onclick="mostrar_cambiar_estado('.$organizacion->id.', \''.$organizacion->nombre.'\')" rel="tooltip" title="Cambiar Estado" class="btn btn-simple btn-rose btn-icon"><i class="material-icons">low_priority</i></a>';
-                        $editar = '<a href="#" onclick="organizacion_user('.$organizacion->id.',2)" rel="tooltip" title="Editar" class="btn btn-simple btn-success btn-icon edit"><i class="material-icons">edit</i></a>';
-                        $eliminar = '<a href="#" onclick="eliminar('.$organizacion->id.',\''.$organizacion->nombre.'\',\''.$ruta.'\')" rel="tooltip" title="Eliminar" class="btn btn-simple btn-danger btn-icon"><i class="material-icons">close</i></a>';
-                        return $ficha.$historial.$cambiar_estado.$editar.$eliminar;
-                    })
-                ->rawColumns(['estado','action'])
+                    })->implode('<br>');
+                })
+                ->addColumn('desactivar', '<label class="switch"><input type="checkbox" checked><span class="slider round"></span></label>')
+                ->addColumn('action', function ($organizacion) {
+                    $ruta = "organizaciones/";
+                    $ficha = '<a href="#" onclick="ficha('.$organizacion->id.')" data-toggle="modal" data-target="#modal_ficha" rel="tooltip" title="Ficha Empresa" class="btn btn-simple btn-primary btn-icon"><i class="material-icons">business</i></a>';
+                    $historial = '<a href="#" onclick="historial_estados('.$organizacion->id.')" rel="tooltip" title="Historial de Estados" class="btn btn-simple btn-info btn-icon"><i class="material-icons">playlist_add</i></a>';
+                    $cambiar_estado = '<a href="#" onclick="mostrar_cambiar_estado('.$organizacion->id.', \''.$organizacion->nombre.'\')" rel="tooltip" title="Cambiar Estado" class="btn btn-simple btn-rose btn-icon"><i class="material-icons">low_priority</i></a>';
+                    $editar = '<a href="#" onclick="organizacion_user('.$organizacion->id.',2)" rel="tooltip" title="Editar" class="btn btn-simple btn-success btn-icon edit"><i class="material-icons">edit</i></a>';
+                    $eliminar = '<a href="#" onclick="eliminar('.$organizacion->id.',\''.$organizacion->nombre.'\',\''.$ruta.'\')" rel="tooltip" title="Eliminar" class="btn btn-simple btn-danger btn-icon"><i class="material-icons">close</i></a>';
+                    return $ficha.$historial.$cambiar_estado.$editar.$eliminar;
+                })
+                ->rawColumns(['estado','action', 'desactivar'])
                 ->make(true);
     }
 

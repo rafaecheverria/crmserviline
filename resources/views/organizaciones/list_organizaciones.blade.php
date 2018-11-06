@@ -6,9 +6,9 @@
             <th>Rut</th>
             <th>Nombre / Razón Social</th>
             <th>Teléfono</th>
-            <th>Dirección</th>
             <th>Email</th>
             <th>Estado</th>
+            <th>On/Off</th>
         </tr>
     </thead>
     <tbody>

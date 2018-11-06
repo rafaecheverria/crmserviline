@@ -33,6 +33,7 @@ mix.scripts([
 	'resources/assets/js/jquery.tagsinput.js',
 	'resources/assets/js/material-dashboard.js',
 	'resources/assets/js/demo.js',
+	'resources/assets/js/dataToggle.js',
 	'resources/assets/js/sweetalert2.js',
 	'resources/assets/js/calendarios.js',
 	'resources/assets/js/ajax.js',
@@ -43,7 +44,7 @@ mix.scripts([
 	'resources/assets/css/sweetalert2.css',
 	'resources/assets/css/demo.css',
 	'resources/assets/css/style.css',
-	
 	'resources/assets/css/material-dashboard.css',
+	'resources/assets/css/dataToggle.css',
 
 	], 'public/css/app.css');

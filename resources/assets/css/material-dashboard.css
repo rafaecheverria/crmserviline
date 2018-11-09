@@ -8204,6 +8204,7 @@ form .form-footer .checkbox {
 fieldset[disabled] .form-group.is-focused .checkbox label {
   color: rgba(0,0,0, 0.26);
 }
+
 .checkbox input[type=checkbox] {
   opacity: 0;
   position: absolute;

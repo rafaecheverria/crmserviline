@@ -23797,11 +23797,7 @@ $('#modal_estado').on('shown.bs.modal', function () {
     $('#nota').focus();
 })
 
-//$('.material-datatables label').addClass('form-group');
-$('#toggle-two').bootstrapToggle();
-$('#dias').datepicker({
-    multidate:true,
-});
+
 $('[data-toggle="tooltip"]').tooltip();
 $('.datepicker').datetimepicker({
         format: 'DD-MM-YYYY',
@@ -23875,6 +23871,7 @@ $('.timepicker').datetimepicker({
     })*/
 
  $("#region_id").change(function(event){ //carga las Ciudades en el select #ciudad_id según la región elegida.
+    alert()
     $("#display").hide();
     var id = event.target.value;
     if (!id) 
@@ -23920,7 +23917,6 @@ $('.timepicker').datetimepicker({
         $("#display").hide();
         $('#region_id').prop('disabled', false);
         $('#contacto_id').val("default").selectpicker('refresh')
-        
     }
  })
 
@@ -24509,6 +24505,7 @@ $( "#add_paciente" ).click(function(event){
         })
     })*/
 
+
 $( "#ingresar" ).click(function(event){ 
         //event.preventDefault();
         var dataString  = $( '#form_login' ).serializeArray();
@@ -24946,7 +24943,7 @@ function cargar_tabla_historial(datos, color, estado, organizacion, estado_actua
     html+="<tbody>";
     for(var i in datos){
         for(var j in datos[i]){
-            html+="<tr><td><b class='text-primary'>"+datos[i][j][6]+"</b></td><td><span class='label' style='background:"+datos[i][j][7]+"'>"+datos[i][j][3]+"</span></td><td>"+datos[i][j][4]+"</td><td class='text-center'><a href='#' onclick='mostrar_agregar_nota("+estado_actual+", "+organizacion+",\"" + estado + "\", \"" + color + "\", "+datos[i][j][0]+")'><span class='btn btn-success btn-simple'><i class='material-icons'>edit</i></span></a><a href='#' onclick='eliminar("+datos[i][j][0]+", \"" +'nota de '+datos[i][j][3]+ "\", \"" +'estado_organizacion/'+ "\", "+datos[i][j][1]+" )'><span class='btn btn-danger btn-simple'><i class='material-icons'>delete</i></span></a></td></tr>";
+            html+="<tr><td><b class='text-primary'>"+datos[i][j][2]+"</b></td><td><span class='label' style='background:"+datos[i][j][3]+"'>"+datos[i][j][1]+"</span></td><td>"+datos[i][j][6]+"</td><td class='text-center'><a href='#' onclick='mostrar_agregar_nota("+estado_actual+", "+organizacion+",\"" + estado + "\", \"" + color + "\", "+datos[i][j][0]+")'><span class='btn btn-success btn-simple'><i class='material-icons'>edit</i></span></a><a href='#' onclick='eliminar("+datos[i][j][0]+", \"" +'nota de '+datos[i][j][1]+ "\", \"" +'estado_organizacion/'+ "\", "+datos[i][j][7]+" )'><span class='btn btn-danger btn-simple'><i class='material-icons'>delete</i></span></a></td></tr>";
         }
     }
     html+="</tbody>";
@@ -25023,27 +25020,26 @@ function mostrar_cambiar_estado(organizacion_id, nombre){
     $("#modal_cambiar_estado").modal("show");
     var route = "/cargar_estados_segun_actual/"+organizacion_id+"";
     var html = "";
-         $.ajax({
-           url: route,
-           type: 'GET',
-           success:function(data){            
+    $.ajax({
+        url: route,
+        type: 'GET',
+        success:function(data){   
             $("#select-estados").empty();
             for (i=0;i<data.estados.length;i++) {
                 $("#select-estados").append("<option style='background:"+data.estados[i].color+"; color:white' value='"+data.estados[i].id+"'>"+data.estados[i].estado+"</option>")
             }
-              $("#boton-cambiar-estado").html("<a onclick='cambiar_estado("+organizacion_id+")' class='btn btn-primary btn pull-right'>Cambiar Estado</a>");
-            }
-           
-         })
+            $("#boton-cambiar-estado").html("<a onclick='cambiar_estado("+organizacion_id+")' class='btn btn-primary btn pull-right'>Cambiar Estado</a>");
+            
+        }
+    })
 }
 
 function cambiar_estado(organizacion_id){
-
- const swalWithBootstrapButtons = swal.mixin({
-  confirmButtonClass: 'btn btn-success',
-  cancelButtonClass: 'btn btn-danger',
-  buttonsStyling: false,
-})
+    const swalWithBootstrapButtons = swal.mixin({
+        confirmButtonClass: 'btn btn-success',
+        cancelButtonClass: 'btn btn-danger',
+        buttonsStyling: false,
+    })
 
 swalWithBootstrapButtons({
   title: '¿Estás seguro que quieres cambiar el estado de esta empresa?',
@@ -25069,14 +25065,100 @@ swalWithBootstrapButtons({
           $("#modal_cambiar_estado").modal("hide");
           $(".nota").html("");
           $('#organizaciones').DataTable().ajax.reload();
-          
-
         }
     })
 
 
   } 
 })
+}
+async function on_off(elemento,organizacion_id, estado_id, nombre){
+
+if($(elemento).siblings('input').prop("checked")){
+
+    const swalWithBootstrapButtons = swal.mixin({
+      confirmButtonClass: 'btn btn-success',
+      cancelButtonClass: 'btn btn-danger',
+      buttonsStyling: false,
+    })
+    const {value: nota} = await swal({
+      title: 'Desactivar a '+nombre+'',
+      input: 'textarea',
+      type: 'question',
+      confirmButtonClass: 'btn btn-success',
+      cancelButtonClass: 'btn btn-danger',
+      confirmButtonText: 'Desactivar',
+      cancelButtonText: 'Cancelar',
+      buttonsStyling: false,
+      inputPlaceholder: 'Escriba aquí una nota con el motivo de la baja...',
+      showCancelButton: true,
+      inputValidator: (value) => {
+        return !value && 'Debe completar todos los campos!'
+      }
+    })
+        var checked = $(elemento).siblings('input').prop("checked")
+        if (nota) {
+            var csrf_token = $('meta[name="csrf-token"]').attr('content')
+            $.ajax({
+            url:  "/cambiar_estado/"+organizacion_id+"",
+            type: 'POST',
+            datatype: "json",
+            data: {'_token' : csrf_token, 'estado_id': 7, 'nota': nota},
+            success:function(data){
+                var html = "";
+                $('#organizaciones').DataTable().ajax.reload();
+               /* html += cargar_tabla_historial(data.historial_estados, data.color, data.estado, data.organizacion_id, data.estado_actual)
+                $('#modal_historial_estado .modal-body').empty();
+                $('#modal_historial_estado .modal-body').append(html);*/
+                $.notify({icon: "add_alert", message: "la Empresa "+nombre+" ha sido desactivada exitosamente!"},{type: 'success', timer: 1000});
+            }, 
+            error:function(){
+                $(elemento).siblings('input').prop('checked', !checked);
+                alert('la operación falló');
+            }
+       })
+        } else {
+              $(elemento).siblings('input').prop('checked', !checked);
+        }
+   }else{
+    const {value: nota} = await swal({
+      title: 'Activar a '+nombre+'',
+      text: 'Cuando se activa una empresa, se añade automáticamente al estado PROSPECTO',
+      input: 'textarea',
+      type: 'question',
+      confirmButtonClass: 'btn btn-success',
+      cancelButtonClass: 'btn btn-danger',
+      confirmButtonText: 'Activar',
+      cancelButtonText: 'Cancelar',
+      buttonsStyling: false,
+      inputPlaceholder: 'Escriba aquí una nota para el nuevo estado...',
+      showCancelButton: true,
+      inputValidator: (value) => {
+        return !value && 'Debe completar todos los campos!'
+      }
+    })
+    var checked = $(elemento).siblings('input').prop("checked")
+        if (nota) {
+            var csrf_token = $('meta[name="csrf-token"]').attr('content')
+            $.ajax({
+            url:  "/cambiar_estado/"+organizacion_id+"",
+            type: 'POST',
+            datatype: "json",
+            data: {'_token' : csrf_token, 'estado_id': 1, 'nota': nota},
+            success:function(data){
+                $('#organizaciones').DataTable().ajax.reload();
+                console.log(data)
+                $.notify({icon: "add_alert", message: "la Empresa "+nombre+" ha sido activada exitosamente!"},{type: 'success', timer: 1000});
+            }, 
+            error:function(){
+                $(elemento).siblings('input').prop('checked', !checked);
+                alert('la operación falló');
+            }
+       })
+        } else {
+              $(elemento).siblings('input').prop('checked', !checked);
+        }
+   }
 }
 //finaliza crud organización.
 //------------------------------

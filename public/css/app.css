@@ -269,7 +269,7 @@ color: #9C27B0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #F44336;
+  background-color: #ccc;
   -webkit-transition: .4s;
   transition: .4s;
 }
@@ -287,11 +287,11 @@ color: #9C27B0;
 }
 
 input:checked + .slider {
-  background-color: #2196F3;
+  background-color: #9B27AF;
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
+  box-shadow: 0 0 1px #9B27AF;
 }
 
 input:checked + .slider:before {
@@ -8514,6 +8514,7 @@ form .form-footer .checkbox {
 fieldset[disabled] .form-group.is-focused .checkbox label {
   color: rgba(0,0,0, 0.26);
 }
+
 .checkbox input[type=checkbox] {
   opacity: 0;
   position: absolute;

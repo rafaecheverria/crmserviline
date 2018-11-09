@@ -39,16 +39,33 @@ class Organizacion extends Model
         return $organizacion;
     }
 
+    public static function traer_datos_estado_organizacion($organizacion){
+        $estado_organizacion = $organizacion->estados()
+            ->join('estados as est', 'estado_organizacion.estado_id', '=', 'est.id')
+            ->join('organizaciones as org', 'estado_organizacion.organizacion_id', '=', 'org.id')
+            ->select('estado_organizacion.id as id','estado_organizacion.estado_id', 'org.nombre', 'est.estado', 'est.color', 'estado_organizacion.organizacion_id as organizacion_id', 'estado_organizacion.nota','estado_organizacion.fecha_creado','estado_organizacion.fecha_actualizado')->orderBy('estado_organizacion.fecha_creado', 'DESC');
+        return $estado_organizacion;
+    }
+
     public static function obtener_historial_estados($id){
          $organizacion = Organizacion::findOrFail($id);
-         $historial_estados = $organizacion->estados()
-         ->join('estados as est', 'estado_organizacion.estado_id', '=', 'est.id')
-         ->select('estado_organizacion.id as id','estado_organizacion.estado_id', 'est.estado', 'est.color', 'estado_organizacion.organizacion_id as organizacion_id', 'estado_organizacion.nota','estado_organizacion.fecha_creado','estado_organizacion.fecha_actualizado')->orderBy('estado_organizacion.fecha_actualizado', 'DESC')->get();
-
-        $agrupar = $historial_estados->mapToGroups(function ($item, $key) {
-            return [$item['estado'] => [$item['id'], $item['organizacion_id'], $item['estado_id'], $item['estado'], $item['nota'], Date::parse($item['fecha_creado'])->format('j F Y'), Date::parse($item['fecha_actualizado'])->format('j F Y'), $item['color']]];
-        });
-        return $agrupar->toArray();
+         $historial_estados = Organizacion::traer_datos_estado_organizacion($organizacion)->get();
+         $datos = $historial_estados->map(function($item, $key){
+            return [$item['estado'] => [$item['id'],$item['estado'], Date::parse($item['fecha_creado'])->format('j F Y'), $item['color'], $item['organizacion_id'], $item['estado_id'], $item['nota'], $item['organizacion_id']]];
+         });
+         return $datos;
+/*==========================================================================================================
+            CÓDIGO QUE AGRUPA EL ARRAY POR SUS ESTADOS CON LA FUNCION mapToGroups()
+============================================================================================================*/
+       // $agrupar = $historial_estados->mapToGroups(function ($item, $key) {
+            //return [$item['estado'] => [$item['id'], $item['organizacion_id'], $item['estado_id'], $item['estado'], $item['nota'], Date::parse($item['fecha_creado'])->format('j F Y'), Date::parse($item['fecha_actualizado'])->format('j F Y'), $item['color']]];
+        //});
+        //return $agrupar->toArray();
+         //return $historial_estados;
+/*==========================================================================================================
+            CÓDIGO QUE AGRUPA EL ARRAY POR SUS ESTADOS CON LA FUNCION mapToGroups()
+============================================================================================================*/
+         
     }
     public static function estado_actual($id){
         $organizacion = Organizacion::findOrFail($id);

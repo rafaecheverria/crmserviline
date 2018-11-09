@@ -1,4 +1,4 @@
-<div id="formulario_cambiar_estados">
+<div id="formulario_cambiar_estado-show">
     <form class="form" id="form_cambiar_estado">
         {{csrf_field()}}
         <div class="row">
@@ -7,6 +7,7 @@
                       <select id="select-estados" name="estado_id" class="form-control" data-style="select-with-transition">
                       
                       </select>
+
                 </div>
             </div>
         </div>

@@ -102,6 +102,16 @@ class User extends Authenticatable
         return Carbon::parse($this->nacimiento)->age;
     }
 
+    public static function obtener_persona($id){
+        $persona = User::findOrFail($id);
+        return $persona;
+    }
+    
+    public static function obtener_persona_segun_rol($role){
+        $persona = User::select(['id', 'rut', 'nombres', 'apellidos', 'telefono', 'nacimiento'])->withRole($role);
+        return $persona;
+    }
+
     
 
     protected $hidden = [

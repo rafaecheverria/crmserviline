@@ -12,7 +12,7 @@
                     <div class="card-content">
                         <table id="top-button-add">
                             <tr>
-                                <td><h4 class="card-title"><small>ORGANIZACIONES / EMPRESAS</small></h4></td>         
+                                <td><h4 class="card-title"><small class="text-primary">ORGANIZACIONES / EMPRESAS</small></h4></td>         
                                 <td class="pull-right"><a href="#" onclick="organizacion_user(0,1)" rel="tooltip" title="Agregar organización" class="btn btn-primary btn-round btn-fab btn-fab-mini">
                                         <i class="material-icons">add</i>
                                     </a>

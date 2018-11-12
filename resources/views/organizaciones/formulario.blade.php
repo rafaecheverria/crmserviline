@@ -24,6 +24,10 @@
     </div>
     </div>
 </div>
+
+@role('vendedor')
+   <input id="vendedor_id" name="vendedor_id" value="{{Auth::User()->id}}" hidden="true" />                 
+@else
 <div id="vendedor-show" style="display: none;">
     <div class="row sinpadding">
         <div class="col-md-10 col-lg-10 col-sm-10"> 
@@ -45,6 +49,7 @@
         </div>
     </div>
 </div>
+@endrole
 
 <div id="display" style="display: none;">
 <div class="row sinpadding">

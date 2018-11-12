@@ -77,39 +77,8 @@ $('.timepicker').datetimepicker({
         $("#btn-guardar").html('<a href="#" onclick="guardar_especialidad();" class="btn btn-fill btn-success">Guardar</a>')
     })
 
-    /*$("#fonasa").click(function(event){
-        var html = "";
-        html+="<select id='prevision_select' data-style='select-with-transition'>";
-        html+="<option>FONASA A</option>";
-        html+="<option>FONASA B</option>";
-        html+="<option>FONASA C</option>";
-        html+= "</select>";
-        $("#prevision").html(html)
-        $("#prevision_select").selectpicker()
-    })
-
-    $("#particular").click(function(event){
-        var html = "";
-        html+="<select id='prevision_select' data-style='select-with-transition' disabled='true'>";
-        html+="<option>PARTICULAR</option>";
-        html+= "</select>";
-        $("#prevision").html(html)
-        $("#prevision_select").selectpicker()
-    })
- $("#isapre").click(function(event){
-        var html = "";
-        html+="<select id='prevision_select' data-style='select-with-transition'";
-        html+="<option>CONASALUD</option>";
-        html+="<option>CRUZ BLANCA</option>";
-        html+="<option>PARTICULAR</option>";
-        html+="<option>BANMÉDICA</option>";
-        html+= "</select>";
-        $("#prevision").html(html)
-        $("#prevision_select").selectpicker()
-    })*/
 
  $("#region_id").change(function(event){ //carga las Ciudades en el select #ciudad_id según la región elegida.
-    alert()
     $("#display").hide();
     var id = event.target.value;
     if (!id) 
@@ -135,20 +104,21 @@ $('.timepicker').datetimepicker({
  $("#ciudad_id").change(function(event){ //Muestra u oculta el formulario de registro de una organización según la opción elegida en el select ciudad.
     $id = event.target.value;
     if ($id > 0) {
-        $("#vendedor-show").show();
-        $('#vendedor_id').val("default").selectpicker('refresh')
+        //$("#vendedor-show").show()
+        $("#display").show();
+        //$('#vendedor_id').val("default").selectpicker('refresh')
         $("#rut").focus();
     }else{
         $("#vendedor-show").hide();
         //$('#ciudad').prop('disabled', false);
-        $('#vendedor_id').val("default").selectpicker('refresh')
+        //$('#vendedor_id').val("default").selectpicker('refresh')
         
     }
  })
  $("#vendedor_id").change(function(event){ //Muestra u oculta el formulario de registro de una organización según la opción elegida en el select ciudad.
     $id = event.target.value;
     if ($id > 0) {
-        $("#display").show();
+        
         $('#contacto_id').val("default").selectpicker('refresh')
         $("#rut").focus();
     }else{
@@ -1143,7 +1113,6 @@ function ficha(id) //carga datos en la ficha.
             }
             $('.title-name').html(data.nombre)
             $('#descargar').html('<a href="pdf/'+data.id+'" id="download_ficha" class="btn btn-primary pull-right"><span class="btn-label"><i class="material-icons">file_download</i></span>Descargar</a>')
-            
           },
        error:function(){
             //redirect('/')
@@ -1223,15 +1192,20 @@ function agregar_nota(id, tipo){
     if (tipo == 1) {
         type = 'POST';
         route = route;
+        boton = 'Agregar Nota';
     }else{
         type = 'PUT';
         route = route+"/"+id+"";
+        boton = 'Actualizar Nota';
     }
       $.ajax({
             url: route,
             type: type,
             datatype: datatype,
             data:dataString,
+             beforeSend: function(){
+                $("#boton-agregar-nota").html("<a class='btn btn-primary btn-sm btn pull-right'>"+boton+" <i class='fa fa-2px fa-spinner'></i></a>");
+            },
             success:function(data){
                 var html = "";
                 $("#modal_estado").modal("hide");
@@ -1298,6 +1272,9 @@ swalWithBootstrapButtons({
         datatype: "json",
         type: 'POST',
         data: dataString,
+        beforeSend: function(){
+            $("#boton-cambiar-estado").html("<a class='btn btn-primary btn pull-right'>Cambiar Estado <i class='fa fa-2px fa-spinner'></i></a>");
+            },
        success:function(data){
           $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
           $("#modal_cambiar_estado").modal("hide");
@@ -1449,70 +1426,41 @@ function cargo(id, tipo)//Inserta un cargo en el select cargo_id del modal agreg
 //----------------------
  
 //Inicia crud contacto
-
 function mostrar_contacto(id,tipo_user){ //estamos aqui
-    $("#modal_contacto").modal('show')
-    if (tipo_user == 1) {
-        //muestrea el formulario de vendedor.
-        $("#tipo_user").val("vendedor")
-        $(".title-contacto").html("Agregar Vendedor")
-        $("#show-cargo").hide()
-        $("#boton_contacto").html("<a href='#' onclick='contacto(0,1)' class='btn btn-info pull-right'>Agregar Vendedor</a>")
-    }else{
-        //muestra el formulario de contacto de la empresa.
-        $("#tipo_user").val("contacto")
-        $(".title-contacto").html("Agregar Contacto")
+   $("#modal_contacto").modal('show')
+   if (id == 0) { // si el id es igual a cero, significa que el modal es llamado desde el boton agregar contacto - vendedor
+        $('#form_contacto')[0].reset()
+        if (tipo_user == 1) {
+            //muestrea el formulario de vendedor.
+            $("#tipo_user").val("vendedor")
+            $(".title-contacto").html("Agregar Vendedor")
+            $("#show-cargo").hide()
+            $("#boton_contacto").html("<a href='#' onclick='contacto(0,2)' class='btn btn-info pull-right'>Agregar Vendedor</a>")
+        }else{
+            //muestra el formulario de contacto de la empresa.
+            $("#tipo_user").val("contacto")
+            $(".title-contacto").html("Agregar Contacto")
+            $("#show-cargo").show()
+            $("#boton_contacto").html("<a href='#' onclick='contacto(0,1)' class='btn btn-info pull-right'>Agregar Contacto</a>")
+        } 
+    }else{ // si el id viene con un valor, significa que el modal es llamado desde un botón editar contacto - vendedor
+        $(".title-contacto").html("Actualizar Contacto")
         $("#show-cargo").show()
-        $("#boton_contacto").html("<a href='#' onclick='contacto(0,1)' class='btn btn-info pull-right'>Agregar Contacto</a>")
-    }    
-}
-
-function contacto(id,tipo){
-    //si origen es 1 -> agrega un vendedor de la empresa.
-    //si origen es 2 -> agrega un contacto de la empresa cliente.
-    var dataString  = $( '#form_contacto' ).serializeArray()
-    if (tipo == 1) {
-    var route = "contactos" 
-    $.ajax({
-        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-        url: route,
-        type: 'POST',
-        datatype: 'json',
-        data:dataString,
-        success:function(data){
-            $("#"+data.id).empty() //Limpia el select "cargo_id"del modal "agregar contacto"
-           for (i=0;i<data.personas.length;i++) { //llena el select del modal "agregar contacto" con el cargo nuego agregado recientemente.
-            $("#"+data.id).append("<option value='"+data.personas[i].id+"'>"+data.personas[i].nombres+" "+data.personas[i].apellidos+"</option>")
-            $('#'+data.id+' option[value='+data.my_persona+']').attr('selected', 'selected')// Selecciona el cargo insertado recientemente
-           }
-           $('.selectpicker').selectpicker('refresh')
-           $("#modal_contacto").modal('hide')
-           $('#form_contacto')[0].reset()
-           $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
-        },
-        error:function(data){
-            var error = data.responseJSON.errors;
-            for(var i in error){
-                for(var j in error[i]){
-                    var message = error[i][j];
-                   $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000})
-                }
-            }
-        }
-    })
-
-    }else{
-        var route = "/organizaciones/"+id+""
+        $("#boton_contacto").html("<a href='#' onclick='contacto("+id+",1)' class='btn btn-info pull-right'>Actualizar Contacto</a>")
         $.ajax({
-            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-            url: route,
-            type: 'PUT',
-            datatype: 'json',
-            data:dataString,
+            url: "contactos/"+id+"/edit",
+            type: "GET",
             success:function(data){
-                $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
-                $('#organizaciones').DataTable().ajax.reload();
-                $('#modal_organizacion').modal('toggle')
+                $("#rut_user").val(data.rut)
+                $("#nombres_user").val(data.nombres)
+                $("#apellidos_user").val(data.apellidos)
+                $("#email_user").val(data.email)
+                $("#direccion_user").val(data.direccion)
+                $("#telefono_user").val(data.telefono)
+                $("#cargo_id").val(data.cargo)
+                $("INPUT[name=genero]").val([data.genero]) //carga valor de radiobutton desde mysql
+                $('#cargo_id option[value='+data.cargo+']').attr('selected', 'selected')        
+                $('.selectpicker').selectpicker('refresh')
             },
             error:function(data){
                 var error = data.responseJSON.errors;
@@ -1527,9 +1475,73 @@ function contacto(id,tipo){
     }
 }
 
-
-
-
+function contacto(id,tipo){
+    var dataString  = $( '#form_contacto' ).serializeArray()
+    var dataType = "JSON"
+    var headers = {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')};
+    if (id > 0) {
+        var type = "PUT"
+        var route = "/contactos/"+id+""
+            $.ajax({
+            headers: headers,
+            url: route,
+            type: type,
+            datatype: dataType,
+            data:dataString,
+            success:function(data){
+                $("#modal_contacto").modal('hide')
+                $('#form_contacto')[0].reset()
+                $('#contactos').DataTable().ajax.reload();
+                $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
+                $('.selectpicker').selectpicker('refresh')
+            },
+            error:function(data){
+                var error = data.responseJSON.errors;
+                for(var i in error){
+                    for(var j in error[i]){
+                        var message = error[i][j];
+                       $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000})
+                    }
+                }
+            }
+        })  
+    }else{
+        var type = "POST"
+        if (tipo == 1) { //agrega un persona de tipo contacto en la base de datos.
+            var route = "contactos"
+        }else{ // inserta una persona de tipo vendedor en la base de datos.
+            var route = "/contactos/"+id+"" //
+        }
+        $.ajax({
+        headers: headers,
+        url: route,
+        type: type,
+        datatype: dataType,
+        data:dataString,
+            success:function(data){
+               $("#"+data.id).empty() //Limpia el select "cargo_id"del modal "agregar contacto"
+                for (i=0;i<data.personas.length;i++) { //llena el select del modal "agregar contacto" con el cargo nuego agregado recientemente.
+                    $("#"+data.id).append("<option value='"+data.personas[i].id+"'>"+data.personas[i].nombres+" "+data.personas[i].apellidos+"</option>")
+                    $('#'+data.id+' option[value='+data.my_persona+']').attr('selected', 'selected')// Selecciona el cargo insertado recientemente
+                }
+                $('.selectpicker').selectpicker('refresh')
+                $("#modal_contacto").modal('hide')
+                $('#form_contacto')[0].reset()
+                $('#contactos').DataTable().ajax.reload();
+                $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
+            },
+            error:function(data){
+                var error = data.responseJSON.errors;
+                for(var i in error){
+                    for(var j in error[i]){
+                        var message = error[i][j];
+                       $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000})
+                    }
+                }
+            }
+        })  
+    } 
+}
 
 //Finaliza crud contacto
 
@@ -1711,31 +1723,28 @@ swalWithBootstrapButtons({
   cancelButtonText: 'No, cancelar!',
   reverseButtons: true
 }).then((result) => {
-  if (result.value) {
-    var csrf_token = $('meta[name="csrf-token"]').attr('content')
-    var route = ruta+id;
-    $.ajax({
+        if (result.value) {
+        var csrf_token = $('meta[name="csrf-token"]').attr('content')
+        var route = ruta+id;
+        $.ajax({
             url: route,
             type: 'POST',
             data: {'_method' : 'DELETE', '_token' : csrf_token, 'organizacion_id': organizacion_id},
-            success:function(data){
-                console.log(data)
-                var html = "";
-                //$("#modal_estado").modal("hide");
-                html += cargar_tabla_historial(data.historial_estados, data.color, data.estado, data.organizacion_id, data.estado_actual)
-                $('#modal_historial_estado .modal-body').empty();
-                $('#modal_historial_estado .modal-body').append(html);
-                $('#organizaciones').DataTable().ajax.reload();
-                $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000});
-            }, 
-            error:function(){
-                alert('la operación falló');
-            }
-       });
-
-
-  } 
-})
+                success:function(data){
+                    var html = "";
+                    html += cargar_tabla_historial(data.historial_estados, data.color, data.estado, data.organizacion_id, data.estado_actual)
+                    $('#modal_historial_estado .modal-body').empty();
+                    $('#modal_historial_estado .modal-body').append(html);
+                    $('#organizaciones').DataTable().ajax.reload();
+                    $('#contactos').DataTable().ajax.reload();
+                    $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000});
+                },          
+                error:function(){
+                    alert('la operación falló');
+                }
+           })
+        } 
+    })
 }
 
 function delete_especialidad(id)

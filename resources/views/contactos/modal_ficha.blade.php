@@ -4,10 +4,10 @@
         <div class="modal-content">
             <div class="modal-header-info">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="material-icons">clear</i></button>
-                <h6>FICHA DEL PACIENTE:  <b><span class="title-name"></span></b></h6>
+                <h6>Fica del Contacto:  <b><span class="title-name"></span></b></h6>
             </div>
             <div class="modal-body">
-                @include('pacientes.ficha')
+                @include('contactos.ficha')
             </div>
             <div class="modal-footer text-center">
                 <div id="descargar"></div>

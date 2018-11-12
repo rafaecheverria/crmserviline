@@ -7,7 +7,15 @@
                 <h6><div class="title-contacto"></div> </h6>
             </div>
             <div class="modal-body-add">
-                @include('contactos.formulario')
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="contenido-modal">
+                                @include('contactos.formulario')
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer text-center">
                 <div id="boton_contacto"></div>

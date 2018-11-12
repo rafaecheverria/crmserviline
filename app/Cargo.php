@@ -16,4 +16,9 @@ class Cargo extends Model
         return $this->belongsTo('App\User');
     }
 
+    public static function obtener_cargos(){
+    	$cargos = Cargo::select(['id', 'nombre'])->orderBy('nombre', 'asc')->get();
+    	return $cargos;
+    }
+
 }

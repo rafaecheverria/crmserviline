@@ -248,6 +248,7 @@ var listar_organizaciones = function()
         "processing": true,
         "serverSide": true,
         "fixedHeader": true,
+        "retrieve": true,
         "order": [[ 3, "asc" ]],
         "ajax": {
              "url": "organizaciones/show",

@@ -105,7 +105,7 @@ class OrganizacionesController extends Controller
                         $id_estado = $v->id;
                     }   
                     if ($id_estado == 6) {
-                        $cambiar_estado = '<p rel="tooltip" title="Cambiar Estado - la empresa ya ha pasado por el proceso completo de seguimiento " class="btn btn-simple btn-default btn-icon"><i class="material-icons">low_priority</i></p>';
+                        $cambiar_estado = '<p rel="tooltip" disabled title="Cambiar Estado - la empresa ya ha pasado por el proceso completo de seguimiento " class="btn btn-simple btn-default btn-icon"><i class="material-icons">low_priority</i></p>';
                     }else{
                         $cambiar_estado = '<a href="#" onclick="mostrar_cambiar_estado('.$organizacion->id.', \''.$organizacion->nombre.'\')" rel="tooltip" title="Cambiar Estado" class="btn btn-simple btn-rose btn-icon"><i class="material-icons">low_priority</i></a>';
                     }
@@ -166,27 +166,27 @@ class OrganizacionesController extends Controller
 
     public function edit(Request $request, $id)
     {
-         if($request->ajax()) {
-        $organizacion = Organizacion::findOrFail($id);
-        $contactos    = User::withRole('contacto')->orderBy('apellidos', 'asc')->get()->pluck('full_name', 'id');
-        $my_contactos = $organizacion->users->pluck('id')->ToArray();        
-        return response()->json([
-            'success'      => true,
-            'rut'          => $organizacion->rut,
-            'id'           => $organizacion->id,
-            'nombre'       => $organizacion->nombre,
-            'email'        => $organizacion->email,
-            'telefono'     => $organizacion->telefono,
-            'direccion'    => $organizacion->direccion,
-            'giro'         => $organizacion->giro,
-            'logo'         => $organizacion->logo,
-            'tipo'         => $organizacion->tipo,
-            'ciudad_id'    => $organizacion->ciudad_id,
-            'region_id'    => $organizacion->region_id,
-            'vendedor_id'  => $organizacion->vendedor_id,
-            'contactos'    => $contactos,
-            'my_contactos' => $my_contactos
-        ]);
+        if($request->ajax()) {
+            $organizacion = Organizacion::findOrFail($id);
+            $contactos    = User::withRole('contacto')->orderBy('apellidos', 'asc')->get()->pluck('full_name', 'id');
+            $my_contactos = $organizacion->users->pluck('id')->ToArray();        
+            return response()->json([
+                'success'      => true,
+                'rut'          => $organizacion->rut,
+                'id'           => $organizacion->id,
+                'nombre'       => $organizacion->nombre,
+                'email'        => $organizacion->email,
+                'telefono'     => $organizacion->telefono,
+                'direccion'    => $organizacion->direccion,
+                'giro'         => $organizacion->giro,
+                'logo'         => $organizacion->logo,
+                'tipo'         => $organizacion->tipo,
+                'ciudad_id'    => $organizacion->ciudad_id,
+                'region_id'    => $organizacion->region_id,
+                'vendedor_id'  => $organizacion->vendedor_id,
+                'contactos'    => $contactos,
+                'my_contactos' => $my_contactos
+            ]);
         }
     }
 

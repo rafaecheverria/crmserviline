@@ -48,21 +48,49 @@
                 </a>
             </li>
             @permission('leer-pacientes')
+  
+            @endpermission
+
+            @permission('leer-empresas')
             <li>
-                <a href="{{ url('contactos') }}">
-                    <i class="material-icons">contact_phone</i>
-                    <p>Contactos</p>
+                <a data-toggle="collapse" href="#empresas">
+                    <i class="material-icons">graphic_eq</i>
+                    <p>
+                        <b class="caret"></b>
+                            CRM
+                    </p>
                 </a>
+                <div class="collapse" id="empresas">
+                    <ul class="nav">
+                        <li>
+                            <a href="{{ url('organizaciones') }}">
+                                <i class="material-icons">list_alt</i>
+                                <p>Panel</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url('organizaciones') }}">
+                                <i class="material-icons">business</i>
+                                <p>Empresas</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url('contactos') }}">
+                                <i class="material-icons">contact_phone</i>
+                                <p>Contactos</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url('contactos') }}">
+                                <i class="material-icons">supervisor_account</i>
+                                <p>Vendedores</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </li>
             @endpermission
-            @permission('leer-pacientes')
-            <li>
-                <a href="{{ url('organizaciones') }}">
-                    <i class="material-icons">business</i>
-                    <p>Organizaciones</p>
-                </a>
-            </li>
-            @endpermission
+
             @permission('leer-pacientes')
             <li>
                 <a href="{{ url('pacientes') }}">

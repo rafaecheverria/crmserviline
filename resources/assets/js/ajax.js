@@ -1084,41 +1084,70 @@ function organizacion(id,tipo){
 
     }
 }
-function ficha(id) //carga datos en la ficha.
+function ficha(id, origen) //carga datos en la ficha.
 {
-   $("#ficha_modal").modal("show")
-   var route = "/ficha/"+id+"";
-   var csrf_token = $('meta[name="csrf-token"]').attr('content');
-   var tipo ="";
-   var html = "";
-   var image = new Image();
-    $.ajax({
-           url: route,
-           type: 'GET',
-        success:function(data){
-            if (data.tipo == "PEQUENA") {data.tipo = "PEQUEÑA"}
-            $(".img_pac").attr('src', 'assets/img/perfiles/'+data.logo+'?'+ new Date().getTime()).addClass("img-circle");
-            $('.rut').html(data.rut)
-            $('.nombre').html(data.nombre)
-            $('.email').html("<a href='mailto:"+data.email+"'><span class='label label-primary'>"+data.email+"</span></a>")
-            $('.telefono').html(data.telefono)
-            $('.direccion').html(data.direccion)
-            $('.tipo').html(data.tipo)
-            $('#estado').html("<a href='#' onclick='historial_estados("+data.id+")' <span class='label' style='background:"+data.color+"'>"+data.nombre_estado+" ("+data.notas_estado+")"+"</span></a>" + " " +"<a href='#'><span class='btn btn-success btn-simple editar_estado'><i class='material-icons'>edit</i></span></a>")
-            $("#id_empresa").val(data.id)
-            $('.actualizacion').html(data.actualizacion)
-            $('#contacto_2').html(html)
-            for (i=0;i<data.contacto.length;i++) {
-                $("#contacto_2").html( $("#contacto_2").html() + "<h6><a href='#' onclick='javascript:alert("+data.contacto[i].id+")'><span class='label label-primary'>" + data.contacto[i].nombres.toUpperCase() + " " + data.contacto[i].apellidos.toUpperCase() + "</span></a></h6>")
-            }
-            $('.title-name').html(data.nombre)
-            $('#descargar').html('<a href="pdf/'+data.id+'" id="download_ficha" class="btn btn-primary pull-right"><span class="btn-label"><i class="material-icons">file_download</i></span>Descargar</a>')
-          },
-       error:function(){
-            //redirect('/')
-           $.notify({icon: "add_alert", message: "Su sesión ha finalizado, porfavor vuelta a logearse"},{type: 'danger', timer: 1000})
-          }
-    })
+    var csrf_token = $('meta[name="csrf-token"]').attr('content');
+    if (origen == 1) {//si el origen es igual a 1, la petición viene desde el mantenedor de contacto
+        $("#modal_ficha_contacto").modal("show")
+        $.ajax({
+               url: "/ficha_contacto/"+id+"",
+               type: 'GET',
+            success:function(data){
+                $(".img_pac").attr('src', 'assets/img/perfiles/'+data.avatar+'?'+ new Date().getTime()).addClass("img-circle");
+                $('#rut').html(data.rut)
+                $('#nombres').html(data.nombres)
+                $('#email').html("<a href='mailto:"+data.email+"'><span class='label label-primary'>"+data.email+"</span></a>")
+                $('#telefono').html(data.telefono)
+                $('#genero').html(data.genero)
+                $('#direccion').html(data.direccion)
+                $('#cargo').html("<span class='label label-primary'>"+data.cargo+"</span>")
+                $('#empresas_2').html("")
+               for (i=0;i<data.empresas.length;i++) {
+                    $("#empresas_2").html( $("#empresas_2").html() + "<h6><a href='#' onclick='javascript:alert("+data.empresas[i].id+")'><span class='label label-primary'>" + data.empresas[i].nombre.toUpperCase() + "</span></a></h6>")
+                }
+                $('.title-name').html("<span class='label label-rose'>"+data.nombres+"</span>")
+               $('#cerrar').html('<a href="#" class="btn btn-danger pull-right" data-dismiss="modal">Cerrar</a>')
+              },
+            error:function(){
+               alert("La operación falló")
+              }
+        })
+    }else{
+        $("#modal_ficha_organizacion").modal("show")
+        var route = "/ficha_organizacion/"+id+"";
+        var csrf_token = $('meta[name="csrf-token"]').attr('content');
+        var tipo ="";
+        var html = "";
+        var image = new Image();
+        $.ajax({
+               url: route,
+               type: 'GET',
+            success:function(data){
+                if (data.tipo == "PEQUENA") {data.tipo = "PEQUEÑA"}
+                $(".img_pac").attr('src', 'assets/img/perfiles/'+data.logo+'?'+ new Date().getTime()).addClass("img-circle");
+                $('.rut').html(data.rut)
+                $('.nombre').html(data.nombre)
+                $('.email').html("<a href='mailto:"+data.email+"'><span class='label label-primary'>"+data.email+"</span></a>")
+                $('.telefono').html(data.telefono)
+                $('.direccion').html(data.direccion)
+                $('.tipo').html(data.tipo)
+                $('#estado').html("<a href='#' onclick='historial_estados("+data.id+")' <span class='label' style='background:"+data.color+"'>"+data.nombre_estado+" ("+data.notas_estado+")"+"</span></a>" + " " +"<a href='#'><span class='btn btn-success btn-simple editar_estado'><i class='material-icons'>edit</i></span></a>")
+                $("#id_empresa").val(data.id)
+                $('.actualizacion').html(data.actualizacion)
+                $('#contacto_2').html(html)
+                for (i=0;i<data.contacto.length;i++) {
+                    $("#contacto_2").html( $("#contacto_2").html() + "<h6><a href='#' onclick='javascript:alert("+data.contacto[i].id+")'><span class='label label-primary'>" + data.contacto[i].nombres.toUpperCase() + " " + data.contacto[i].apellidos.toUpperCase() + "</span></a></h6>")
+                }
+                $('.title-name').html(data.nombre)
+                $('#descargar').html('<a href="pdf/'+data.id+'" id="download_ficha" class="btn btn-primary pull-right"><span class="btn-label"><i class="material-icons">file_download</i></span>Descargar</a>')
+              },
+           error:function(){
+               alert("La operación falló")
+              }
+        })
+
+    }
+   
 }
 
 function historial_estados(id) //carga datos del historial de los estados con el id de la organización.

@@ -21,4 +21,9 @@ class Cargo extends Model
     	return $cargos;
     }
 
+    public static function obtener_cargo_persona($cargo){
+        $cargo = Cargo::where("id", $cargo)->get();
+        return $cargo;
+    }
+
 }

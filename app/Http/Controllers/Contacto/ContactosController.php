@@ -54,6 +54,32 @@ class ContactosController extends Controller
         }
     }
 
+    public function ficha($id)
+    {
+        $persona = User::obtener_persona($id);
+        $empresas  = $persona->organizaciones;
+
+        $cargo = Cargo::obtener_cargo_persona($persona->cargo_id);
+        foreach($cargo as $i => $v)
+        {
+            $nombre_cargo = $v['nombre'];
+        }
+        return response()->json([
+            'success'  => true,
+            'id'       => $persona->id,
+            'avatar'   => $persona->avatar,
+            'rut'      => $persona->rut,
+            'nombres'  => strtoupper($persona->nombres. " " . $persona->apellidos),
+            'email'    => strtoupper($persona->email),
+            'telefono' => $persona->telefono,
+            'genero'   => strtoupper($persona->genero),
+            'direccion'=> strtoupper($persona->direccion),
+            'empresas' => $empresas,
+            'cargo'    => $nombre_cargo
+
+        ]);
+    }
+
     public function show()
     {
         $users = User::obtener_persona_segun_rol("contacto");
@@ -63,7 +89,7 @@ class ContactosController extends Controller
                     })
                     ->addColumn('action', function ($user) {
                         $ruta = "contactos/";
-                        $ficha = '<a href="#" onclick="ficha('.$user->id.')" data-toggle="modal" data-target="#modal_ficha" rel="tooltip" title="Ficha del paciente" class="btn btn-simple btn-primary btn-icon"><i class="material-icons">folder_shared</i></a>';
+                        $ficha = '<a href="#" onclick="ficha('.$user->id.', 1)" data-toggle="modal" data-target="#modal_ficha" rel="tooltip" title="Ficha del paciente" class="btn btn-simple btn-primary btn-icon"><i class="material-icons">folder_shared</i></a>';
                         $editar = '<a href="#" onclick="mostrar_contacto('.$user->id.', 2)" data-toggle="modal" data-target="#modal_editar_paciente" rel="tooltip" title="Editar" class="btn btn-simple btn-success btn-icon edit"><i class="material-icons">edit</i></a>';
                         $eliminar = '<a href="#" onclick="eliminar('.$user->id.',\''.$user->nombre.'\',\''.$ruta.'\')" data-toggle="modal" data-target="#eliminar_paciente" rel="tooltip" title="Editar" class="btn btn-simple btn-danger btn-icon"><i class="material-icons">close</i></a>';
 

@@ -112,8 +112,6 @@ class User extends Authenticatable
         return $persona;
     }
 
-    
-
     protected $hidden = [
         'password', 'remember_token',
     ];

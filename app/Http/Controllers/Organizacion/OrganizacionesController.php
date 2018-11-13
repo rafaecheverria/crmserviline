@@ -98,7 +98,7 @@ class OrganizacionesController extends Controller
                 })
                 ->addColumn('action', function ($organizacion) {
                     $ruta = "organizaciones/";
-                    $ficha = '<a href="#" onclick="ficha('.$organizacion->id.')" data-toggle="modal" data-target="#modal_ficha" rel="tooltip" title="Ficha Empresa" class="btn btn-simple btn-primary btn-icon"><i class="material-icons">business</i></a>';
+                    $ficha = '<a href="#" onclick="ficha('.$organizacion->id.', 2)" data-toggle="modal" data-target="#modal_ficha" rel="tooltip" title="Ficha Empresa" class="btn btn-simple btn-primary btn-icon"><i class="material-icons">business</i></a>';
                     $historial = '<a href="#" onclick="historial_estados('.$organizacion->id.')" rel="tooltip" title="Historial de Estados" class="btn btn-simple btn-info btn-icon"><i class="material-icons">playlist_add</i></a>';
                     $estado_actual = Organizacion::estado_actual($organizacion->id);
                     foreach($estado_actual as $v){

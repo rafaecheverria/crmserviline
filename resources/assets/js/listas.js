@@ -3,6 +3,7 @@ $(document).ready(function() {
     listar_recepcionistas()
     listar_personas()
     listar_contactos()
+    listar_vendedores()
     listar_organizaciones()
     listar_especialidades()
     listar_permisos()
@@ -239,6 +240,40 @@ var listar_contactos = function()
             {data: 'nacimiento', name: 'nacimiento'}
         ]
 	})
+        //$('.material-datatables label').addClass('form-group');
+}
+var listar_vendedores = function()
+{
+    var table = $('#vendedores').DataTable({
+        "headers": {'X-CSRF-TOKEN':$('input[name=_token]').attr('content')},
+        "processing": true,
+        "serverSide": true,
+        "fixedHeader": true,
+        "order": [[ 3, "asc" ]],
+        "ajax": {
+             "url": "vendedores/show",
+            },
+
+        "pagingType": "simple_numbers",
+        "lengthMenu": [
+            [10, 25, 50, -1],
+            [10, 25, 50, "Todos"]
+        ],
+        "language": {
+            url: "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json",
+            search: "_INPUT_",
+            class: "form-group",
+        },
+        "responsive": true,
+        "columns":[
+            {data: 'action', name: 'action', orderable: false, searchable: false, class:"text-left"},
+            {data: 'rut', name: 'rut'},
+            {data: 'nombres', name: 'nombres'},
+            {data: 'apellidos', name: 'apellidos'},
+            {data: 'telefono', name: 'telefono'},
+            {data: 'nacimiento', name: 'nacimiento'}
+        ]
+    })
         //$('.material-datatables label').addClass('form-group');
 }
 var listar_organizaciones = function()

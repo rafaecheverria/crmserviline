@@ -14,9 +14,6 @@
                 </ul>
             </div>
         </div>
-
-
-
         <div class="col-md-8">
             <div class="tab-content">
                 <div class="tab-pane active" id="basica">
@@ -49,10 +46,6 @@
                                 <tr>
                                     <th>Empresas:</th>
                                     <td id="empresas_2"></td>
-                                </tr>
-                                <tr>
-                                    <th>Cargo:</th>
-                                    <td id="cargo"></td>
                                 </tr>
                             </tbody>
                         </table>

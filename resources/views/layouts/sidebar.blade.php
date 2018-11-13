@@ -80,12 +80,6 @@
                                 <p>Contactos</p>
                             </a>
                         </li>
-                        <li>
-                            <a href="{{ url('contactos') }}">
-                                <i class="material-icons">supervisor_account</i>
-                                <p>Vendedores</p>
-                            </a>
-                        </li>
                     </ul>
                 </div>
             </li>
@@ -118,19 +112,12 @@
                 </a>
                 <div class="collapse" id="settings">
                     <ul class="nav">
-                        @permission('leer-doctores')
+                        @permission('leer-vendedores')
                         <li>
-                            <a href="{{ url('doctores') }}">Doctores</a>
-                        </li>
-                        @endpermission
-                        @permission('leer-recepcionistas')
-                        <li>
-                            <a href="{{ url('recepcionistas') }}">Recepcionistas</a>
-                        </li>
-                        @endpermission
-                        @permission('leer-especialidades')
-                        <li>
-                            <a href="{{ url('especialidades') }}">Especialidades</a>
+                            <a href="{{ url('vendedores') }}">
+                                <i class="material-icons">supervisor_account</i>
+                                <p>Vendedores</p>
+                            </a>
                         </li>
                         @endpermission
                     </ul>

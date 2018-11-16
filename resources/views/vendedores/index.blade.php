@@ -13,7 +13,7 @@
                         <table id="top-button-add">
                             <tr>
                                 <td><h4 class="card-title"><small class="text-primary">LISTA DE VENDEDORES</small></h4></td>         
-                                <td class="pull-right"><a href="#" onclick="mostrar_contacto(0,2)" rel="tooltip" title="Agregar vendedor" class="btn btn-primary btn-round btn-fab btn-fab-mini">
+                                <td class="pull-right"><a href="#" onclick="mostrar_contacto(0,1)" rel="tooltip" title="Agregar vendedor" class="btn btn-primary btn-round btn-fab btn-fab-mini">
                                         <i class="material-icons">add</i>
                                     </a>
                                 </td>
@@ -31,4 +31,5 @@
 </div>
 @include('vendedores.modal_ficha')
 @include('vendedores.modal')
+@include('../contactos.modal')
 @endsection

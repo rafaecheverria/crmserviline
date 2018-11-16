@@ -23796,7 +23796,9 @@ $('#contador').append(parrafo + 'Tienes ' + contador + ' caracteres restantes</p
 $('#modal_estado').on('shown.bs.modal', function () {
     $('#nota').focus();
 })
-
+$('#modal_contacto').on('shown.bs.modal', function () {
+    $('#rut_user').focus();
+})
 
 $('[data-toggle="tooltip"]').tooltip();
 $('.datepicker').datetimepicker({
@@ -24849,67 +24851,96 @@ function organizacion(id,tipo){
 function ficha(id, origen) //carga datos en la ficha.
 {
     var csrf_token = $('meta[name="csrf-token"]').attr('content');
-    if (origen == 1) {//si el origen es igual a 1, la petición viene desde el mantenedor de contacto
-        $("#modal_ficha_contacto").modal("show")
-        $.ajax({
-               url: "/ficha_contacto/"+id+"",
-               type: 'GET',
-            success:function(data){
-                $(".img_pac").attr('src', 'assets/img/perfiles/'+data.avatar+'?'+ new Date().getTime()).addClass("img-circle");
-                $('#rut').html(data.rut)
-                $('#nombres').html(data.nombres)
-                $('#email').html("<a href='mailto:"+data.email+"'><span class='label label-primary'>"+data.email+"</span></a>")
-                $('#telefono').html(data.telefono)
-                $('#genero').html(data.genero)
-                $('#direccion').html(data.direccion)
-                $('#cargo').html("<span class='label label-primary'>"+data.cargo+"</span>")
-                $('#empresas_2').html("")
-               for (i=0;i<data.empresas.length;i++) {
-                    $("#empresas_2").html( $("#empresas_2").html() + "<h6><a href='#' onclick='javascript:alert("+data.empresas[i].id+")'><span class='label label-primary'>" + data.empresas[i].nombre.toUpperCase() + "</span></a></h6>")
-                }
-                $('.title-name').html("<span class='label label-rose'>"+data.nombres+"</span>")
-               $('#cerrar').html('<a href="#" class="btn btn-danger pull-right" data-dismiss="modal">Cerrar</a>')
-              },
-            error:function(){
-               alert("La operación falló")
-              }
-        })
-    }else{
-        $("#modal_ficha_organizacion").modal("show")
-        var route = "/ficha_organizacion/"+id+"";
-        var csrf_token = $('meta[name="csrf-token"]').attr('content');
-        var tipo ="";
-        var html = "";
-        var image = new Image();
-        $.ajax({
-               url: route,
-               type: 'GET',
-            success:function(data){
-                if (data.tipo == "PEQUENA") {data.tipo = "PEQUEÑA"}
-                $(".img_pac").attr('src', 'assets/img/perfiles/'+data.logo+'?'+ new Date().getTime()).addClass("img-circle");
-                $('.rut').html(data.rut)
-                $('.nombre').html(data.nombre)
-                $('.email').html("<a href='mailto:"+data.email+"'><span class='label label-primary'>"+data.email+"</span></a>")
-                $('.telefono').html(data.telefono)
-                $('.direccion').html(data.direccion)
-                $('.tipo').html(data.tipo)
-                $('#estado').html("<a href='#' onclick='historial_estados("+data.id+")' <span class='label' style='background:"+data.color+"'>"+data.nombre_estado+" ("+data.notas_estado+")"+"</span></a>" + " " +"<a href='#'><span class='btn btn-success btn-simple editar_estado'><i class='material-icons'>edit</i></span></a>")
-                $("#id_empresa").val(data.id)
-                $('.actualizacion').html(data.actualizacion)
-                $('#contacto_2').html(html)
-                for (i=0;i<data.contacto.length;i++) {
-                    $("#contacto_2").html( $("#contacto_2").html() + "<h6><a href='#' onclick='javascript:alert("+data.contacto[i].id+")'><span class='label label-primary'>" + data.contacto[i].nombres.toUpperCase() + " " + data.contacto[i].apellidos.toUpperCase() + "</span></a></h6>")
-                }
-                $('.title-name').html(data.nombre)
-                $('#descargar').html('<a href="pdf/'+data.id+'" id="download_ficha" class="btn btn-primary pull-right"><span class="btn-label"><i class="material-icons">file_download</i></span>Descargar</a>')
-              },
-           error:function(){
-               alert("La operación falló")
-              }
-        })
-
+    switch(origen) {
+        case 1:
+            $("#modal_ficha_contacto").modal("show")
+            $.ajax({
+                url: "/ficha_contacto/"+id+"",
+                type: "GET",
+                success:function(data){
+                    $(".img_pac").attr('src', 'assets/img/perfiles/'+data.avatar+'?'+ new Date().getTime()).addClass("img-circle");
+                    $('#rut').html(data.rut)
+                    $('#nombres').html(data.nombres)
+                    $('#email').html("<a href='mailto:"+data.email+"'><span class='label label-primary'>"+data.email+"</span></a>")
+                    $('#telefono').html(data.telefono)
+                    $('#genero').html(data.genero)
+                    $('#direccion').html(data.direccion)
+                    $('#cargo').html("<span class='label label-primary'>"+data.cargo+"</span>")
+                    $('#empresas_2').html("")
+                   for (i=0;i<data.empresas.length;i++) {
+                        $("#empresas_2").html( $("#empresas_2").html() + "<h6><a href='#' onclick='javascript:alert("+data.empresas[i].id+")'><span class='label label-primary'>" + data.empresas[i].nombre.toUpperCase() + "</span></a></h6>")
+                    }
+                    $('.title-name').html("<span class='label label-rose'>"+data.nombres+"</span>")
+                   $('#cerrar').html('<a href="#" class="btn btn-danger pull-right" data-dismiss="modal">Cerrar</a>')
+                  },
+                error:function(){
+                   alert("La operación falló")
+                  }
+            })
+        break;
+        case 2:
+            $("#modal_ficha_organizacion").modal("show")
+            var route = "/ficha_organizacion/"+id+"";
+            var csrf_token = $('meta[name="csrf-token"]').attr('content');
+            var tipo ="";
+            var html = "";
+            var image = new Image();
+            $.ajax({
+                   url: route,
+                   type: 'GET',
+                success:function(data){
+                    if (data.tipo == "PEQUENA") {data.tipo = "PEQUEÑA"}
+                    $(".img_pac").attr('src', 'assets/img/perfiles/'+data.logo+'?'+ new Date().getTime()).addClass("img-circle");
+                    $('.rut').html(data.rut)
+                    $('.nombre').html(data.nombre)
+                    $('.email').html("<a href='mailto:"+data.email+"'><span class='label label-primary'>"+data.email+"</span></a>")
+                    $('.telefono').html(data.telefono)
+                    $('.direccion').html(data.direccion)
+                    $('.tipo').html(data.tipo)
+                    $('#estado').html("<a href='#' onclick='historial_estados("+data.id+")' <span class='label' style='background:"+data.color+"'>"+data.nombre_estado+" ("+data.notas_estado+")"+"</span></a>" + " " +"<a href='#'><span class='btn btn-success btn-simple editar_estado'><i class='material-icons'>edit</i></span></a>")
+                    $("#id_empresa").val(data.id)
+                    $('.actualizacion').html(data.actualizacion)
+                    $('#contacto_2').html(html)
+                    for (i=0;i<data.contacto.length;i++) {
+                        $("#contacto_2").html( $("#contacto_2").html() + "<h6><a href='#' onclick='javascript:alert("+data.contacto[i].id+")'><span class='label label-primary'>" + data.contacto[i].nombres.toUpperCase() + " " + data.contacto[i].apellidos.toUpperCase() + "</span></a></h6>")
+                    }
+                    $('.title-name').html(data.nombre)
+                    $('#descargar').html('<a href="pdf/'+data.id+'" id="download_ficha" class="btn btn-primary pull-right"><span class="btn-label"><i class="material-icons">file_download</i></span>Descargar</a>')
+                  },
+               error:function(){
+                   alert("La operación falló")
+                  }
+            })
+            break;
+        case 3:
+            //$("#modal_ficha_vendedor").modal("show")
+            $.ajax({
+                url: "/ficha_vendedor/"+id+"",
+                type: "GET",
+                success:function(data){
+                    console.log(data)
+                   /* $(".img_pac").attr('src', 'assets/img/perfiles/'+data.avatar+'?'+ new Date().getTime()).addClass("img-circle");
+                    $('#rut').html(data.rut)
+                    $('#nombres').html(data.nombres)
+                    $('#email').html("<a href='mailto:"+data.email+"'><span class='label label-primary'>"+data.email+"</span></a>")
+                    $('#telefono').html(data.telefono)
+                    $('#genero').html(data.genero)
+                    $('#direccion').html(data.direccion)
+                    $('#empresas_2').html("")
+                    console.log(data.empresas)
+                   for (i=0;i<data.empresas.length;i++) {
+                        $("#empresas_2").html( $("#empresas_2").html() + "<h6><a href='#' onclick='javascript:alert("+data.empresas[i].id+")'><span class='label label-primary'>" + data.empresas[i].nombre.toUpperCase() + "</span></a></h6>")
+                    }
+                    $('.title-name').html("<span class='label label-rose'>"+data.nombres+"</span>")
+                    $('#cerrar').html('<a href="#" class="btn btn-danger pull-right" data-dismiss="modal">Cerrar</a>')*/
+                  },
+                error:function(){
+                   alert("La operación falló")
+                  }
+            })
+            break;
+    
     }
-   
 }
 
 function historial_estados(id) //carga datos del historial de los estados con el id de la organización.
@@ -25220,24 +25251,31 @@ function cargo(id, tipo)//Inserta un cargo en el select cargo_id del modal agreg
 function mostrar_contacto(id,tipo_user){ //estamos aqui
    $("#modal_contacto").modal('show')
    if (id == 0) { // si el id es igual a cero, significa que el modal es llamado desde el boton agregar contacto - vendedor
-        $('#form_contacto')[0].reset()
+    $('#form_contacto')[0].reset()
         if (tipo_user == 1) {
             //muestrea el formulario de vendedor.
             $("#tipo_user").val("vendedor")
             $(".title-contacto").html("Agregar Vendedor")
             $("#show-cargo").hide()
-            $("#boton_contacto").html("<a href='#' onclick='contacto(0,2)' class='btn btn-info pull-right'>Agregar Vendedor</a>")
+            $("#boton_contacto").html("<a href='#' onclick='contacto(0,2)' class='btn btn-primary pull-right'>Agregar Vendedor</a>")
         }else{
             //muestra el formulario de contacto de la empresa.
             $("#tipo_user").val("contacto")
             $(".title-contacto").html("Agregar Contacto")
             $("#show-cargo").show()
-            $("#boton_contacto").html("<a href='#' onclick='contacto(0,1)' class='btn btn-info pull-right'>Agregar Contacto</a>")
+            $("#boton_contacto").html("<a href='#' onclick='contacto(0,1)' class='btn btn-primary pull-right'>Agregar Contacto</a>")
         } 
     }else{ // si el id viene con un valor, significa que el modal es llamado desde un botón editar contacto - vendedor
-        $(".title-contacto").html("Actualizar Contacto")
-        $("#show-cargo").show()
-        $("#boton_contacto").html("<a href='#' onclick='contacto("+id+",1)' class='btn btn-info pull-right'>Actualizar Contacto</a>")
+        if(tipo_user == 1){
+            $(".title-contacto").html("Actualizar Vendedor")
+            $("#show-cargo").hide()
+            $("#boton_contacto").html("<a href='#' onclick='contacto("+id+",2)' class='btn btn-primary pull-right'>Actualizar Vendedor</a>")
+        }else{
+            $(".title-contacto").html("Actualizar Contacto")
+            $("#show-cargo").show()
+            $("#boton_contacto").html("<a href='#' onclick='contacto("+id+",1)' class='btn btn-primary pull-right'>Actualizar Contacto</a>")
+        }
+        
         $.ajax({
             url: "contactos/"+id+"/edit",
             type: "GET",
@@ -25528,6 +25566,7 @@ swalWithBootstrapButtons({
                     $('#modal_historial_estado .modal-body').append(html);
                     $('#organizaciones').DataTable().ajax.reload();
                     $('#contactos').DataTable().ajax.reload();
+                    $('#vendedores').DataTable().ajax.reload();
                     $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000});
                 },          
                 error:function(){

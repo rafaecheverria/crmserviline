@@ -20,7 +20,8 @@ class VendedoresController extends Controller
      */
     public function index()
     {
-        return view('vendedores.index');
+        $cargos = Cargo::obtener_cargos();
+        return view('vendedores.index', compact('cargos'));
     }
 
     /**
@@ -59,21 +60,34 @@ class VendedoresController extends Controller
                     })
                     ->addColumn('action', function ($user) {
                         $ruta = "contactos/";
-                        $ficha = '<a href="#" onclick="ficha('.$user->id.', 1)" data-toggle="modal" data-target="#modal_ficha" rel="tooltip" title="Ficha del paciente" class="btn btn-simple btn-primary btn-icon"><i class="material-icons">folder_shared</i></a>';
-                        $editar = '<a href="#" onclick="mostrar_contacto('.$user->id.', 2)" data-toggle="modal" data-target="#modal_editar_paciente" rel="tooltip" title="Editar" class="btn btn-simple btn-success btn-icon edit"><i class="material-icons">edit</i></a>';
-                        $eliminar = '<a href="#" onclick="eliminar('.$user->id.',\''.$user->nombre.'\',\''.$ruta.'\')" data-toggle="modal" data-target="#eliminar_paciente" rel="tooltip" title="Editar" class="btn btn-simple btn-danger btn-icon"><i class="material-icons">close</i></a>';
+                        $ficha = '<a href="#" onclick="ficha('.$user->id.', 3)" rel="tooltip" title="Ficha del vendedor" class="btn btn-simple btn-primary btn-icon"><i class="material-icons">folder_shared</i></a>';
+                        $editar = '<a href="#" onclick="mostrar_contacto('.$user->id.', 1)" rel="tooltip" title="Editar" class="btn btn-simple btn-success btn-icon edit"><i class="material-icons">edit</i></a>';
+                        $eliminar = '<a href="#" onclick="eliminar('.$user->id.',\''.$user->nombre.'\',\''.$ruta.'\')" rel="tooltip" title="Editar" class="btn btn-simple btn-danger btn-icon"><i class="material-icons">close</i></a>';
 
                         return $ficha.$editar.$eliminar;
                        
                     })->make(true);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+     public function ficha($id)
+    {
+        $persona = User::obtener_persona($id);
+        $empresas  = $persona->organizaciones;
+
+        return response()->json([
+            /*'success'  => true,
+            'id'       => $persona->id,
+            'avatar'   => $persona->avatar,
+            'rut'      => $persona->rut,
+            'nombres'  => strtoupper($persona->nombres. " " . $persona->apellidos),
+            'email'    => strtoupper($persona->email),
+            'telefono' => $persona->telefono,
+            'genero'   => strtoupper($persona->genero),
+            'direccion'=> strtoupper($persona->direccion),*/
+            'empresas' => $empresas,
+
+        ]);
+    }
     public function edit($id)
     {
         //

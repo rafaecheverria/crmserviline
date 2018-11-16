@@ -66,10 +66,10 @@ class OrganizacionesController extends Controller
             $organizacion->ciudad_id   = $request->ciudad_id;
             $organizacion->region_id   = $request->region_id;
             $organizacion->vendedor_id = $request->vendedor_id;
-            //$organizacion->color       = "#F44336";
             $organizacion->logo        = "default.jpg";
             $organizacion->save();
-            $organizacion->users()->sync($request->contacto_id);  
+            $organizacion->users()->sync([$request->contacto_id, $request->vendedor_id]);  
+            //$organizacion->users()->sync($request->vendedor_id); 
             $organizacion->estados()->sync(1);
             return response()->json([
                 "message" => "La empresa ".$organizacion->nombre." ha sido guardada exitosamente!"
@@ -104,7 +104,7 @@ class OrganizacionesController extends Controller
                     foreach($estado_actual as $v){
                         $id_estado = $v->id;
                     }   
-                    if ($id_estado == 6) {
+                    if ($id_estado >= 6) {
                         $cambiar_estado = '<p rel="tooltip" disabled title="Cambiar Estado - la empresa ya ha pasado por el proceso completo de seguimiento " class="btn btn-simple btn-default btn-icon"><i class="material-icons">low_priority</i></p>';
                     }else{
                         $cambiar_estado = '<a href="#" onclick="mostrar_cambiar_estado('.$organizacion->id.', \''.$organizacion->nombre.'\')" rel="tooltip" title="Cambiar Estado" class="btn btn-simple btn-rose btn-icon"><i class="material-icons">low_priority</i></a>';
@@ -206,6 +206,7 @@ class OrganizacionesController extends Controller
             $organizacion->vendedor_id = $request->vendedor_id;
             $organizacion->save();
             $organizacion->users()->sync($request->contacto_id); 
+            $organizacion->users()->attach($request->vendedor_id);  
             return response()->json([
              "nombre" => $organizacion->nombre,
              "message" => "La empresa ".$organizacion->nombre." ha sido actualizada exitosamente!"

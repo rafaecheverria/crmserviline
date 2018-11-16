@@ -20,6 +20,7 @@ Route::middleware(['auth', 'role:administrador|vendedor'])->group(function(){
 	Route::put('update_estado/{id}', 'Organizacion\OrganizacionesController@update_estado');
 	Route::get('ficha_organizacion/{id}', 'Organizacion\OrganizacionesController@ficha');
 	Route::get('ficha_contacto/{id}', 'Contacto\ContactosController@ficha');
+	Route::get('ficha_vendedor/{id}', 'Vendedor\VendedoresController@ficha');
 
 	Route::resource('cargos', 'Contacto\CargosController');
 

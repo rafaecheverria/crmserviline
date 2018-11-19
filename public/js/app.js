@@ -23871,7 +23871,7 @@ $('.timepicker').datetimepicker({
  $("#ciudad_id").change(function(event){ //Muestra u oculta el formulario de registro de una organización según la opción elegida en el select ciudad.
     $id = event.target.value;
     if ($id > 0) {
-        //$("#vendedor-show").show()
+        $("#vendedor-show").show()
         $("#display").show();
         //$('#vendedor_id').val("default").selectpicker('refresh')
         $("#rut").focus();
@@ -25252,8 +25252,10 @@ function cargo(id, tipo)//Inserta un cargo en el select cargo_id del modal agreg
 //Inicia crud contacto
 function mostrar_contacto(id,tipo_user){ //estamos aqui
    $("#modal_contacto").modal('show')
-   if (id == 0) { // si el id es igual a cero, significa que el modal es llamado desde el boton agregar contacto - vendedor
+   if (id == 0) { //Si el id es igual a cero, significa que el modal es llamado desde el boton agregar contacto - vendedor
     $('#form_contacto')[0].reset()
+        $( "#rut_user" ).prop( "readonly", false );
+        $( "#email_user" ).prop( "readonly", false );
         if (tipo_user == 1) {
             //muestrea el formulario de vendedor.
             $("#tipo_user").val("vendedor")
@@ -25268,6 +25270,8 @@ function mostrar_contacto(id,tipo_user){ //estamos aqui
             $("#boton_contacto").html("<a href='#' onclick='contacto(0,1)' class='btn btn-primary pull-right'>Agregar Contacto</a>")
         } 
     }else{ // si el id viene con un valor, significa que el modal es llamado desde un botón editar contacto - vendedor
+        $( "#rut_user" ).prop( "readonly", true );
+        $( "#email_user" ).prop( "readonly", true );
         if(tipo_user == 1){
             $(".title-contacto").html("Actualizar Vendedor")
             $("#show-cargo").hide()
@@ -25341,7 +25345,7 @@ function contacto(id,tipo){
         if (tipo == 1) { //agrega un persona de tipo contacto en la base de datos.
             var route = "contactos"
         }else{ // inserta una persona de tipo vendedor en la base de datos.
-            var route = "/contactos/"+id+"" //
+            var route = "vendedores"
         }
         $.ajax({
         headers: headers,
@@ -25350,6 +25354,7 @@ function contacto(id,tipo){
         datatype: dataType,
         data:dataString,
             success:function(data){
+                console.log(data)
                $("#"+data.id).empty() //Limpia el select "cargo_id"del modal "agregar contacto"
                 for (i=0;i<data.personas.length;i++) { //llena el select del modal "agregar contacto" con el cargo nuego agregado recientemente.
                     $("#"+data.id).append("<option value='"+data.personas[i].id+"'>"+data.personas[i].nombres+" "+data.personas[i].apellidos+"</option>")
@@ -26138,7 +26143,16 @@ var listar_organizaciones = function()
         "serverSide": true,
         "fixedHeader": true,
         "retrieve": true,
-        "order": [[ 3, "asc" ]],
+        "order": [[ 2, "asc" ]],
+        "columnDefs": [ //define el ancho de las columnas de la tabla.
+            { "width": "10%", "targets": 0 },
+            { "width": "10%", "targets": 1 },
+            { "width": "40%", "targets": 2 },
+            { "width": "10%", "targets": 3 },
+            { "width": "10%", "targets": 4 },
+            { "width": "10%", "targets": 5 },
+            { "width": "10%", "targets": 6 },
+          ],
         "ajax": {
              "url": "organizaciones/show",
             },
@@ -26162,6 +26176,8 @@ var listar_organizaciones = function()
             {data: 'desactivar', name: 'desactivar'},
         ]
     })
+
+    console.log(table)
 }
 var listar_personas = function()
 {

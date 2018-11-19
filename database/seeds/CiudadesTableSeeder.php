@@ -12,68 +12,90 @@ class CiudadesTableSeeder extends Seeder
     public function run()
     {
        factory(App\Ciudad::class)->create([
+          'id' => 1,
 	        'nombre' => 'Arica',
+	        'regiones_id' => 15,
+        ]);
+       factory(App\Ciudad::class)->create([
+          'id' => 2,
+	        'nombre' => 'Iquique',
+	        'regiones_id' => 1,
+        ]);
+       factory(App\Ciudad::class)->create([
+          'id' => 3,
+	        'nombre' => 'Antofagasta',
 	        'regiones_id' => 2,
         ]);
        factory(App\Ciudad::class)->create([
-	        'nombre' => 'Iquique',
-	        'regiones_id' => 3,
-        ]);
-       factory(App\Ciudad::class)->create([
-	        'nombre' => 'Antofagasta',
+          'id' => 4,
+	        'nombre' => 'La Serena',
 	        'regiones_id' => 4,
         ]);
        factory(App\Ciudad::class)->create([
-	        'nombre' => 'La Serena',
+          'id' => 5,
+	        'nombre' => 'Valparaiso',
 	        'regiones_id' => 5,
         ]);
        factory(App\Ciudad::class)->create([
-	        'nombre' => 'Valparaiso',
-	        'regiones_id' => 6,
-        ]);
-       factory(App\Ciudad::class)->create([
+          'id' => 6,
 	        'nombre' => 'Viña del Mar',
+	        'regiones_id' => 5,
+        ]);
+       factory(App\Ciudad::class)->create([
+          'id' => 7,
+	        'nombre' => 'Rancagua',
 	        'regiones_id' => 6,
         ]);
        factory(App\Ciudad::class)->create([
-	        'nombre' => 'Rancagua',
-	        'regiones_id' => 14,
-        ]);
-       factory(App\Ciudad::class)->create([
+          'id' => 8,
 	        'nombre' => 'Talca',
 	        'regiones_id' => 7,
         ]);
        factory(App\Ciudad::class)->create([
+          'id' => 9,
 	        'nombre' => 'Concepción',
-	        'regiones_id' => 9,
+	        'regiones_id' => 8,
         ]);
        factory(App\Ciudad::class)->create([
+          'id' => 10,
 	        'nombre' => 'Chillán',
+	        'regiones_id' => 16,
+        ]);
+
+       factory(App\Ciudad::class)->create([
+          'id' => 11,
+	        'nombre' => 'Temuco',
 	        'regiones_id' => 9,
         ]);
        factory(App\Ciudad::class)->create([
-	        'nombre' => 'Temuco',
-	        'regiones_id' => 10,
-        ]);
-       factory(App\Ciudad::class)->create([
+          'id' => 12,
 	        'nombre' => 'Villarrica',
+	        'regiones_id' => 9,
+        ]);
+       factory(App\Ciudad::class)->create([
+          'id' => 13,
+	        'nombre' => 'Osorno',
 	        'regiones_id' => 10,
         ]);
        factory(App\Ciudad::class)->create([
-	        'nombre' => 'Osorno',
+          'id' => 14,
+	        'nombre' => 'Coyhaique',
 	        'regiones_id' => 11,
         ]);
        factory(App\Ciudad::class)->create([
-	        'nombre' => 'Coihaique',
+          'id' => 15,
+	        'nombre' => 'Punta Arenas',
 	        'regiones_id' => 12,
         ]);
        factory(App\Ciudad::class)->create([
-	        'nombre' => 'Punta Arenas',
+          'id' => 16,
+	        'nombre' => 'Santiago',
 	        'regiones_id' => 13,
         ]);
        factory(App\Ciudad::class)->create([
-	        'nombre' => 'Santiago',
-	        'regiones_id' => 14,
+          'id' => 17,
+          'nombre' => 'San Carlos',
+          'regiones_id' => 16,
         ]);
     }
 }

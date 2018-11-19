@@ -44,7 +44,7 @@
         </div>
         <div class="col-md-2 col-lg-2 col-sm-2"> 
             <div id="add_contact">
-              <a href="#" onclick="mostrar_contacto(1,1)" class="btn btn-rose btn-round btn-sm">+</a>
+              <a href="#" onclick="mostrar_contacto(0,1)" class="btn btn-rose btn-round btn-sm">+</a>
             </div>
         </div>
     </div>
@@ -108,7 +108,7 @@
     </div>
     <div class="col-md-2 col-lg-2 col-sm-2"> 
         <div id="add_contact">
-          <a href="#" onclick="mostrar_contacto(1,2)" class="btn btn-rose btn-round btn-sm">+</a>
+          <a href="#" onclick="mostrar_contacto(0,2)" class="btn btn-rose btn-round btn-sm">+</a>
         </div>
     </div>
 </div>

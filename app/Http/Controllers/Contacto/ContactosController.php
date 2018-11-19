@@ -9,7 +9,8 @@ use App\Cargo;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\CrearContactoRequest;
+use App\Http\Requests\ActualizarContactoRequest;
 use App\Http\Controllers\Controller;
 
 class ContactosController extends Controller
@@ -20,7 +21,7 @@ class ContactosController extends Controller
         return view('contactos.index', compact('cargos'));
     }
 
-    public function store(CreateUserRequest $request)
+    public function store(CrearContactoRequest $request)
     {
         if($request->ajax()){
             $persona = new User();
@@ -33,18 +34,16 @@ class ContactosController extends Controller
             $persona->genero    = $request->genero;
             $persona->cargo_id  = $request->cargo_id;
             $persona->avatar    = "default.jpg";
+            //$persona->password  = bcrypt(substr($request->rut_user,0,4));  //17748600-0
             $persona->save();
-            if ($request->tipo_user === "vendedor") {
-                    $persona->attachRole(2); //2 es el numero id del rol vendedor
-                    $tipo_user = "vendedor";
-                    $id = "vendedor_id";
-                }else{
-                    $persona->attachRole(3); //3 es el numero id del rol contacto
-                    $tipo_user = "contacto";
-                    $id = "contacto_id";
-                }
+
+            $persona->attachRole(3); //3 es el numero id del rol contacto
+            $tipo_user = "contacto";
+            $id = "contacto_id";
+
             $personas = User::obtener_persona_segun_rol($request->tipo_user)->orderBy('apellidos', 'asc')->get();
             $my_persona = $persona->id;
+
             return response()->json([
                 "message"    => "El ".$request->tipo_user." ".$persona->nombres." ".$persona->apellidos." se agregó exitosamente",
                 "personas"   => $personas,
@@ -120,7 +119,7 @@ class ContactosController extends Controller
         }
     }
 
-     public function update(Request $request, $id)
+     public function update(ActualizarContactoRequest $request, $id)
     {
         if($request->ajax()){
             $persona = User::obtener_persona($id);

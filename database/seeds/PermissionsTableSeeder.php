@@ -37,55 +37,10 @@ class PermissionsTableSeeder extends Seeder
             'name' => 'crear-roles',
         ]);
         factory(App\Permission::class)->create([
-            'name' => 'editar-atender',
-        ]);
-        factory(App\Permission::class)->create([
-            'name' => 'editar-citas',
-        ]);
-        factory(App\Permission::class)->create([
-            'name' => 'editar-clinicas',
-        ]);
-        factory(App\Permission::class)->create([
-            'name' => 'editar-consultas',
-        ]);
-        factory(App\Permission::class)->create([
-            'name' => 'editar-doctores',
-        ]);
-        factory(App\Permission::class)->create([
-            'name' => 'editar-especialidades',
-        ]);
-        factory(App\Permission::class)->create([
-            'name' => 'editar-pacientes',
-        ]);
-        factory(App\Permission::class)->create([
             'name' => 'editar-permisos',
         ]);
         factory(App\Permission::class)->create([
             'name' => 'editar-personas',
-        ]);
-        factory(App\Permission::class)->create([
-            'name' => 'editar-recepsionistas',
-        ]);
-        factory(App\Permission::class)->create([
-            'name' => 'editar-roles',
-        ]);
-        factory(App\Permission::class)->create([
-            'name' => 'eliminar-citas',
-        ]);
-        factory(App\Permission::class)->create([
-            'name' => 'eliminar-clinicas',
-        ]);
-        factory(App\Permission::class)->create([
-            'name' => 'eliminar-consultas',
-        ]);
-        factory(App\Permission::class)->create([
-            'name' => 'eliminar-doctores',
-        ]);
-        factory(App\Permission::class)->create([
-            'name' => 'eliminar-especialidades',
-        ]);
-        factory(App\Permission::class)->create([
-            'name' => 'eliminar-pacientes',
         ]);
         factory(App\Permission::class)->create([
             'name' => 'eliminar-permisos',
@@ -97,31 +52,10 @@ class PermissionsTableSeeder extends Seeder
             'name' => 'eliminar-roles',
         ]);
         factory(App\Permission::class)->create([
-            'name' => 'leer-atender',
-        ]);
-        factory(App\Permission::class)->create([
-            'name' => 'leer-citas',
-        ]);
-        factory(App\Permission::class)->create([
-            'name' => 'leer-clinicas',
-        ]);
-        factory(App\Permission::class)->create([
             'name' => 'leer-configuraciones',
         ]);
         factory(App\Permission::class)->create([
-            'name' => 'leer-consultas',
-        ]);
-        factory(App\Permission::class)->create([
-            'name' => 'leer-doctores',
-        ]);
-        factory(App\Permission::class)->create([
-            'name' => 'leer-especialidades',
-        ]);
-        factory(App\Permission::class)->create([
             'name' => 'leer-mantenimientos',
-        ]);
-        factory(App\Permission::class)->create([
-            'name' => 'leer-pacientes',
         ]);
         factory(App\Permission::class)->create([
             'name' => 'leer-permisos',
@@ -130,10 +64,10 @@ class PermissionsTableSeeder extends Seeder
             'name' => 'leer-personas',
         ]);
         factory(App\Permission::class)->create([
-            'name' => 'leer-recepcionistas',
+            'name' => 'leer-roles',
         ]);
         factory(App\Permission::class)->create([
-            'name' => 'leer-roles',
+            'name' => 'leer-empresas',
         ]);
         //factory(App\Role::class, 4)->create();
     }

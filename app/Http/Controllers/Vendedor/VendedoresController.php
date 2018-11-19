@@ -10,15 +10,11 @@ use App\Organizacion;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Http\Requests\ValidarVendedorRequest;
 use App\Http\Controllers\Controller;
 
 class VendedoresController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $cargos = Cargo::obtener_cargos();
@@ -30,9 +26,35 @@ class VendedoresController extends Controller
         //
     }
 
-    public function store(Request $request)
+    public function store(ValidarVendedorRequest $request)
     {
-        //
+        if($request->ajax()){
+            $persona = new User();
+            $persona->rut       = $request->rut_user;
+            $persona->nombres   = $request->nombres_user;
+            $persona->apellidos = $request->apellidos_user;
+            $persona->email     = $request->email_user;
+            $persona->telefono  = $request->telefono_user;
+            $persona->direccion = $request->direccion_user;
+            $persona->genero    = $request->genero;
+            $persona->avatar    = "default.jpg";
+            $persona->password  = bcrypt(substr($request->rut_user,0,4));
+            $persona->save();
+         
+            $persona->attachRole(2); //2 es el numero id del rol vendedor
+            $tipo_user = "vendedor";
+            $id = "vendedor_id";
+                
+            $personas = User::obtener_persona_segun_rol($request->tipo_user)->orderBy('apellidos', 'asc')->get();
+            $my_persona = $persona->id;
+            return response()->json([
+                "message"    => "El ".$request->tipo_user." ".$persona->nombres." ".$persona->apellidos." se agregó exitosamente",
+                "personas"   => $personas,
+                "my_persona" => $my_persona,
+                "tipo_user"  => $tipo_user,
+                "id"         => $id,
+            ]);
+        }
     }
 
     public function show($id)

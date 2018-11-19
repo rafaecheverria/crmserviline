@@ -284,7 +284,16 @@ var listar_organizaciones = function()
         "serverSide": true,
         "fixedHeader": true,
         "retrieve": true,
-        "order": [[ 3, "asc" ]],
+        "order": [[ 2, "asc" ]],
+        "columnDefs": [ //define el ancho de las columnas de la tabla.
+            { "width": "10%", "targets": 0 },
+            { "width": "10%", "targets": 1 },
+            { "width": "40%", "targets": 2 },
+            { "width": "10%", "targets": 3 },
+            { "width": "10%", "targets": 4 },
+            { "width": "10%", "targets": 5 },
+            { "width": "10%", "targets": 6 },
+          ],
         "ajax": {
              "url": "organizaciones/show",
             },
@@ -308,6 +317,8 @@ var listar_organizaciones = function()
             {data: 'desactivar', name: 'desactivar'},
         ]
     })
+
+    console.log(table)
 }
 var listar_personas = function()
 {

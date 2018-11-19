@@ -47,9 +47,6 @@
                     <p>Inicio</p>
                 </a>
             </li>
-            @permission('leer-pacientes')
-  
-            @endpermission
 
             @permission('leer-empresas')
             <li>

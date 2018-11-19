@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Organizacion;
 
 use App\Organizacion;
@@ -11,6 +10,8 @@ use App\Estado;
 use Jenssegers\Date\Date;
 use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\ValidarOrganizacionRequest;
 use App\Http\Controllers\Controller;
 
 class OrganizacionesController extends Controller
@@ -52,7 +53,7 @@ class OrganizacionesController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(ValidarOrganizacionRequest $request)
     {
        if($request->ajax()){
             $organizacion = new Organizacion();
@@ -79,7 +80,15 @@ class OrganizacionesController extends Controller
 
     public function show()
     {
-        $organizaciones = Organizacion::with('estados')->selectRaw('distinct organizaciones.*');
+        $organizaciones = "";
+
+        if(Auth::user()->hasRole('administrador')){
+            $organizaciones = Organizacion::with('estados')->selectRaw('distinct organizaciones.*');
+        }else{
+            $organizaciones = Organizacion::with('estados')->selectRaw('distinct organizaciones.*')->whereHas('users', function ($query) {
+                $query->where('organizacion_user.user_id', '=', Auth::user()->id);
+                });
+        }
         return  datatables()
                 ->of($organizaciones)
                 ->addColumn('estado', function (Organizacion $organizacion) {
@@ -190,7 +199,7 @@ class OrganizacionesController extends Controller
         }
     }
 
-    public function update(Request $request, $id)
+    public function update(ValidarOrganizacionRequest $request, $id)
     {
         if($request->ajax()){
             $organizacion = Organizacion::findOrFail($id);

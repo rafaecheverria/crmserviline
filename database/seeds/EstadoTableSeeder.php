@@ -42,5 +42,11 @@ class EstadoTableSeeder extends Seeder
             //'fecha_creado' => Carbon::now(),
             //'fecha_actualizado' => Carbon::now(),
         ]);
+        factory(App\Estado::class)->create([
+            'estado' => 'DE BAJA',
+            'color' => '#F44336',
+            //'fecha_creado' => Carbon::now(),
+            //'fecha_actualizado' => Carbon::now(),
+        ]);
     }
 }

@@ -9,6 +9,7 @@ use App\Cargo;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Http\Requests\CreateUserRequest;
 use App\Http\Controllers\Controller;
 
 class ContactosController extends Controller
@@ -19,7 +20,7 @@ class ContactosController extends Controller
         return view('contactos.index', compact('cargos'));
     }
 
-    public function store(Request $request)
+    public function store(CreateUserRequest $request)
     {
         if($request->ajax()){
             $persona = new User();
@@ -91,7 +92,7 @@ class ContactosController extends Controller
                         $ruta = "contactos/";
                         $ficha = '<a href="#" onclick="ficha('.$user->id.', 1)" rel="tooltip" title="Ficha del contacto" class="btn btn-simple btn-primary btn-icon"><i class="material-icons">folder_shared</i></a>';
                         $editar = '<a href="#" onclick="mostrar_contacto('.$user->id.', 2)" rel="tooltip" title="Editar" class="btn btn-simple btn-success btn-icon edit"><i class="material-icons">edit</i></a>';
-                        $eliminar = '<a href="#" onclick="eliminar('.$user->id.',\''.$user->nombre.'\',\''.$ruta.'\')" data-toggle="modal" data-target="#eliminar_paciente" rel="tooltip" title="Editar" class="btn btn-simple btn-danger btn-icon"><i class="material-icons">close</i></a>';
+                        $eliminar = '<a href="#" onclick="eliminar('.$user->id.',\''.$user->nombres." ".$user->apellidos.'\',\''.$ruta.'\')" data-toggle="modal" data-target="#eliminar_paciente" rel="tooltip" title="Editar" class="btn btn-simple btn-danger btn-icon"><i class="material-icons">close</i></a>';
 
                         return $ficha.$editar.$eliminar;
                        
@@ -135,7 +136,7 @@ class ContactosController extends Controller
             $persona->save();
             return response()->json([
              "apellidos" => $persona->apellidos,
-             "message" => "El paciente ".$persona->nombres." ".$persona->apellidos." ha sido actualizado correctamente !"
+             "message" => "El contacto ".$persona->nombres." ".$persona->apellidos." ha sido actualizado correctamente !"
             ]);
         }
     }

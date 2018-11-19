@@ -15,9 +15,10 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label class="control-label">NOTA:</label>
-                    <textarea rows="6" type="text" class="form-control nota" name="nota" maxlength="500"></textarea>
+                    <textarea rows="6" type="text" class="form-control nota" name="nota" maxlength="500" placeholder="Escriba aquí una nota para el estado"></textarea>
                 </div>
             </div>
         </div>
     </form>
+    <div class="contador"></div>
 </div>

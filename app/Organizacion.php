@@ -51,9 +51,10 @@ class Organizacion extends Model
          $organizacion = Organizacion::findOrFail($id);
          $historial_estados = Organizacion::traer_datos_estado_organizacion($organizacion)->get();
          $datos = $historial_estados->map(function($item, $key){
-            return [$item['estado'] => [$item['id'],$item['estado'], Date::parse($item['fecha_creado'])->format('j F Y'), $item['color'], $item['organizacion_id'], $item['estado_id'], $item['nota'], $item['organizacion_id']]];
+            return [$item['estado'] => [$item['id'],$item['estado'], Date::parse($item['fecha_creado'])->format('j F Y'), $item['color'], $item['organizacion_id'], $item['estado_id'], $item['nota'], $item['organizacion_id'], Date::parse($item['fecha_creado'])->format('H:i')]];
          });
          return $datos;
+        
 /*==========================================================================================================
             CÓDIGO QUE AGRUPA EL ARRAY POR SUS ESTADOS CON LA FUNCION mapToGroups()
 ============================================================================================================*/

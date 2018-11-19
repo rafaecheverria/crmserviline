@@ -6,12 +6,12 @@
               <div class="col-md-12">
                   <div class="form-group">
                       <label class="control-label">NOTA:</label>
-                      <textarea rows="6" type="text" class="form-control" id="nota" name="nota" maxlength="500"></textarea>
+                      <textarea rows="6" type="text" class="form-control nota" id="nota" name="nota" maxlength="500" placeholder="Escriba aquí una nota para el estado"></textarea>
                   </div>
               </div>
           </div>
     </form>
-    <div id="contador"></div>
+    <div class="contador"></div>
    <!--  <a class="btn btn-primary btn-sm btn pull-right" id="boton-agregar-nota" onclick="agregar_nota(0)">Agregar Nota</a> -->
    <div id="boton-agregar-nota"></div>
 

@@ -14,6 +14,7 @@ Route::middleware(['auth', 'role:administrador|vendedor'])->group(function(){
 	Route::resource('vendedores', 'Vendedor\VendedoresController');
 	Route::resource('organizaciones', 'Organizacion\OrganizacionesController');
 	Route::resource('estado_organizacion', 'Estado_Organizacion\Estado_OrganizacionController');
+	Route::resource('panel', 'Panel\PanelesController');
 	Route::get('cargar_estados_segun_actual/{id}', 'Estado_Organizacion\Estado_OrganizacionController@get_estados_segun_actual');
 	Route::post('cambiar_estado/{id}', 'Estado_Organizacion\Estado_OrganizacionController@cambiar_estado');
 	Route::get('historial_estado/{id}', 'Organizacion\OrganizacionesController@historial_estado');

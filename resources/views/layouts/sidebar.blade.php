@@ -63,7 +63,7 @@
                 <div class="collapse" id="empresas">
                     <ul class="nav">
                         <li>
-                            <a href="{{ url('organizaciones') }}">
+                            <a href="{{ url('panel') }}">
                                 <i class="material-icons">list_alt</i>
                                 <p>Panel</p>
                             </a>

@@ -30,6 +30,5 @@
     </div>
 </div>
 @include('vendedores.modal_ficha')
-@include('vendedores.modal')
 @include('../contactos.modal')
 @endsection

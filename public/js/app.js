@@ -23768,9 +23768,9 @@ function redirect(ruta)
 $(document).ready(function() {
     var valor, contador, parrafo;  
 // Mostramos un mensaje inicial y lo añadimos al div de id contador.  
-$('<p class="indicador">Tienes 500 caracteres restantes</p>').appendTo('#contador');
+$('<p class="indicador">Tienes 500 caracteres restantes</p>').appendTo('.contador');
 // Definimos el evento para que detecte cada vez que se presione una tecla.  
-$('#nota').keydown(function(){  
+$('.nota').keydown(function(){  
 // Redefinimos el valor de contador al máximo permitido (150).  
 contador = 500;  
 /* Quitamos el párrafo con clase advertencia o indicador, en caso de que ya se 
@@ -23778,7 +23778,7 @@ contador = 500;
 $('.advertencia').remove();  
 $('.indicador').remove();  
 // Tomamos el valor actual del contenido del área de texto  
-valor = $('#nota').val().length;  
+valor = $('.nota').val().length;  
 // Descontamos ese valor al máximo.  
 contador = contador - valor;  
 /* Dependiendo de cuantos caracteres quedan, mostraremos el mensaje de una 
@@ -23789,7 +23789,7 @@ if(contador < 0) {
    parrafo = '<p class="indicador">';  
 }  
 // Mostramos el mensaje con el número de caracteres restantes.  
-$('#contador').append(parrafo + 'Tienes ' + contador + ' caracteres restantes</p>');  
+$('.contador').append(parrafo + 'Tienes ' + contador + ' caracteres restantes</p>');  
   
 });  
 
@@ -23798,6 +23798,9 @@ $('#modal_estado').on('shown.bs.modal', function () {
 })
 $('#modal_contacto').on('shown.bs.modal', function () {
     $('#rut_user').focus();
+})
+$('#modal_cambiar_estado').on('shown.bs.modal', function () {
+    $('.nota').focus();
 })
 
 $('[data-toggle="tooltip"]').tooltip();
@@ -24913,13 +24916,12 @@ function ficha(id, origen) //carga datos en la ficha.
             })
             break;
         case 3:
-            //$("#modal_ficha_vendedor").modal("show")
+            $("#modal_ficha_vendedor").modal("show")
             $.ajax({
                 url: "/ficha_vendedor/"+id+"",
                 type: "GET",
                 success:function(data){
-                    console.log(data)
-                   /* $(".img_pac").attr('src', 'assets/img/perfiles/'+data.avatar+'?'+ new Date().getTime()).addClass("img-circle");
+                    $(".img_pac").attr('src', 'assets/img/perfiles/'+data.avatar+'?'+ new Date().getTime()).addClass("img-circle");
                     $('#rut').html(data.rut)
                     $('#nombres').html(data.nombres)
                     $('#email').html("<a href='mailto:"+data.email+"'><span class='label label-primary'>"+data.email+"</span></a>")
@@ -24927,12 +24929,11 @@ function ficha(id, origen) //carga datos en la ficha.
                     $('#genero').html(data.genero)
                     $('#direccion').html(data.direccion)
                     $('#empresas_2').html("")
-                    console.log(data.empresas)
                    for (i=0;i<data.empresas.length;i++) {
                         $("#empresas_2").html( $("#empresas_2").html() + "<h6><a href='#' onclick='javascript:alert("+data.empresas[i].id+")'><span class='label label-primary'>" + data.empresas[i].nombre.toUpperCase() + "</span></a></h6>")
                     }
                     $('.title-name').html("<span class='label label-rose'>"+data.nombres+"</span>")
-                    $('#cerrar').html('<a href="#" class="btn btn-danger pull-right" data-dismiss="modal">Cerrar</a>')*/
+                    $('#cerrar').html('<a href="#" class="btn btn-danger pull-right" data-dismiss="modal">Cerrar</a>')
                   },
                 error:function(){
                    alert("La operación falló")
@@ -24953,6 +24954,7 @@ function historial_estados(id) //carga datos del historial de los estados con el
         url: route,
         type: 'GET',
         success:function(data){    
+            console.log(data.agrupar)
             html += cargar_tabla_historial(data.agrupar, data.color, data.estado, data.organizacion_id, data.estado_actual)
             $('#modal_historial_estado .modal-body').empty();
             $('#modal_historial_estado .modal-body').append(html);
@@ -24972,7 +24974,7 @@ function cargar_tabla_historial(datos, color, estado, organizacion, estado_actua
     html+="<tbody>";
     for(var i in datos){
         for(var j in datos[i]){
-            html+="<tr><td><b class='text-primary'>"+datos[i][j][2]+"</b></td><td><span class='label' style='background:"+datos[i][j][3]+"'>"+datos[i][j][1]+"</span></td><td>"+datos[i][j][6]+"</td><td class='text-center'><a href='#' onclick='mostrar_agregar_nota("+estado_actual+", "+organizacion+",\"" + estado + "\", \"" + color + "\", "+datos[i][j][0]+")'><span class='btn btn-success btn-simple'><i class='material-icons'>edit</i></span></a><a href='#' onclick='eliminar("+datos[i][j][0]+", \"" +'nota de '+datos[i][j][1]+ "\", \"" +'estado_organizacion/'+ "\", "+datos[i][j][7]+" )'><span class='btn btn-danger btn-simple'><i class='material-icons'>delete</i></span></a></td></tr>";
+            html+="<tr><td><b class='text-primary'>"+datos[i][j][2]+"</b></td><td><span class='label' style='background:"+datos[i][j][3]+"'>"+datos[i][j][1]+"</span></td><td>"+datos[i][j][6]+"<br><p class='pull-right small'>"+datos[i][j][8]+"</p></td><td class='text-center'><a href='#' onclick='mostrar_agregar_nota("+estado_actual+", "+organizacion+",\"" + estado + "\", \"" + color + "\", "+datos[i][j][0]+")'><span class='btn btn-success btn-simple'><i class='material-icons'>edit</i></span></a><a href='#' onclick='eliminar("+datos[i][j][0]+", \"" +'nota de '+datos[i][j][1]+ "\", \"" +'estado_organizacion/'+ "\", "+datos[i][j][7]+" )'><span class='btn btn-danger btn-simple'><i class='material-icons'>delete</i></span></a></td></tr>";
         }
     }
     html+="</tbody>";
@@ -25544,9 +25546,9 @@ const swalWithBootstrapButtons = swal.mixin({
 })
 
 swalWithBootstrapButtons({
-  title: 'Estás seguro de eliminar a '+nombre+ '?',
+  title: 'Estás seguro de Eliminar a '+nombre+ '?',
   text: "No podrás revertir esto.!",
-  type: 'warning',
+  type: 'question',
   showCancelButton: true,
   confirmButtonText: 'Si, Eliminar!',
   cancelButtonText: 'No, cancelar!',

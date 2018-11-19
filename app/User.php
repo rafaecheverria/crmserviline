@@ -73,7 +73,7 @@ class User extends Authenticatable
 
     public function setNombresAttribute($valor)
     {
-        $this->attributes['nombres'] = strtolower($valor);
+        $this->attributes['nombres'] = mb_strtolower($valor);
     }
     public function getNombresAttribute($valor)
     {
@@ -81,7 +81,7 @@ class User extends Authenticatable
     }
     public function setApellidosAttribute($valor)
     {
-        $this->attributes['apellidos'] = strtolower($valor);
+        $this->attributes['apellidos'] = mb_strtolower($valor);
     }
     public function getApellidosAttribute($valor)
     {
@@ -90,7 +90,7 @@ class User extends Authenticatable
 
     public function setEmailAttribute($valor)
     {
-        $this->attributes['email'] = strtolower($valor);
+        $this->attributes['email'] = mb_strtolower($valor);
     }
 
     public function getEdad(){

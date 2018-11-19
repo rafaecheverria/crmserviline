@@ -68,7 +68,7 @@ class OrganizacionesController extends Controller
             $organizacion->vendedor_id = $request->vendedor_id;
             $organizacion->logo        = "default.jpg";
             $organizacion->save();
-            $organizacion->users()->sync([$request->contacto_id, $request->vendedor_id]);  
+            $organizacion->users()->sync($request->contacto_id);  
             //$organizacion->users()->sync($request->vendedor_id); 
             $organizacion->estados()->sync(1);
             return response()->json([

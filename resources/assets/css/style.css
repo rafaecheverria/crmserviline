@@ -243,3 +243,18 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+
+.activo{background-color: #29B34C;}
+.zona{background-color:#A1ECB5;}
+
+/*#products { float:left; width: 200px; margin-right: 2em; }
+#cart { width: 200px; float: left; margin-left:100px;}
+#cart ol { margin: 0; padding: 1em 0 1em 3em; } 
+h3{ background-color:#2075CA; color:#F8F8F8; height:20px; padding:10px;}
+li{ background-color:#D8D8D8; color:#393939; margin-bottom:10px; padding:10px; list-style:none;}
+.carrito{ width:300px; height: auto; background-color:#FFFAFA; border:solid 1px #FF6366; border-radius:5px;}
+ol{ width:200px; height:auto;}
+.zona{background-color:#A1ECB5;}
+.activo{background-color: #29B34C;}
+.articulonew{ width:100px;}
+.quitar{font-size:14px; color:#F40004; cursor:pointer; float:right;}*/

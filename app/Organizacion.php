@@ -30,8 +30,7 @@ class Organizacion extends Model
     public function getUpdatedAttribute()
     {
         //return Date::parse($this->updated_at)->toDayDateTimeString();
-        return Date::parse($this->updated_at)->format('j F Y');
-        
+        return Date::parse($this->updated_at)->format('j F Y');   
     }
 
     public static function obtener_organizacion($id){
@@ -40,7 +39,7 @@ class Organizacion extends Model
     }
 
     public static function obtener_organizacion_segun_estado(){
-        $empresa =  Organizacion::with('estados')->selectRaw('distinct organizaciones.*');
+        $empresa = Organizacion::with('estados')->selectRaw('distinct organizaciones.*');
         return $empresa;
     }
 
@@ -59,7 +58,6 @@ class Organizacion extends Model
             return [$item['estado'] => [$item['id'],$item['estado'], Date::parse($item['fecha_creado'])->format('j F Y'), $item['color'], $item['organizacion_id'], $item['estado_id'], $item['nota'], $item['organizacion_id'], Date::parse($item['fecha_creado'])->format('H:i')]];
          });
          return $datos;
-        
 /*==========================================================================================================
             CÓDIGO QUE AGRUPA EL ARRAY POR SUS ESTADOS CON LA FUNCION mapToGroups()
 ============================================================================================================*/
@@ -71,7 +69,6 @@ class Organizacion extends Model
 /*==========================================================================================================
             CÓDIGO QUE AGRUPA EL ARRAY POR SUS ESTADOS CON LA FUNCION mapToGroups()
 ============================================================================================================*/
-         
     }
     public static function estado_actual($id){
         $organizacion = Organizacion::findOrFail($id);

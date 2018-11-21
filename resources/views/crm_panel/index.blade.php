@@ -2,221 +2,134 @@
 
 @section('content')
 
-<div class="contenido">
+<div class="content">
     <div class="row">
         <div class="col-md-12">
-        <div class="col-lg-2 col-space">
-            <div class="card card-pricing card-raised">
-                <div class="content">
-                    <h6 class="category">Small Company</h6>
 
-                    <div id="catalog">
-                        <div class="list-group">
-                          <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                            <div class="d-flex w-100 justify-content-between">
-                              <h5 class="mb-1">List group item heading</h5>
-                              <small>3 days ago</small>
-                            </div>
-                            <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                            <small>Donec id elit non mi porta.</small>
-                          </a>
-                          <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                            <div class="d-flex w-100 justify-content-between">
-                              <h5 class="mb-1">List group item heading</h5>
-                              <small class="text-muted">3 days ago</small>
-                            </div>
-                            <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                            <small class="text-muted">Donec id elit non mi porta.</small>
-                          </a>
-                          <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                            <div class="d-flex w-100 justify-content-between">
-                              <h5 class="mb-1">List group item heading</h5>
-                              <small class="text-muted">3 days ago</small>
-                            </div>
-                            <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                            <small class="text-muted">Donec id elit non mi porta.</small>
-                          </a>
-                        </div>
+             
+                <div class="col-md-15 well well-sm">
+                    <div class="list-group">
+                        @foreach($prospectos as $prospecto)
+                        <a href="#" class="list-group-item">
+                            <h6 class="list-group-item-heading">{{ $prospecto->nombre }}</h6>
+                            <p class="list-group-item-text">List Group Item Text</p>
+                             
+                        </a>
+                        @endforeach
                     </div>
-
-
                 </div>
-            </div>
-        </div>
-        <div class="col-lg-2 col-space">
-            <div class="card card-pricing card-raised">
-                <div class="content">
-                    <h6 class="category">Small Company</h6>
+           
+
+
+            <div class="col-md-15 well well-sm">
+                    <div class="list-group">
+                        @foreach($contactados as $contactado)
+                        <a href="#" class="list-group-item">
+                            <h6 class="list-group-item-heading">{{ $contactado->nombre }}</h6>
+                            <p class="list-group-item-text">List Group Item Text</p>
+                             
+                        </a>
+                        @endforeach
+                    </div>
+                </div>
+            <div class="col-md-15 well well-sm">
+               <div class="list-group">
+                    <a href="#" class="list-group-item">
+                        <h6 class="list-group-item-heading">First List Group Item Heading</h6>
+                        <p class="list-group-item-text">List Group Item Text</p>
+                    </a>
+                    <a href="#" class="list-group-item">
+                        <h6 class="list-group-item-heading">Second List Group Item Heading</h6>
+                        <p class="list-group-item-text">List Group Item Text</p>
+                    </a>
+                    <a href="#" class="list-group-item">
+                            <h6 class="list-group-item-heading">Third List Group Item Heading</h6>
+                            <p class="list-group-item-text">List Group Item Text</p>
+                    </a>
+                     <a href="#" class="list-group-item">
+                        <h6 class="list-group-item-heading">Second List Group Item Heading</h6>
+                        <p class="list-group-item-text">List Group Item Text</p>
+                    </a>
+                     <a href="#" class="list-group-item">
+                        <h6 class="list-group-item-heading">Second List Group Item Heading</h6>
+                        <p class="list-group-item-text">List Group Item Text</p>
+                    </a>
+                     <a href="#" class="list-group-item">
+                        <h6 class="list-group-item-heading">Second List Group Item Heading</h6>
+                        <p class="list-group-item-text">List Group Item Text</p>
+                    </a>
+                    <a href="#" class="list-group-item">
+                        <h6 class="list-group-item-heading">Second List Group Item Heading</h6>
+                        <p class="list-group-item-text">List Group Item Text</p>
+                    </a>
+                    <a href="#" class="list-group-item">
+                        <h6 class="list-group-item-heading">Second List Group Item Heading</h6>
+                        <p class="list-group-item-text">List Group Item Text</p>
+                    </a>
+                    <a href="#" class="list-group-item">
+                        <h6 class="list-group-item-heading">Second List Group Item Heading</h6>
+                        <p class="list-group-item-text">List Group Item Text</p>
+                    </a>
+                    <a href="#" class="list-group-item">
+                        <h6 class="list-group-item-heading">Second List Group Item Heading</h6>
+                        <p class="list-group-item-text">List Group Item Text</p>
+                    </a>
+                    <a href="#" class="list-group-item">
+                        <h6 class="list-group-item-heading">Second List Group Item Heading</h6>
+                        <p class="list-group-item-text">List Group Item Text</p>
+                    </a>
                     
+          </div>
+            </div>
+            <div class="col-md-15 well well-sm">
+                <div class="list-group">
+                    <a href="#" class="list-group-item">
+                        <h6 class="list-group-item-heading">First List Group Item Heading</h6>
+                        <p class="list-group-item-text">List Group Item Text</p>
+                    </a>
+                    <a href="#" class="list-group-item">
+                        <h6 class="list-group-item-heading">Second List Group Item Heading</h6>
+                        <p class="list-group-item-text">List Group Item Text</p>
+                    </a>
+                    <a href="#" class="list-group-item">
+                            <h6 class="list-group-item-heading">Third List Group Item Heading</h6>
+                            <p class="list-group-item-text">List Group Item Text</p>
+                    </a>
+                     <a href="#" class="list-group-item">
+                        <h6 class="list-group-item-heading">Second List Group Item Heading</h6>
+                        <p class="list-group-item-text">List Group Item Text</p>
+                    </a>
+                     <a href="#" class="list-group-item">
+                        <h4 class="list-group-item-heading">Second List Group Item Heading</h4>
+                        <p class="list-group-item-text">List Group Item Text</p>
+                    </a>
+                     <a href="#" class="list-group-item">
+                        <h4 class="list-group-item-heading">Second List Group Item Heading</h4>
+                        <p class="list-group-item-text">List Group Item Text</p>
+                    </a>
 
-                        <div class="list-group">
-                            <div id="cart">
-                          <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                            <div class="d-flex w-100 justify-content-between">
-                              <h5 class="mb-1">List group item heading</h5>
-                              <small>3 days ago</small>
-                            </div>
-                            <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                            <small>Donec id elit non mi porta.</small>
-                          </a>
-                          <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                            <div class="d-flex w-100 justify-content-between">
-                              <h5 class="mb-1">List group item heading</h5>
-                              <small class="text-muted">3 days ago</small>
-                            </div>
-                            <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                            <small class="text-muted">Donec id elit non mi porta.</small>
-                          </a>
-                          <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                            <div class="d-flex w-100 justify-content-between">
-                              <h5 class="mb-1">List group item heading</h5>
-                              <small class="text-muted">3 days ago</small>
-                            </div>
-                            <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                            <small class="text-muted">Donec id elit non mi porta.</small>
-                          </a>
-                      </div>
-                        </div>
-                    
+          </div>
+            </div>
+            <div class="col-md-15 well well-sm">
+                <div class="list-group">
+                    <a href="#" class="list-group-item">
+                        <h6 class="list-group-item-heading">First List Group Item Heading</h6>
+                        <p class="list-group-item-text">List Group Item Text</p>
+                    </a>
+                    <a href="#" class="list-group-item">
+                        <h4 class="list-group-item-heading">Second List Group Item Heading</h4>
+                        <p class="list-group-item-text">List Group Item Text</p>
+                    </a>
+                    <a href="#" class="list-group-item">
+                            <h4 class="list-group-item-heading">Third List Group Item Heading</h4>
+                            <p class="list-group-item-text">List Group Item Text</p>
+                    </a>
 
-                </div>
+          </div>
             </div>
-        </div>
-        <div class="col-lg-2 col-space">
-            <div class="card card-pricing card-raised">
-                <div class="content">
-                    <h6 class="category">Small Company</h6>
-                    <div class="list-group">
-                      <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-between">
-                          <h5 class="mb-1">List group item heading</h5>
-                          <small>3 days ago</small>
-                        </div>
-                        <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                        <small>Donec id elit non mi porta.</small>
-                      </a>
-                      <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-between">
-                          <h5 class="mb-1">List group item heading</h5>
-                          <small class="text-muted">3 days ago</small>
-                        </div>
-                        <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                        <small class="text-muted">Donec id elit non mi porta.</small>
-                      </a>
-                      <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-between">
-                          <h5 class="mb-1">List group item heading</h5>
-                          <small class="text-muted">3 days ago</small>
-                        </div>
-                        <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                        <small class="text-muted">Donec id elit non mi porta.</small>
-                      </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-2 col-space">
-            <div class="card card-pricing card-raised">
-                <div class="content">
-                    <h6 class="category">Small Company</h6>
-                    <div class="list-group">
-                      <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-between">
-                          <h5 class="mb-1">List group item heading</h5>
-                          <small>3 days ago</small>
-                        </div>
-                        <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                        <small>Donec id elit non mi porta.</small>
-                      </a>
-                      <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-between">
-                          <h5 class="mb-1">List group item heading</h5>
-                          <small class="text-muted">3 days ago</small>
-                        </div>
-                        <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                        <small class="text-muted">Donec id elit non mi porta.</small>
-                      </a>
-                      <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-between">
-                          <h5 class="mb-1">List group item heading</h5>
-                          <small class="text-muted">3 days ago</small>
-                        </div>
-                        <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                        <small class="text-muted">Donec id elit non mi porta.</small>
-                      </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-2 col-space">
-            <div class="card card-pricing card-raised">
-                <div class="content">
-                    <h6 class="category">Small Company</h6>
-                    <div class="list-group">
-                      <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-between">
-                          <h5 class="mb-1">List group item heading</h5>
-                          <small>3 days ago</small>
-                        </div>
-                        <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                        <small>Donec id elit non mi porta.</small>
-                      </a>
-                      <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-between">
-                          <h5 class="mb-1">List group item heading</h5>
-                          <small class="text-muted">3 days ago</small>
-                        </div>
-                        <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                        <small class="text-muted">Donec id elit non mi porta.</small>
-                      </a>
-                      <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-between">
-                          <h5 class="mb-1">List group item heading</h5>
-                          <small class="text-muted">3 days ago</small>
-                        </div>
-                        <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                        <small class="text-muted">Donec id elit non mi porta.</small>
-                      </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-2 col-space">
-            <div class="card card-pricing card-raised">
-                <div class="content">
-                    <h6 class="category">Small Company</h6>
-                    <div class="list-group">
-                      <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-between">
-                          <h5 class="mb-1">List group item heading</h5>
-                          <small>3 days ago</small>
-                        </div>
-                        <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                        <small>Donec id elit non mi porta.</small>
-                      </a>
-                      <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-between">
-                          <h5 class="mb-1">List group item heading</h5>
-                          <small class="text-muted">3 days ago</small>
-                        </div>
-                        <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                        <small class="text-muted">Donec id elit non mi porta.</small>
-                      </a>
-                      <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-between">
-                          <h5 class="mb-1">List group item heading</h5>
-                          <small class="text-muted">3 days ago</small>
-                        </div>
-                        <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                        <small class="text-muted">Donec id elit non mi porta.</small>
-                      </a>
-                    </div>
-                </div>
-            </div>
+
         </div>
     </div>
-</div>
-
 </div>
 
 @endsection

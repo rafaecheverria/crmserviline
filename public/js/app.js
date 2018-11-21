@@ -25232,8 +25232,9 @@ function agregar_nota(id, tipo){
 }
 
 function mostrar_cambiar_estado(organizacion_id, nombre){
-    $("#titulo_estado").html("<span>Cambiar Estado: </span> <span class='label label-rose'>"+nombre+"</span></h6>");
-    $("#modal_cambiar_estado").modal("show");
+    $("#titulo_estado").html("<span>Cambiar Estado: </span> <span class='label label-rose'>"+nombre+"</span></h6>")
+    $("#modal_cambiar_estado").modal("show")
+    $(".nota").val("")
     var route = "/cargar_estados_segun_actual/"+organizacion_id+"";
     var html = "";
     $.ajax({

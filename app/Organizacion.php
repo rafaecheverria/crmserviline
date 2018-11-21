@@ -39,11 +39,8 @@ class Organizacion extends Model
         return $organizacion;
     }
 
-    public static function obtener_organizacion_segun_estado($id){
-        $empresa =  Organizacion::with('estados')->selectRaw('distinct organizaciones.*')->whereHas('estados', function ($query) {
-               $query->where('estado_organizacion.estado_id', '=', $id);
-                })->get();
-
+    public static function obtener_organizacion_segun_estado(){
+        $empresa =  Organizacion::with('estados')->selectRaw('distinct organizaciones.*');
         return $empresa;
     }
 

@@ -323,6 +323,22 @@ ol{ width:200px; height:auto;}
 .activo{background-color: #29B34C;}
 .articulonew{ width:100px;}
 .quitar{font-size:14px; color:#F40004; cursor:pointer; float:right;}*/
+
+.contenido {
+  margin-top: 50px;
+  margin-left: -5px;
+  padding: 0px 5px; /* Valores por defecto --> padding: 30px 15px;  */
+  min-height: calc(100vh - 123px);
+}
+
+.col-space {
+  position: relative;
+  min-height: 1px;
+  padding-left: 0px;
+  padding-right:1px;
+
+}
+
 /*! =========================================================
  *
  Material Dashboard PRO - V1.1.0

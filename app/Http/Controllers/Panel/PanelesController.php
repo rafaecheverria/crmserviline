@@ -12,14 +12,16 @@ class PanelesController extends Controller
 {
     public function index()
     {
-    	$prospecto = Organizacion::obtener_organizacion_segun_estado(1);
-    	$contactado = Organizacion::obtener_organizacion_segun_estado(2);
-    	$reunion = Organizacion::obtener_organizacion_segun_estado(3);
-    	$propuesta = Organizacion::obtener_organizacion_segun_estado(4);
-    	$negociacion = Organizacion::obtener_organizacion_segun_estado(5);
-    	$cierre = Organizacion::obtener_organizacion_segun_estado(6);
-        return view('crm_panel.index', compact($prospecto, $contactado, $reunion, $propuesta, $negociacion, $cierre));
-        dd($prospecto, $contactado);
+    	$prospecto = Organizacion::obtener_organizacion_segun_estado()->whereHas('estados', function ($query) {
+               $query->where('estado_organizacion.estado_id', '=', 1);
+                })->get();
+    	//$contactado = Organizacion::obtener_organizacion_segun_estado(2);
+    	//$reunion = Organizacion::obtener_organizacion_segun_estado(3);
+    	//$propuesta = Organizacion::obtener_organizacion_segun_estado(4);
+    	//$negociacion = Organizacion::obtener_organizacion_segun_estado(5);
+    	//$cierre = Organizacion::obtener_organizacion_segun_estado(6);
+        return view('crm_panel.index', compact($prospecto));
+        dd($prospecto);
     	//$prospecto = Organizacion::with('estados')->selectRaw('distinct organizaciones.*')->whereHas('estados', function ($query) {
                //$query->where('estado_organizacion.estado_id', '=', 2);
                // })->get();

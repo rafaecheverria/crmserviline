@@ -70,8 +70,7 @@ class OrganizacionesController extends Controller
             $organizacion->logo        = "default.jpg";
             $organizacion->save();
             $organizacion->users()->sync($request->contacto_id);  
-            //$organizacion->users()->sync($request->vendedor_id); 
-            $organizacion->estados()->sync(1);
+            $organizacion->estados()->sync(1); //Al crear una empresa, se añade automaticamente al estado PROSPECTO que tiene el id 1 en la tabla "estados"
             return response()->json([
                 "message" => "La empresa ".$organizacion->nombre." ha sido guardada exitosamente!"
                 ]);

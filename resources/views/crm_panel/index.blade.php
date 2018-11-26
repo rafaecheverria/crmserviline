@@ -12,7 +12,7 @@
                         @foreach($prospectos as $prospecto)
                             
                         <a href="#" class="list-group-item">
-                            <h6 class="list-group-item-heading">{{ $prospectos->nombre }}</h6>
+                            <h6 class="list-group-item-heading">{{ $prospecto->nombre }}</h6>
                             <p class="list-group-item-text">List Group Item Text</p>
                              
                         </a>

@@ -19,12 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('direccion');
             $table->date('nacimiento')->nullable();
             $table->string('actividad')->nullable();
-            $table->string('fecha_admision')->nullable();
-            $table->string('diagnostico')->nullable();
             $table->string('descripcion')->nullable();
-            $table->string('titulo')->nullable();  
-            $table->string('estudios_complementarios')->nullable(); 
-            $table->string('posicion')->nullable();
             $table->string('genero')->nullable();
             $table->string('estado')->nullable();
             $table->string('avatar')->default('default.jpg');

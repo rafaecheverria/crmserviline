@@ -67,6 +67,7 @@ class OrganizacionesController extends Controller
             $organizacion->ciudad_id   = $request->ciudad_id;
             $organizacion->region_id   = $request->region_id;
             $organizacion->vendedor_id = $request->vendedor_id;
+            $organizacion->estado_actual = 1; //se guarda el estado PROSPECTO cuando se agrega a una empresa.
             $organizacion->logo        = "default.jpg";
             $organizacion->save();
             $organizacion->users()->sync($request->contacto_id);  
@@ -135,7 +136,6 @@ class OrganizacionesController extends Controller
              "message"=> "El estado de ".$organizacion->nombre." ha sido actualizado exitosamente!",
             ]);
         }
-
     }
 
     public function ficha($id)

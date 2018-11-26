@@ -44,7 +44,7 @@ Route::middleware(['auth', 'role:administrador|vendedor'])->group(function(){
 	//Route::get('dias-doctor/{id}','Doctor\DiasController@dias'); //carga los eventos en el fullcalendar.
 	Route::get('pdf/{id}', 'Paciente\FichaPacienteController@reporte')->middleware(['permission:leer-pacientes']);
 	Route::get('pdf-expediente/{id}', 'Paciente\ExpedienteController@reporte')->middleware(['permission:leer-pacientes']);
-	Route::get('/', 'Citas\CitasMedicasController@index');
+	Route::get('/', 'Organizacion\OrganizacionesController@index');
 });
 
 Route::get('login', 'Auth\AuthController@getLogin');

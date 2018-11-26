@@ -10,13 +10,13 @@
                 <div class="col-md-15 well well-sm">
                     <div class="list-group">
                         @foreach($prospectos as $prospecto)
-                            @foreach($prospecto as $pros)
+                            
                         <a href="#" class="list-group-item">
-                            <h6 class="list-group-item-heading">{{ $pros->estado }}</h6>
+                            <h6 class="list-group-item-heading">{{ $prospectos->nombre }}</h6>
                             <p class="list-group-item-text">List Group Item Text</p>
                              
                         </a>
-                            @endforeach
+                          
                         @endforeach
                     </div>
                 </div>
@@ -25,13 +25,13 @@
 
             <div class="col-md-15 well well-sm">
                     <div class="list-group">
-                        @foreach($contactados as $contactado)
+                      
                         <a href="#" class="list-group-item">
-                            <h6 class="list-group-item-heading">{{ $contactado[nombre] }}</h6>
+                            <h6 class="list-group-item-heading"></h6>
                             <p class="list-group-item-text">List Group Item Text</p>
                              
                         </a>
-                        @endforeach
+
                     </div>
                 </div>
             <div class="col-md-15 well well-sm">

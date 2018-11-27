@@ -78,6 +78,8 @@ class Organizacion extends Model
 
     public static function insertar_nota_organizacion_estado($organizacion_id, $estado_id, $nota){
         $organizacion = Organizacion::findOrFail($organizacion_id);
+        $organizacion->estado_actual = $estado_id;
+        $organizacion->save();
         $insertar_nota = $organizacion->estados()->attach($estado_id,['nota'=>$nota, 'fecha_creado' => now(), 'fecha_actualizado' => now()]);
         return $insertar_nota;
     }
@@ -99,7 +101,6 @@ class Organizacion extends Model
        $delete = DB::table('estado_organizacion')->where('id', $id)->delete();
        return $delete;
     }
-
 
     public static function obtener_un_estado_organizacion($id){
         $estado_organizacion = DB::table("estado_organizacion")->select("estado_organizacion.id", "estado_organizacion.nota")->where("id", "=", $id)->get();

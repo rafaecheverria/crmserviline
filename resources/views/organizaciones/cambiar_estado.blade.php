@@ -5,9 +5,7 @@
             <div class="col-md-8">
                 <div class="form-group">
                       <select id="select-estados" name="estado_id" class="form-control" data-style="select-with-transition">
-                      
                       </select>
-
                 </div>
             </div>
         </div>

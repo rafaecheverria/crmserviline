@@ -378,6 +378,51 @@ ol{ width:200px; height:auto;}
         float: left;
     }
 }
+.panel-contenido{
+  height: 800px;
+  border: 1px solid #DADADA;
+  bottom: 0px;
+  border-radius: 3px;
+  padding: 0px 0px;
+  bottom: 8px;
+  margin: -1px;
+}
+.color-estado{
+    float: right;
+    margin-top: 5px;
+}
+
+.circulo {
+  width: 10px;
+  height: 10px;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  float: left;
+}
+
+/*.titulos-panel{
+  transform: skewX(-30deg);
+  width: 0;
+  border-left: 50px solid;
+  border-right: 50px solid;
+}*/
+
+.titulos-panel {
+    /*height: 300px;*/
+    background: red;
+    position: relative;
+}
+
+.titulos-panel:before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    border-top: 20px solid white;
+    border-left: 50px solid red;
+    border-right: 50px solid red;
+    width: 0;
+}
 /*! =========================================================
  *
  Material Dashboard PRO - V1.1.0

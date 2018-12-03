@@ -15,8 +15,8 @@ class PanelesController extends Controller
       $contactados = $organizacion->select(["id", "nombre"])->where("estado_actual", 2)->get();
       $reuniones = $organizacion->select(["id", "nombre"])->where("estado_actual", 3)->get();
       $propuestas = $organizacion->select(["id", "nombre"])->where("estado_actual", 4)->get();
-      $negociciones = $organizacion->select(["id", "nombre"])->where("estado_actual", 5)->get();
+      $negociaciones = $organizacion->select(["id", "nombre"])->where("estado_actual", 5)->get();
 
-      return view('crm_panel.index', compact('prospectos', 'contactados', 'reuniones', 'propuestas', 'negociciones'));
+      return view('crm_panel.index', compact('prospectos', 'contactados', 'reuniones', 'propuestas', 'negociaciones'));
     }
 }

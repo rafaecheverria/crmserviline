@@ -25259,38 +25259,36 @@ function cambiar_estado(organizacion_id){
     })
 
 swalWithBootstrapButtons({
-  title: '¿Estás seguro que quieres cambiar el estado de esta empresa?',
-  text: "Si aceptas, NO PODRÁS VOLVER AL ESTADO ACTUAL.!",
-  type: 'warning',
-  showCancelButton: true,
-  confirmButtonText: 'Si, Cambiar!',
-  cancelButtonText: 'No, cancelar!',
-  reverseButtons: true
-}).then((result) => {
-  if (result.value) {
-    var dataString  = $( '#form_cambiar_estado' ).serializeArray()
-    var csrf_token = $('meta[name="csrf-token"]').attr('content')
-    var route = "/cambiar_estado/"+organizacion_id+"";
-    $.ajax({
-        headers: csrf_token,
-        url: route,
-        datatype: "json",
-        type: 'POST',
-        data: dataString,
-        beforeSend: function(){
-            $("#boton-cambiar-estado").html("<a class='btn btn-primary btn pull-right'>Cambiar Estado <i class='fa fa-2px fa-spinner'></i></a>");
-            },
-       success:function(data){
-          $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
-          $("#modal_cambiar_estado").modal("hide");
-          $(".nota").html("");
-          $('#organizaciones').DataTable().ajax.reload();
-        }
+    title: '¿Estás seguro que quieres cambiar el estado de esta empresa?',
+    text: "Si aceptas, NO PODRÁS VOLVER AL ESTADO ACTUAL.!",
+    type: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Si, Cambiar!',
+    cancelButtonText: 'No, cancelar!',
+    reverseButtons: true
+    }).then((result) => {
+      if (result.value) {
+        var dataString  = $( '#form_cambiar_estado' ).serializeArray()
+        var csrf_token = $('meta[name="csrf-token"]').attr('content')
+        var route = "/cambiar_estado/"+organizacion_id+"";
+        $.ajax({
+            headers: csrf_token,
+            url: route,
+            datatype: "json",
+            type: 'POST',
+            data: dataString,
+            beforeSend: function(){
+                $("#boton-cambiar-estado").html("<a class='btn btn-primary btn pull-right'>Cambiar Estado <i class='fa fa-2px fa-spinner'></i></a>");
+                },
+           success:function(data){
+              $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
+              $("#modal_cambiar_estado").modal("hide");
+              $(".nota").html("");
+              $('#organizaciones').DataTable().ajax.reload();
+            }
+        })
+      } 
     })
-
-
-  } 
-})
 }
 async function on_off(elemento,organizacion_id, estado_id, nombre){
 

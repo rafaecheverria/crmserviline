@@ -24,8 +24,9 @@
               </div>
           </div>
 
-            <div class="col-md-15 panel-contenido">          
-                 <div class="list-group">
+
+            <div class="col-md-15 panel-contenido">
+                <div class="list-group">
                     <span href="#" class="list-group-item titulos-panel">
                         <h6 class="list-group-item-heading">CONTACTADOS</h6>
                     </span>
@@ -41,7 +42,9 @@
                         @endif
                     @endforeach
               </div>
-            </div>
+          </div>
+
+
 
            <div class="col-md-15 panel-contenido">
                 <div class="list-group">

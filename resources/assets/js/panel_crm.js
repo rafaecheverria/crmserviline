@@ -1,6 +1,12 @@
- $(function() 
+$(document).ready(function(){
+
+  $( ".drag" ).sortable({conectWith: ".cart"});
+  $( ".cart" ).sortable({conectWith: ".drag"});
+  });
+
+ /*$(function() 
 		{
-      $( "#catalog a" ).draggable({//propiedades 
+      $( "#drag" ).draggable({//propiedades 
         appendTo: "body",
         helper: "clone"
       });
@@ -21,9 +27,9 @@
 	  
         }
       }).sortable({
-       // items: "a:not(.placeholder)",
+        items: "a:not(.placeholder)",
         sort: function() {
 
         }
       });
-    });
+    });*/

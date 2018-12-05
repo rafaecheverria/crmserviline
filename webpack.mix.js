@@ -14,6 +14,7 @@ let mix = require('laravel-mix');
 mix.scripts([
 	'resources/assets/js/jquery-3.1.1.min.js',
 	'resources/assets/js/jquery-ui.min.js',
+	/*'resources/assets/js/ui.js',*/
 	'resources/assets/js/jquery.ui.touch-punch.js',
 	'resources/assets/js/bootstrap.min.js',
 	'resources/assets/js/material.min.js',

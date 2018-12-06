@@ -1,100 +1,76 @@
 $(document).ready(function(){
 
-    $( ".prospecto" ).sortable({
-      connectWith: [".contacto", ".reunion", ".propuesta", ".negociacion" ], 
-
-    }).droppable({
-      activeClass: "zona",
-      hoverClass: "activo",
-      drop: function( event, ui ) {
-        //$( this ).find( ".placeholder" ).remove();//removemos el texto "Añadir producto"
-        var id = ui.draggable.attr('id')//extraemos el id del objeto arrastrado
-        var nombre = ui.draggable.attr('name')
-        var estado = 1
-        estado_crm(id, nombre, estado)
-        //mostrar_cambiar_estado(id, nombre);
-        //$("#select-estados").val(1);
-        ///$(".selector_estados").hide()
-        console.log(id)
-        console.log(nombre)
-        },
-    });
-    
-
-    $( ".contacto" ).sortable({
-      connectWith: [".reunion", ".propuesta", ".negociacion" ], 
-
-    }).droppable({
-      activeClass: "zona",
-      hoverClass: "activo",
-      drop: function( event, ui ) {
-        var id = ui.draggable.attr('id');//extraemos el id del objeto arrastrado
-        var nombre = ui.draggable.attr('name');
-        var estado = 2;
-        estado_crm(id, nombre, estado)
-        //mostrar_cambiar_estado(id)
-        estado_crm(id)
-        console.log(nombre)
-        $(".selector_estados").hide()
-        console.log(id)
+  $(".prospecto").sortable({
+    connectWith: [".contacto", ".reunion", ".propuesta", ".negociacion" ], 
+   // revert: "invalid" //crea el efecto de transición cuando se suelta el elemento
+  })
 
 
-        },
-    });
+  $(".contacto").sortable({
+    connectWith: [".reunion", ".propuesta", ".negociacion" ], 
+    //revert: "invalid",
+     receive: function(ev, ui)
+      {
 
+        var id = ui.item.attr('id')
+        var name = ui.item.attr('name')
+        var estado = 2
+        console.log(estado_crm(id, name, estado))
+        /*if (!estado_crm(id, name, estado)) {
+           $(ui.sender).sortable('cancel')
+        }*/
+      },
+  })
 
-    $( ".reunion" ).sortable({
-      connectWith: [".propuesta", ".negociacion" ], 
-
-    }).droppable({
-      activeClass: "zona",
-      hoverClass: "activo",
-      drop: function( event, ui ) {
-        var id = ui.draggable.attr('id');//extraemos el id del objeto arrastrado
-        var nombre = ui.draggable.attr('name');
+  $(".reunion").sortable({
+    connectWith: [".propuesta", ".negociacion" ], 
+   // revert: "invalid",
+     receive: function(ev, ui)
+      {
+        var id = ui.item.attr('id')
+        var name = ui.item.attr('name')
         var estado = 3;
-        estado_crm(id, nombre, estado)
-        console.log(nombre)
-        },
-    });
+        estado_crm(id, name, estado)
+        alert("recibe reunion")
+        console.log(id)
+        console.log(name)
+        $(ui.sender).sortable('cancel')
+      },
+  })
 
-
-    $( ".propuesta" ).sortable({
-      connectWith: [".negociacion" ], 
-
-    }).droppable({
-      activeClass: "zona",
-      hoverClass: "activo",
-      drop: function( event, ui ) {
-        var id = ui.draggable.attr('id');//extraemos el id del objeto arrastrado
-        var nombre = ui.draggable.attr('name');
+  $(".propuesta").sortable({
+    connectWith: [".negociacion" ], 
+    //revert: "invalid",
+     receive: function(ev, ui)
+      {
+        var id = ui.item.attr('id')
+        var name = ui.item.attr('name')
         var estado = 4;
-        estado_crm(id, nombre, estado)
-        console.log(nombre)
-        },
-    });
+        estado_crm(id, name, estado)
+        alert("recibe propuesta")
+        console.log(id)
+        console.log(name)
+        $(ui.sender).sortable('cancel')
+      },
+  })
 
-
-    $( ".negociacion" ).sortable({
-      
-    }).droppable({
-      activeClass: "zona",
-      hoverClass: "activo",
-    }).droppable({
-        drop: function( event, ui ) {
-        var id = ui.draggable.attr('id');//extraemos el id del objeto arrastrado
-        var nombre = ui.draggable.attr('name');
+  $(".negociacion").sortable({
+    //revert: "invalid",
+     receive: function(ev, ui)
+      {
+        var id = ui.item.attr('id')
+        var name = ui.item.attr('name')
         var estado = 5;
-        estado_crm(id, nombre, estado)
-        console.log(nombre)
-        },
-    });
+        estado_crm(id, name, estado)
+        alert("recibe negociacion")
+        console.log(id)
+        console.log(name)
+        $(ui.sender).sortable('cancel');
+      },
+  })
 
-
-  });
+})
 async function estado_crm(organizacion_id, nombre, estado_id){
-  var estado = 0;
-
   switch(estado_id){
     case 1: estado = 1;
     break;
@@ -118,11 +94,9 @@ async function estado_crm(organizacion_id, nombre, estado_id){
     break;
   }
 
-  //alert(estado)
-
     const {value: nota} = await swal({
 
-      title: 'Cambiar de estado a '+nombre+'', //\"" +nombre+ "\"
+      title: 'Cambiar de estado a '+nombre+'',
       input: 'textarea',
       type: 'question',
       confirmButtonClass: 'btn btn-success',
@@ -135,9 +109,9 @@ async function estado_crm(organizacion_id, nombre, estado_id){
       inputValidator: (value) => {
         return !value && 'Debe completar todos los campos!'
       }
-    }).then((value) => {
-      if (value.value) {
-        var csrf_token = $('meta[name="csrf-token"]').attr('content')
+    })
+      if (nota) {
+       var csrf_token = $('meta[name="csrf-token"]').attr('content')
         $.ajax({
         url:  "/cambiar_estado/"+organizacion_id+"",
         type: 'POST',
@@ -153,35 +127,8 @@ async function estado_crm(organizacion_id, nombre, estado_id){
                 alert('la operación falló');
             }
         })
+      }else{
+          return false;
       }
-      })
+     
 }
- /*$(function() 
-		{
-      $( "#drag" ).draggable({//propiedades 
-        appendTo: "body",
-        helper: "clone"
-      });
-  
-      $( "#cart a" ).droppable({
-        activeClass: "zona",
-        hoverClass: "active",
-        drop: function( event, ui ) {
-		
-          $( this ).find( ".placeholder" ).remove();//removemos el texto "Añadir producto"
-	  
-	  var id = ui.draggable.attr('id');//extraemos el id del objeto arrastrado
-	  
-	  var idprod = saveart(id);			  
-	  
-          $( '<li id="fila'+idprod+'"></li>' ).html( ui.draggable.text()+'<span class="quitar" onclick="quitarprod('+idprod+')">quitar</span>' ).appendTo( this );
-	  
-	  
-        }
-      }).sortable({
-        items: "a:not(.placeholder)",
-        sort: function() {
-
-        }
-      });
-    });*/

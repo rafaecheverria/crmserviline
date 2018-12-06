@@ -43,8 +43,11 @@ mix.scripts([
 	], 'public/js/app.js')
 .styles([
 	'resources/assets/css/bootstrap.min.css',
+	'resources/assets/css/jquery-ui.min.css',
 	'resources/assets/css/sweetalert2.css',
 	'resources/assets/css/demo.css',
 	'resources/assets/css/style.css',
 	'resources/assets/css/material-dashboard.css',
 	], 'public/css/app.css');
+
+

@@ -43,6 +43,7 @@
                 
                 @foreach($contactados as $contacto)
                     <div class="contacto">
+
                         @if(strlen($contacto->nombre) > 26 )
                             <a href="#" id="{{ $contacto->id }}" name="{{ $contacto->nombre }}" class="list-group-item list-group-item-action" rel="tooltip" data-placement="rigth" title="{{ $contacto->nombre }}">{{ substr($contacto->nombre,0,26) }}...
                                 <span class="color-estado"><div class="circulo" style="background: #5cb85c;"></div></span>
@@ -52,8 +53,9 @@
                                 <span class="color-estado"><div class="circulo" style="background: #5cb85c;"></div></span>
                             </a>
                         @endif
-                    </div>
+               </div>
                 @endforeach
+                     
             </div>
         </div>
         <div class="col-md-15 panel-contenido">

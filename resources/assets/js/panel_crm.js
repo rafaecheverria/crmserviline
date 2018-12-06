@@ -8,13 +8,15 @@ $(document).ready(function(){
       hoverClass: "activo",
       drop: function( event, ui ) {
         //$( this ).find( ".placeholder" ).remove();//removemos el texto "Añadir producto"
-        var id = ui.draggable.attr('id');//extraemos el id del objeto arrastrado
-        var nombre = ui.draggable.attr('name');
-        mostrar_cambiar_estado(id, nombre);
+        var id = ui.draggable.attr('id')//extraemos el id del objeto arrastrado
+        var nombre = ui.draggable.attr('name')
+        var estado = 1
+        estado_crm(id, nombre, estado)
+        //mostrar_cambiar_estado(id, nombre);
         //$("#select-estados").val(1);
-        $(".selector_estados").hide()
-        console.log(id);
-        console.log(nombre);
+        ///$(".selector_estados").hide()
+        console.log(id)
+        console.log(nombre)
         },
     });
     
@@ -27,9 +29,14 @@ $(document).ready(function(){
       hoverClass: "activo",
       drop: function( event, ui ) {
         var id = ui.draggable.attr('id');//extraemos el id del objeto arrastrado
-        var nombre = 
-        mostrar_cambiar_estado(id);
-        console.log(id);
+        var nombre = ui.draggable.attr('name');
+        var estado = 2;
+        estado_crm(id, nombre, estado)
+        //mostrar_cambiar_estado(id)
+        estado_crm(id)
+        console.log(nombre)
+        $(".selector_estados").hide()
+        console.log(id)
 
 
         },
@@ -44,8 +51,10 @@ $(document).ready(function(){
       hoverClass: "activo",
       drop: function( event, ui ) {
         var id = ui.draggable.attr('id');//extraemos el id del objeto arrastrado
-        console.log(id);
-        cambiar_estado(id);
+        var nombre = ui.draggable.attr('name');
+        var estado = 3;
+        estado_crm(id, nombre, estado)
+        console.log(nombre)
         },
     });
 
@@ -58,8 +67,10 @@ $(document).ready(function(){
       hoverClass: "activo",
       drop: function( event, ui ) {
         var id = ui.draggable.attr('id');//extraemos el id del objeto arrastrado
-        cambiar_estado(id);
-        console.log(id);
+        var nombre = ui.draggable.attr('name');
+        var estado = 4;
+        estado_crm(id, nombre, estado)
+        console.log(nombre)
         },
     });
 
@@ -72,51 +83,78 @@ $(document).ready(function(){
     }).droppable({
         drop: function( event, ui ) {
         var id = ui.draggable.attr('id');//extraemos el id del objeto arrastrado
-        cambiar_estado(id);
-        console.log(id);
+        var nombre = ui.draggable.attr('name');
+        var estado = 5;
+        estado_crm(id, nombre, estado)
+        console.log(nombre)
         },
     });
 
 
   });
-function estado_crm(organizacion_id){
-    const swalWithBootstrapButtons = swal.mixin({
-        confirmButtonClass: 'btn btn-success',
-        cancelButtonClass: 'btn btn-danger',
-        buttonsStyling: false,
-    })
+async function estado_crm(organizacion_id, nombre, estado_id){
+  var estado = 0;
 
-swalWithBootstrapButtons({
-    title: '¿Estás seguro que quieres cambiar el estado de esta empresa?',
-    text: "Si aceptas, NO PODRÁS VOLVER AL ESTADO ACTUAL.!",
-    type: 'warning',
-    showCancelButton: true,
-    confirmButtonText: 'Si, Cambiar!',
-    cancelButtonText: 'No, cancelar!',
-    reverseButtons: true
-    }).then((result) => {
-      if (result.value) {
-        var dataString  = $( '#form_cambiar_estado' ).serializeArray()
+  switch(estado_id){
+    case 1: estado = 1;
+    break;
+
+    case 2: estado = 2;
+    break;
+
+    case 3: estado = 3;
+    break;
+
+    case 4: estado = 4;
+    break;
+
+    case 5: estado = 5;
+    break;
+
+    case 6: estado = 6;
+    break;
+
+    case 7: estado = 7;
+    break;
+  }
+
+  //alert(estado)
+
+    const {value: nota} = await swal({
+
+      title: 'Cambiar de estado a '+nombre+'', //\"" +nombre+ "\"
+      input: 'textarea',
+      type: 'question',
+      confirmButtonClass: 'btn btn-success',
+      cancelButtonClass: 'btn btn-danger',
+      confirmButtonText: 'Sí, Cambiar',
+      cancelButtonText: 'Cancelar',
+      buttonsStyling: false,
+      inputPlaceholder: 'Escriba una nota que junstifique el cambio de estado.',
+      showCancelButton: true,
+      inputValidator: (value) => {
+        return !value && 'Debe completar todos los campos!'
+      }
+    }).then((value) => {
+      if (value.value) {
         var csrf_token = $('meta[name="csrf-token"]').attr('content')
-        var route = "/cambiar_estado/"+organizacion_id+"";
         $.ajax({
-            headers: csrf_token,
-            url: route,
-            datatype: "json",
-            type: 'POST',
-            data: dataString,
-            beforeSend: function(){
-                $("#boton-cambiar-estado").html("<a class='btn btn-primary btn pull-right'>Cambiar Estado <i class='fa fa-2px fa-spinner'></i></a>");
-                },
-           success:function(data){
-              $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
-              $("#modal_cambiar_estado").modal("hide");
-              $(".nota").html("");
-              $('#organizaciones').DataTable().ajax.reload();
+        url:  "/cambiar_estado/"+organizacion_id+"",
+        type: 'POST',
+        datatype: "json",
+        data: {'_token' : csrf_token, 'estado_id': estado, 'nota': nota},
+            success:function(data){
+                $('#organizaciones').DataTable().ajax.reload();
+                console.log(data)
+                $.notify({icon: "add_alert", message: "la Empresa "+nombre+" ha sido activada exitosamente!"},{type: 'success', timer: 1000});
+            }, 
+            error:function(){
+                $(elemento).siblings('input').prop('checked', !checked);
+                alert('la operación falló');
             }
         })
-      } 
-    })
+      }
+      })
 }
  /*$(function() 
 		{

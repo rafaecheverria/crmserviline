@@ -26,7 +26,7 @@
                                     <span class="color-estado"><div class="circulo" style="background: #5cb85c;"></div></span>
                                 </a>
                             @else
-                            <a href="#" id="{{ $prospecto->id }}" name="{{ $prospecto->nombre }}" class="list-group-item list-group-item-action">{{ $prospecto->nombre }}
+                            <a href="#" id="{{ $prospecto->id }}" name="{{ $prospecto->nombre }}" class="list-group-item list-group-item-action">{{ $prospecto->nombre}}
                                 <span class="color-estado"><div class="circulo" style="background: #5cb85c;"></div></span>
                             </a>
                         @endif

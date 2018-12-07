@@ -2,73 +2,63 @@ $(document).ready(function(){
 
   $(".prospecto").sortable({
     connectWith: [".contacto", ".reunion", ".propuesta", ".negociacion" ], 
-   // revert: "invalid" //crea el efecto de transición cuando se suelta el elemento
+    revert: "invalid" //crea el efecto de transición cuando se suelta el elemento
   })
 
 
   $(".contacto").sortable({
     connectWith: [".reunion", ".propuesta", ".negociacion" ], 
-    //revert: "invalid",
+    revert: "invalid",
      receive: function(ev, ui)
       {
 
         var id = ui.item.attr('id')
         var name = ui.item.attr('name')
         var estado = 2
-        console.log(estado_crm(id, name, estado))
-        /*if (!estado_crm(id, name, estado)) {
-           $(ui.sender).sortable('cancel')
-        }*/
+        estado_crm(id, name, estado)
       },
   })
 
   $(".reunion").sortable({
     connectWith: [".propuesta", ".negociacion" ], 
-   // revert: "invalid",
+    revert: "invalid",
+    active: "zona",
+    hover: "activo",
      receive: function(ev, ui)
       {
         var id = ui.item.attr('id')
         var name = ui.item.attr('name')
         var estado = 3;
         estado_crm(id, name, estado)
-        alert("recibe reunion")
-        console.log(id)
-        console.log(name)
-        $(ui.sender).sortable('cancel')
       },
   })
 
   $(".propuesta").sortable({
     connectWith: [".negociacion" ], 
-    //revert: "invalid",
+    revert: "invalid",
+    active: "zona",
+    hover: "activo",
      receive: function(ev, ui)
       {
         var id = ui.item.attr('id')
         var name = ui.item.attr('name')
         var estado = 4;
         estado_crm(id, name, estado)
-        alert("recibe propuesta")
-        console.log(id)
-        console.log(name)
-        $(ui.sender).sortable('cancel')
       },
   })
 
   $(".negociacion").sortable({
-    //revert: "invalid",
+    revert: "invalid",
+   active: "zona",
+    hover: "activo",
      receive: function(ev, ui)
       {
         var id = ui.item.attr('id')
         var name = ui.item.attr('name')
         var estado = 5;
         estado_crm(id, name, estado)
-        alert("recibe negociacion")
-        console.log(id)
-        console.log(name)
-        $(ui.sender).sortable('cancel');
       },
   })
-
 })
 async function estado_crm(organizacion_id, nombre, estado_id){
   switch(estado_id){
@@ -108,7 +98,7 @@ async function estado_crm(organizacion_id, nombre, estado_id){
       showCancelButton: true,
       inputValidator: (value) => {
         return !value && 'Debe completar todos los campos!'
-      }
+      },
     })
       if (nota) {
        var csrf_token = $('meta[name="csrf-token"]').attr('content')
@@ -119,7 +109,7 @@ async function estado_crm(organizacion_id, nombre, estado_id){
         data: {'_token' : csrf_token, 'estado_id': estado, 'nota': nota},
             success:function(data){
                 $('#organizaciones').DataTable().ajax.reload();
-                console.log(data)
+                //console.log(data)
                 $.notify({icon: "add_alert", message: "la Empresa "+nombre+" ha sido activada exitosamente!"},{type: 'success', timer: 1000});
             }, 
             error:function(){
@@ -128,7 +118,10 @@ async function estado_crm(organizacion_id, nombre, estado_id){
             }
         })
       }else{
-          return false;
-      }
-     
+        $( ".prospecto" ).sortable( "cancel" );
+        $( ".contacto" ).sortable( "cancel" );
+        $( ".reunion" ).sortable( "cancel" );
+        $( ".propuesta" ).sortable( "cancel" );
+        $( ".negociacion" ).sortable( "cancel" );
+      }   
 }

@@ -244,8 +244,8 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
-.activo{background-color: #29B34C;}
-.zona{background-color:#A1ECB5;}
+.activo{background-color: #83e618;}
+.zona{background-color:#4e8a0e;}
 
 /*#products { float:left; width: 200px; margin-right: 2em; }
 #cart { width: 200px; float: left; margin-left:100px;}
@@ -313,6 +313,7 @@ ol{ width:200px; height:auto;}
         float: left;
     }
 }
+
 .panel-contenido{
   height: 800px;
   border: 1px solid white;
@@ -360,3 +361,4 @@ ol{ width:200px; height:auto;}
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
 }
+

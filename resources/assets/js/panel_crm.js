@@ -2,28 +2,37 @@ $(document).ready(function(){
 
   $(".prospecto").sortable({
     connectWith: [".contacto", ".reunion", ".propuesta", ".negociacion" ], 
-    revert: "invalid" //crea el efecto de transición cuando se suelta el elemento
+    revert: "invalid", //crea el efecto de transición cuando se suelta el elemento
+    items: "li:not(.titulos)",
+    //placeholder: "sortable-placeholder",
+  }).droppable({
+     activeClass: "activo",
+     hoverClass: "zona" 
   })
 
 
   $(".contacto").sortable({
     connectWith: [".reunion", ".propuesta", ".negociacion" ], 
     revert: "invalid",
+    items: "li:not(.titulos)",
+    //placeholder: "sortable-placeholder",
      receive: function(ev, ui)
       {
-
         var id = ui.item.attr('id')
         var name = ui.item.attr('name')
         var estado = 2
         estado_crm(id, name, estado)
       },
+  }).droppable({
+     activeClass: "activo",
+     hoverClass: "zona" 
   })
 
   $(".reunion").sortable({
     connectWith: [".propuesta", ".negociacion" ], 
     revert: "invalid",
-    active: "zona",
-    hover: "activo",
+    items: "li:not(.titulos)",
+    placeholder: "ui-state-highlight",
      receive: function(ev, ui)
       {
         var id = ui.item.attr('id')
@@ -31,13 +40,16 @@ $(document).ready(function(){
         var estado = 3;
         estado_crm(id, name, estado)
       },
+  }).droppable({
+     activeClass: "activo",
+     hoverClass: "zona" 
   })
 
   $(".propuesta").sortable({
     connectWith: [".negociacion" ], 
     revert: "invalid",
-    active: "zona",
-    hover: "activo",
+    items: "li:not(.titulos)",
+    //placeholder: "ui-state-highlight",
      receive: function(ev, ui)
       {
         var id = ui.item.attr('id')
@@ -45,12 +57,15 @@ $(document).ready(function(){
         var estado = 4;
         estado_crm(id, name, estado)
       },
+  }).droppable({
+     activeClass: "activo",
+     hoverClass: "zona" 
   })
 
   $(".negociacion").sortable({
     revert: "invalid",
-   active: "zona",
-    hover: "activo",
+    items: "li:not(.titulos)",
+    //placeholder: "ui-state-highlight",
      receive: function(ev, ui)
       {
         var id = ui.item.attr('id')
@@ -58,6 +73,9 @@ $(document).ready(function(){
         var estado = 5;
         estado_crm(id, name, estado)
       },
+  }).droppable({
+     activeClass: "activo",
+     hoverClass: "zona" 
   })
 })
 async function estado_crm(organizacion_id, nombre, estado_id){

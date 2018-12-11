@@ -59,7 +59,7 @@ class Organizacion extends Model
          });
          return $datos;
 /*==========================================================================================================
-            CÓDIGO QUE AGRUPA EL ARRAY POR SUS ESTADOS CON LA FUNCION mapToGroups()
+          INICIA CÓDIGO QUE AGRUPA EL ARRAY POR SUS ESTADOS CON LA FUNCION mapToGroups()
 ============================================================================================================*/
        // $agrupar = $historial_estados->mapToGroups(function ($item, $key) {
             //return [$item['estado'] => [$item['id'], $item['organizacion_id'], $item['estado_id'], $item['estado'], $item['nota'], Date::parse($item['fecha_creado'])->format('j F Y'), Date::parse($item['fecha_actualizado'])->format('j F Y'), $item['color']]];
@@ -67,9 +67,16 @@ class Organizacion extends Model
         //return $agrupar->toArray();
          //return $historial_estados;
 /*==========================================================================================================
-            CÓDIGO QUE AGRUPA EL ARRAY POR SUS ESTADOS CON LA FUNCION mapToGroups()
+           FIN DE CÓDIGO QUE AGRUPA EL ARRAY POR SUS ESTADOS CON LA FUNCION mapToGroups()
 ============================================================================================================*/
     }
+
+    public static function obtener_organizaciones_crm($estado_id){
+         
+          $organizacion =  DB::table('organizaciones')->join("estado_organizacion", "organizaciones.id", "=", "estado_organizacion.organizacion_id")->join("estados", "estado_organizacion.estado_id", "=", "estados.id")->where("estado_actual", $estado_id)->where("estado_organizacion.estado_id", $estado_id)->orderBy('estado_organizacion.fecha_creado', 'DESC')->get();
+           return $organizacion;
+    }
+
     public static function estado_actual($id){
         $organizacion = Organizacion::findOrFail($id);
         $estado_actual = $organizacion->estados()->orderBy('fecha_creado', 'DESC')->take(1)->get(); //obtiene el estado actual (ultimo registro segun fecha

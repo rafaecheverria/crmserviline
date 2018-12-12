@@ -12,8 +12,10 @@ class Estado_OrganizacionController extends Controller
     {
         if($request->ajax()){
             Organizacion::insertar_nota_organizacion_estado($request->organizacion_id, $request->estado_id, $request->nota);
+            Organizacion::insertar_fecha_actualizacion($request->organizacion_id); //actualiza fecha en la tabla organización campo "fecha_actualizacion"
             $historial_estados = Organizacion::obtener_historial_estados($request->organizacion_id);
             $estado_actual = Organizacion::estado_actual($request->organizacion_id);
+            
                 foreach($estado_actual as $v){
                     $id_estado = $v->id;
                     $estado[]  = $v->estado; 
@@ -34,6 +36,9 @@ class Estado_OrganizacionController extends Controller
     {
         if($request->ajax()){
         Organizacion::insertar_nota_organizacion_estado($id, $request->estado_id, $request->nota);
+        if ($request->origen = "crm") {
+            Organizacion::insertar_fecha_actualizacion($id); //actualiza fecha en la tabla organización campo "fecha_actualizacion"
+        }
         return response()->json([
               "message" => "Se ha realizado el cambio de estado",
               "id" => $request->id,

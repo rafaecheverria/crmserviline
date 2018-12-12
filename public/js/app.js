@@ -26511,11 +26511,12 @@ async function estado_crm(organizacion_id, nombre, estado_id){
     })
       if (nota) {
        var csrf_token = $('meta[name="csrf-token"]').attr('content')
+       var origen = "crm"
         $.ajax({
         url:  "/cambiar_estado/"+organizacion_id+"",
         type: 'POST',
         datatype: "json",
-        data: {'_token' : csrf_token, 'estado_id': estado, 'nota': nota},
+        data: {'_token' : csrf_token, 'estado_id': estado, 'nota': nota, 'origen': crm},
             success:function(data){
                 $('#organizaciones').DataTable().ajax.reload();
                 //console.log(data)

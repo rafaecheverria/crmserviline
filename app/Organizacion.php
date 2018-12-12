@@ -71,9 +71,19 @@ class Organizacion extends Model
 ============================================================================================================*/
     }
 
+    public static function insertar_fecha_actualizacion($id){
+        //$organizacion = Organizacion::findOrFail($id);
+        $organizacion = DB::table('organizaciones')->where('id', $id)->update(['fecha_actualizado' => Carbon::now()]);
+        //$organizacion->fecha_actualizacion = Carbon::now();
+        //$organizacion->save();
+    }
+
+
     public static function obtener_organizaciones_crm($estado_id){
+
+        $organizacion = Organizacion::select(["id", "nombre"])->where("estado_actual", "=", $estado_id)->get();
          
-          $organizacion =  DB::table('organizaciones')->join("estado_organizacion", "organizaciones.id", "=", "estado_organizacion.organizacion_id")->join("estados", "estado_organizacion.estado_id", "=", "estados.id")->where("estado_actual", $estado_id)->where("estado_organizacion.estado_id", $estado_id)->orderBy('estado_organizacion.fecha_creado', 'DESC')->get();
+          //$organizacion =  DB::table('organizaciones')->join("estado_organizacion", "organizaciones.id", "=", "estado_organizacion.organizacion_id")->join("estados", "estado_organizacion.estado_id", "=", "estados.id")->where("estado_actual", $estado_id)->where("estado_organizacion.estado_id", $estado_id)->orderBy('estado_organizacion.fecha_creado', 'DESC')->get();
            return $organizacion;
     }
 

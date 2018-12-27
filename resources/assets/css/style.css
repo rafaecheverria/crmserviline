@@ -335,6 +335,7 @@ ol{ width:200px; height:auto;}
   -webkit-border-radius: 50%;
   border-radius: 50%;
   float: left;
+  background: #5cb85c;
 }
 
 /*.titulos-panel{

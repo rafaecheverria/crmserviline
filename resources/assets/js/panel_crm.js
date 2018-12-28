@@ -240,19 +240,28 @@ async function estado_crm(organizacion_id, nombre, estado_id){
 
                 $('#organizaciones').DataTable().ajax.reload();
 
-                $("li[id='"+organizacion_id+"']").children().children().children().children().removeClass("circulo")
+                //$("li[id='"+organizacion_id+"']").children().children().children().children().removeClass("circulo")
 
-                $("li[id='"+organizacion_id+"']").children().children().children().append("<div class='circulo' style:'background:green;margin:0px 1px;'></div>")
+                //$("li[id='"+organizacion_id+"']").children().children().children(".text-success").remove()
+
+                var responde = $("li[id='"+organizacion_id+"']").children().children().children().remove() //.removeClass("text-success").addClass("text-success")
 
 
-                $.notify({icon: "add_alert", message: "la Empresa "+nombre+" ha sido activada exitosamente!"},{type: 'success', timer: 1000});
+               var responde2 =  $("li[id='"+organizacion_id+"']").children().append("<i class='material-icons text-danger' style='font-size: 17px;'>check_circle</i> <i class='material-icons text-danger' style='font-size: 17px;'>close</i>")
+
+                console.log(responde)
+
+                console.log(responde2)
+
+                $.notify({icon: "add_alert", message: "la Empresa "+nombre+" ha sido activada exitosamente!"},{type: 'success', timer: 1000})
             
-            }, 
+            },
+
             error:function(){
 
-                $(elemento).siblings('input').prop('checked', !checked);
+                $(elemento).siblings('input').prop('checked', !checked)
 
-                alert('la operación falló');
+                alert('la operación falló')
 
             }
 
@@ -260,19 +269,19 @@ async function estado_crm(organizacion_id, nombre, estado_id){
 
       }else{
 
-        $( ".prospecto" ).sortable( "cancel" );
+        $( ".prospecto" ).sortable( "cancel" )
 
         /*$("li[id='"+organizacion_id+"']").children().children().children().children().removeClass("circulo")*/
 
-        $("li[id='"+organizacion_id+"']").children().children().children().append("<div class='circulo' margin:0px 1px;'></div>")
+        //$("li[id='"+organizacion_id+"']").children().children().children().append("<div class='circulo' margin:0px 1px;'></div>")
 
-        $( ".contacto" ).sortable( "cancel" );
+        $( ".contacto" ).sortable( "cancel" )
 
-        $( ".reunion" ).sortable( "cancel" );
+        $( ".reunion" ).sortable( "cancel" )
 
-        $( ".propuesta" ).sortable( "cancel" );
+        $( ".propuesta" ).sortable( "cancel" )
 
-        $( ".negociacion" ).sortable( "cancel" );
+        $( ".negociacion" ).sortable( "cancel" )
 
         $(".negociacion").attr('name', 'negociacion').append("")
 

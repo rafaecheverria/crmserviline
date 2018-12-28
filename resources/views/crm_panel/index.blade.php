@@ -51,22 +51,45 @@
 
                         <li id="{{ $prospecto->id }}" name="{{ $prospecto->nombre }}" class="list-group-item list-group-item-action">
 
-                            <a href="#">{{ $prospecto->nombre}}
+                            @if($prospecto->fecha_actualizado_difference()  < 3)
 
-                                <span class="color-estado">
+                                 <span class="badge">
 
-                                    @if($prospecto->fecha_actualizado_difference()  < 3)
+                                    <a href="#">
 
-                                        <div class="circulo" style="background: #5cb85c;"></div>  
+                                        <i class="material-icons text-success" style="font-size: 17px;">check_circle</i>
 
-                                     @else
+                                    </a>
 
-                                        <div class="circulo" style="background: red;"></div>      
+                                    <a href="#" onclick="on_off('', '{{$prospecto->id}}', '{{$prospecto->estado_actual}}', '{{$prospecto->nombre}}')">
+                                        
+                                        <i class="material-icons text-danger" style="font-size: 17px;">close</i>
 
-
-                                    @endif        
+                                    </a>
 
                                 </span>
+
+                             @else
+
+                                <span class="badge">
+
+                                    <a href="#">
+
+                                        <i class="material-icons text-warning" style="font-size: 17px;">warning</i>
+
+                                    </a>
+
+                                    <a href="#" onclick="on_off('', '{{$prospecto->id}}', '{{$prospecto->estado_actual}}', '{{$prospecto->nombre}}')">
+
+                                        <i class="material-icons text-danger" style="font-size: 17px;">close</i>
+
+                                    </a>
+
+                                </span>
+
+                            @endif       
+
+                                <a href="#">{{ $prospecto->nombre}}
 
                             </a>
 
@@ -100,23 +123,42 @@
 
                     <li id="{{ $contacto->id }}" name="{{ $contacto->nombre }}" class="list-group-item list-group-item-action">
 
-                        <a href="#">{{ $contacto->nombre }}
+                        <span class="badge">
 
-                            <span class="color-estado">
+                            @if($contacto->fecha_actualizado_difference()  < 3)
 
-                               @if($contacto->fecha_actualizado_difference()  < 3)
+                                <a href="#" estado="estado">
 
-                                    <div class="circulo" style="background: #5cb85c;"></div>  
+                                    <i class="material-icons text-success" style="font-size: 17px;">check_circle</i>
 
-                                @else
+                                </a>
 
-                                    <div class="circulo" style="background: red;"></div>      
+                                <a href="#" estado="estado" onclick="on_off('', '{{$contacto->id}}', '{{$contacto->estado_actual}}', '{{$contacto->nombre}}')">
+                                    
+                                    <i class="material-icons text-danger" style="font-size: 17px;">close</i>
 
-                                @endif 
+                                </a>
 
-                            </span>
+                             @else
+                                <a href="#" class="estado">
 
-                        </a>
+                                    <i class="material-icons text-warning" style="font-size: 17px;">warning</i>
+
+                                </a>
+
+                                <a href="#" onclick="on_off('', '{{$contacto->id}}', '{{$contacto->estado_actual}}', '{{$contacto->nombre}}')">
+
+                                    <i class="material-icons text-text-danger" style="font-size: 17px;">close</i>
+
+                                </a>
+
+                            @endif       
+
+                    </span>
+
+                            <a href="#">{{ $contacto->nombre}}
+
+                            </a>
 
                     </li>
 
@@ -151,25 +193,49 @@
                 @foreach($reuniones as $reunion)
 
                     <li id="{{ $reunion->id }}" name="{{ $reunion->nombre }}" class="list-group-item list-group-item-action">
-                        <a href="#">
 
-                            {{ $reunion->nombre }}
-                           
-                            <span class="color-estado">
+                        @if($reunion->fecha_actualizado_difference()  < 3)
 
-                                @if($reunion->fecha_actualizado_difference()  < 3)
+                             <span class="badge">
 
-                                    <div class="circulo" style="background: #5cb85c;"></div>  
+                                <a href="#">
 
-                                @else
+                                    <i class="material-icons text-success" style="font-size: 17px;">check_circle</i>
 
-                                    <div class="circulo" style="background: red;"></div>      
+                                </a>
 
-                                @endif 
+                                <a href="#" onclick="on_off('', '{{$reunion->id}}', '{{$reunion->estado_actual}}', '{{$reunion->nombre}}')">
+                                    
+                                    <i class="material-icons text-danger" style="font-size: 17px;">close</i>
+
+                                </a>
 
                             </span>
 
-                        </a>
+                         @else
+
+                                <span class="badge">
+
+                                    <a href="#">
+
+                                        <i class="material-icons text-warning" style="font-size: 17px;">warning</i>
+
+                                    </a>
+
+                                    <a href="#" onclick="on_off('', '{{$reunion->id}}', '{{$reunion->estado_actual}}', '{{$reunion->nombre}}')">
+
+                                        <i class="material-icons text-danger" style="font-size: 17px;">close</i>
+
+                                    </a>
+
+                                </span>
+
+                        @endif       
+
+                            <a href="#">{{ $reunion->nombre}}
+
+                            </a>
+
                     </li>
 
                 @endforeach
@@ -197,30 +263,50 @@
                 </li>
 
                 @foreach($propuestas as $propuesta)
-        
-                    <li  id="{{ $propuesta->id }}" name="{{ $propuesta->nombre }}" class="list-group-item list-group-item-action">
+                    
+                    <li id="{{ $propuesta->id }}" name="{{ $propuesta->nombre }}" class="list-group-item list-group-item-action">
 
-                        <a href="#">
+                        @if($propuesta->fecha_actualizado_difference()  < 3)
 
+                             <span class="badge">
+
+                                <a href="#">
+
+                                    <i class="material-icons text-success" style="font-size: 17px;">check_circle</i>
+
+                                </a>
+
+                                <a href="#" onclick="on_off('', '{{$propuesta->id}}', '{{$propuesta->estado_actual}}', '{{$propuesta->nombre}}')">
                                     
-                            {{ $propuesta->nombre }}
+                                    <i class="material-icons text-danger" style="font-size: 17px;">close</i>
 
-                            <span class="color-estado">
+                                </a>
 
-                                @if($propuesta->fecha_actualizado_difference() < 3)
-
-                                    <div class="circulo" style="background: #5cb85c;"></div>  
-
-                                 @else
-
-                                    <div class="circulo" style="background: red;"></div>      
-
-
-                                 @endif                  
-                           
                             </span>
 
-                        </a>
+                         @else
+
+                                <span class="badge">
+
+                                    <a href="#">
+
+                                        <i class="material-icons text-warning" style="font-size: 17px;">warning</i>
+
+                                    </a>
+
+                                    <a href="#" onclick="on_off('', '{{$propuesta->id}}', '{{$propuesta->estado_actual}}', '{{$propuesta->nombre}}')">
+
+                                        <i class="material-icons text-danger" style="font-size: 17px;">close</i>
+
+                                    </a>
+
+                                </span>
+
+                        @endif       
+
+                            <a href="#">{{ $propuesta->nombre}}
+
+                            </a>
 
                     </li>
 
@@ -250,39 +336,52 @@
 
                     @foreach($negociaciones as $negociacion)
             
-                        <li  id="{{ $negociacion->id }}" name="{{ $negociacion->nombre }}" class="list-group-item list-group-item-action recuperaIconos">
+                        <li id="{{ $negociacion->id }}" name="{{ $negociacion->nombre }}" class="list-group-item list-group-item-action">
 
-                            <a href="#">
+                        @if($negociacion->fecha_actualizado_difference()  < 3)
 
-                                @if(strlen($negociacion->nombre) > 26 )
+                             <span class="badge">
 
-                                    {{ substr($negociacion->nombre,0,26) }}...
+                                <a href="#">
 
-                                @else
+                                    <i class="material-icons text-success" style="font-size: 17px;">check_circle</i>
 
-                                     {{ $negociacion->nombre }}
+                                </a>
 
-                                @endif
+                                <a href="#" onclick="on_off('', '{{$negociacion->id}}', '{{$negociacion->estado_actual}}', '{{$negociacion->nombre}}')">
+                                    
+                                    <i class="material-icons text-danger" style="font-size: 17px;">close</i>
 
-                                <span class="color-estado">
+                                </a>
 
-                                    @if($negociacion->fecha_actualizado_difference() < 3)
+                            </span>
 
-                                        <div class="circulo" style="background: #5cb85c;"></div> <a href="#" rel="tooltip" title="Eliminar" class="btn btn-simple btn-danger btn-icon"><i class="material-icons">close</i></a>
+                         @else
 
-                                     @else
+                                <span class="badge">
 
-                                        <div class="circulo" style="background: red;"></div> <a href="#" rel="tooltip" title="Eliminar" class="btn btn-simple btn-danger btn-icon"><i class="material-icons">close</i></a>     
+                                    <a href="#">
 
+                                        <i class="material-icons text-warning" style="font-size: 17px;">warning</i>
 
-                                 @endif        
+                                    </a>
+
+                                    <a href="#" onclick="on_off('', '{{$negociacion->id}}', '{{$negociacion->estado_actual}}', '{{$negociacion->nombre}}')">
+
+                                        <i class="material-icons text-danger" style="font-size: 17px;">close</i>
+
+                                    </a>
 
                                 </span>
 
-                            </a>
-                            
-                        </li>
+                        @endif       
 
+                            <a href="#">{{ $negociacion->nombre}}
+
+                            </a>
+
+                    </li>
+                        
                     @endforeach
 
                 </ul>

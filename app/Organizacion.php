@@ -121,7 +121,7 @@ class Organizacion extends Model
 
     public static function obtener_organizaciones_crm($estado_id){
 
-        $organizacion = Organizacion::select(["id", "nombre", "fecha_actualizado"])->where("estado_actual", "=", $estado_id)->get();
+        $organizacion = Organizacion::select(["id", "nombre", "fecha_actualizado", "estado_actual"])->where("estado_actual", "=", $estado_id)->get();
 
         return $organizacion;
 

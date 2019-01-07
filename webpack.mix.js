@@ -14,7 +14,6 @@ let mix = require('laravel-mix');
 mix.scripts([
 	'resources/assets/js/jquery-3.1.1.min.js',
 	'resources/assets/js/jquery-ui.min.js',
-	/*'resources/assets/js/ui.js',*/
 	'resources/assets/js/jquery.ui.touch-punch.js',
 	'resources/assets/js/bootstrap.min.js',
 	'resources/assets/js/material.min.js',
@@ -40,6 +39,7 @@ mix.scripts([
 	'resources/assets/js/ajax.js',
 	'resources/assets/js/listas.js',
 	'resources/assets/js/panel_crm.js',
+	'resources/assets/js/ajax-ventas.js',
 	], 'public/js/app.js')
 .styles([
 	'resources/assets/css/bootstrap.min.css',

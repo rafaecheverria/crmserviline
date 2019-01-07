@@ -1,15 +1,12 @@
 $(document).ready(function() {
-	listar_doctores()
-    listar_recepcionistas()
     listar_personas()
     listar_contactos()
     listar_vendedores()
     listar_organizaciones()
-    listar_especialidades()
     listar_permisos()
     listar_roles()
-    listar_citas_pendientes()
-    listar_citas_atendidas()
+    listar_categorias()
+    listar_productos()
 })
 
 var listar_permisos = function()
@@ -64,16 +61,16 @@ var listar_roles = function()
         ]
     })
 }
-var listar_especialidades = function()
+var listar_categorias = function()
 {
-    var table = $('#table_especialidades').DataTable({
+    var table = $('#categorias').DataTable({
         "headers": {'X-CSRF-TOKEN':$('input[name=_token]').attr('content')},
         "processing": true,
         "serverSide": true,
         "fixedHeader": true,
         "order": [[ 1, "asc" ]],
         "ajax": {
-             "url": "especialidades/show",
+             "url": "categorias/show",
             },
         "pagingType": "simple_numbers",
         "lengthMenu": [
@@ -86,49 +83,21 @@ var listar_especialidades = function()
         "responsive": true,
         "columns":[
             {data: 'action', name: 'action', orderable: false, searchable: false},
-            {data: 'nombre', name: 'nombre'}
+            {data: 'categoria', name: 'categoria'}
         ]
     })
 }
-var listar_doctores = function()
+
+var listar_productos = function()
 {
-    var table = $('#table_doctores').DataTable({
+    var table = $('#productos').DataTable({
         "headers": {'X-CSRF-TOKEN':$('input[name=_token]').attr('content')},
         "processing": true,
         "serverSide": true,
         "fixedHeader": true,
         "order": [[ 3, "asc" ]],
         "ajax": {
-             "url": "doctores/show",
-            },
-        "pagingType": "full_numbers",
-        "lengthMenu": [
-            [10, 25, 50, -1],
-            [10, 25, 50, "Todos"]
-        ],
-        "language": {
-            url: "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
-        },
-        "responsive": true,
-        "columns":[
-            {data: 'action', name: 'action', orderable: false, searchable: false},
-            {data: 'rut', name: 'rut'},
-            {data: 'nombres', name: 'nombres'},
-            {data: 'apellidos', name: 'apellidos'},
-            {data: 'email', name: 'email'}
-        ]
-	})
-}
-var listar_recepcionistas = function()
-{
-    var table = $('#table_recepcionistas').DataTable({
-        "headers": {'X-CSRF-TOKEN':$('input[name=_token]').attr('content')},
-        "processing": true,
-        "serverSide": true,
-        "fixedHeader": true,
-        "order": [[ 3, "asc" ]],
-        "ajax": {
-             "url": "recepcionistas/show",
+             "url": "productos/show",
             },
         "pagingType": "simple_numbers",
         "lengthMenu": [
@@ -138,76 +107,32 @@ var listar_recepcionistas = function()
         "language": {
             url: "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
         },
-        //"responsive": true,
+        "responsive": true,
         "columns":[
             {data: 'action', name: 'action', orderable: false, searchable: false},
-            {data: 'rut', name: 'rut'},
-            {data: 'nombres', name: 'nombres'},
-            {data: 'apellidos', name: 'apellidos'},
-            {data: 'email', name: 'email'}
+
+            {
+
+            "render": function (data, type, JsonResultRow, meta) {
+
+                return "<img src='assets/img/productos/"+JsonResultRow.imagen+"' class='img-circle' width='30px'>";
+
+                }
+            },
+            
+            {data: 'codigo', name: 'codigo'},
+            {data: 'descripcion', name: 'descripcion'},
+            {data: 'categoria', name: 'categorias.categoria'},
+            {data: 'stock', name: 'stock'},
+            {data: 'precio_compra', name: 'precio_compra'},
+            {data: 'precio_venta', name: 'precio_venta'},
+            {data: 'created_at', name: 'created_at'}
+
         ]
-	})
-}
-var listar_citas_pendientes = function()
-{
-    var table = $('#pendientes').DataTable({
-        "headers": {'X-CSRF-TOKEN':$('input[name=_token]').attr('content')},
-        "processing": true,
-        "serverSide": true,
-        "fixedHeader": true,
-        "bInfo": false,
-        "order": [[ 1, "desc" ]],
-        "ajax": {
-             "url": "consultas/show",
-            },
-        "pagingType": "full_numbers",
-        "lengthMenu": [
-            [10, 25, 50, -1],
-            [10, 25, 50, "Todos"]
-        ],
-        "language": {
-            url: "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json",
-        },
-        "responsive": true,
-        "columns":[
-            {data: 'action', name: 'action', orderable: false, searchable: false, class:"text-left"},
-            {data: 'fecha_inicio', name: 'fecha_inicio'},
-            {data: 'paciente', name: 'paciente.apellidos'},
-            {data: 'doctor', name: 'doctor.apellidos'},
-            {data: 'especialidad', name: 'especialidad.nombre'},
-        ],
-	})
-}
-var listar_citas_atendidas = function()
-{
-    var table = $('#table_atendidos').DataTable({
-        "headers": {'X-CSRF-TOKEN':$('input[name=_token]').attr('content')},
-        "processing": true,
-        "serverSide": true,
-        "fixedHeader": true,
-        "bInfo": false,
-        "order": [[ 1, "desc" ]],
-        "ajax": {
-             "url": "consultas-carga",
-            },
-        "pagingType": "full_numbers",
-        "lengthMenu": [
-            [10, 25, 50, -1],
-            [10, 25, 50, "Todos"]
-        ],
-        "language": {
-            url: "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json",
-        },
-        "responsive": true,
-        "columns":[
-            {data: 'action', name: 'action', orderable: false, searchable: false, class:"text-left"},
-            {data: 'fecha_inicio', name: 'fecha_inicio'},
-            {data: 'paciente', name: 'paciente.apellidos'},
-            {data: 'doctor', name: 'doctor.apellidos'},
-            {data: 'especialidad', name: 'especialidad.nombre'},
-        ],
     })
 }
+
+
 var listar_contactos = function()
 {
     var table = $('#contactos').DataTable({

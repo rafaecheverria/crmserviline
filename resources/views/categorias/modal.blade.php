@@ -1,6 +1,6 @@
 <!-- notice modal -->
 
-<div class="modal fade" id="modal_organizacion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal_categoria" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 
     <div class="modal-dialog">
 
@@ -10,7 +10,7 @@
 
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="material-icons">clear</i></button>
 
-                <h6>ORGANIZACIÓN </h6>
+                <h6>CATEGORÍA </h6>
 
             </div>
 
@@ -24,7 +24,7 @@
 
                             <div id="contenido-modal">
 
-                                @include('organizaciones.formulario')
+                                @include('categorias.formulario')
 
                             </div>
 
@@ -38,7 +38,7 @@
 
             <div class="modal-footer text-center">
 
-                <div id="boton_organizacion"></div>
+                <div id="btn-categoria"></div>
 
                 <!--<a href="#" id="add_organizacion" class="btn btn-info pull-right">Agregar</a>-->
 

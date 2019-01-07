@@ -135,16 +135,6 @@ $(document).ready(function(){
 
         estado_crm(id, name, estado)          
 
-            var dato = ui.item.attr("name", "negociacion").children().children().children().removeClass("circulo")
-
-            //ui.item.attr("name", "negociacion").children().children().remove()
-
-            ui.item.attr('name', 'negociacion').children().children().children().append("<div class='circulo' style='background: #000; margin:0px 1px;'></div> <div class='circulo' style='background: #000;'></div>")
-
-            //children().children().children().children().remove()
-
-            console.log(dato)
-
       },
 
   }).droppable({
@@ -238,22 +228,25 @@ async function estado_crm(organizacion_id, nombre, estado_id){
 
             success:function(data){
 
-                $('#organizaciones').DataTable().ajax.reload();
+                $('#organizaciones').DataTable().ajax.reload()
 
-                //$("li[id='"+organizacion_id+"']").children().children().children().children().removeClass("circulo")
+                $("li[id='"+organizacion_id+"']").children().children().children().remove()
 
-                //$("li[id='"+organizacion_id+"']").children().children().children(".text-success").remove()
+                //Se comprueba si la clase del ul es negociación, se agrega un botón para finalizar el ciclo de la empresa en el panel crm
 
-                var responde = $("li[id='"+organizacion_id+"']").children().children().children().remove() //.removeClass("text-success").addClass("text-success")
+                if ($("li[name='"+nombre+"']").parent().hasClass('negociacion')){
 
+                  $("li[id='"+organizacion_id+"']").children().children(".estado").append("<i class='material-icons text-success' style='font-size: 17px;'>check_circle</i> <i class='material-icons text-success' style='font-size: 17px;'>close</i> <i class='material-icons text-danger' style='font-size: 17px;'>close</i>")
 
-               var responde2 =  $("li[id='"+organizacion_id+"']").children().append("<i class='material-icons text-danger' style='font-size: 17px;'>check_circle</i> <i class='material-icons text-danger' style='font-size: 17px;'>close</i>")
+                }else{
 
-                console.log(responde)
+                  $("li[id='"+organizacion_id+"']").children().children(".estado").append("<i class='material-icons text-success' style='font-size: 17px;'>check_circle</i> <i class='material-icons text-danger' style='font-size: 17px;'>close</i>")
 
-                console.log(responde2)
+                }
 
-                $.notify({icon: "add_alert", message: "la Empresa "+nombre+" ha sido activada exitosamente!"},{type: 'success', timer: 1000})
+                //fin de la comprobación
+
+                $.notify({icon: "add_alert", message: "la Empresa "+nombre+" ha cambiado de estado!"},{type: 'success', timer: 1000})
             
             },
 
@@ -270,10 +263,6 @@ async function estado_crm(organizacion_id, nombre, estado_id){
       }else{
 
         $( ".prospecto" ).sortable( "cancel" )
-
-        /*$("li[id='"+organizacion_id+"']").children().children().children().children().removeClass("circulo")*/
-
-        //$("li[id='"+organizacion_id+"']").children().children().children().append("<div class='circulo' margin:0px 1px;'></div>")
 
         $( ".contacto" ).sortable( "cancel" )
 

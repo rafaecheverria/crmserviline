@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
 <div class="content">
 
     <div class="container-fluid">
@@ -28,13 +27,15 @@
 
                                     <h4 class="card-title">
 
-                                        <small class="text-primary">LISTA DE CONTACTOS</small>
+                                        <small class="text-primary">CATEGORIAS</small>
 
                                     </h4>
 
-                                </td> 
+                                </td>    
 
-                                <td class="pull-right"><a href="#" onclick="mostrar_contacto(0,2)" rel="tooltip" title="Agregar contacto" class="btn btn-primary btn-round btn-fab btn-fab-mini">
+                                <td class="pull-right">
+
+                                    <a href="#" onclick="mostrar_categoria(0)" rel="tooltip" title="Agregar organización" class="btn btn-primary btn-round btn-fab btn-fab-mini">
 
                                         <i class="material-icons">add</i>
 
@@ -44,11 +45,11 @@
 
                             </tr>
 
-                        </table>   
+                        </table> 
 
-                        @component('contactos.list_contactos')
+                        @component('categorias.list_categorias')
 
-                            @slot('contactos')
+                            @slot('categorias')
 
                             @endslot
 
@@ -66,10 +67,6 @@
 
 </div>
 
-@include('contactos.modal_ficha')
-
-@include('contactos.modal')
-
-@include('../cargos.modal')
+@include('categorias.modal')
 
 @endsection

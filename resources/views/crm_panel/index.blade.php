@@ -6,21 +6,21 @@
 
     <div class="row">
 
-        <div class="col-md-12">
+        <div class="col-md-12 cabecera_crm pull-right">
 
             <div class="card">
 
-                <div class="card-content text-center">
+                <div class="card-content text-right">
 
-                    <code>col-md-4</code>
+                    <a href="#" onclick="organizacion_user(0,1)" rel="tooltip" title="Agregar organización" class="btn btn-primary btn-round btn-fab btn-fab-mini">
+                                        <i class="material-icons">add</i>
+                                    </a>
 
                 </div>
 
             </div>
 
         </div>
-
-    </div>
 
     <!-- ELEMENTOS DEL ESTADO PROSPECTOS -->
 
@@ -30,16 +30,23 @@
 
             <div class="col-md-15 panel-contenido">
 
-                <ul class="list-group prospecto">
+                <ul class="list-group prospecto" prospecto>
 
                     <li href="#" class="list-group-item titulos">
 
                         <b>
+
                             <h6 class="list-group-item-heading">
 
                                 <i class="material-icons pull-right text-warning">label_important</i>
 
-                                PROSPECTOS
+                                PROSPECTOS <br>
+
+                                <small style="color: white;">
+
+                                    Cantidad de Prospectos <span id="count-prospectos">({{ $prospectos->count() }})</span>
+
+                                </small>
 
                             </h6>
 
@@ -51,15 +58,27 @@
 
                         <li id="{{ $prospecto->id }}" name="{{ $prospecto->nombre }}" class="list-group-item list-group-item-action">
 
-                            @if($prospecto->fecha_actualizado_difference()  < 3)
+                            <span class="badge">
 
-                                 <span class="badge">
+                                <div class="estado">
 
-                                    <a href="#">
+                                    @if($prospecto->fecha_actualizado_difference()  < 3)
 
-                                        <i class="material-icons text-success" style="font-size: 17px;">check_circle</i>
+                                        <a href="#">
 
-                                    </a>
+                                            <i class="material-icons text-success" style="font-size: 17px;">check_circle</i>
+
+                                        </a>
+
+                                     @else
+
+                                        <a href="#">
+
+                                            <i class="material-icons text-warning" style="font-size: 17px;">warning</i>
+
+                                        </a>
+
+                                     @endif 
 
                                     <a href="#" onclick="on_off('', '{{$prospecto->id}}', '{{$prospecto->estado_actual}}', '{{$prospecto->nombre}}')">
                                         
@@ -67,31 +86,11 @@
 
                                     </a>
 
-                                </span>
+                                </div>
 
-                             @else
+                            </span>    
 
-                                <span class="badge">
-
-                                    <a href="#">
-
-                                        <i class="material-icons text-warning" style="font-size: 17px;">warning</i>
-
-                                    </a>
-
-                                    <a href="#" onclick="on_off('', '{{$prospecto->id}}', '{{$prospecto->estado_actual}}', '{{$prospecto->nombre}}')">
-
-                                        <i class="material-icons text-danger" style="font-size: 17px;">close</i>
-
-                                    </a>
-
-                                </span>
-
-                            @endif       
-
-                                <a href="#">{{ $prospecto->nombre}}
-
-                            </a>
+                            <a href="#"><p class="text-muted">{{ str_limit($prospecto->nombre, $limit = 26, $end = '...') }}</p></a>
 
                         </li>
 
@@ -113,7 +112,13 @@
 
                         <i class="material-icons pull-right text-warning">label_important</i>
 
-                        CONTACTADOS
+                            CONTACTADOS <br>
+
+                            <small style="color: white;">
+
+                                Cantidad de Contactados ({{ $contactados->count() }})
+
+                            </small>
 
                     </h6>
 
@@ -123,42 +128,39 @@
 
                     <li id="{{ $contacto->id }}" name="{{ $contacto->nombre }}" class="list-group-item list-group-item-action">
 
-                        <span class="badge">
+                             <span class="badge">
 
-                            @if($contacto->fecha_actualizado_difference()  < 3)
+                                <div class="estado">
 
-                                <a href="#" estado="estado">
+                                    @if($contacto->fecha_actualizado_difference()  < 3)
 
-                                    <i class="material-icons text-success" style="font-size: 17px;">check_circle</i>
+                                        <a href="#">
 
-                                </a>
+                                            <i class="material-icons text-success" style="font-size: 17px;">check_circle</i>
 
-                                <a href="#" estado="estado" onclick="on_off('', '{{$contacto->id}}', '{{$contacto->estado_actual}}', '{{$contacto->nombre}}')">
-                                    
-                                    <i class="material-icons text-danger" style="font-size: 17px;">close</i>
+                                        </a>
 
-                                </a>
+                                     @else
 
-                             @else
-                                <a href="#" class="estado">
+                                        <a href="#">
 
-                                    <i class="material-icons text-warning" style="font-size: 17px;">warning</i>
+                                            <i class="material-icons text-warning" style="font-size: 17px;">warning</i>
 
-                                </a>
+                                        </a>
 
-                                <a href="#" onclick="on_off('', '{{$contacto->id}}', '{{$contacto->estado_actual}}', '{{$contacto->nombre}}')">
+                                     @endif 
 
-                                    <i class="material-icons text-text-danger" style="font-size: 17px;">close</i>
+                                    <a href="#" onclick="on_off('', '{{$contacto->id}}', '{{$contacto->estado_actual}}', '{{$contacto->nombre}}')">
+                                        
+                                        <i class="material-icons text-danger" style="font-size: 17px;">close</i>
 
-                                </a>
+                                    </a>
 
-                            @endif       
+                                </div>
 
-                    </span>
+                            </span>                              
 
-                            <a href="#">{{ $contacto->nombre}}
-
-                            </a>
+                            <a href="#"><p class="text-muted">{{ str_limit($contacto->nombre, $limit = 26, $end = '...') }}</p></a>
 
                     </li>
 
@@ -180,11 +182,17 @@
 
                         <i class="material-icons pull-right text-warning">
 
-                                label_important
+                            label_important
 
                         </i>
 
-                            REUNIONES
+                            REUNIONES <br>
+
+                            <small style="color: white;">
+
+                                Cantidad de Reuniones ({{ $reuniones->count() }})
+
+                            </small>
 
                     </h6>
 
@@ -194,47 +202,39 @@
 
                     <li id="{{ $reunion->id }}" name="{{ $reunion->nombre }}" class="list-group-item list-group-item-action">
 
-                        @if($reunion->fecha_actualizado_difference()  < 3)
-
                              <span class="badge">
 
-                                <a href="#">
+                                <div class="estado">
 
-                                    <i class="material-icons text-success" style="font-size: 17px;">check_circle</i>
+                                    @if($reunion->fecha_actualizado_difference()  < 3)
 
-                                </a>
+                                        <a href="#">
 
-                                <a href="#" onclick="on_off('', '{{$reunion->id}}', '{{$reunion->estado_actual}}', '{{$reunion->nombre}}')">
-                                    
-                                    <i class="material-icons text-danger" style="font-size: 17px;">close</i>
+                                            <i class="material-icons text-success" style="font-size: 17px;">check_circle</i>
 
-                                </a>
+                                        </a>
 
-                            </span>
+                                     @else
 
-                         @else
+                                        <a href="#">
 
-                                <span class="badge">
+                                            <i class="material-icons text-warning" style="font-size: 17px;">warning</i>
 
-                                    <a href="#">
+                                        </a>
 
-                                        <i class="material-icons text-warning" style="font-size: 17px;">warning</i>
-
-                                    </a>
+                                     @endif 
 
                                     <a href="#" onclick="on_off('', '{{$reunion->id}}', '{{$reunion->estado_actual}}', '{{$reunion->nombre}}')">
-
+                                        
                                         <i class="material-icons text-danger" style="font-size: 17px;">close</i>
 
                                     </a>
 
-                                </span>
+                                </div>
 
-                        @endif       
+                            </span>                              
 
-                            <a href="#">{{ $reunion->nombre}}
-
-                            </a>
+                            <a href="#"><p class="text-muted">{{ str_limit($reunion->nombre, $limit = 26, $end = '...') }}</p></a>
 
                     </li>
 
@@ -256,7 +256,13 @@
 
                         <i class="material-icons pull-right text-warning">label_important</i>
 
-                        PROPUESTAS
+                        PROPUESTAS </br>
+
+                            <small style="color: white;">
+
+                                Cantidad de Propuestas ({{ $propuestas->count() }})
+
+                            </small>
 
                     </h6>
 
@@ -266,47 +272,39 @@
                     
                     <li id="{{ $propuesta->id }}" name="{{ $propuesta->nombre }}" class="list-group-item list-group-item-action">
 
-                        @if($propuesta->fecha_actualizado_difference()  < 3)
-
                              <span class="badge">
 
-                                <a href="#">
+                                <div class="estado">
 
-                                    <i class="material-icons text-success" style="font-size: 17px;">check_circle</i>
+                                     @if($propuesta->fecha_actualizado_difference()  < 3) <!-- pregunta si han pasado 3 dias desde la ultima actualizacion de estado de la empresa -->
 
-                                </a>
+                                        <a href="#">
 
-                                <a href="#" onclick="on_off('', '{{$propuesta->id}}', '{{$propuesta->estado_actual}}', '{{$propuesta->nombre}}')">
-                                    
-                                    <i class="material-icons text-danger" style="font-size: 17px;">close</i>
+                                            <i class="material-icons text-success" style="font-size: 17px;">check_circle</i>
 
-                                </a>
+                                        </a>
 
-                            </span>
+                                    @else
 
-                         @else
+                                        <a href="#">
 
-                                <span class="badge">
+                                            <i class="material-icons text-warning" style="font-size: 17px;">warning</i>
 
-                                    <a href="#">
+                                        </a>
 
-                                        <i class="material-icons text-warning" style="font-size: 17px;">warning</i>
+                                    @endif    
 
-                                    </a>
+                                        <a href="#" onclick="on_off('', '{{$propuesta->id}}', '{{$propuesta->estado_actual}}', '{{$propuesta->nombre}}')">
+                                            
+                                            <i class="material-icons text-danger" style="font-size: 17px;">close</i>
 
-                                    <a href="#" onclick="on_off('', '{{$propuesta->id}}', '{{$propuesta->estado_actual}}', '{{$propuesta->nombre}}')">
+                                        </a>
 
-                                        <i class="material-icons text-danger" style="font-size: 17px;">close</i>
+                                </div>
 
-                                    </a>
+                            </span>                        
 
-                                </span>
-
-                        @endif       
-
-                            <a href="#">{{ $propuesta->nombre}}
-
-                            </a>
+                            <a href="#"><p class="text-muted">{{ str_limit($propuesta->nombre, $limit = 26, $end = '...') }}</p></a>
 
                     </li>
 
@@ -328,7 +326,13 @@
 
                             <i class="material-icons pull-right text-warning">label_important</i>
 
-                            NEGOCIACIÓN
+                            NEGOCIACIÓN </br>
+
+                            <small style="color: white;">
+
+                                Cantidad de negociación ({{ $negociaciones->count() }})
+
+                            </small>
 
                         </h6>
 
@@ -338,49 +342,47 @@
             
                         <li id="{{ $negociacion->id }}" name="{{ $negociacion->nombre }}" class="list-group-item list-group-item-action">
 
-                        @if($negociacion->fecha_actualizado_difference()  < 3)
-
                              <span class="badge">
 
-                                <a href="#">
+                                <div class="estado">
 
-                                    <i class="material-icons text-success" style="font-size: 17px;">check_circle</i>
+                                     @if($negociacion->fecha_actualizado_difference()  < 3)
 
-                                </a>
+                                        <a href="#">
 
-                                <a href="#" onclick="on_off('', '{{$negociacion->id}}', '{{$negociacion->estado_actual}}', '{{$negociacion->nombre}}')">
-                                    
-                                    <i class="material-icons text-danger" style="font-size: 17px;">close</i>
+                                            <i class="material-icons text-success" style="font-size: 17px;">check_circle</i>
 
-                                </a>
+                                        </a>
 
-                            </span>
+                                    @else
 
-                         @else
+                                        <a href="#">
 
-                                <span class="badge">
+                                            <i class="material-icons text-warning" style="font-size: 17px;">warning</i>
 
-                                    <a href="#">
+                                        </a>
 
-                                        <i class="material-icons text-warning" style="font-size: 17px;">warning</i>
-
-                                    </a>
+                                    @endif
 
                                     <a href="#" onclick="on_off('', '{{$negociacion->id}}', '{{$negociacion->estado_actual}}', '{{$negociacion->nombre}}')">
-
+                                        
                                         <i class="material-icons text-danger" style="font-size: 17px;">close</i>
 
                                     </a>
 
-                                </span>
+                                    <a href="#" onclick="on_off('', '{{$negociacion->id}}', '{{$negociacion->estado_actual}}', '{{$negociacion->nombre}}')">
+                                        
+                                        <i class="material-icons text-danger" style="font-size: 17px;">close</i>
 
-                        @endif       
+                                    </a>
 
-                            <a href="#">{{ $negociacion->nombre}}
+                                </div>
 
-                            </a>
+                            </span>                             
 
-                    </li>
+                            <a href="#" onclick="ficha('{{$negociacion->id}}', 2)"><p class="text-muted">{{ str_limit($negociacion->nombre, $limit = 21, $end = '...') }}</p></a>
+
+                        </li>
                         
                     @endforeach
 
@@ -393,6 +395,20 @@
     </div>
 
 </div>
+
+@include('../organizaciones.modal')
+
+@include('../contactos.modal')
+
+@include('../cargos.modal')
+
+@include('../organizaciones.modal_cambiar_estado')
+
+@include('../organizaciones.modal_ficha')
+
+@include('../organizaciones.modal_historial')
+
+@include('../organizaciones.modal_estado')
 
 @include('../organizaciones.modal_cambiar_estado')
 

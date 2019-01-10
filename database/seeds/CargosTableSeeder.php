@@ -12,8 +12,5 @@ class CargosTableSeeder extends Seeder
         factory(App\Cargo::class)->create([
 	        'nombre' => 'Gerente General',
         ]);
-        factory(App\Cargo::class)->create([
-	        'nombre' => 'Otro Cargo',
-        ]);
     }
 }

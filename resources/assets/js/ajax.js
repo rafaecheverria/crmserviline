@@ -5,17 +5,34 @@ function redirect(ruta)
 }
 $(document).ready(function() {
 
+    $('#rut').Rut({
+
+       on_error: function(){ 
+
+            $.notify({icon: "add_alert", message: "El rut tiene un formato que no es correcto, por favor verifique e intente nuevamente"},{type: 'danger', timer: 1000})
+
+                $('#rut').val("")
+
+                $('#rut').focus()
+
+             },
+
+      format_on: 'keyup'
+
+    })
+
 var valor, contador, parrafo;  
 // Mostramos un mensaje inicial y lo añadimos al div de id contador.  
-$('<p class="indicador">Tienes 500 caracteres restantes</p>').appendTo('.contador');
+$('<p class="indicador">Tienes 500 caracteres restantes</p>').appendTo('.contador')
 // Definimos el evento para que detecte cada vez que se presione una tecla.  
 $('.nota').keydown(function(){  
 // Redefinimos el valor de contador al máximo permitido (150).  
 contador = 500;  
 /* Quitamos el párrafo con clase advertencia o indicador, en caso de que ya se 
    haya mostrado un mensaje */  
-$('.advertencia').remove();  
-$('.indicador').remove();  
+$('.advertencia').remove()
+
+$('.indicador').remove() 
 // Tomamos el valor actual del contenido del área de texto  
 valor = $('.nota').val().length;  
 // Descontamos ese valor al máximo.  
@@ -379,168 +396,202 @@ $( "#actualizar_usuario" ).click(function(event){  //actualiza los datos del doc
             }
 		})
 	})
+
     $( "#update_miclave" ).click(function(event){ 
-       // event.preventDefault()
+
         var id= $( '#mi_pass' ).val()
+
         var route = "/put-clave/"+id+""
-        var dataString  = $( '#form_mi_clave' ).serializeArray();
+
+        var dataString  = $( '#form_mi_clave' ).serializeArray()
+
         $.ajax({
+
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+
             url: route,
+
             type: 'PUT',
+
             datatype: 'json',
+
             data:dataString,
+
             success:function(data){
+
                  $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
+
                  $('#modal_miclave').modal('toggle')
+
                  $('#form_mi_clave')[0].reset()
+
             },
+
              error:function(data){
+
               var error = data.responseJSON.errors;
+
                 for(var i in error){
+
                     var message = error[i];
+
                     $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000});
+
                 }
+
             }
+
         })
+
     })
+
 $( "#add_rol" ).click(function(event){
+
         var route = "/roles/"
+
         var dataString  = $( '#form_add_rol' ).serializeArray()
+
         $.ajax({
+
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+
             url: route,
+
             type: 'POST',
+
             datatype: 'json',
+
             data:dataString,
+
             success:function(data){
-                $('#table_roles').DataTable().ajax.reload();
-                $('#modal_agregar_rol').modal('toggle');
+
+                $('#table_roles').DataTable().ajax.reload()
+
+                $('#modal_agregar_rol').modal('toggle')
+
                 $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
+
             },
+
             error:function(data){
+
                 var error = data.responseJSON.errors;
+
                 for(var i in error){
+
                     for(var j in error[i]){
+
                         var message = error[i][j];
+
                        $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000})
+
                     }
+
                 }
+
             }
+
         })
+
     })
+
 $( "#add_permiso" ).click(function(event){
+
         var route = "/permisos/"
+
         var dataString  = $( '#form_add_permisos' ).serializeArray()
+
         $.ajax({
+
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+
             url: route,
+
             type: 'POST',
+
             datatype: 'json',
+
             data:dataString,
+
             success:function(data){
-                $('#table_permisos').DataTable().ajax.reload();
-                $('#modal_agregar_permiso').modal('toggle');
+
+                $('#table_permisos').DataTable().ajax.reload()
+
+                $('#modal_agregar_permiso').modal('toggle')
+
                 $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
+
             },
+
             error:function(data){
+
                 var error = data.responseJSON.errors;
+
                 for(var i in error){
+
                     for(var j in error[i]){
+
                         var message = error[i][j];
+
                        $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000})
+
                     }
+
                 }
+
             }
+
         })
+
     })
 
 
-
-$( "#add_paciente" ).click(function(event){
-        var route = "/pacientes/"
-        var dataString  = $( '#form_add_paciente' ).serializeArray()
-        $.ajax({
-            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-            url: route,
-            type: 'POST',
-            datatype: 'json',
-            data:dataString,
-            success:function(data){
-                $('#pacientes').DataTable().ajax.reload();
-                $('#modal_agregar_paciente').modal('toggle');
-                $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
-            },
-            error:function(data){
-                var error = data.responseJSON.errors;
-                for(var i in error){
-                    for(var j in error[i]){
-                        var message = error[i][j];
-                       $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000})
-                    }
-                }
-            }
-        })
-    })
-/*$( "#add_usuario" ).click(function(event){  //esta funcion agrega nuevos doctores y recepcionistas.
-        var route = ""
-        var dataString  = $( '#form_add_usuario' ).serializeArray()
-        var tipo = $(".tipo").val()
-        if (tipo === "doctor"){route = "/doctores/"}else{route = "/recepcionistas/"}
-        $.ajax({
-            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-            url: route,
-            type: 'POST',
-            datatype: 'json',
-            data:dataString,
-            success:function(data){
-                if (data.tipo === "doctor") {
-                     $('#table_doctores').DataTable().ajax.reload();
-                     $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
-                     $('#form_add_usuario')[0].reset()
-                     $('#modal_agregar_doctor').modal('toggle')
-                }else{
-                     $('#table_recepcionistas').DataTable().ajax.reload();
-                     $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
-                     $('#form_add_usuario')[0].reset()
-                     $('#modal_agregar_recepcionista').modal('toggle')
-                }
-            },
-            error:function(data){
-                var error = data.responseJSON.errors;
-                for(var i in error){
-                    for(var j in error[i]){
-                        var message = error[i][j];
-                       $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000})
-                    }
-                }
-            }
-        })
-    })*/
 
 
 $( "#ingresar" ).click(function(event){ 
-        //event.preventDefault();
-        var dataString  = $( '#form_login' ).serializeArray();
+
+        event.preventDefault()
+
+        var dataString  = $( '#form_login' ).serializeArray()
+
         var route = "login";
+
         $.ajax({
+
             url: route,
+
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+
             type: 'post',
+
             datatype: 'json',
+
             data:dataString,
+
             success:function(){
-                redirect('/');
+
+                redirect('/')
+
             },
+
             error:function(data){
+
               var error = data.responseJSON.errors;
+
                 for(var i in error){
+
                     var message = error[i];
-                    $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000});
+
+                    $.notify({icon: "add_alert", message: message},{type: 'danger', timer: 1000})
+
                 }
+
             }
+
         })
+
     })
+
 })
 // Subir Imagen de para los usuarios desde la adminsitracion
     var $avatarInput, $avatarImage, $avatarForm;
@@ -572,11 +623,11 @@ $( "#ingresar" ).click(function(event){
                 contentType: false,
 
             beforeSend: function(){
-                    $avatarImage.attr('src', '/assets/img/touchloader.gif')
+                    $avatarImage.attr('src', '/images/touchloader.gif')
             },
             success: function(data){
                 alet('succ')
-                    $avatarImage.attr('src', '/assets/img/perfiles/'+data.file_name+'?'+ new Date().getTime())
+                    $avatarImage.attr('src', 'images/perfiles/'+data.file_name+'?'+ new Date().getTime())
                     $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
             },
             error: function(data){
@@ -584,7 +635,7 @@ $( "#ingresar" ).click(function(event){
                 for(var i in error){
                     var message = error[i];
                       $avatarImage.attr('src');
-                      $avatarImage.attr('src', '/assets/img/perfiles/'+data.file_name+'?'+ new Date().getTime())
+                      $avatarImage.attr('src', 'images/perfiles/'+data.file_name+'?'+ new Date().getTime())
                      $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000})
                 }
             }
@@ -624,10 +675,10 @@ $( "#ingresar" ).click(function(event){
                 contentType: false,
 
             beforeSend: function(){
-                    $avatar_img.attr('src', '/assets/img/touchloader.gif');
+                    $avatar_img.attr('src', 'mages/touchloader.gif');
             },
             success: function(data){
-                    $avatar_img.attr('src', '/assets/img/perfiles/'+data.file_name+'?'+ new Date().getTime());
+                    $avatar_img.attr('src', 'images/perfiles/'+data.file_name+'?'+ new Date().getTime());
                    // $('#pacientes').DataTable().ajax.reload();
                     $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000});
             },
@@ -636,7 +687,7 @@ $( "#ingresar" ).click(function(event){
                 for(var i in error){
                     var message = error[i];
                       $avatar_img.attr('src');
-                      $avatar_img.attr('src', '/assets/img/perfiles/'+data.file_name+'?'+ new Date().getTime());
+                      $avatar_img.attr('src', 'images/perfiles/'+data.file_name+'?'+ new Date().getTime());
                      $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000});
                 }
             }
@@ -752,7 +803,7 @@ function roles_user(id)// carga datos en el modal roles_user del módulo de pers
             $('#rut').val(data.rut)
             $('#nombres').val(data.nombres)
             $('.title-name').html(data.nombres +' '+ data.apellidos)
-            $('#image-modal').html('<img src="/assets/img/perfiles/'+data.avatar+'" alt="Thumbnail Image" class="img-rounded img-responsive">')
+            $('#image-modal').html('<img src="images/perfiles/'+data.avatar+'" alt="Thumbnail Image" class="img-rounded img-responsive">')
             const crearOption = (value, name, selected) => `<option value="${value}"${selected.includes(value) ? ' selected' : ''}>${name}</option>`
             const obj = data.roles
             const values = Object.keys(obj)
@@ -1031,7 +1082,7 @@ function ficha(id, origen) //carga datos en la ficha.
 
                 success:function(data){
 
-                    $(".img_pac").attr('src', 'assets/img/perfiles/'+data.avatar+'?'+ new Date().getTime()).addClass("img-circle")
+                    $(".img_pac").attr('src', 'images/perfiles/'+data.avatar+'?'+ new Date().getTime()).addClass("img-circle")
 
                     $('#rut').html(data.rut)
 
@@ -1095,7 +1146,7 @@ function ficha(id, origen) //carga datos en la ficha.
 
                     if (data.tipo == "PEQUENA") {data.tipo = "PEQUEÑA"}
 
-                    $(".img_pac").attr('src', 'assets/img/perfiles/'+data.logo+'?'+ new Date().getTime()).addClass("img-circle");
+                    $(".img_pac").attr('src', 'images/perfiles/'+data.logo+'?'+ new Date().getTime()).addClass("img-circle");
 
                     $('.rut').html(data.rut)
 
@@ -1151,7 +1202,7 @@ function ficha(id, origen) //carga datos en la ficha.
 
                 success:function(data){
 
-                    $(".img_pac").attr('src', 'assets/img/perfiles/'+data.avatar+'?'+ new Date().getTime()).addClass("img-circle")
+                    $(".img_pac").attr('src', 'images/perfiles/'+data.avatar+'?'+ new Date().getTime()).addClass("img-circle")
 
                     $('#rut').html(data.rut)
 
@@ -1591,67 +1642,133 @@ function cargo(id, tipo)//Inserta un cargo en el select cargo_id del modal agreg
 //----------------------
  
 //Inicia crud contacto
-function mostrar_contacto(id,tipo_user){ //estamos aqui
+function mostrar_contacto(id,tipo_user){ 
+
    $("#modal_contacto").modal('show')
+
+   var route = ""
+
    if (id == 0) { //Si el id es igual a cero, significa que el modal es llamado desde el boton agregar contacto - vendedor
+
     $('#form_contacto')[0].reset()
-        $( "#rut_user" ).prop( "readonly", false );
-        $( "#email_user" ).prop( "readonly", false );
+
+        $( "#rut_user" ).prop( "readonly", false )
+
+        $( "#email_user" ).prop( "readonly", false )
+
         if (tipo_user == 1) {
+
             //muestrea el formulario de vendedor.
+
+            route = "vendedores/"+id+"/edit",
+
             $("#tipo_user").val("vendedor")
+
             $(".title-contacto").html("Agregar Vendedor")
+
             $("#show-cargo").hide()
-            $("#boton_contacto").html("<a href='#' onclick='contacto(0,2)' class='btn btn-primary pull-right'>Agregar Vendedor</a>")
+
+            $("#boton_contacto").html("<a href='#' onclick='insertarTipoPersona(0,2)' class='btn btn-primary pull-right'>Agregar Vendedor</a>")
+
         }else{
+
             //muestra el formulario de contacto de la empresa.
+
+            route = "contactos/"+id+"/edit",
+
             $("#tipo_user").val("contacto")
+
             $(".title-contacto").html("Agregar Contacto")
+
             $("#show-cargo").show()
-            $("#boton_contacto").html("<a href='#' onclick='contacto(0,1)' class='btn btn-primary pull-right'>Agregar Contacto</a>")
+
+            $("#boton_contacto").html("<a href='#' onclick='insertarTipoPersona(0,1)' class='btn btn-primary pull-right'>Agregar Contacto</a>")
+
         } 
+
     }else{ // si el id viene con un valor, significa que el modal es llamado desde un botón editar contacto - vendedor
-        $( "#rut_user" ).prop( "readonly", true );
-        $( "#email_user" ).prop( "readonly", true );
+
+        $( "#rut_user" ).prop( "readonly", true )
+
+        $( "#email_user" ).prop( "readonly", true )
+
         if(tipo_user == 1){
+
+            route = "vendedores/"+id+"/edit",
+
             $(".title-contacto").html("Actualizar Vendedor")
+
             $("#show-cargo").hide()
-            $("#boton_contacto").html("<a href='#' onclick='contacto("+id+",2)' class='btn btn-primary pull-right'>Actualizar Vendedor</a>")
+
+            $("#boton_contacto").html("<a href='#' onclick='insertarTipoPersona("+id+",2)' class='btn btn-primary pull-right'>Actualizar Vendedor</a>")
+
         }else{
+
+            route = "contactos/"+id+"/edit",
+
             $(".title-contacto").html("Actualizar Contacto")
+
             $("#show-cargo").show()
-            $("#boton_contacto").html("<a href='#' onclick='contacto("+id+",1)' class='btn btn-primary pull-right'>Actualizar Contacto</a>")
+
+            $("#boton_contacto").html("<a href='#' onclick='insertarTipoPersona("+id+",1)' class='btn btn-primary pull-right'>Actualizar Contacto</a>")
+
         }
         
         $.ajax({
-            url: "contactos/"+id+"/edit",
+
+            url: route,
+
             type: "GET",
+
             success:function(data){
+
                 $("#rut_user").val(data.rut)
+
                 $("#nombres_user").val(data.nombres)
+
                 $("#apellidos_user").val(data.apellidos)
+
                 $("#email_user").val(data.email)
+
                 $("#direccion_user").val(data.direccion)
+
                 $("#telefono_user").val(data.telefono)
+
                 $("#cargo_id").val(data.cargo)
+
                 $("INPUT[name=genero]").val([data.genero]) //carga valor de radiobutton desde mysql
-                $('#cargo_id option[value='+data.cargo+']').attr('selected', 'selected')        
+
+                $('#cargo_id option[value='+data.cargo+']').attr('selected', 'selected')  
+
                 $('.selectpicker').selectpicker('refresh')
+
             },
+
             error:function(data){
+
                 var error = data.responseJSON.errors;
+
                 for(var i in error){
+
                     for(var j in error[i]){
+
                         var message = error[i][j];
+
                        $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000})
+
                     }
+
                 }
+
             }
+
         }) 
+
     }
+
 }
 
-function contacto(id,tipo){
+function insertarTipoPersona(id,tipo){
 
     var dataString  = $( '#form_contacto' ).serializeArray()
 
@@ -1659,11 +1776,25 @@ function contacto(id,tipo){
 
     var headers = {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')};
 
+    if (tipo == 1) { 
+
+        //inserta o actualiza a una persona de tipo contacto en la base de datos.
+
+            var route = "contactos"
+
+        }else{ 
+
+        // inserta o actualiza una persona de tipo vendedor en la base de datos.
+
+            var route = "vendedores"
+
+        }
+
     if (id > 0) {
 
         var type = "PUT"
 
-        var route = "/contactos/"+id+""
+        var route = route+"/"+id+""
 
             $.ajax({
 
@@ -1684,6 +1815,8 @@ function contacto(id,tipo){
                 $('#form_contacto')[0].reset()
 
                 $('#contactos').DataTable().ajax.reload()
+
+                $('#vendedores').DataTable().ajax.reload()
 
                 $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
 
@@ -1714,16 +1847,6 @@ function contacto(id,tipo){
     }else{
 
         var type = "POST"
-
-        if (tipo == 1) { //agrega un persona de tipo contacto en la base de datos.
-
-            var route = "contactos"
-
-        }else{ // inserta una persona de tipo vendedor en la base de datos.
-
-            var route = "vendedores"
-
-        }
 
         $.ajax({
 
@@ -1803,7 +1926,7 @@ function carga_usuario(id)//carga datos del doctor y recepcionista en el modal e
             $("INPUT[name=direccion]").val([data.direccion])
             $("INPUT[name=nacimiento]").val([data.nacimiento])
             $("INPUT[name=id]").val(data.id)
-            $(".avatarImage").attr('src', 'assets/img/perfiles/'+data.avatar+'?'+ new Date().getTime())
+            $(".avatarImage").attr('src', 'images/perfiles/'+data.avatar+'?'+ new Date().getTime())
             $("INPUT[name=genero]").val([data.genero]) //carga valor de radiobutton desde mysql
             $('.title-name').html(data.nombres+" "+ data.apellidos)
           },
@@ -1857,7 +1980,7 @@ function carga_paciente(id)//carga datos del paciente en el modal editar.
            type: 'GET',
         success:function(data){
             $("#id_paciente").val(data.id)
-            $(".avatarImage").attr('src', 'assets/img/perfiles/'+data.avatar+'?'+ new Date().getTime())
+            $(".avatarImage").attr('src', 'images/perfiles/'+data.avatar+'?'+ new Date().getTime())
             $('#rut_e').val(data.rut)
             $('#nombres_e').val(data.nombres)
             $('#apellidos_e').val(data.apellidos)
@@ -1911,42 +2034,6 @@ function permisos_roles(id) //carga modal que contiene el select multiple de per
           }
     });
 }
-/*function especialidad_doctor(id) //carga modal que contiene el select multiple de las especialidades del doctor.
-{
-   var route = "/especialidad-doctor/"+id+"/edit";
-   var csrf_token = $('meta[name="csrf-token"]').attr('content');
-   var image = new Image();
-    $.ajax({
-       url: route,
-       type: 'GET',
-        success:function(data){
-            $('#id_especialidad').val(data.id)
-            $(".img_doc").attr('src', 'assets/img/perfiles/'+data.avatar+'?'+ new Date().getTime());
-            //$(".avatarImage").attr('src', 'assets/img/perfiles/'+data.avatar+'?'+ new Date().getTime());
-            $('#rut').html(data.rut)
-            $('#nombres').html(data.nombres)
-            $('#estudios_complementarios').val(data.estudios_complementarios)
-            $('.title-name').html(data.nombres)
-            const crearOption = (value, name, selected) => `<option value="${value}"${selected.includes(value) ? ' selected' : ''}>${name}</option>`
-            const obj = data.especialidades
-            const values = Object.keys(obj)
-            const opciones = values.map(x => crearOption(x, obj[x], data.my_especialidades))
-            const select = document.getElementById('especialidades_doctor')
-                 select.innerHTML = ''
-                 opciones.forEach(x => { select.insertAdjacentHTML('beforeend', x) })
-            const valor = data.my_especialidades
-                 i = 0, size = valor.length
-                      for(i; i < size; i++){
-                    $('select option[value='+valor[i]+']').attr('selected', 'selected')
-                }
-           $('.selectpicker').selectpicker('refresh')
-          },
-       error:function(){
-           alert('la operación falló');
-          }
-    });
-}*/
-
 
 function eliminar(id, nombre, ruta, organizacion_id) //funcion general para eliminar cualquier registro de la base de datos.
 

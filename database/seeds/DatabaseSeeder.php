@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
         $this->call(RegionesTableSeeder::class);
         $this->call(CiudadesTableSeeder::class);
         $this->call(CargosTableSeeder::class);
-        $this->call(OrganizacionTableSeeder::class);
+        //$this->call(OrganizacionTableSeeder::class);
         $this->call(EstadoTableSeeder::class);
 
         DB::table('permission_role')->insert(array(

@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Crm Serviline'),
+    'name' => env('APP_NAME', 'SGA-Serviline'),
 
     /*
     |--------------------------------------------------------------------------

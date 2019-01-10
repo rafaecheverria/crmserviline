@@ -10,16 +10,27 @@ use App\Http\Controllers\ApiController;
 
 class RoleUserController extends Controller
 {
+
     public function update(Request $request, $id)
+
     {
+
         if($request->ajax()){
+
             $user = User::find($id);
+
             $user->roles()->sync($request->role);   
+
             return response()->json([
+
                 "apellidos" => $user->apellidos,
+
                 "message" => "los roles del usuario ".$user->apellidos." se han actualizado correctamente !"
-                ]);
-           
+
+            ]);
+
         }
+
     }
+    
 }

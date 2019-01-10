@@ -66,8 +66,6 @@ class Estado_OrganizacionController extends Controller
 
           Organizacion::insertar_nota_organizacion_estado($id, $request->estado_id, $request->nota);
 
-         // $cantidad =  Organizacion::where("estado_actual", $request->estado_actual)->count();
-
         if ($request->origen = "crm") {
 
           Organizacion::insertar_fecha_actualizacion($id); //actualiza fecha en la tabla organización campo "fecha_actualizacion"
@@ -83,9 +81,6 @@ class Estado_OrganizacionController extends Controller
           "estado" => $request->estado_id,
 
           "nota" => $request->nota,
-
-          "cantidad" => $cantidad
-
 
           ]);
 

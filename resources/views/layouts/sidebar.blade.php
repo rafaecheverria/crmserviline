@@ -1,4 +1,4 @@
-<div class="sidebar" data-active-color="rose" data-background-color="black" data-image="{{ asset('assets/img/sidebar.jpg') }}">
+<div class="sidebar" data-active-color="rose" data-background-color="black" data-image="{{ asset('images/sidebar.jpg') }}">
 
     <div class="logo">
 
@@ -12,7 +12,7 @@
 
     <div class="logo logo-mini">
 
-        <a href="http://www.creative-tim.com" class="simple-text">
+        <a href="#" class="simple-text">
 
             Dc
 
@@ -38,7 +38,7 @@
 
                 <div class="photo">
 
-                    <img src="/assets/img/perfiles/{{ Auth::User()->avatar }}" class="img-responsive avatar_img" />
+                    <img src="images/perfiles/{{ Auth::User()->avatar }}" class="img-responsive avatar_img" />
 
                 </div>
 

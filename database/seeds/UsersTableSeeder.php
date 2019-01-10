@@ -13,13 +13,24 @@ class UsersTableSeeder extends Seeder
 	        'direccion' => 'El Canelo 1135',
 	        'telefono' => '957590687',
 	        'actividad' => 'Servicios Informáticos en la municipalidad de San Carlos',
-	        'descripcion' => 'Se detecta una alergia',
 	        'nacimiento' => '1987-05-16',
 	        'email' => 'rafaecheverria@live.cl',
 	        'password' => bcrypt('26082008'),
 	        'remember_token' => str_random(10),
         ]);
 
-        factory(App\User::class, 1000)->create();  
+        factory(App\User::class)->create([
+	        'nombres' => 'Luciano Michael',
+	        'rut' => '17.183.394-9',
+	        'apellidos' => 'Fuentes Bustos',
+	        'direccion' => 'Mutupin km 8.5',
+	        'telefono' => '997650140',
+	        'actividad' => 'Ingeniero Civil',
+	        'nacimiento' => '1998-12-14',
+	        'email' => 'lfuentes@serviline.cl',
+	        'password' => bcrypt('171833949'),
+	        'remember_token' => str_random(10),
+        ]);
+
     }
 }

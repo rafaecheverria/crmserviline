@@ -22,12 +22,15 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
 
-use App\Http\Requests\ValidarOrganizacionRequest;
+use App\Http\Requests\InsertarEmpresaRequest;
+
+use App\Http\Requests\ActualizarEmpresaRequest;
 
 use App\Http\Controllers\Controller;
 
 class OrganizacionesController extends Controller
 {
+
     public function index()
 
     {
@@ -92,7 +95,7 @@ class OrganizacionesController extends Controller
 
     }
 
-    public function store(ValidarOrganizacionRequest $request)
+    public function store(InsertarEmpresaRequest $request)
 
     {
 
@@ -379,7 +382,7 @@ class OrganizacionesController extends Controller
 
     }
 
-    public function update(ValidarOrganizacionRequest $request, $id)
+    public function update(ActualizarEmpresaRequest $request, $id)
 
     {
 

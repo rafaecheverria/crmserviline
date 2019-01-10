@@ -12,6 +12,7 @@ use App\Http\Controllers\Controller;
 
 class PanelesController extends Controller
 {
+
     public function index(){
 
        $regiones = Region::select(['id', 'nombre'])->orderBy('nombre', 'asc')->get();

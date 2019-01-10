@@ -13,6 +13,7 @@ use App\Http\Controllers\Controller;
 class RegionesController extends Controller
 
 {
+
    public function getCiudad(Request $request, $id)
 
     {

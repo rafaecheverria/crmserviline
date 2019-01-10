@@ -19,11 +19,9 @@ class ActualizarContactoRequest extends FormRequest
    public function rules()
     {
         return [
-            //'rut_user'      => 'required|max:10|unique:users,rut',
             'nombres_user'  => 'required|string|max:255',
             'apellidos_user'=> 'required|max:255',
             'telefono_user' => 'required|min:6|numeric',
-            //'email_user'    => 'required|email|unique:users,email',
             'direccion_user'=> 'required|max:50',
             'genero'        => 'required',
             'cargo_id'      => 'required',

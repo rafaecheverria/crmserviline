@@ -74,7 +74,7 @@
 
                                         <a href="#">
 
-                                            <i class="material-icons text-warning" style="font-size: 17px;">warning</i>
+                                            <i class="material-icons text-warning" rel="tooltip" title="La empresa lleva mas de 3 días sin actividad" style="font-size: 17px;">warning</i>
 
                                         </a>
 
@@ -90,7 +90,7 @@
 
                             </span>    
 
-                            <a href="#"><p class="text-muted">{{ str_limit($prospecto->nombre, $limit = 26, $end = '...') }}</p></a>
+                            <a href="#" onclick="ficha('{{$prospecto->id}}', 2)"><p class="text-muted">{{ str_limit($prospecto->nombre, $limit = 26, $end = '...') }}</p></a>
 
                         </li>
 
@@ -144,7 +144,7 @@
 
                                         <a href="#">
 
-                                            <i class="material-icons text-warning" style="font-size: 17px;">warning</i>
+                                            <i class="material-icons text-warning" rel="tooltip" title="La empresa lleva mas de 3 días sin actividad" style="font-size: 17px;">warning</i>
 
                                         </a>
 
@@ -160,7 +160,7 @@
 
                             </span>                              
 
-                            <a href="#"><p class="text-muted">{{ str_limit($contacto->nombre, $limit = 26, $end = '...') }}</p></a>
+                            <a href="#" onclick="ficha('{{$contacto->id}}', 2)"><p class="text-muted">{{ str_limit($contacto->nombre, $limit = 26, $end = '...') }}</p></a>
 
                     </li>
 
@@ -218,7 +218,7 @@
 
                                         <a href="#">
 
-                                            <i class="material-icons text-warning" style="font-size: 17px;">warning</i>
+                                            <i class="material-icons text-warning" rel="tooltip" title="La empresa lleva mas de 3 días sin actividad" style="font-size: 17px;">warning</i>
 
                                         </a>
 
@@ -234,7 +234,7 @@
 
                             </span>                              
 
-                            <a href="#"><p class="text-muted">{{ str_limit($reunion->nombre, $limit = 26, $end = '...') }}</p></a>
+                            <a href="#" onclick="ficha('{{$reunion->id}}', 2)"><p class="text-muted">{{ str_limit($reunion->nombre, $limit = 26, $end = '...') }}</p></a>
 
                     </li>
 
@@ -288,7 +288,7 @@
 
                                         <a href="#">
 
-                                            <i class="material-icons text-warning" style="font-size: 17px;">warning</i>
+                                            <i class="material-icons text-warning" rel="tooltip" title="La empresa lleva mas de 3 días sin actividad" style="font-size: 17px;">warning</i>
 
                                         </a>
 
@@ -304,7 +304,7 @@
 
                             </span>                        
 
-                            <a href="#"><p class="text-muted">{{ str_limit($propuesta->nombre, $limit = 26, $end = '...') }}</p></a>
+                            <a href="#" onclick="ficha('{{$propuesta->id}}', 2)"><p class="text-muted">{{ str_limit($propuesta->nombre, $limit = 26, $end = '...') }}</p></a>
 
                     </li>
 
@@ -346,11 +346,17 @@
 
                                 <div class="estado">
 
+                                    <a href="#" onclick="mostrar_cambiar_estado('{{$negociacion->id}}', '{{$negociacion->nombre}}')">
+                                        
+                                        <i class="material-icons text-primary" style="font-size: 17px;">label</i>
+
+                                    </a>
+
                                      @if($negociacion->fecha_actualizado_difference()  < 3)
 
                                         <a href="#">
 
-                                            <i class="material-icons text-success" style="font-size: 17px;">check_circle</i>
+                                            <i class="material-icons text-success" style="font-size: 17px;">check</i>
 
                                         </a>
 
@@ -358,17 +364,12 @@
 
                                         <a href="#">
 
-                                            <i class="material-icons text-warning" style="font-size: 17px;">warning</i>
+                                            <i class="material-icons text-warning" rel="tooltip" title="La empresa lleva mas de 3 días sin actividad" style="font-size: 17px;">warning</i>
 
                                         </a>
 
                                     @endif
 
-                                    <a href="#" onclick="on_off('', '{{$negociacion->id}}', '{{$negociacion->estado_actual}}', '{{$negociacion->nombre}}')">
-                                        
-                                        <i class="material-icons text-danger" style="font-size: 17px;">close</i>
-
-                                    </a>
 
                                     <a href="#" onclick="on_off('', '{{$negociacion->id}}', '{{$negociacion->estado_actual}}', '{{$negociacion->nombre}}')">
                                         

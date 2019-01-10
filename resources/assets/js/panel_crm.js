@@ -236,7 +236,7 @@ async function estado_crm(organizacion_id, nombre, estado_id){
 
                 if ($("li[name='"+nombre+"']").parent().hasClass('negociacion')){
 
-                  $("li[id='"+organizacion_id+"']").children().children(".estado").append("<i class='material-icons text-success' style='font-size: 17px;'>check_circle</i> <i class='material-icons text-success' style='font-size: 17px;'>close</i> <i class='material-icons text-danger' style='font-size: 17px;'>close</i>")
+                  $("li[id='"+organizacion_id+"']").children().children(".estado").append("<i class='material-icons text-primary' style='font-size: 17px;'>send</i> <i class='material-icons text-success' style='font-size: 17px;'>check_circle</i> <i class='material-icons text-danger' style='font-size: 17px;'>close</i>")
 
                 }else{
 
@@ -252,7 +252,7 @@ async function estado_crm(organizacion_id, nombre, estado_id){
 
             error:function(){
 
-                $(elemento).siblings('input').prop('checked', !checked)
+                //$(elemento).siblings('input').prop('checked', !checked)
 
                 alert('la operación falló')
 
@@ -276,3 +276,4 @@ async function estado_crm(organizacion_id, nombre, estado_id){
 
       }   
 }
+

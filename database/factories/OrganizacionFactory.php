@@ -11,6 +11,5 @@ $factory->define(App\Organizacion::class, function (Faker $faker) {
         'actividad' => $faker->jobTitle,
         'descripcion' => $faker->jobTitle,
         'email' => $faker->unique()->safeEmail,
-        //'speciality_id' => $faker->randomNumber(2),
     ];
 });

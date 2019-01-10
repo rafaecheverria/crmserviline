@@ -39,6 +39,7 @@ mix.scripts([
 	'resources/assets/js/ajax.js',
 	'resources/assets/js/listas.js',
 	'resources/assets/js/panel_crm.js',
+	'resources/assets/js/jquery.Rut.js',
 	'resources/assets/js/ajax-ventas.js',
 	], 'public/js/app.js')
 .styles([

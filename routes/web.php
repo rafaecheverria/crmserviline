@@ -2,12 +2,6 @@
 
 Route::middleware(['auth', 'role:administrador|vendedor'])->group(function(){
 
-	//Route::resource('clinica','Clinica\ClinicaController')->middleware(['permission:leer-clinicas']);
-
-	//Route::resource('doctores', 'Doctor\DoctorController')->middleware(['permission:leer-doctores']);
-
-	//Route::resource('recepcionistas', 'Receptionist\ReceptionistController')->middleware(['permission:leer-recepcionistas']);
-
 	Route::resource('users/avatar', 'User\AvatarController', ['only' => 'store']);
 
 	Route::resource('personas', 'User\UserController')->middleware(['permission:leer-personas']);

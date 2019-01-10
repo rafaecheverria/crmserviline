@@ -13,6 +13,7 @@ use App\Http\Controllers\ApiController;
 
 class UserController extends ApiController
 {
+
     public function index()
     {
         return view('personas.index');

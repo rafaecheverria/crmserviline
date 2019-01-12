@@ -4475,7 +4475,7 @@ a)}})(window.jQuery||window.Zepto);
 
   // part of this is duplicated in i18n/defaults-en_US.js. Make sure to update both.
   Selectpicker.DEFAULTS = {
-    noneSelectedText: 'Ningun elemento seleccionado',
+    noneSelectedText: 'Seleccione',
     noneResultsText: 'No se encontraron resultados {0}',
     countSelectedText: function (numSelected, numTotal) {
       return (numSelected == 1) ? "{0} item selected" : "{0} items selected";
@@ -23947,7 +23947,7 @@ function redirect(ruta)
 }
 $(document).ready(function() {
 
-    $('#rut').Rut({
+    $('#rut').Rut({ //rut del login
 
        on_error: function(){ 
 
@@ -23962,6 +23962,23 @@ $(document).ready(function() {
       format_on: 'keyup'
 
     })
+
+    $('#rut_user').Rut({ //rut del formuario contacto y vendedor
+
+       on_error: function(){ 
+
+            $.notify({icon: "add_alert", message: "El rut tiene un formato que no es correcto, por favor verifique e intente nuevamente"},{type: 'danger', timer: 1000})
+
+                $('#rut_user').val("")
+
+                $('#rut_user').focus()
+
+             },
+
+      format_on: 'keyup'
+
+    })
+
 
 var valor, contador, parrafo;  
 // Mostramos un mensaje inicial y lo añadimos al div de id contador.  
@@ -24001,7 +24018,17 @@ $('#modal_cambiar_estado').on('shown.bs.modal', function () {
     $('.nota').focus();
 })
 
-$('[data-toggle="tooltip"]').tooltip();
+$('#modal_contacto').on('shown.bs.modal', function () {
+    $('#nombres_user').focus();
+})
+
+$('#modal_cargo').on('shown.bs.modal', function () {
+    $('#nombre_cargo').focus();
+})
+
+
+$('[data-toggle="tooltip"]').tooltip()
+
 $('.datepicker').datetimepicker({
         format: 'DD-MM-YYYY',
         locale:'es',
@@ -24276,67 +24303,57 @@ $( "#update_micuenta" ).click(function(event){  //actualiza los datos del doctor
             }
         })
     })
-$( "#actualizar_usuario" ).click(function(event){  //actualiza los datos del doctor.
-        var id= $( '#id' ).val()
-        var tipo = $("#tipo").val()
-        var route = ""
-        if (tipo === "doctor") {route = "/doctores/"+id+"";}else{route = "/recepcionistas/"+id+"";}
-        var dataString  = $( '#form_editar_usuario' ).serializeArray()
-        $.ajax({
-            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-            url: route,
-            type: 'PUT',
-            datatype: 'json',
-            data:dataString,
-            success:function(data){
-                if (data.tipo === "doctor") {
-                    $('#table_doctores').DataTable().ajax.reload()
-                    $('#modal_editar_doctor').modal('toggle')
-                    $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
-                }else{
-                    $('#table_recepcionistas').DataTable().ajax.reload()
-                    $('#modal_editar_recepcionista').modal('toggle')
-                    $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
-                }         
-            },
-            error:function(data){
-                var error = data.responseJSON.errors;
-                for(var i in error){
-                    for(var j in error[i]){
-                        var message = error[i][j];
-                       $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000})
-                    }
-                }
-            }
-        })
-    })
 
 	$( "#update_clave" ).click(function(event){ 
-		//event.preventDefault()
+
         var id= $( '#id_user_clave' ).val()
+
         var route = "/put-clave/"+id+""
-		var dataString  = $( '#form_clave' ).serializeArray();
+
+		var dataString  = $( '#form_clave' ).serializeArray()
+
 		$.ajax({
+
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+
 			url: route,
+
 			type: 'PUT',
+
 			datatype: 'json',
+
 			data:dataString,
+
 			success:function(data){
+
                 $('#table_doctores').DataTable().ajax.reload()
+
                 $('#table_recepcionistas').DataTable().ajax.reload()
+
 				 $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
+
                  $('#modal_clave').modal('toggle')
+
                  $('#form_clave')[0].reset()
+
 			},
+
              error:function(data){
+
               var error = data.responseJSON.errors;
+
                 for(var i in error){
+
                     var message = error[i];
+
                     $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000});
+
                 }
+
             }
+
 		})
+
 	})
 
     $( "#update_miclave" ).click(function(event){ 
@@ -24773,6 +24790,7 @@ function roles_user(id)// carga datos en el modal roles_user del módulo de pers
 //----------------------------------------------------------------------------------------
 // inicia crud organización
 function organizacion_user(id, tipo)// carga datos en el modal organizacion_user del módulo de organizacion, si el tipo es 2 es porque el llamado es editar, si es 1 es agregar.
+
 {
 
     $("#modal_organizacion").modal('show')
@@ -24813,8 +24831,6 @@ function organizacion_user(id, tipo)// carga datos en el modal organizacion_user
 
             success:function(data){
 
-                console.log(data.region_id)
-
                 $("#region_id").val(data.region_id)
 
                 var ciudad_id = $("#ciudad_id").val()
@@ -24823,7 +24839,7 @@ function organizacion_user(id, tipo)// carga datos en el modal organizacion_user
 
                 $('#id').val(data.id)
 
-                $('#rut').val(data.rut)
+                $('#rut').val(data.rut).attr("disabled", true)
 
                 $('#nombre').val(data.nombre)
 
@@ -25016,6 +25032,8 @@ function ficha(id, origen) //carga datos en la ficha.
 
             $("#modal_ficha_contacto").modal("show")
 
+            var html = ""
+
             $.ajax({
 
                 url: "/ficha_contacto/"+id+"",
@@ -25068,15 +25086,15 @@ function ficha(id, origen) //carga datos en la ficha.
 
             $("#modal_ficha_organizacion").modal("show")
 
-            var route = "/ficha_organizacion/"+id+"";
+            var route = "/ficha_organizacion/"+id+""
 
             var csrf_token = $('meta[name="csrf-token"]').attr('content')
 
-            var tipo ="";
+            var tipo =""
 
-            var html = "";
+            var html = ""
 
-            var image = new Image();
+            var image = new Image()
 
             $.ajax({
 
@@ -25086,7 +25104,7 @@ function ficha(id, origen) //carga datos en la ficha.
 
                 success:function(data){
 
-                    if (data.tipo == "PEQUENA") {data.tipo = "PEQUEÑA"}
+                   if (data.tipo == "PEQUENA") {data.tipo = "PEQUEÑA"}
 
                     $(".img_pac").attr('src', 'images/perfiles/'+data.logo+'?'+ new Date().getTime()).addClass("img-circle");
 
@@ -25110,16 +25128,20 @@ function ficha(id, origen) //carga datos en la ficha.
 
                     $('#contacto_2').html(html)
 
-                    for (i=0;i<data.contacto.length;i++) {
+                    for(var i in data.contacto){
 
-                        $("#contacto_2").html( $("#contacto_2").html() + "<h6><a href='#' onclick='javascript:alert("+data.contacto[i].id+")'><span class='label label-primary'>" + data.contacto[i].nombres.toUpperCase() + " " + data.contacto[i].apellidos.toUpperCase() + "</span></a></h6>")
+                        for(var j in data.contacto[i]){
 
+                            $("#contacto_2").html( $("#contacto_2").html() + "<h6><a href='#' onclick='javascript:alert("+data.contacto[i][j][0]+")'><span class='label label-primary'>" + data.contacto[i][j][1] + " " + data.contacto[i][j][2] + "</span></a></h6>")
+
+                        }
                     }
 
                     $('.title-name').html(data.nombre)
 
                     $('#descargar').html('<a href="pdf/'+data.id+'" id="download_ficha" class="btn btn-primary pull-right"><span class="btn-label"><i class="material-icons">file_download</i></span>Descargar</a>')
 
+                    
                   },
 
                error:function(){
@@ -25225,45 +25247,83 @@ function historial_estados(id) //carga datos del historial de los estados con el
 }
 
 function cargar_tabla_historial(datos, color, estado, organizacion, estado_actual){
+
     var html = "";
+
     var title = "";
+
     title += "<h6>ESTADO ACTUAL: <span class='label' style='background:"+color+"'>"+estado+"</span></h6>";
+
     html+="<table class='table table-hover table-striped table-responsive tabe-condensed'>";
+
     html+="<thead><td class='tamano_celda_th'>FECHA</td><td>ESTADO</td><td>NOTA</td><td class='text-center'><a href='#' onclick='mostrar_agregar_nota("+estado_actual+", "+organizacion+",\"" + estado + "\", \"" + color + "\", "+0+")' data-toggle='tooltip' data-placement='top' class='btn btn-primary btn-round btn-fab btn-fab-mini' title='Agregar Nota'><i class='material-icons'>add_comment</i></a></td></thead>";
+
     html+="<tbody>";
+
     for(var i in datos){
+
         for(var j in datos[i]){
+
             html+="<tr><td><b class='text-primary'>"+datos[i][j][2]+"</b></td><td><span class='label' style='background:"+datos[i][j][3]+"'>"+datos[i][j][1]+"</span></td><td>"+datos[i][j][6]+"<br><p class='pull-right small'>"+datos[i][j][8]+"</p></td><td class='text-center'><a href='#' onclick='mostrar_agregar_nota("+estado_actual+", "+organizacion+",\"" + estado + "\", \"" + color + "\", "+datos[i][j][0]+")'><span class='btn btn-success btn-simple'><i class='material-icons'>edit</i></span></a><a href='#' onclick='eliminar("+datos[i][j][0]+", \"" +'nota de '+datos[i][j][1]+ "\", \"" +'estado_organizacion/'+ "\", "+datos[i][j][7]+" )'><span class='btn btn-danger btn-simple'><i class='material-icons'>delete</i></span></a></td></tr>";
+
         }
+
     }
+
     html+="</tbody>";
+
     html+="</table>";
+
     $("#colapse").html(html)
+
     $("#title-estado").html(title)
+
     return html;
+
 }
 
 function mostrar_agregar_nota(estado_id, organizacion_id, estado, color, id){
+
     var title = "";
+
     $("#nota").val("")
-    $("#boton-agregar-nota").html("<a class='btn btn-primary btn-sm btn pull-right' onclick='agregar_nota(0,1)'>Agregar Nota</a>");
+
+    $("#boton-agregar-nota").html("<a class='btn btn-primary btn-sm btn pull-right' onclick='agregar_nota(0,1)'>Agregar Nota</a>")
+
     title += "<h6>AGREGAR NOTA AL ESTADO: <span class='label' style='background:"+color+"'>"+estado+"</span></h6>";
-    $("#modal_estado").modal("show");
-    $("#add_nota").html(title);
+
+    $("#modal_estado").modal("show")
+
+    $("#add_nota").html(title)
+
     $("#id_estado").val(estado_id)
+
     $("#id_empresa").val(organizacion_id)
+
     if (id>0) {
-        $("#boton-agregar-nota").html("<a class='btn btn-primary btn-sm btn pull-right' onclick='agregar_nota("+id+",2)'>Actualizar Nota</a>");
+
+        $("#boton-agregar-nota").html("<a class='btn btn-primary btn-sm btn pull-right' onclick='agregar_nota("+id+",2)'>Actualizar Nota</a>")
+
         var route = "/estado_organizacion/"+id+"";
+
          $.ajax({
+
            url: route,
+
            type: 'GET',
+
            success:function(data){
+
             $("#id").val(data.id)
+
             $("#nota").val(data.nota)
+
            }
+
         })
+
     }
+
 }
 
 
@@ -25538,61 +25598,103 @@ if($(elemento).siblings('input').prop("checked") || elemento == ""){
 
 //Inicia crud cargo
 function mostrar_cargo(id, tipo){
-    $("#modal_agregar_cargo").modal('show')
-    $("#boton_cargo").html("<a href='#' onclick='cargo(0,1)' class='btn btn-info pull-right'>Agregar</a>")
+
+    $("#modal_cargo").modal('show')
+
+    $("#boton_cargo").html("<a href='#' onclick='cargo(0,1)' class='btn btn-primary pull-right'>Agregar</a>")
 }
+
 function cargo(id, tipo)//Inserta un cargo en el select cargo_id del modal agregar contacto.
+
 {
+
    //event.preventDefault();  
+
    var dataString  = $( '#form_cargo' ).serializeArray()
+
     if (tipo == 1) {
+
     var route = "cargos"
+
      $.ajax({
+
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+
         url: route,
+
         type: 'POST',
+
         datatype: 'json',
+
         data:dataString,
+
         success:function(data){
+
            $("#cargo_id").empty() //Limpia el select "cargo_id"del modal "agregar contacto"
+
            for (i=0;i<data.cargos.length;i++) { //llena el select del modal "agregar contacto" con el cargo nuego agregado recientemente.
+
             $("#cargo_id").append("<option value='"+data.cargos[i].id+"'>"+data.cargos[i].nombre+"</option>")
+
             $('#cargo_id option[value='+data.my_cargo+']').attr('selected', 'selected')// Selecciona el cargo insertado recientemente
+
            }
+
            $('.selectpicker').selectpicker('refresh')
+
            $("#modal_agregar_cargo").modal('hide')
+
            $('#form_cargo')[0].reset()
+
            $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
+
         },
+
         error:function(data){
+
             var error = data.responseJSON.errors;
+
             for(var i in error){
+
                 for(var j in error[i]){
+
                     var message = error[i][j];
+
                    $.notify({icon: "add_alert", message: message},{type: 'warning', timer: 1000})
+
                 }
+
             }
+
         }
 
     })
+
     }else{
+
         //codigo para editar
+
     }
+
 }
 //Finaliza crud cargo
 
 //----------------------
  
 //Inicia crud contacto
-function mostrar_contacto(id,tipo_user){ 
+function mostrar_contacto(id,tipo_user){
 
    $("#modal_contacto").modal('show')
 
    var route = ""
 
-   if (id == 0) { //Si el id es igual a cero, significa que el modal es llamado desde el boton agregar contacto - vendedor
+   var html = ""
 
-    $('#form_contacto')[0].reset()
+   if (id == 0) {
+
+    //Si el id es igual a cero, significa que el modal es llamado desde el boton agregar contacto - vendedor
+
+        $('#form_contacto')[0].reset()
 
         $( "#rut_user" ).prop( "readonly", false )
 
@@ -25600,7 +25702,7 @@ function mostrar_contacto(id,tipo_user){
 
         if (tipo_user == 1) {
 
-            //muestrea el formulario de vendedor.
+            //muestra el formulario de vendedor.
 
             route = "vendedores/"+id+"/edit",
 
@@ -25612,23 +25714,47 @@ function mostrar_contacto(id,tipo_user){
 
             $("#boton_contacto").html("<a href='#' onclick='insertarTipoPersona(0,2)' class='btn btn-primary pull-right'>Agregar Vendedor</a>")
 
+            $("#show-empresas").show()
+
         }else{
 
-            //muestra el formulario de contacto de la empresa.
+            //muestra el formulario de agregar contacto de la empresa.
 
             route = "contactos/"+id+"/edit",
 
             $("#tipo_user").val("contacto")
 
+            $("#rut_user").parent().remove()
+
+            $("#direccion_user").parent().remove()
+
+            $("#email_user").parent().remove()
+
+            $("#nombres_user").parent().parent().removeClass("col-md-6")
+
+            $("#nombres_user").parent().parent().addClass("col-md-12")
+
+            $("#telefono_user").parent().parent().removeClass("col-md-6")
+
+            $("#telefono_user").parent().parent().addClass("col-md-12")
+
+            $("#apellidos_user").parent().parent().removeClass("col-md-6")
+
+            $("#apellidos_user").parent().parent().addClass("col-md-12")
+
             $(".title-contacto").html("Agregar Contacto")
 
             $("#show-cargo").show()
+
+            $("#show-empresas").show()
 
             $("#boton_contacto").html("<a href='#' onclick='insertarTipoPersona(0,1)' class='btn btn-primary pull-right'>Agregar Contacto</a>")
 
         } 
 
-    }else{ // si el id viene con un valor, significa que el modal es llamado desde un botón editar contacto - vendedor
+    }else{ 
+
+        // si el id viene con un valor, significa que el modal es llamado desde un botón editar contacto - vendedor
 
         $( "#rut_user" ).prop( "readonly", true )
 
@@ -25642,6 +25768,8 @@ function mostrar_contacto(id,tipo_user){
 
             $("#show-cargo").hide()
 
+            $("#show-empresas").show()
+
             $("#boton_contacto").html("<a href='#' onclick='insertarTipoPersona("+id+",2)' class='btn btn-primary pull-right'>Actualizar Vendedor</a>")
 
         }else{
@@ -25650,7 +25778,29 @@ function mostrar_contacto(id,tipo_user){
 
             $(".title-contacto").html("Actualizar Contacto")
 
+            $("#rut_user").parent().remove()
+
+            $("#direccion_user").parent().remove()
+
+            $("#email_user").parent().remove()
+
+            $("#nombres_user").parent().parent().removeClass("col-md-6")
+
+            $("#nombres_user").parent().parent().addClass("col-md-12")
+
+            $("#telefono_user").parent().parent().removeClass("col-md-6")
+
+            $("#telefono_user").parent().parent().addClass("col-md-12")
+
+            $("#apellidos_user").parent().parent().removeClass("col-md-6")
+
+            $("#apellidos_user").parent().parent().addClass("col-md-12")
+
             $("#show-cargo").show()
+
+            $("#show-empresas").show()
+
+            //carga las empresas que tiene asociadas el contacto seleccionado
 
             $("#boton_contacto").html("<a href='#' onclick='insertarTipoPersona("+id+",1)' class='btn btn-primary pull-right'>Actualizar Contacto</a>")
 
@@ -25682,7 +25832,31 @@ function mostrar_contacto(id,tipo_user){
 
                 $('#cargo_id option[value='+data.cargo+']').attr('selected', 'selected')  
 
-                $('.selectpicker').selectpicker('refresh')
+                 const crearOption = (value, name, selected) => `<option value="${value}"${selected.includes(value) ? ' selected' : ''}>${name}</option>`
+
+                const obj = data.organizaciones
+
+                const values = Object.keys(obj)
+
+                const opciones = values.map(x => crearOption(x, obj[x], data.my_organizaciones))
+
+                const select = document.getElementById('organizacion_id')
+
+                     select.innerHTML = ''
+
+                     opciones.forEach(x => { select.insertAdjacentHTML('beforeend', x) })
+
+                const valor = data.my_organizaciones
+
+                    i = 0, size = valor.length
+
+                        for(i; i < size; i++){
+
+                            $('select option[value='+valor[i]+']').attr('selected', 'selected')
+
+                        }
+
+                        $('.selectpicker').selectpicker('refresh')
 
             },
 
@@ -25716,6 +25890,8 @@ function insertarTipoPersona(id,tipo){
 
     var dataType = "JSON"
 
+    var type = ""
+
     var headers = {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')};
 
     if (tipo == 1) { 
@@ -25734,9 +25910,11 @@ function insertarTipoPersona(id,tipo){
 
     if (id > 0) {
 
-        var type = "PUT"
+        type = "PUT"
 
         var route = route+"/"+id+""
+
+        console.log(dataString)
 
             $.ajax({
 
@@ -25752,6 +25930,8 @@ function insertarTipoPersona(id,tipo){
 
             success:function(data){
 
+                $('.selectpicker').selectpicker('update')
+
                 $("#modal_contacto").modal('hide')
 
                 $('#form_contacto')[0].reset()
@@ -25761,8 +25941,6 @@ function insertarTipoPersona(id,tipo){
                 $('#vendedores').DataTable().ajax.reload()
 
                 $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
-
-                $('.selectpicker').selectpicker('refresh')
 
             },
 
@@ -25788,7 +25966,9 @@ function insertarTipoPersona(id,tipo){
 
     }else{
 
-        var type = "POST"
+        type = "POST"
+
+         console.log(dataString)
 
         $.ajax({
 
@@ -25822,6 +26002,8 @@ function insertarTipoPersona(id,tipo){
 
                 $('#contactos').DataTable().ajax.reload()
 
+                $('#vendedores').DataTable().ajax.reload()
+
                 $.notify({icon: "add_alert", message: data.message},{type: 'success', timer: 1000})
 
             },
@@ -25846,36 +26028,59 @@ function insertarTipoPersona(id,tipo){
 
         })  
 
-    } 
+    }
 
 }
 
 //Finaliza crud contacto
 
 function carga_usuario(id)//carga datos del doctor y recepcionista en el modal editar.
+
 {
    //event.preventDefault(); este evento no funciona con firefox y envia error, no cargan los datos en el modal.
-   var route = "/recepcionistas/"+id+"/edit";
-   var csrf_token = $('meta[name="csrf-token"]').attr('content');
+
+   var route = "/recepcionistas/"+id+"/edit"
+
+   var csrf_token = $('meta[name="csrf-token"]').attr('content')
+
     $.ajax({
+
            url: route,
+
            type: 'GET',
+
         success:function(data){
+
             $("INPUT[name=nombres]").val([data.nombres])
+
             $("INPUT[name=apellidos]").val([data.apellidos])
+
             $("INPUT[name=email]").val([data.email])
+
             $("INPUT[name=telefono]").val([data.telefono])
+
             $("INPUT[name=direccion]").val([data.direccion])
+
             $("INPUT[name=nacimiento]").val([data.nacimiento])
+
             $("INPUT[name=id]").val(data.id)
+
             $(".avatarImage").attr('src', 'images/perfiles/'+data.avatar+'?'+ new Date().getTime())
+
             $("INPUT[name=genero]").val([data.genero]) //carga valor de radiobutton desde mysql
+
             $('.title-name').html(data.nombres+" "+ data.apellidos)
+
           },
+
        error:function(){
+
            alert('la operación falló');
+
           }
+
     })
+
 }
 
 function carga_rol(id)//carga datos del doctor en el modal editar.
@@ -25913,38 +26118,6 @@ function carga_permiso(id)//carga datos de los permisos en el modal editar.
     });
 }
 
-function carga_paciente(id)//carga datos del paciente en el modal editar.
-{
-   //event.preventDefault(); este evento no funciona con firefox y envia error, no cargan los datos en el modal.
-   var route = "/pacientes/"+id+"/edit";
-    $.ajax({
-           url: route,
-           type: 'GET',
-        success:function(data){
-            $("#id_paciente").val(data.id)
-            $(".avatarImage").attr('src', 'images/perfiles/'+data.avatar+'?'+ new Date().getTime())
-            $('#rut_e').val(data.rut)
-            $('#nombres_e').val(data.nombres)
-            $('#apellidos_e').val(data.apellidos)
-            $('#email_e').val(data.email)
-            $('#telefono_e').val(data.telefono)
-            $('#direccion_e').val(data.direccion)
-            $('#nacimiento_e').val(data.nacimiento)
-            $("INPUT[name=genero_e]").val([data.genero]) //carga valor de radiobutton desde mysql
-            $('#sangre_e').val(data.sangre)
-            $('#vih_e').val(data.vih)
-            $('#peso_e').val(data.peso)
-            $('#altura_e').val(data.altura)
-            $('#alergia_e').val(data.alergia)
-            $('#medicamento_e').val(data.medicamento)
-            $('#enfermedad_e').val(data.enfermedad)
-            $('.title-name_e').html(data.nombres)
-          },
-       error:function(){
-           alert('la operación falló')
-          }
-    })
-}
 function permisos_roles(id) //carga modal que contiene el select multiple de permisos del rol.
 {
    var route = "/permisos-roles/"+id+"/edit";
@@ -26279,11 +26452,9 @@ var listar_contactos = function()
         "responsive": true,
         "columns":[
             {data: 'action', name: 'action', orderable: false, searchable: false, class:"text-left"},
-            {data: 'rut', name: 'rut'},
             {data: 'nombres', name: 'nombres'},
             {data: 'apellidos', name: 'apellidos'},
             {data: 'telefono', name: 'telefono'},
-            {data: 'nacimiento', name: 'nacimiento'}
         ]
 	})
         //$('.material-datatables label').addClass('form-group');
@@ -26363,9 +26534,8 @@ var listar_organizaciones = function()
             {data: 'desactivar', name: 'desactivar'},
         ]
     })
-
-    console.log(table)
 }
+
 var listar_personas = function()
 {
     var table = $('#personas').DataTable({

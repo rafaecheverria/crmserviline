@@ -158,11 +158,9 @@ var listar_contactos = function()
         "responsive": true,
         "columns":[
             {data: 'action', name: 'action', orderable: false, searchable: false, class:"text-left"},
-            {data: 'rut', name: 'rut'},
             {data: 'nombres', name: 'nombres'},
             {data: 'apellidos', name: 'apellidos'},
             {data: 'telefono', name: 'telefono'},
-            {data: 'nacimiento', name: 'nacimiento'}
         ]
 	})
         //$('.material-datatables label').addClass('form-group');
@@ -242,9 +240,8 @@ var listar_organizaciones = function()
             {data: 'desactivar', name: 'desactivar'},
         ]
     })
-
-    console.log(table)
 }
+
 var listar_personas = function()
 {
     var table = $('#personas').DataTable({

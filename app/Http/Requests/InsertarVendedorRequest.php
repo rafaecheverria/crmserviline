@@ -9,13 +9,13 @@ class InsertarVendedorRequest extends FormRequest
    
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     public function rules()
     {
         return [
-            'rut_user'           => 'required|max:10|unique:users,rut',
+            'rut_user'           => 'required|max:12|unique:users,rut',
             'nombres_user'       => 'required|max:255',
             'apellidos_user'     => 'required|max:255',
             'telefono_user'      => 'required|min:6|numeric',
@@ -26,11 +26,11 @@ class InsertarVendedorRequest extends FormRequest
         ];
     }
 
-     public function messages()
+    public function messages()
     {
         return [
             'rut_user.required'       => 'El campo rut es obligatorio.',
-            'rut_user.max:10'         => 'El campo rut debe tener un maxino de 10 digitos.',
+            'rut_user.max:12'         => 'El campo rut debe tener un maxino de 12 digitos.',
             'rut_user.unique'         => 'El campo rut ya existe en nuestros registros.',
             'nombres_user.string'     => 'El campo nombres es obligatorio.',
             'apellidos_user.required' => 'El campo apellidos es obligatorio.',

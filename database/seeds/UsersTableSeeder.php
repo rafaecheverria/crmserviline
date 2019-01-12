@@ -32,5 +32,18 @@ class UsersTableSeeder extends Seeder
 	        'remember_token' => str_random(10),
         ]);
 
+        factory(App\User::class)->create([
+	        'nombres' => 'Rafael Agustín',
+	        'rut' => '14.566.236-2',
+	        'apellidos' => 'Ramos Lara',
+	        'direccion' => 'parcela 15 La Unión de Ninquihue',
+	        'telefono' => '974837110',
+	        'actividad' => 'Profesor de Historia',
+	        'nacimiento' => '1980-04-26',
+	        'email' => 'rramos@serviline.cl',
+	        'password' => bcrypt('145662362'),
+	        'remember_token' => str_random(10),
+        ]);
+
     }
 }

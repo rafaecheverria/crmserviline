@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Contacto;
 
 use App\User;
 use App\Role;
-use App\Query;
 use App\Cargo;
+use App\Organizacion;
+use App\Region;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -22,7 +23,15 @@ class ContactosController extends Controller
 
         $cargos = Cargo::obtener_cargos();
 
-        return view('contactos.index', compact('cargos'));
+        $empresas = Organizacion::obtener_empresas();
+
+        $regiones = Region::obtener_regiones();
+
+        $vendedores = User::obtener_persona_segun_rol("vendedor")->get();
+
+        $contactos = User::obtener_persona_segun_rol("contacto")->get();
+
+        return view('contactos.index', compact('cargos', 'empresas', 'regiones', 'vendedores', 'contactos'));
 
     }
 
@@ -34,17 +43,11 @@ class ContactosController extends Controller
 
             $persona = new User();
 
-            $persona->rut       = $request->rut_user;
-
             $persona->nombres   = $request->nombres_user;
 
             $persona->apellidos = $request->apellidos_user;
 
-            $persona->email     = $request->email_user;
-
             $persona->telefono  = $request->telefono_user;
-
-            $persona->direccion = $request->direccion_user;
 
             $persona->genero    = $request->genero;
 
@@ -52,8 +55,9 @@ class ContactosController extends Controller
 
             $persona->avatar    = "default.jpg";
 
-
             $persona->save();
+
+            $persona->organizaciones()->attach($request->organizacion_id);
 
             $persona->attachRole(3); //3 es el numero id del rol contacto
 
@@ -64,6 +68,19 @@ class ContactosController extends Controller
             $personas = User::obtener_persona_segun_rol($request->tipo_user)->orderBy('apellidos', 'asc')->get();
 
             $my_persona = $persona->id;
+
+             //Actualiza el contacto en la tabla pivote con el tipo de persona
+
+            $array = [];
+
+            $size = count($request->organizacion_id);
+
+            for ($i=0; $i < $size; $i++) { 
+                
+                $array[$request->organizacion_id[$i]] = [ 'tipo' => 'contacto' ];
+            }
+
+            $persona->organizaciones()->sync($array);
 
             return response()->json([
 
@@ -166,6 +183,10 @@ class ContactosController extends Controller
 
             $persona = User::obtener_persona($id);
 
+            $organizaciones  = Organizacion::obtener_empresas()->pluck('nombre', 'id');
+
+            $my_organizaciones = $persona->organizaciones->pluck('id')->ToArray();   
+
             return response()->json([
 
                 'success'     => true,
@@ -189,6 +210,10 @@ class ContactosController extends Controller
                 'direccion'   => $persona->direccion,
 
                 'cargo'       => $persona->cargo_id,
+
+                'organizaciones'    => $organizaciones,
+
+                'my_organizaciones' => $my_organizaciones
 
             ]);
 
@@ -223,6 +248,19 @@ class ContactosController extends Controller
             $persona->avatar    = "default.jpg";
 
             $persona->save();
+
+            //Actualiza el contacto en la tabla pivote con el tipo de persona
+
+            $array = [];
+
+            $size = count($request->organizacion_id);
+
+            for ($i=0; $i < $size; $i++) { 
+                
+                $array[$request->organizacion_id[$i]] = [ 'tipo' => 'contacto' ];
+            }
+
+            $persona->organizaciones()->sync($array);
 
             return response()->json([
 

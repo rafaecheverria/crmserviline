@@ -80,7 +80,7 @@ class DatabaseSeeder extends Seeder
                 array('user_id' => 1, 'role_id' => 1),
                 array('user_id' => 2, 'role_id' => 2),
                 array('user_id' => 3, 'role_id' => 2),
-                array('user_id' => 4, 'role_id' => 2),
+                /*array('user_id' => 4, 'role_id' => 2),
                 array('user_id' => 5, 'role_id' => 2),
                 array('user_id' => 6, 'role_id' => 2),
                 array('user_id' => 7, 'role_id' => 2),
@@ -110,7 +110,6 @@ class DatabaseSeeder extends Seeder
                 array('user_id' => 31, 'role_id' => 4),
                 array('user_id' => 32, 'role_id' => 4),
                 array('user_id' => 33, 'role_id' => 4),
-
                 array('user_id' => 34, 'role_id' => 2),
                 array('user_id' => 35, 'role_id' => 2),
                 array('user_id' => 36, 'role_id' => 2),
@@ -149,7 +148,7 @@ class DatabaseSeeder extends Seeder
                 array('user_id' => 69, 'role_id' => 2),
                 array('user_id' => 70, 'role_id' => 2),
                 array('user_id' => 71, 'role_id' => 2),
-                array('user_id' => 72, 'role_id' => 2)
+                array('user_id' => 72, 'role_id' => 2)*/
             ));
 
     }

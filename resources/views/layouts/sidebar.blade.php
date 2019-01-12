@@ -158,6 +158,8 @@
 
             @endpermission
 
+            @permission('leer-ventas')
+
             <li>
 
                 <a data-toggle="collapse" href="#ventas">
@@ -222,6 +224,10 @@
 
             </li>
 
+            @endpermission
+
+            @permission('leer-productos')
+
             <li>
 
                 <a href="{{url('productos')}}">
@@ -238,6 +244,10 @@
 
             </li>
 
+            @endpermission
+
+             @permission('leer-productos')
+
              <li>
 
                 <a href="{{url('categorias')}}">
@@ -253,6 +263,8 @@
                 </a>
 
             </li>
+
+            @endpermission
 
             @permission('leer-mantenimientos')
 

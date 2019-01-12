@@ -72,4 +72,6 @@
 
 @include('../cargos.modal')
 
+@include('../organizaciones.modal')
+
 @endsection

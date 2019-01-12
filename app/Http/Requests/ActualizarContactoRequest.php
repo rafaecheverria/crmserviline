@@ -19,12 +19,12 @@ class ActualizarContactoRequest extends FormRequest
    public function rules()
     {
         return [
-            'nombres_user'  => 'required|string|max:255',
-            'apellidos_user'=> 'required|max:255',
-            'telefono_user' => 'required|min:6|numeric',
-            'direccion_user'=> 'required|max:50',
-            'genero'        => 'required',
-            'cargo_id'      => 'required',
+            'nombres_user'    => 'required|string|max:255',
+            'apellidos_user'  => 'required|max:255',
+            'telefono_user'   => 'required|min:6|numeric',
+            'genero'          => 'required',
+            'cargo_id'        => 'required',
+            'organizacion_id' => 'required',
             
         ];
     }
@@ -38,9 +38,9 @@ class ActualizarContactoRequest extends FormRequest
             'apellidos_user.required' => 'El campo apellidos es obligatorio.',
             'telefono_user.required'  => 'El campo teléfono es obligatorio.',
             'telefono_user.numeric'   => 'El campo teléfono debe contener sólo números.',
-            'direccion_user.required' => 'El campo dirección es obligatorio.',
             'genero.required'         => 'El campo género es obligatorio.',
             'cargo_id.required'       => 'El campo cargo es obligatorio.',
+            'organizacion_id.required'=> 'El campo empresa es obligatorio.',
         ];
     }
 }

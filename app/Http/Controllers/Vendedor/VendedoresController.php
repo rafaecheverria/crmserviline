@@ -6,6 +6,7 @@ use App\User;
 use App\Role;
 use App\Query;
 use App\Cargo;
+use App\Region;
 use App\Organizacion;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -20,7 +21,16 @@ class VendedoresController extends Controller
     public function index()
     {
         $cargos = Cargo::obtener_cargos();
-        return view('vendedores.index', compact('cargos'));
+
+        $empresas = Organizacion::obtener_empresas();
+
+        $regiones = Region::obtener_regiones();
+
+        $vendedores = User::obtener_persona_segun_rol("vendedor")->get();
+
+        $contactos = User::obtener_persona_segun_rol("contacto")->get();
+
+        return view('vendedores.index', compact('cargos', 'empresas', 'regiones', 'vendedores', 'contactos'));
     }
 
     public function create()
@@ -65,6 +75,19 @@ class VendedoresController extends Controller
             $personas = User::obtener_persona_segun_rol($request->tipo_user)->orderBy('apellidos', 'asc')->get();
 
             $my_persona = $persona->id;
+
+            //Actualiza el contacto en la tabla pivote con el tipo de persona
+
+            $array = [];
+
+            $size = count($request->organizacion_id);
+
+            for ($i=0; $i < $size; $i++) { 
+                
+                $array[$request->organizacion_id[$i]] = [ 'tipo' => 'vendedor' ];
+            }
+
+            $persona->organizaciones()->sync($array);
 
             return response()->json([
 
@@ -120,7 +143,7 @@ class VendedoresController extends Controller
 
         $persona = User::obtener_persona($id);
 
-        $empresas = Organizacion::where("vendedor_id", $persona->id)->get();
+        $empresas  = $persona->organizaciones;
 
         return response()->json([
 
@@ -153,6 +176,10 @@ class VendedoresController extends Controller
 
             $persona = User::obtener_persona($id);
 
+            $organizaciones  = Organizacion::obtener_empresas()->pluck('nombre', 'id');
+
+            $my_organizaciones = $persona->organizaciones->pluck('id')->ToArray();   
+
             return response()->json([
 
                 'success'     => true,
@@ -174,6 +201,10 @@ class VendedoresController extends Controller
                 'telefono'    => $persona->telefono,
 
                 'direccion'   => $persona->direccion,
+
+                'organizaciones'    => $organizaciones,
+
+                'my_organizaciones' => $my_organizaciones
 
             ]);
 
@@ -205,6 +236,17 @@ class VendedoresController extends Controller
             $persona->avatar    = "default.jpg";
 
             $persona->save();
+
+             $array = [];
+
+            $size = count($request->organizacion_id);
+
+            for ($i=0; $i < $size; $i++) { 
+                
+                $array[$request->organizacion_id[$i]] = [ 'tipo' => 'vendedor' ];
+            }
+
+            $persona->organizaciones()->sync($array);
 
             return response()->json([
 

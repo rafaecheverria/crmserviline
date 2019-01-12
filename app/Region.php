@@ -20,7 +20,19 @@ class Region extends Model
     }*/
 
     public function ciudades()
+
     {
+
         return $this->belongsToMany('App\Ciudad');
+
     }
+
+    public static function obtener_regiones(){
+
+        $regiones = Region::select(['id', 'nombre'])->orderBy('id', 'desc')->get();
+
+        return $regiones;
+
+    }
+
 }

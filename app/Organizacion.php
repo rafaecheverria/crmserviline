@@ -5,6 +5,7 @@ namespace App;
 use Jenssegers\Date\Date;
 use DB;
 use App\Estado;
+use App\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
@@ -62,6 +63,22 @@ class Organizacion extends Model
         $empresa = Organizacion::with('estados')->selectRaw('distinct organizaciones.*');
 
         return $empresa;
+    }
+
+    public static function obtener_tipo_persona($organizacion_id, $tipo){
+
+        $organizacion = Organizacion::obtener_organizacion($organizacion_id);
+
+        $datos = $organizacion->users()->where("organizacion_id" ,$organizacion->id)->where("tipo", $tipo)->get();
+
+        $tipo_persona = $datos->map(function($item, $key){
+
+            return [$item['nombres'] => [$item['id'], $item['nombres'], $item['apellidos']]];
+
+         });
+
+        return $tipo_persona;
+
     }
 
     public static function traer_datos_estado_organizacion($organizacion){
@@ -187,6 +204,14 @@ class Organizacion extends Model
         $estado_organizacion = DB::table("estado_organizacion")->select("estado_organizacion.id", "estado_organizacion.nota")->where("id", "=", $id)->get();
 
         return $estado_organizacion;
+
+    }
+
+    public static function obtener_empresas(){
+
+        $empresas = Organizacion::select(['id', 'nombre'])->orderBy('nombre', 'asc')->get();
+
+        return $empresas;
 
     }
 

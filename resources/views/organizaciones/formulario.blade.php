@@ -66,8 +66,6 @@
 
                     <label class="control-label">VENDEDOR DUEÑO DEL CONTACTO</label>
 
-                    <!-- <div id="show_contact"></div> -->
-
                         <select id="vendedor_id" name="vendedor_id" class="selectpicker show-tick" data-dropup-auto="false" data-size="5" data-live-search="true" data-style="select-with-transition">
 
                             <option value="0"> Seleccione </option>

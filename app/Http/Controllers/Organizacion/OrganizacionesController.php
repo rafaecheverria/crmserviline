@@ -35,15 +35,17 @@ class OrganizacionesController extends Controller
 
     {
 
-        $regiones = Region::select(['id', 'nombre'])->orderBy('nombre', 'asc')->get();
+        $regiones = Region::obtener_regiones();
 
-        $contactos = User::select(['id', 'nombres', 'apellidos'])->withRole("contacto")->orderBy('apellidos', 'asc')->get();
+        $contactos = User::obtener_persona_segun_rol("contacto")->get();
 
-        $vendedores = User::select(['id', 'nombres', 'apellidos'])->withRole("vendedor")->orderBy('nombres', 'asc')->get();
+        $vendedores = User::obtener_persona_segun_rol("vendedor")->get();
 
-        $cargos = Cargo::select(['id', 'nombre'])->orderBy('nombre', 'asc')->get();
+        $cargos = Cargo::obtener_cargos();
 
-        return view('organizaciones.index', compact('regiones', 'contactos', 'vendedores', 'cargos'));
+        $empresas = Organizacion::obtener_empresas();
+
+        return view('organizaciones.index', compact('regiones', 'contactos', 'vendedores', 'cargos', 'empresas'));
 
     }
 
@@ -131,7 +133,9 @@ class OrganizacionesController extends Controller
 
             $organizacion->save();
 
-            $organizacion->users()->sync($request->contacto_id);  
+            $organizacion->users()->attach($request->contacto_id);  
+
+            $organizacion->users()->attach($request->vendedor_id);  
 
             $organizacion->estados()->attach(1, ['nota' => 'nota 1 de agregado', 'fecha_creado' => Carbon::now(), 'fecha_actualizado' => Carbon::now()]); 
 
@@ -168,7 +172,7 @@ class OrganizacionesController extends Controller
 
             $organizaciones = Organizacion::with('estados')->selectRaw('distinct organizaciones.*')->whereHas('users', function ($query) {
 
-                $query->where('organizacion_user.user_id', '=', Auth::user()->id);
+                $query->where('organizacion_user.user_id', '=', Auth::id());
 
                 });
 
@@ -270,9 +274,11 @@ class OrganizacionesController extends Controller
 
     {
 
-        $organizacion = Organizacion::findOrFail($id);
+        $organizacion = Organizacion::obtener_organizacion($id);
 
-        $contacto    = $organizacion->users;
+        //obtiene los contactos que estan asociados a la empresa.
+
+        $contacto = Organizacion::obtener_tipo_persona($organizacion->id, "contacto");
 
         $color = "";
 
@@ -390,8 +396,6 @@ class OrganizacionesController extends Controller
 
             $organizacion = Organizacion::findOrFail($id);
 
-            $organizacion->rut         = $request->rut;
-
             $organizacion->nombre      = $request->nombre; 
 
             $organizacion->email       = $request->email;
@@ -412,9 +416,20 @@ class OrganizacionesController extends Controller
 
             $organizacion->save();
 
-            $organizacion->users()->sync($request->contacto_id);
+            //$organizacion->users()->sync($request->contacto_id);
 
-            $organizacion->users()->attach($request->vendedor_id);  
+            $array = [];
+
+            $size = count($request->contacto_id);
+
+            for ($i=0; $i < $size; $i++) { 
+                
+                $array[$request->contacto_id[$i]] = [ 'tipo' => 'contacto' ];
+            }
+
+            $organizacion->users()->sync($array);
+
+            $organizacion->users()->attach($request->vendedor_id, ["tipo" => "vendedor"]);  
 
             return response()->json([
 

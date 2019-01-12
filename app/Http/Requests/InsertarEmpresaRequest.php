@@ -23,7 +23,7 @@ class InsertarEmpresaRequest extends FormRequest
             'ciudad_id'          => 'required',
             'vendedor_id'        => 'required',
             'contacto_id'        => 'required',
-            'rut'                => 'required|max:10|unique:organizaciones,rut',
+            'rut'                => 'required|max:12|unique:organizaciones,rut',
             'nombre'             => 'required',
             'email'              => 'required|email|max:255|unique:organizaciones,email',
             'telefono'           => 'required|min:6|numeric',
@@ -37,7 +37,7 @@ class InsertarEmpresaRequest extends FormRequest
     {
         return [
             'rut.required'         => 'El campo rut es obligatorio.',
-            'rut.max:10'           => 'El campo rut debe tener un maxino de 10 digitos.',
+            'rut.max:12'           => 'El campo rut debe tener un maxino de 12 digitos.',
             'rut.unique'           => 'El campo rut ya existe en nuestros registros.',
             'nombres.string'       => 'El campo nombre es obligatorio.',
             'telefono.required'    => 'El campo teléfono es obligatorio.',

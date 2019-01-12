@@ -33,7 +33,9 @@ class PanelesController extends Controller
 
        $negociaciones = Organizacion::obtener_organizaciones_crm(5);
 
-     	return view('crm_panel.index', compact('prospectos', 'contactados', 'reuniones', 'propuestas', 'negociaciones', 'regiones', 'vendedores', 'contactos', 'cargos'));
+       $empresas = Organizacion::obtener_empresas();
+
+     	return view('crm_panel.index', compact('prospectos', 'contactados', 'reuniones', 'propuestas', 'negociaciones', 'regiones', 'vendedores', 'contactos', 'cargos', 'empresas'));
 
     }
     

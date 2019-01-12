@@ -30,15 +30,7 @@ class PermissionsTableSeeder extends Seeder
             'name' => 'editar-permisos',
         ]);
 
-        factory(App\Permission::class)->create([
-            'name' => 'editar-vendedores',
-        ]);
-
-        factory(App\Permission::class)->create([
-            'name' => 'editar-contactos',
-        ]);
-
-        factory(App\Permission::class)->create([
+         factory(App\Permission::class)->create([
             'name' => 'editar-personas',
         ]);
 
@@ -84,6 +76,10 @@ class PermissionsTableSeeder extends Seeder
 
         factory(App\Permission::class)->create([
             'name' => 'leer-empresas',
+        ]);
+
+        factory(App\Permission::class)->create([
+            'name' => 'leer-vendedores',
         ]);
 
         //factory(App\Role::class, 4)->create();

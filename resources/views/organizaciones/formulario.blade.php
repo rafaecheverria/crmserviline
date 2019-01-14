@@ -12,7 +12,7 @@
 
                     <label class="control-label">REGIÓN</label>
 
-                    <select id="region_id" name="region_id" class="selectpicker show-tick" data-dropup-auto="false" data-size="5" data-live-search="true" data-style="select-with-transition">
+                    <select id="region_id" name="region_id" class="form-control">
 
                         <option value=""> Seleccione </option>
 
@@ -36,7 +36,7 @@
 
                     <label class="control-label">CIUDAD</label>
 
-                    <select id="ciudad_id" data-live-search="true" name="ciudad_id" class="selectpicker show-tick" data-dropup-auto="false" data-size="5" data-style="select-with-transition">
+                    <select id="ciudad_id" name="ciudad_id" class="form-control">
 
                         <option value="0"> Seleccione </option>
 

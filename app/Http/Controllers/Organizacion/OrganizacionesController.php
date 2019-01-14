@@ -164,7 +164,7 @@ class OrganizacionesController extends Controller
         $organizaciones = "";
 
 
-        if(Auth::user()->hasRole('administrador')){
+        if(Auth::user()->hasRole('administrador') || Auth::user()->hasRole('super-administrador')){
 
             $organizaciones = Organizacion::with('estados')->selectRaw('distinct organizaciones.*');
 

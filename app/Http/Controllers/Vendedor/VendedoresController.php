@@ -80,10 +80,10 @@ class VendedoresController extends Controller
 
             $array = [];
 
-            $size = count($request->organizacion_id);
+            $size = count((array)$request->organizacion_id);
 
-            for ($i=0; $i < $size; $i++) { 
-                
+            for ($i=0; $i < $size; $i++) {
+
                 $array[$request->organizacion_id[$i]] = [ 'tipo' => 'vendedor' ];
             }
 
@@ -237,12 +237,12 @@ class VendedoresController extends Controller
 
             $persona->save();
 
-             $array = [];
+            $array = [];
 
-            $size = count($request->organizacion_id);
+            $size = count((array)$request->organizacion_id);
 
-            for ($i=0; $i < $size; $i++) { 
-                
+            for ($i=0; $i < $size; $i++) {
+
                 $array[$request->organizacion_id[$i]] = [ 'tipo' => 'vendedor' ];
             }
 

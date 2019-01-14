@@ -468,6 +468,8 @@ $( "#add_rol" ).click(function(event){
 
         var dataString  = $( '#form_add_rol' ).serializeArray()
 
+        console.log(dataString)
+
         $.ajax({
 
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},

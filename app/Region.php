@@ -29,7 +29,7 @@ class Region extends Model
 
     public static function obtener_regiones(){
 
-        $regiones = Region::select(['id', 'nombre'])->orderBy('id', 'desc')->get();
+        $regiones = Region::select(['id', 'nombre'])->orderBy('id', 'asc')->get();
 
         return $regiones;
 

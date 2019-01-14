@@ -20,7 +20,7 @@
 
                         <div class="photo">
 
-                            <img src="assets/img/productos/default.png" alt="Thumbnail Image" class="img-rounded img-responsive imagen">
+                            <img src="images/productos/default.png" alt="Thumbnail Image" class="img-rounded img-responsive imagen">
 
                         </div>
 

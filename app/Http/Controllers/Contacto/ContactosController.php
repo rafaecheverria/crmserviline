@@ -73,7 +73,7 @@ class ContactosController extends Controller
 
             $array = [];
 
-            $size = count($request->organizacion_id);
+            $size = count((array)$request->organizacion_id);
 
             for ($i=0; $i < $size; $i++) { 
                 
@@ -253,7 +253,7 @@ class ContactosController extends Controller
 
             $array = [];
 
-            $size = count($request->organizacion_id);
+            $size = count((array)$request->organizacion_id);
 
             for ($i=0; $i < $size; $i++) { 
                 

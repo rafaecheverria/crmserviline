@@ -1,6 +1,6 @@
 <?php
 
-Route::middleware(['auth', 'role:administrador|vendedor'])->group(function(){
+Route::middleware(['auth', 'role:super-administrador|administrador|vendedor'])->group(function(){
 
 	Route::resource('users/avatar', 'User\AvatarController', ['only' => 'store']);
 
